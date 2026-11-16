@@ -9,21 +9,96 @@
 <section class="panel"><h2>🧭 3ステップで試そう</h2><div class="steps"><div class="step"><strong>1. 選ぶ</strong>サンプルSQLを選択</div><div class="step"><strong>2. 実行</strong>SQLを実行ボタンを押す</div><div class="step"><strong>3. 確認</strong>結果の表を見る</div></div></section>
 <section class="panel" aria-labelledby="editor-heading"><h2 id="editor-heading">⌨️ SQLを実行する</h2><p class="muted small">サンプルを選ぶと入力欄にSQLが入ります。自分で書き換えてもOK。</p><div class="examples" role="group" aria-label="サンプルSQL"><button class="example" data-sql="all">すべて表示</button><button class="example" data-sql="where">りんごだけ</button><button class="example" data-sql="sort">売上順</button><button class="example" data-sql="count">件数</button><button class="example" data-sql="sum">売上合計</button><button class="example" data-sql="group">商品別集計</button></div><label for="sql">やってみる：SQL入力欄</label><textarea id="sql" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="editor-help">SELECT * FROM sales;</textarea><p class="muted small" id="editor-help">SQLの最後の「;」は文の終わりを表します。SQLiteでは省略できる場合もあります。</p><div class="actions"><button class="primary" id="run" disabled>▶ SQLを実行</button><button class="secondary" id="reset" disabled>↺ 初期データに戻す</button></div><p id="status" class="status" role="status" aria-live="polite">SQLiteを準備しています…</p></section>
 <section class="panel"><h2>✅ 確認する：実行結果</h2><div id="result" class="tablewrap" aria-label="SQLの実行結果"><p style="padding:12px">SQLを実行すると、ここに結果が表示されます。</p></div><p id="detail" class="muted small"></p><div class="hint"><strong>✏️ 挑戦する</strong><div>りんごの売上金額を合計してみよう。ヒント：<code>WHERE</code> と <code>SUM(amount)</code> を組み合わせます。答えは <strong>450円</strong>。</div></div></section>
-<section class="panel"><h2>🔒 安心して試せる仕組み</h2><p>SQLはブラウザ内のSQLiteで実行されます。入力したSQLや演習データをIT図鑑のサーバーへ送信する機能はありません。データは一時的なメモリ内にあり、ページを再読み込みしても初期状態に戻ります。</p><p class="muted small">初回の読み込みにはインターネット接続が必要です。SQLite実行エンジンは外部CDNから取得します。大量のデータ生成や複雑なSQLではブラウザが重くなる場合があります。</p></section>
+<section class="panel"><h2>🔒 安心して試せる仕組み</h2><p>SQLはブラウザ内のSQLiteで実行されます。入力したSQLや演習データをIT図鑑のサーバーへ送信する機能はありません。データは一時的なメモリ内にあり、ページを再読み込みしても初期状態に戻ります。</p><p class="muted small">初回の読み込みにはインターネット接続が必要です。SQLite実行エンジンは外部CDNから取得します。SQLは別スレッドで実行し、3秒を超えた処理は停止して初期化します。結果表示は最大200行です。</p></section>
 <footer><a href="/materials/">無料教材一覧に戻る</a> · © IT図鑑</footer></main>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.13.0/sql-wasm.js" crossorigin="anonymous"></script>
 <script>
 (function(){
 'use strict';
 const queries={all:"SELECT * FROM sales;",where:"SELECT * FROM sales\nWHERE product = 'りんご';",sort:"SELECT * FROM sales\nORDER BY amount DESC;",count:"SELECT COUNT(*) AS count\nFROM sales;",sum:"SELECT SUM(amount) AS total\nFROM sales;",group:"SELECT product, SUM(amount) AS total\nFROM sales\nGROUP BY product;"};
-const $=id=>document.getElementById(id);let engine=null,db=null;const MAX_SQL_LENGTH=5000;
-const status=(msg,kind='')=>{ $('status').textContent=msg;$('status').className='status '+kind;};
-function makeDB(){if(db)db.close();db=new engine.Database();db.run("CREATE TABLE sales (id INTEGER PRIMARY KEY, product TEXT NOT NULL, quantity INTEGER NOT NULL, amount INTEGER NOT NULL); INSERT INTO sales (id,product,quantity,amount) VALUES (1,'りんご',2,300),(2,'みかん',3,450),(3,'りんご',1,150);");}
-function errorHelp(msg){const s=msg.toLowerCase();if(s.includes('syntax'))return 'SQLの書き方に誤りがあるようです。SELECTやFROM、カンマ、引用符を確認してください。';if(s.includes('no such table'))return 'テーブル名が見つかりません。今回は sales を使います。';if(s.includes('no such column'))return '列名が見つかりません。id、product、quantity、amount を確認してください。';if(s.includes('incomplete input'))return 'SQLが途中で終わっているようです。括弧や引用符、条件式を確認してください。';if(s.includes('readonly'))return 'この操作は実行できません。';return 'SQLを見直してください。サンプルを選んで試すこともできます。';}
-function render(rows){const root=$('result');root.replaceChildren();if(!rows.length){const p=document.createElement('p');p.style.padding='12px';p.textContent='SQLは実行されました（表示する列・行はありません）。';root.append(p);return;}for(const result of rows){const table=document.createElement('table'),head=document.createElement('thead'),hr=document.createElement('tr');for(const name of result.columns){const th=document.createElement('th');th.scope='col';th.textContent=name;hr.append(th);}head.append(hr);table.append(head);const body=document.createElement('tbody');for(const values of result.values){const tr=document.createElement('tr');for(const value of values){const td=document.createElement('td');td.textContent=value===null?'NULL':String(value);tr.append(td);}body.append(tr);}table.append(body);root.append(table);}}
-function run(){if(!db)return;try{const sql=$('sql').value.trim();if(!sql){status('SQLを入力してください。','err');return;}if(sql.length>MAX_SQL_LENGTH){status('SQLが長すぎます。5000文字以内で入力してください。','err');return;}if(!/^\s*(SELECT|WITH)\b/i.test(sql)){status('この教材ではSELECT（検索）だけを実行できます。データを変更するSQLは使えません。','err');return;}const results=db.exec(sql);render(results);const count=results.reduce((n,r)=>n+r.values.length,0);$('detail').textContent=results.length?'表示した行数：'+count:'SQLの実行が完了しました。';status('SQLを実行できました。','ok');}catch(e){$('result').replaceChildren();const p=document.createElement('p');p.style.padding='12px';p.textContent='エラーのため結果は表示できません。';$('result').append(p);status('エラー：'+errorHelp(String(e.message||e)),'err');$('detail').textContent='SQLiteからのメッセージ：'+String(e.message||e);}}
-document.querySelectorAll('[data-sql]').forEach(btn=>btn.addEventListener('click',()=>{$('sql').value=queries[btn.dataset.sql];$('sql').focus();}));$('run').addEventListener('click',run);$('reset').addEventListener('click',()=>{try{makeDB();$('sql').value=queries.all;render(db.exec(queries.all));$('detail').textContent='初期データ3件に戻しました。';status('初期データに戻しました。','ok');}catch(e){status('初期化に失敗しました：'+String(e.message||e),'err');}});
-if(typeof initSqlJs!=='function'){status('SQLiteを読み込めませんでした。インターネット接続を確認して再読み込みしてください。','err');return;}
-initSqlJs({locateFile:file=>'https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.13.0/'+file}).then(SQL=>{engine=SQL;makeDB();$('run').disabled=false;$('reset').disabled=false;status('準備完了！「SQLを実行」を押してみましょう。','ok');}).catch(e=>{status('SQLiteの準備に失敗しました。通信状況を確認して再読み込みしてください。','err');console.error(e);});
+const $=id=>document.getElementById(id);
+const RUN_TIMEOUT=3000,INIT_TIMEOUT=15000;
+let worker=null,seq=0,pending=null,ready=false;
+function status(msg,kind=''){$('status').textContent=msg;$('status').className='status '+kind;}
+function buttons(busy){$('run').disabled=busy||!ready;$('reset').disabled=busy||!ready;}
+function showMessage(message){const p=document.createElement('p');p.style.padding='12px';p.textContent=message;$('result').replaceChildren(p);}
+function render(result){
+ const table=document.createElement('table'),caption=document.createElement('caption');
+ caption.textContent='SQLの実行結果';table.append(caption);
+ const head=document.createElement('thead'),tr=document.createElement('tr');
+ for(const name of result.columns){const th=document.createElement('th');th.scope='col';th.textContent=name;tr.append(th);}
+ head.append(tr);table.append(head);
+ const body=document.createElement('tbody');
+ for(const values of result.values){const row=document.createElement('tr');for(const value of values){const td=document.createElement('td');td.textContent=value===null?'NULL':String(value);row.append(td);}body.append(row);}
+ table.append(body);$('result').replaceChildren(table);
+}
+function errorHelp(message){
+ const s=message.toLowerCase();
+ if(s.includes('syntax'))return 'SQLの書き方に誤りがあります。SELECT、FROM、カンマや引用符を確認してください。';
+ if(s.includes('no such table'))return 'テーブル名が見つかりません。sales を使ってください。';
+ if(s.includes('no such column'))return '列名が見つかりません。id、product、quantity、amount を確認してください。';
+ if(s.includes('incomplete input'))return 'SQLが途中で終わっています。括弧や引用符を確認してください。';
+ if(s.includes('readonly')||s.includes('attempt to write'))return 'データの変更はできません。SELECTで検索・集計してください。';
+ if(s.includes('200行'))return message;
+ return message||'SQLを見直し、サンプルから試してください。';
+}
+function stopWorker(){
+ if(pending){clearTimeout(pending.timer);pending=null;}
+ if(worker){worker.terminate();worker=null;}
+ ready=false;buttons(true);
+}
+function request(type,sql,timeout){
+ return new Promise((resolve,reject)=>{
+  if(!worker){reject(new Error('SQLiteが起動していません。'));return;}
+  const id=++seq;
+  const timer=setTimeout(()=>{
+   pending=null;stopWorker();reject(new Error(type==='init'?'SQLiteの読み込みが時間切れになりました。':'SQLが制限時間（3秒）を超えたため停止しました。'));
+  },timeout);
+  pending={id,resolve,reject,timer};
+  worker.postMessage({id,type,sql});
+ });
+}
+async function boot(){
+ stopWorker();status('SQLiteを準備しています…');$('detail').textContent='';
+ if(!window.Worker){status('このブラウザはWeb Workerに対応していません。新しいブラウザをお試しください。','err');return;}
+ worker=new Worker('./worker.js');
+ worker.onmessage=event=>{
+  const msg=event.data||{};
+  if(!pending||msg.id!==pending.id)return;
+  const p=pending;pending=null;clearTimeout(p.timer);
+  if(msg.ok)p.resolve(msg);else p.reject(new Error(msg.error||'不明なエラー'));
+ };
+ worker.onerror=()=>{if(pending){const p=pending;pending=null;clearTimeout(p.timer);p.reject(new Error('SQLiteの読み込みに失敗しました。'));}stopWorker();status('読み込みに失敗しました。通信状況を確認してページを再読み込みしてください。','err');};
+ try{await request('init',null,INIT_TIMEOUT);ready=true;buttons(false);status('準備完了！SQLを実行してみましょう。','ok');}
+ catch(e){stopWorker();status('SQLiteの準備に失敗しました：'+errorHelp(e.message),'err');}
+}
+async function run(){
+ if(!ready)return;
+ const sql=$('sql').value.trim();
+ if(!sql){status('SQLを入力してください。','err');return;}
+ if(sql.length>5000){status('SQLは5000文字以内で入力してください。','err');return;}
+ buttons(true);status('SQLを実行しています…');
+ try{
+  const msg=await request('run',sql,RUN_TIMEOUT);
+  render(msg.result);
+  $('detail').textContent='表示した行数：'+msg.result.values.length;
+  status('SQLを実行できました。','ok');
+ }catch(e){
+  showMessage('エラーのため結果は表示できません。');
+  $('detail').textContent='SQLiteからのメッセージ：'+e.message;
+  status('エラー：'+errorHelp(e.message),'err');
+  if(!worker){status('SQLが時間切れになりました。SQLiteを再起動しています…','err');await boot();}
+ }finally{buttons(false);}
+}
+async function reset(){
+ if(!ready){await boot();return;}
+ buttons(true);status('初期データに戻しています…');
+ try{await request('reset',null,RUN_TIMEOUT);$('sql').value=queries.all;showMessage('初期データ3件に戻しました。SQLを実行してみましょう。');$('detail').textContent='';status('初期データに戻しました。','ok');}
+ catch(e){status('リセットに失敗しました。再起動します。','err');await boot();}
+ finally{buttons(false);}
+}
+document.querySelectorAll('[data-sql]').forEach(btn=>btn.addEventListener('click',()=>{$('sql').value=queries[btn.dataset.sql];$('sql').focus();}));
+$('run').addEventListener('click',run);
+$('reset').addEventListener('click',reset);
+boot();
 })();
 </script></body></html>
