@@ -4,7 +4,7 @@
   window.dataLayer = window.dataLayer || [];
   window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
   window.gtag('js', new Date());
-  window.gtag('config', 'G-C5NFDZ258X');
+  window.gtag('config', 'G-J0PDHL2KZL');
   document.addEventListener('click', function (event) {
     var target = event.target;
     if (!target || !target.closest) return;
