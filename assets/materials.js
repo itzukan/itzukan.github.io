@@ -1,0 +1,1 @@
+document.addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('[data-print-pdf]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('details').forEach(d=>d.open=true);window.print()}))});
