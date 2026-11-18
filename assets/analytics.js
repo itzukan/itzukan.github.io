@@ -45,3 +45,6 @@
     window.gtag('event', type, data);
   });
 }());
+
+// Shared feedback UI for public learning materials; GA4 opt-out remains effective.
+(function(){if(!/^\/materials\/(network|api|sql|security|html-javascript)\//.test(location.pathname))return;function load(){var s=document.createElement('script');s.src='/assets/material-feedback.js';document.body.appendChild(s);}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',load,{once:true});else load();})();
