@@ -9,7 +9,7 @@ var routes={
 };
 var path=location.pathname.replace(/index\.html$/,'');if(!path.endsWith('/'))path+='/';
 var item=routes[path];if(!item)return;
-function link(href,title,desc,primary){var a=document.createElement('a');a.href=href;a.className='itz-next-link'+(primary?' itz-next-primary':'');var strong=document.createElement('strong');strong.textContent=title;var small=document.createElement('span');small.textContent=desc;a.append(strong,small);a.addEventListener('click',function(){if(window.itzukanAnalyticsOptOut||window['ga-disable-G-J0PDHL2KZL'])return;if(typeof window.gtag==='function')window.gtag('event','material_next_click',{material_id:item.id,destination_path:href});});return a;}
+function link(href,title,desc,primary){var a=document.createElement('a');a.href=href;a.className='itz-next-link'+(primary?' itz-next-primary':'');var strong=document.createElement('strong');strong.textContent=title;var small=document.createElement('span');small.textContent=desc;a.append(strong,small);a.addEventListener('click',function(){if(window.itzukanAnalyticsOptOut||window['ga-disable-G-J0PDHL2KZL'])return;if(typeof window.gtag==='function')window.gtag('event','material_next_click',{material_id:item.id,destination_path:href,transport_type:'beacon'});});return a;}
 var section=document.createElement('section');section.className='itz-next';section.setAttribute('aria-label','次に学ぶ教材');
 var heading=document.createElement('h2');heading.textContent='🚀 次に学ぶなら';section.append(heading);
 var intro=document.createElement('p');intro.textContent='ここまでお疲れさま！興味のあるテーマから、次の一歩に進めます。';section.append(intro);
