@@ -17,6 +17,7 @@
   if (setting !== '0' && !excluded) {
     try { excluded = window.localStorage.getItem(key) === '1'; } catch (e) {}
   }
+  window.itzukanAnalyticsOptOut = excluded;
   if (excluded) {
     window['ga-disable-G-J0PDHL2KZL'] = true;
     return;
