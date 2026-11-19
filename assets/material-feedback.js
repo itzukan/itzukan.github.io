@@ -18,7 +18,7 @@ function question(title,name,choices){var field=document.createElement('fieldset
 question('役に立ちましたか？','helpfulness',[['helpful','役に立った'],['neutral','普通'],['not_helpful','役に立たなかった']]);
 question('難易度はどうでしたか？','difficulty',[['easy','簡単すぎた'],['just_right','ちょうどよかった'],['hard','難しかった']]);
 var submit=document.createElement('button');submit.type='submit';submit.textContent='匿名で回答する';submit.style.cssText='padding:12px 20px;background:#0891b2;color:white;border:0;border-radius:10px;cursor:pointer';form.append(submit);
-var privacy=document.createElement('p');privacy.textContent='名前・メールアドレス・SQL入力内容は送信しません。';privacy.style.fontSize='13px';form.append(privacy);box.append(form);
+var privacy=document.createElement('p');privacy.textContent='名前・メールアドレスは送信しません。';privacy.style.fontSize='13px';form.append(privacy);box.append(form);
 form.onsubmit=function(e){e.preventDefault();var f=new FormData(form),help=f.get('helpfulness'),diff=f.get('difficulty');if(!['helpful','neutral','not_helpful'].includes(help)||!['easy','just_right','hard'].includes(diff))return;emit('feedback_submit',{helpfulness:help,difficulty:diff});form.textContent='回答ありがとうございました！';};
 var main=document.querySelector('main')||document.body;var next=main.querySelector('.itz-next');var footer=main.querySelector('footer');if(next)main.insertBefore(box,next);else if(footer)main.insertBefore(box,footer);else main.append(box);
 if(demo){box.hidden=true;try{var done=JSON.parse(localStorage.getItem('itzukan-sql-course-preview-completed-v1')||'[]');box.hidden=![8,11,14].every(function(n){return done.includes(n);});}catch(e){}}
