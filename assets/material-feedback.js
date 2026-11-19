@@ -9,10 +9,6 @@ var box=document.createElement('section');box.setAttribute('aria-label','教材�
 box.style.cssText='max-width:760px;margin:32px auto;padding:24px;background:#142239;color:#f8fafc;border:1px solid #334761;border-radius:16px;font:16px/1.7 system-ui,sans-serif';
 var h=document.createElement('h2');h.textContent='教材の感想を教えてください';box.append(h);
 var p=document.createElement('p');p.textContent='匿名・2問だけ。教材の改善に使います。';box.append(p);
-if(!demo){
-var practice=document.createElement('button');practice.type='button';practice.textContent='実際に試せた（自己申告）';practice.style.cssText='padding:12px;background:#155e75;color:white;border:1px solid #67e8f9;border-radius:10px;cursor:pointer';
-practice.onclick=function(){emit('material_practice_complete',{completion_type:'self_report'});practice.disabled=true;practice.textContent='実践完了を記録しました';};box.append(practice);
-}
 var form=document.createElement('form');
 function question(title,name,choices){var field=document.createElement('fieldset');field.style.cssText='border:0;padding:8px 0';var legend=document.createElement('legend');legend.textContent=title;field.append(legend);choices.forEach(function(c){var label=document.createElement('label');label.style.cssText='display:block;margin:7px 0';var input=document.createElement('input');input.type='radio';input.name=name;input.value=c[0];input.required=true;label.append(input,document.createTextNode(' '+c[1]));field.append(label);});form.append(field);}
 question('役に立ちましたか？','helpfulness',[['helpful','役に立った'],['neutral','普通'],['not_helpful','役に立たなかった']]);
