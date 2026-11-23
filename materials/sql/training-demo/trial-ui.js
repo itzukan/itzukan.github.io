@@ -43,3 +43,23 @@ document.getElementById("trial-read-guide").addEventListener("click", () => {
 for (const id of ["trial-return-to-sql", "loadAnswer", "challengeLoad"]) {
   document.getElementById(id).addEventListener("click", returnToEditor);
 }
+
+for (const button of document.querySelectorAll("[data-trial-dialog]")) {
+  const dialog = document.getElementById(button.dataset.trialDialog);
+  button.addEventListener("click", () => dialog.showModal());
+}
+
+for (const button of document.querySelectorAll("[data-q]")) {
+  button.addEventListener("click", () => {
+    for (const details of document.querySelectorAll(".trial-context")) details.open = false;
+  });
+}
+
+const hintSteps = document.getElementById("hintSteps");
+hintSteps.addEventListener("click", (event) => {
+  if (!event.target.matches(".hint-step button")) return;
+  const nextFocus = Array.from(hintSteps.querySelectorAll(".hint-step p")).at(-1);
+  if (!nextFocus) return;
+  nextFocus.tabIndex = -1;
+  nextFocus.focus();
+});

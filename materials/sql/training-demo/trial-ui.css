@@ -1,23 +1,55 @@
 [hidden] { display: none !important; }
 body { background: #0b1425; color: #eef2f8; }
-.wrap { max-width: 1080px; padding: 24px clamp(16px, 4vw, 32px) 64px; }
-.trial-hero { padding-bottom: 28px; }
-.trial-nav, .trial-links, .trial-mode { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
-.trial-nav { border-bottom: 1px solid #334561; padding-bottom: 14px; margin-bottom: 32px; }
+.wrap { max-width: 1080px; padding: 16px clamp(16px, 4vw, 32px) 64px; }
+.trial-hero { margin-bottom: 16px; }
+.trial-nav, .trial-mode { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; }
+.trial-nav { border-bottom: 1px solid #334561; padding-bottom: 10px; margin-bottom: 16px; }
 .trial-nav a { color: #d5dfef; }
 .trial-brand { margin-right: auto; font-size: 1.2rem; font-weight: 750; text-decoration: none; }
-.trial-hero h1 { margin: 12px 0 4px; font-size: clamp(2rem, 5.4vw, 3.5rem); }
-.trial-subtitle { margin: 0; font-weight: 700; font-size: 1.15rem; }
-.trial-links a, .trial-offer a { text-decoration: none; }
+.trial-hero h1 { margin: 0; font-size: clamp(1.4rem, 4vw, 2.35rem); }
+.trial-hero h1 span { color: #f0d28f; font-size: .68em; white-space: nowrap; }
+.trial-hero p { margin: 5px 0 0; }
+.trial-offer a { text-decoration: none; }
 .panel { background: #142139; border-color: #354862; }
-.trial-mode { margin: 20px 0 14px; border-bottom: 1px solid #354862; padding-bottom: 8px; }
-.trial-mode button, .trial-reference { background: #142139; color: #eef2f8; border: 1px solid #526078; border-radius: 8px; }
-.trial-mode button { font: inherit; font-weight: 700; padding: 9px 16px; cursor: pointer; }
-.trial-mode [aria-selected="true"], .trial-links .primary, .trial-offer .primary { background: #d8b975; color: #18283e; border-color: #d8b975; }
-.trial-reference { margin-top: 16px; padding: 12px 16px; }
-.trial-reference summary { cursor: pointer; font-weight: 700; }
+#trial-missions .grid { gap: 8px; }
+#trial-missions .tab { padding: 8px 12px; }
+.trial-mode { margin: 12px 0 8px; border-bottom: 1px solid #354862; padding-bottom: 8px; }
+.trial-mode button { font: inherit; font-weight: 700; background: #142139; color: #eef2f8; border: 1px solid #526078; border-radius: 8px; padding: 7px 14px; cursor: pointer; }
+.trial-mode [aria-selected="true"], .trial-offer .primary { background: #d8b975; color: #18283e; border-color: #d8b975; }
+#trial-exercise .panel { margin: 8px 0; padding: clamp(12px, 2vw, 20px); }
+.trial-problem-title, .trial-editor-toolbar, .trial-resource-buttons, .trial-dialog-header {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 6px 12px;
+}
+.trial-problem-title .pill, .trial-problem h2 { margin: 0; }
+.trial-problem h2 { font-size: clamp(1.05rem, 3vw, 1.5rem); }
+.trial-problem #question { margin: 7px 0; }
+.trial-context summary { cursor: pointer; color: #cee1ff; font-weight: 650; }
+.trial-editor-toolbar { justify-content: space-between; margin-bottom: 8px; }
+.trial-resource-buttons { gap: 6px; }
+.trial-resource-buttons .btn { padding: 5px 10px; min-height: 36px; }
+#trial-exercise textarea { min-height: 128px; }
+.trial-dialog {
+  width: min(760px, calc(100% - 24px)); max-height: calc(100dvh - 24px); overflow: auto;
+  background: #142139; color: #eef2f8; border: 1px solid #687c99; border-radius: 14px;
+  padding: clamp(12px, 4vw, 22px);
+}
+.trial-dialog:not([open]) { display: none; }
+.trial-dialog::backdrop { background: rgb(3 10 23 / 78%); }
+.trial-dialog-header { justify-content: space-between; }
+.trial-dialog-header h2 { margin: 0; }
+#trial-hints .trial-context { margin-top: 14px; }
 .trial-return { justify-self: start; }
 .trial-offer { display: flex; align-items: center; justify-content: space-between; gap: 16px 28px; flex-wrap: wrap; border-color: #a38a56; }
 .trial-offer h2, .trial-offer p { margin: 0 0 8px; }
 .trial-price { color: #f0d28f; font-weight: 750; }
 .trial-mode button:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px solid #f5d797; outline-offset: 3px; }
+@media (max-width: 640px) {
+  .trial-nav { gap: 4px 9px; margin-bottom: 10px; font-size: .8rem; }
+  .trial-brand { margin-right: 2px; font-size: 1rem; }
+  .trial-hero p { display: none; }
+  #trial-missions .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  #trial-missions .tab { padding: 6px; overflow-wrap: anywhere; }
+  #trial-missions .tab small { font-size: .73rem; }
+  .trial-problem #question { line-height: 1.55; }
+  .trial-resource-buttons .btn { min-height: 44px; }
+}
