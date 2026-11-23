@@ -1,1 +1,0 @@
-(()=>{'use strict';const buttons=[...document.querySelectorAll('[data-table]')];buttons.forEach(button=>button.addEventListener('click',()=>{const active=button.dataset.table;buttons.forEach(b=>{const selected=b.dataset.table===active;b.setAttribute('aria-selected',String(selected));document.getElementById('data-'+b.dataset.table).classList.toggle('hidden',!selected)})}));})();
