@@ -78,7 +78,9 @@ function progress() {
     option.textContent = (done[problem.id] ? '✓ ' : '') +
       '問題' + String(problem.id).padStart(2, '0') + '｜' + problem.title;
   }
-  $('progress').textContent = '進捗 ' + trialIds.filter(id => done[id]).length + ' / ' + problems.length + '問';
+  const completedCount = trialIds.filter(id => done[id]).length;
+  $('progress').textContent = '進捗 ' + completedCount + ' / ' + problems.length + '問';
+  $('trialContinuation').hidden = completedCount !== trialIds.length;
 }
 
 function selectMission(id, push = true) {
