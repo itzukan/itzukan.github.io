@@ -1,3 +1,37 @@
+// Carry only known, non-identifying attribution values to the API trial.
+(function () {
+  'use strict';
+  var storageKey = 'itzukan_api_trial_source';
+  var query = new URLSearchParams(window.location.search);
+  var source = query.get('utm_source')?.trim().toLowerCase();
+  var medium = query.get('utm_medium')?.trim().toLowerCase();
+  var referrer = document.referrer ? new URL(document.referrer) : null;
+  var referrerHost = referrer?.hostname || '';
+  var routeSource = '';
+  if (source === 'itzukan_qa' || medium === 'qa') {
+    routeSource = 'itzukan_qa';
+  } else if (source === 'instagram' || (!source &&
+      (referrerHost === 'instagram.com' || referrerHost.endsWith('.instagram.com')))) {
+    routeSource = 'instagram';
+  } else if (!source && referrer?.origin === window.location.origin) {
+    try { routeSource = window.sessionStorage.getItem(storageKey) || ''; } catch (e) {}
+  }
+
+  try {
+    if (routeSource) window.sessionStorage.setItem(storageKey, routeSource);
+    else window.sessionStorage.removeItem(storageKey);
+  } catch (e) {}
+
+  if (routeSource !== 'instagram' && routeSource !== 'itzukan_qa') return;
+  var link = document.querySelector('a[data-analytics-event="api_trial_click"]');
+  if (!link) return;
+  var target = new URL(link.href);
+  target.searchParams.set('utm_source', routeSource);
+  target.searchParams.set('utm_medium', routeSource === 'itzukan_qa' ? 'qa' : 'social');
+  target.searchParams.set('utm_campaign', 'api_key_to_trial');
+  link.href = target.href;
+}());
+
 /* IT図鑑 GA4: opt-out for the administrator's browser.
    Visit /?it_admin=1 once per browser to disable tracking.
    Visit /?it_admin=0 to re-enable tracking.

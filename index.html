@@ -3,10 +3,23 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta http-equiv="refresh" content="0;url=/materials/">
+<noscript><meta http-equiv="refresh" content="0;url=/materials/"></noscript>
 <link rel="canonical" href="https://free.itzukan.com/materials/">
 <title>無料IT教材 | IT図鑑</title>
-<script>window.location.replace('/materials/');</script>
+<script>
+  const params = new URLSearchParams(location.search);
+  const source = params.get('utm_source')?.trim().toLowerCase();
+  const medium = params.get('utm_medium')?.trim().toLowerCase();
+  const referrerHost = document.referrer ? new URL(document.referrer).hostname : '';
+  let destination = '/materials/';
+  if (source === 'itzukan_qa' || medium === 'qa') {
+    destination += '?utm_source=itzukan_qa&utm_medium=qa';
+  } else if (source === 'instagram' || (!source &&
+      (referrerHost === 'instagram.com' || referrerHost.endsWith('.instagram.com')))) {
+    destination += '?utm_source=instagram&utm_medium=social';
+  }
+  location.replace(destination);
+</script>
 </head>
 <body>
 <p>IT図鑑の無料教材一覧へ移動します。<a href="/materials/">教材一覧を見る</a></p>
