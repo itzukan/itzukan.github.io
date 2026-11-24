@@ -4,6 +4,14 @@
    Do not add a separate GA4 tag in GTM or HTML. */
 (function () {
   'use strict';
+  // Keep GA4 off for local, LAN, and other preview origins.
+  var origin = window.location.origin;
+  if (origin !== 'https://free.itzukan.com' && origin !== 'https://itzukan.github.io') {
+    window.itzukanAnalyticsOptOut = true;
+    window['ga-disable-G-J0PDHL2KZL'] = true;
+    return;
+  }
+
   var key = 'itzukan_ga4_admin_optout';
   var query = new URLSearchParams(window.location.search);
   var setting = query.get('it_admin');
