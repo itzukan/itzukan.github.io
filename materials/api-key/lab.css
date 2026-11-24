@@ -1,0 +1,61 @@
+.api-key-page { max-width: 920px; }
+.api-key-page [hidden] { display: none !important; }
+.lab-header { margin: 24px 0; }
+.lab-header h1 { margin-bottom: 4px; }
+.lab-header p, .lab-note { color: #bdcadd; }
+.lab-panel { margin: 20px 0; padding: clamp(16px, 4vw, 32px); background: #132037; border: 1px solid #3a5672; border-radius: 16px; }
+.lab-panel h2, .lab-panel h3 { margin: 0 0 10px; line-height: 1.4; }
+.lab-instructions { padding-left: 1.45em; }
+.lab-instructions li + li { margin-top: 4px; }
+.lab-request { color: #8feaf4; font-weight: 750; }
+.lab-key-row, .lab-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 6px; }
+.lab-key-row input { flex: 1 1 16ch; min-width: 0; max-width: 100%; }
+.lab-panel input, .lab-panel button { min-height: 44px; padding: 8px 12px; border: 1px solid #6783a0; border-radius: 8px; color: #eff6ff; background: #0c1627; font: inherit; }
+.lab-panel button { cursor: pointer; font-weight: 700; }
+.lab-panel button.lab-primary { background: #79e6ed; color: #0b2030; border-color: #79e6ed; }
+.lab-panel button:disabled { cursor: default; opacity: .6; }
+.lab-panel :focus-visible { outline: 3px solid #ffc77d; outline-offset: 3px; }
+.lab-note { font-size: .92rem; }
+.lab-output { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 20px; }
+.lab-output > div { min-width: 0; padding: 14px; border: 1px solid #3a5672; background: #101b30; border-radius: 10px; }
+.lab-panel pre { overflow: auto; background: #081222; color: #dceeff; padding: 10px 12px; border-radius: 8px; }
+.lab-output pre { overflow-wrap: anywhere; white-space: pre-wrap; }
+#response-status { margin: 0 0 6px; }
+#response-status[data-result="success"] { color: #a9edbb; }
+#response-status[data-result="retry"] { color: #ffd092; }
+.lab-key-storage { margin-top: 16px; padding: 16px; border: 1px solid #806640; border-left: 4px solid #ffd092; border-radius: 10px; background: #262238; }
+.lab-key-storage p { margin: 0; }
+.lab-key-storage p + p { margin-top: 8px; }
+.lab-simulation { margin: 16px 0; padding: 16px; border: 1px dashed #6385a5; border-radius: 10px; }
+.lab-simulation .lab-flow { margin-bottom: 0; }
+.lab-panel .lab-flow-title { margin-bottom: 8px; }
+.lab-flow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; padding: 0; list-style: none; }
+.lab-flow li { position: relative; padding: 12px; border: 1px solid #4a7185; border-radius: 10px; background: #10273a; }
+.lab-flow li + li::before { content: ""; position: absolute; width: 10px; height: 10px; left: -18px; top: 50%; border: solid #8feaf4; border-width: 2px 2px 0 0; transform: translateY(-50%) rotate(45deg); }
+.lab-flow-icon {
+  display: block;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 6px;
+  background: url("./flow-icons.png") no-repeat;
+  background-size: 280px 56px;
+}
+.lab-flow-icon--browser { background-position: -56px 0; }
+.lab-flow-icon--result { background-position: -112px 0; }
+.lab-flow-icon--server { background-position: -168px 0; }
+.lab-flow-icon--cloud { background-position: -224px 0; }
+.lab-flow strong, .lab-flow-copy, .lab-flow-status { display: block; }
+.lab-flow-copy { margin-top: 3px; color: #bdcadd; font-size: .9rem; }
+.lab-flow-status code, .lab-flow-key { display: inline-block; padding: 0 6px; border-radius: 4px; background: #412f26; color: #ffd092; font-weight: 700; }
+.lab-flow-status + .lab-flow-status { margin-top: 4px; }
+.lab-flow-status--success code { background: #193b36; color: #a9edbb; }
+.lab-flow .lab-flow-server { border-color: #a78a59; }
+.lab-flow-return { margin-top: 0; color: #c6eadf; }
+.lab-flow-return span { margin-right: 4px; }
+.lab-panel summary { cursor: pointer; color: #8feaf4; font-weight: 700; }
+@media (max-width: 620px) {
+  .lab-output, .lab-flow { grid-template-columns: minmax(0, 1fr); }
+  .lab-flow li { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 10px; align-content: center; }
+  .lab-flow-icon { grid-row: span 2; align-self: center; margin: 0; }
+  .lab-flow li + li::before { left: 34px; top: -19px; transform: rotate(135deg); }
+}

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="APIキーを付けて商品一覧を取得する無料演習。APIキーがないときの401と、あるときの200を見比べます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/api-key/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/materials.css">
+  <link rel="stylesheet" href="./lab.css">
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+  <script type="module" src="./lab.mjs"></script>
+  <title>はじめてのAPIキー | IT図鑑</title>
+</head>
+<body>
+<main class="wrap api-key-page">
+  <nav aria-label="教材ナビゲーション"><a href="/materials/">← 無料教材一覧</a> <span aria-hidden="true"> / </span> <a href="/materials/api/">API入門</a></nav>
+  <header class="lab-header">
+    <h1>はじめてのAPIキー</h1>
+    <p>APIキーは、APIを呼び出すときに使う認証情報の一つです。APIキーを付けると、同じリクエストへの応答がどう変わるか試してみよう。</p>
+  </header>
+
+  <section class="lab-panel" aria-labelledby="lab-title">
+    <h2 id="lab-title">APIキーを付けて商品一覧を取得する</h2>
+    <p class="lab-note">リクエストはブラウザー内で模擬実行されます。</p>
+    <ol class="lab-instructions">
+      <li>入力欄を空のまま「リクエストを送信」を押し、<code>401</code> を確認します。</li>
+      <li>「練習用APIキーを入れる」を押してもう一度送り、<code>200</code> と商品一覧を確認します。</li>
+    </ol>
+    <p class="lab-request"><code>GET /products</code></p>
+    <label for="practice-key">練習用APIキー</label>
+    <div class="lab-key-row">
+      <input id="practice-key" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="key-help" disabled>
+      <button type="button" id="fill-key" class="lab-secondary" disabled>練習用APIキーを入れる</button>
+    </div>
+    <p id="key-help" class="lab-note">演習では誰でも使える練習用APIキーを使います。実際のサービスから発行されたAPIキーはここに入力しないでください。</p>
+    <div class="lab-actions">
+      <button type="button" id="send-request" class="lab-primary" disabled>リクエストを送信</button>
+      <button type="button" id="clear-key" class="lab-secondary" disabled>入力欄を空にする</button>
+    </div>
+    <noscript><p>演習を動かすにはJavaScriptを有効にしてください。</p></noscript>
+    <div class="lab-output">
+      <div>
+        <h3>リクエストの見本</h3>
+        <pre id="request-output">GET /products</pre>
+      </div>
+      <div>
+        <h3>模擬APIの応答</h3>
+        <p id="response-status" role="status">送信後にここへ表示されます。</p>
+        <pre id="response-output" hidden></pre>
+      </div>
+    </div>
+  </section>
+
+  <section class="lab-panel" aria-labelledby="secret-title">
+    <h2 id="secret-title">この教材で何が起きた？</h2>
+    <div class="lab-simulation">
+      <h3>ブラウザーの中だけで動く演習</h3>
+      <ol class="lab-flow" aria-label="この教材の演習の流れ">
+        <li>
+          <span class="lab-flow-icon lab-flow-icon--person" aria-hidden="true"></span>
+          <strong>あなた</strong>
+          <span class="lab-flow-copy">練習用APIキーを入れて送信。空欄でも試せる。</span>
+        </li>
+        <li>
+          <span class="lab-flow-icon lab-flow-icon--browser" aria-hidden="true"></span>
+          <strong>ブラウザー</strong>
+          <span class="lab-flow-copy">教材のプログラムがAPIキーを照合。</span>
+        </li>
+        <li>
+          <span class="lab-flow-icon lab-flow-icon--result" aria-hidden="true"></span>
+          <strong>画面に結果を表示</strong>
+          <span class="lab-flow-copy">
+            <span class="lab-flow-status"><code>401</code> APIキーなし・誤り</span>
+            <span class="lab-flow-status lab-flow-status--success"><code>200</code> 商品一覧を表示</span>
+          </span>
+        </li>
+      </ol>
+    </div>
+    <p class="lab-note">練習用APIキーを入力すると、リクエストの見本に <code>Authorization: Bearer</code> の行が加わります。</p>
+  </section>
+
+  <section class="lab-panel" aria-labelledby="real-api-key-title">
+    <h2 id="real-api-key-title">実際のサイトではどう使う？</h2>
+    <p>たとえば、コーヒー器具の紹介サイトで、楽天市場のコーヒーミルを写真と価格つきで並べたいとします。サイトのサーバーが楽天市場の商品検索APIに問い合わせます。</p>
+    <h3 class="lab-flow-title">紹介サイトで「コーヒーミル」を検索すると</h3>
+    <ol class="lab-flow" aria-label="楽天市場のコーヒーミルを検索して表示する流れ">
+      <li>
+        <span class="lab-flow-icon lab-flow-icon--person" aria-hidden="true"></span>
+        <strong>利用者のブラウザー</strong>
+        <span class="lab-flow-copy">検索欄に「コーヒーミル」と入力して検索。</span>
+      </li>
+      <li class="lab-flow-server">
+        <span class="lab-flow-icon lab-flow-icon--server" aria-hidden="true"></span>
+        <strong>紹介サイトのサーバー</strong>
+        <span class="lab-flow-copy">検索語と<span class="lab-flow-key">APIキー</span>を楽天市場に送る。</span>
+      </li>
+      <li>
+        <span class="lab-flow-icon lab-flow-icon--cloud" aria-hidden="true"></span>
+        <strong>楽天市場の商品検索API</strong>
+        <span class="lab-flow-copy">APIキーを確認し、検索に合う商品の名前・価格・画像URLを返す。</span>
+      </li>
+    </ol>
+    <p class="lab-flow-return"><span aria-hidden="true">↩</span> 紹介サイトの画面に<strong>コーヒーミルの写真・商品名・価格</strong>が並ぶ。</p>
+    <div class="lab-key-storage">
+      <h3>APIキーの置き場所</h3>
+      <p>開発者が、楽天市場から発行されたAPIキーを<strong>紹介サイトのサーバーのシークレット設定</strong>に登録します。</p>
+      <p class="lab-note">APIキーは秘密にしておきます。ブラウザーに配信するJavaScriptに書くと、ページを開いた人が読み取れます。</p>
+    </div>
+    <p class="lab-note">参考 <a href="https://webservice.rakuten.co.jp/documentation/ichiba-item-search">楽天市場の商品検索API（公式）</a>。上の演習はブラウザー内の模擬実行です。</p>
+  </section>
+
+  <section class="lab-panel" aria-labelledby="curl-title">
+    <h2 id="curl-title">補足　curlで自分のPCから呼び出す</h2>
+    <details>
+      <summary>Windows・Macの手順を開く</summary>
+      <p>Python 3が使えるPCで試せます。<a href="./practice-server.py" download>練習用サーバー（practice-server.py）</a>をダウンロードし、保存したフォルダーでターミナルを開きます。</p>
+      <h3>サーバーを起動する</h3>
+      <p>Windows（PowerShell）</p>
+      <pre><code>py -3 practice-server.py</code></pre>
+      <p>Mac（ターミナル）</p>
+      <pre><code>python3 practice-server.py</code></pre>
+      <h3>別のターミナルから、APIキーを付けずに送信し、次に付けて送信する</h3>
+      <p>Windows（PowerShell）</p>
+      <pre><code>curl.exe -i http://127.0.0.1:8711/products
+curl.exe -i -H "Authorization: Bearer itzukan-demo-key" http://127.0.0.1:8711/products</code></pre>
+      <p>Mac（ターミナル）</p>
+      <pre><code>curl -i http://127.0.0.1:8711/products
+curl -i -H "Authorization: Bearer itzukan-demo-key" http://127.0.0.1:8711/products</code></pre>
+      <p><code>127.0.0.1</code> は自分のPCです。応答の先頭行が <code>HTTP/1.0 401 Unauthorized</code> から <code>HTTP/1.0 200 OK</code> に変わることを確認したら、サーバー側の画面で <kbd>Ctrl</kbd>＋<kbd>C</kbd> を押して終了します。</p>
+    </details>
+  </section>
+  <p class="lab-note">参考 <a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-401-unauthorized">HTTP 401の仕様</a></p>
+  <footer><a href="/materials/">無料教材一覧に戻る</a></footer>
+</main>
+</body>
+</html>

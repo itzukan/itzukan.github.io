@@ -1,6 +1,6 @@
 (function(){
 'use strict';
-var m=location.pathname.match(/^\/materials\/(network|api|sql|security|html-javascript)\//);
+var m=location.pathname.match(/^\/materials\/(network|api|api-key|sql|security|html-javascript)\//);
 if(!m)return;
 var demo=m[1]==='sql'&&location.pathname.includes('/training-demo/');
 var playground=m[1]==='sql'&&location.pathname.includes('/playground/');
