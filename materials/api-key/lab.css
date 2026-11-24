@@ -23,6 +23,10 @@
 #response-status { margin: 0 0 6px; }
 #response-status[data-result="success"] { color: #a9edbb; }
 #response-status[data-result="retry"] { color: #ffd092; }
+.lab-next { margin: 12px 0; padding: 12px; border: 1px solid #4a7185; border-radius: 8px; background: #10273a; }
+.lab-next p { margin: 0 0 8px; color: #dceeff; font-size: .92rem; }
+.lab-next a { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 6px 14px; border-radius: 8px; background: #79e6ed; color: #0b2030; font-weight: 700; text-decoration: none; }
+.lab-next a:hover { background: #a4f1f5; color: #0b2030; }
 .lab-key-storage { margin-top: 16px; padding: 16px; border: 1px solid #806640; border-left: 4px solid #ffd092; border-radius: 10px; background: #262238; }
 .lab-key-storage p { margin: 0; }
 .lab-key-storage p + p { margin-top: 8px; }

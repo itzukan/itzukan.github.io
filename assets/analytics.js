@@ -48,12 +48,12 @@
     if (!link) return;
     var material = link.getAttribute('data-material-id');
     var type = link.getAttribute('data-analytics-event');
-    if (!material || (type !== 'material_click' && type !== 'pdf_click')) return;
+    if (!material || (type !== 'material_click' && type !== 'pdf_click' && type !== 'api_trial_click')) return;
     var data = { material_id: material, link_url: link.href };
+    var clickLocation = link.getAttribute('data-click-location');
+    if (clickLocation) data.click_location = clickLocation;
     if (type === 'material_click') {
-      var clickLocation = link.getAttribute('data-click-location');
       var learningRoute = link.getAttribute('data-learning-route');
-      if (clickLocation) data.click_location = clickLocation;
       if (learningRoute) data.learning_route = learningRoute;
     }
     if (type === 'pdf_click') data.platform = link.getAttribute('data-platform') || 'unknown';

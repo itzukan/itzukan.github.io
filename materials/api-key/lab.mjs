@@ -7,6 +7,7 @@ const sendRequest = document.querySelector("#send-request");
 const requestOutput = document.querySelector("#request-output");
 const responseStatus = document.querySelector("#response-status");
 const responseOutput = document.querySelector("#response-output");
+const trialNext = document.querySelector("#api-trial-next");
 
 fillKey.addEventListener("click", () => {
   keyInput.value = practiceKey;
@@ -24,6 +25,7 @@ sendRequest.addEventListener("click", () => {
   requestOutput.textContent = key ? `GET /products\nAuthorization: Bearer ${header}` : "GET /products";
   responseStatus.textContent = accepted ? "200 OK · 商品一覧を取得しました" : "401 Unauthorized · 有効なAPIキーが必要です";
   responseStatus.dataset.result = accepted ? "success" : "retry";
+  trialNext.hidden = !accepted;
   const challenge = 'WWW-Authenticate: Bearer realm="api-key-practice"';
   const payload = accepted ? products : { error: "unauthorized" };
   responseOutput.textContent = (accepted ? "" : challenge + "\n\n") + JSON.stringify(payload, null, 2);
