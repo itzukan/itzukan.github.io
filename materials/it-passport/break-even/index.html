@@ -32,24 +32,24 @@
       </ul>
       <div class="sales-control">
         <label for="cups">販売数を動かす</label>
-        <strong id="cup-count" aria-hidden="true">15杯</strong>
-        <input id="cups" type="range" min="0" max="30" value="15" aria-valuetext="15杯">
+        <strong id="cup-count" aria-hidden="true">10杯</strong>
+        <input id="cups" type="range" min="0" max="30" value="10" aria-valuetext="10杯">
       </div>
-      <output class="profit-summary" id="profit" for="cups" data-state="even" aria-live="polite" aria-atomic="true">
+      <output class="profit-summary" id="profit" for="cups" data-state="loss" aria-live="polite" aria-atomic="true">
         <span>利益</span>
-        <strong id="profit-amount">0円</strong>
-        <span id="profit-status" class="profit-status">損益分岐点</span>
+        <strong id="profit-amount">−1,000円</strong>
+        <span id="profit-status" class="profit-status">赤字</span>
       </output>
       <figure class="diagram" aria-label="売上と費用の比較">
         <div class="bar-row">
           <span>売上</span>
-          <span class="bar-track" aria-hidden="true"><span id="sales-bar" class="sales-bar" style="width:50%"></span></span>
-          <strong id="sales">4,500円</strong>
+          <span class="bar-track" aria-hidden="true"><span id="sales-bar" class="sales-bar" style="width:33.333%"></span></span>
+          <strong id="sales">3,000円</strong>
         </div>
         <div class="bar-row">
           <span>費用</span>
-          <span class="bar-track" aria-hidden="true"><span class="fixed-bar" style="width:33.333%"></span><span id="variable-bar" class="variable-bar" style="width:16.667%"></span></span>
-          <strong id="cost">4,500円</strong>
+          <span class="bar-track" aria-hidden="true"><span class="fixed-bar" style="width:33.333%"></span><span id="variable-bar" class="variable-bar" style="width:11.111%"></span></span>
+          <strong id="cost">4,000円</strong>
         </div>
         <div class="legend">
           <span style="--swatch:#be9bf5">固定費</span>
