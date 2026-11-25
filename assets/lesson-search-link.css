@@ -21,11 +21,34 @@
   text-align: start;
   z-index: 2;
 }
+.lesson-search::before, .lesson-search::after {
+  position: absolute;
+  content: "";
+  pointer-events: none;
+}
+.lesson-search::before {
+  box-sizing: content-box;
+  inset-inline-start: 15px;
+  top: calc(50% - 8px);
+  width: 10px;
+  height: 10px;
+  border: 2px solid #a6ccdf;
+  border-radius: 50%;
+}
+.lesson-search::after {
+  inset-inline-start: 25px;
+  top: calc(50% + 5px);
+  width: 6px;
+  height: 2px;
+  background: #a6ccdf;
+  transform: rotate(45deg);
+}
 .lesson-search input {
   box-sizing: border-box;
   width: 100%;
   min-height: 44px;
   padding: .45em .7em;
+  padding-inline-start: 38px;
   border: 1px solid #7599b9;
   border-radius: 8px;
   background: #142139;
