@@ -24,3 +24,23 @@
 .materials-footer { display: grid; justify-items: center; gap: 8px; }
 .materials-footer nav { justify-content: center; }
 #free-materials { scroll-margin-top: 20px; }
+
+.materials-search { margin-bottom: 20px; }
+.materials-search label { display: block; margin-bottom: 6px; font-weight: 750; }
+.materials-search-controls { display: flex; gap: 8px; }
+.materials-search input, .materials-search button {
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid #57718d;
+  border-radius: 8px;
+  color: inherit;
+  background: #142139;
+  font: inherit;
+}
+.materials-search input { flex: 1; min-width: 0; }
+.materials-search input::placeholder { color: #acbed3; }
+.materials-search button { cursor: pointer; }
+.materials-search :focus-visible { outline: 2px solid #67e8f9; outline-offset: 2px; }
+.materials-search p { margin: 6px 0 0; color: #cbd5e1; }
+.materials-search p:empty { margin: 0; }
+.materials-search[hidden], #material-cards .card[hidden] { display: none; }
