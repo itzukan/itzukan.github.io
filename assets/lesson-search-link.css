@@ -1,0 +1,11 @@
+.lesson-search-link {
+  display: inline-block;
+  margin-inline-start: .65em;
+  text-underline-offset: .2em;
+  white-space: nowrap;
+}
+.lesson-search-link:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+
+@media print {
+  .lesson-search-link { display: none; }
+}

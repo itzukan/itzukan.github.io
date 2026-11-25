@@ -31,7 +31,19 @@
 .hero .lead { margin: 0; }
 
 #free-materials .section-title { font-size: 1.22rem; margin: 18px 0 10px; }
-.materials-search { max-width: 640px; }
+.materials-search { flex: 1 1 215px; max-width: 385px; min-width: 0; }
+.materials-search label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+@media (max-width: 680px) {
+  .materials-search { flex-basis: 100%; max-width: none; }
+}
 .materials-search label { display: block; margin-bottom: 6px; font-weight: 750; }
 .materials-search-controls { display: flex; gap: 8px; }
 .materials-search input, .materials-search button {
@@ -80,6 +92,6 @@
 .materials-search input::placeholder { color: #acbed3; }
 .materials-search button { cursor: pointer; }
 .materials-search :focus-visible { outline: 2px solid #67e8f9; outline-offset: 2px; }
-.materials-search p { margin: 6px 0 0; color: #cbd5e1; }
-.materials-search p:empty { margin: 0; }
+#materials-count { margin: 6px 0 0; color: #cbd5e1; }
+#materials-count:empty { margin: 0; }
 .materials-search[hidden], #material-cards .card[hidden] { display: none; }

@@ -37,3 +37,10 @@ clearMaterialQuery.addEventListener('click', () => {
 window.addEventListener('pageshow', filterMaterials);
 filterMaterials();
 materialSearch.hidden = false;
+
+function focusMaterialSearch() {
+  if (location.hash === '#search-materials') materialQuery.focus();
+}
+
+window.addEventListener('hashchange', focusMaterialSearch);
+focusMaterialSearch();
