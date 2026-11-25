@@ -7,7 +7,7 @@
   <meta name="description" content="文化祭のジュース屋さんを例に、固定費・変動費と損益分岐点を図解。売れる杯数を動かして、赤字と黒字の境目を確かめます。">
   <link rel="canonical" href="https://free.itzukan.com/materials/it-passport/break-even/">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css?v=2">
   <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
   <script defer src="/assets/materials-search.js?v=3"></script>
   <script defer src="/assets/analytics.js"></script>
@@ -30,10 +30,17 @@
         <li><strong>固定費 · 出店料</strong>売れなくても3,000円</li>
         <li><strong>変動費 · 材料とカップ代</strong>1杯増えるごとに100円</li>
       </ul>
-      <p class="note">販売数を動かすと、売上と費用の棒の長さが変わります。</p>
-      <figure class="diagram">
-        <figcaption><label for="cups">販売数 <strong id="cup-count">15杯</strong></label></figcaption>
+      <div class="sales-control">
+        <label for="cups">販売数を動かす</label>
+        <strong id="cup-count" aria-hidden="true">15杯</strong>
         <input id="cups" type="range" min="0" max="30" value="15" aria-valuetext="15杯">
+      </div>
+      <output class="profit-summary" id="profit" for="cups" data-state="even" aria-live="polite" aria-atomic="true">
+        <span>利益</span>
+        <strong id="profit-amount">0円</strong>
+        <span id="profit-status" class="profit-status">損益分岐点</span>
+      </output>
+      <figure class="diagram" aria-label="売上と費用の比較">
         <div class="bar-row">
           <span>売上</span>
           <span class="bar-track" aria-hidden="true"><span id="sales-bar" class="sales-bar" style="width:50%"></span></span>
@@ -45,10 +52,9 @@
           <strong id="cost">4,500円</strong>
         </div>
         <div class="legend">
-          <span style="--swatch:#be9bf5">固定費 <strong>3,000円</strong></span>
-          <span style="--swatch:#f8c780">変動費 <strong id="variable-cost">1,500円</strong></span>
+          <span style="--swatch:#be9bf5">固定費</span>
+          <span style="--swatch:#f8c780">変動費</span>
         </div>
-        <p class="callout" id="profit" aria-live="polite">利益 0円 · 売上と費用がぴったり同じ</p>
       </figure>
     </section>
     <section class="panel" aria-labelledby="calculation-title">
@@ -81,7 +87,7 @@
     const fixedCost = 3000;
     const maxRevenue = Number(cups.max) * price;
     const fields = Object.fromEntries(
-      ['cup-count', 'sales-bar', 'variable-bar', 'sales', 'cost', 'variable-cost', 'profit']
+      ['cup-count', 'sales-bar', 'variable-bar', 'sales', 'cost', 'profit', 'profit-amount', 'profit-status']
         .map(id => [id, document.getElementById(id)])
     );
     const yen = amount => amount.toLocaleString('ja-JP') + '円';
@@ -91,15 +97,16 @@
       const materials = count * unitCost;
       const cost = fixedCost + materials;
       const profit = revenue - cost;
-      const status = profit === 0 ? '売上と費用がぴったり同じ' : profit < 0 ? '赤字' : '黒字';
+      const state = profit < 0 ? 'loss' : profit > 0 ? 'gain' : 'even';
       fields['cup-count'].textContent = count + '杯';
       cups.setAttribute('aria-valuetext', count + '杯');
       fields['sales-bar'].style.width = revenue / maxRevenue * 100 + '%';
       fields['variable-bar'].style.width = materials / maxRevenue * 100 + '%';
       fields.sales.textContent = yen(revenue);
       fields.cost.textContent = yen(cost);
-      fields['variable-cost'].textContent = yen(materials);
-      fields.profit.textContent = '利益 ' + yen(profit) + ' · ' + status;
+      fields.profit.dataset.state = state;
+      fields['profit-amount'].textContent = (profit < 0 ? '−' : '') + yen(Math.abs(profit));
+      fields['profit-status'].textContent = { loss: '赤字', gain: '黒字', even: '損益分岐点' }[state];
     }
     cups.addEventListener('input', showEstimate);
     showEstimate();
