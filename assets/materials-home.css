@@ -25,7 +25,13 @@
 .materials-footer nav { justify-content: center; }
 #free-materials { scroll-margin-top: 20px; }
 
-.materials-search { margin-bottom: 20px; }
+.hero { margin: clamp(18px, 4vw, 40px) 0 16px; }
+.hero h1 { font-size: clamp(1.55rem, 5.2vw, 2.65rem); line-height: 1.3; margin: 0 0 6px; }
+.hero h1 em { white-space: nowrap; }
+.hero .lead { margin: 0; }
+
+#free-materials .section-title { font-size: 1.22rem; margin: 18px 0 10px; }
+.materials-search { max-width: 640px; }
 .materials-search label { display: block; margin-bottom: 6px; font-weight: 750; }
 .materials-search-controls { display: flex; gap: 8px; }
 .materials-search input, .materials-search button {
@@ -37,7 +43,40 @@
   background: #142139;
   font: inherit;
 }
-.materials-search input { flex: 1; min-width: 0; }
+.materials-search input {
+  flex: 1;
+  min-width: 0;
+  min-height: 48px;
+  padding-inline-start: 38px;
+  border-color: #7599b9;
+}
+.materials-search-controls { position: relative; }
+.materials-search-controls::before, .materials-search-controls::after {
+  position: absolute;
+  content: "";
+  pointer-events: none;
+}
+.materials-search-controls::before {
+  width: 10px;
+  height: 10px;
+  left: 15px;
+  top: 16px;
+  border: 2px solid #a6ccdf;
+  border-radius: 50%;
+}
+.materials-search-controls::after {
+  width: 6px;
+  height: 2px;
+  left: 25px;
+  top: 29px;
+  background: #a6ccdf;
+  transform: rotate(45deg);
+}
+@media (max-width: 480px) {
+  .materials-header { gap: 4px 16px; padding-bottom: 8px; }
+  .materials-header nav { gap: 3px 12px; }
+  .materials-search input, .materials-search button { font-size: 16px; }
+}
 .materials-search input::placeholder { color: #acbed3; }
 .materials-search button { cursor: pointer; }
 .materials-search :focus-visible { outline: 2px solid #67e8f9; outline-offset: 2px; }
