@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CPU・メモリ・ストレージの違い｜ITパスポート | IT図鑑</title>
+  <meta name="description" content="写真を開く・編集する・保存する流れで、CPU、メモリ（RAM）、ストレージ（SSDなど）の役割を見分けます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/it-passport/cpu-memory-storage/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/it-passport-visuals.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/it-passport-quiz.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="it-passport-cpu-memory-storage">
+    <p class="topic">ITパスポート入門・テクノロジ系</p>
+    <h1>CPU・メモリ・ストレージの違い</h1>
+    <p class="lead">パソコンで写真を開いて明るさを変えます。編集途中の写真と、保存した写真はどこにあるでしょうか。</p>
+    <section class="panel" aria-labelledby="parts-title">
+      <h2 id="parts-title">🖼️ 写真を開く → 編集する → 保存する</h2>
+      <ol class="visual-steps">
+        <li><span class="visual-icon" aria-hidden="true">🗂️</span><div><strong>① 開く</strong>ストレージ → メモリ<br><small>保存された写真を読み込む</small></div></li>
+        <li><span class="visual-icon" aria-hidden="true">⚙️</span><div><strong>② 編集する</strong>CPUがメモリ上の写真データを処理<br><small>明るさを変えるための計算をする</small></div></li>
+        <li><span class="visual-icon" aria-hidden="true">💾</span><div><strong>③ 保存する</strong>メモリ → ストレージ<br><small>編集した内容を書き込む</small></div></li>
+      </ol>
+    </section>
+    <section class="panel" aria-labelledby="restart-title">
+      <h2 id="restart-title">電源を切っても残るのは？</h2>
+      <ul class="cards">
+        <li><span class="visual-icon" aria-hidden="true">📋</span><strong>メモリ（RAM・主記憶）</strong>作業中のデータを置く場所。電源を切ると内容が消える。</li>
+        <li><span class="visual-icon" aria-hidden="true">🗂️</span><strong>ストレージ（SSDなど・補助記憶）</strong>保存したファイルを置く場所。電源を切っても残る。</li>
+      </ul>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="1" data-correct="正解。保存済みの写真はストレージに残り、メモリにだけあった変更は失われます。" data-retry="元の写真と編集中の変更が、それぞれどこに置かれていたかを考えましょう。">
+        <fieldset>
+          <legend>自動保存のないアプリで、明るさを変更したあと、保存する前に電源が切れました。次に開くと何が見えますか？</legend>
+          <label><input type="radio" name="answer" value="1" required>明るさを変える前の、保存してあった写真</label>
+          <label><input type="radio" name="answer" value="2" required>明るさを変えた直後の写真</label>
+          <label><input type="radio" name="answer" value="3" required>元の写真も消えている</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+    <p class="next-lesson"><a href="/materials/categories/#it-passport">ITパスポートの教材一覧へ</a></p>
+  </main>
+  <footer class="wrap"><a href="/materials/">無料教材一覧</a> · <a href="https://www.ipa.go.jp/shiken/syllabus/omgdg50000005kn1-att/syllabus_ip_ver6_5.pdf#page=44">IPAの出題範囲（PDF）</a></footer>
+</body>
+</html>
