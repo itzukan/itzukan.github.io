@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Gitとは何かを、ファイルの保存とコミットの違いを操作しながら学ぶ無料教材です。ブラウザーで練習できます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/git/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/materials.css">
+  <link rel="stylesheet" href="./lesson.css?v=27">
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+  <script defer src="./lesson.js?v=12"></script>
+  <title>はじめてのGit | IT図鑑</title>
+</head>
+<body>
+<main class="wrap git-intro">
+  <nav aria-label="教材ナビゲーション"><a href="/materials/">← 無料教材一覧</a></nav>
+  <header>
+    <h1>はじめてのGit</h1>
+    <p>Gitは、ファイルの変更を履歴に残す道具です。変更を別々に記録しておくと、<strong>うまくいった修正を残して、問題のあった修正だけを取り消せます。</strong></p>
+    <figure class="git-benefit">
+      <figcaption>たとえば、サイトのボタンを直して画面が崩れたら</figcaption>
+      <ol class="git-benefit-flow" role="list">
+        <li>
+          <div class="git-site-example" aria-hidden="true"><span>お店の案内</span><span class="git-visual-icon git-icon-check git-site-status">✓</span><b>営業時間を見る</b></div>
+          <strong>誤字を直す</strong><span>サイトは正常に表示</span>
+        </li>
+        <li class="git-benefit-error">
+          <div class="git-site-example" aria-hidden="true"><span>お店の案内</span><span class="git-visual-icon git-icon-stop git-site-status">!</span><b>営業時間を見る</b></div>
+          <strong>ボタンを変更</strong><span>ボタンが見切れた</span>
+        </li>
+        <li>
+          <div class="git-site-example" aria-hidden="true"><span>お店の案内</span><span class="git-visual-icon git-icon-check git-site-status">✓</span><b>営業時間を見る</b></div>
+          <strong>ボタンの変更を取り消す</strong><span>表示が直り、誤字の修正は残る</span>
+        </li>
+      </ol>
+    </figure>
+  </header>
+
+  <details class="git-contents">
+    <summary>目次（見たい章へ）</summary>
+    <nav aria-label="この教材の目次">
+      <ul>
+        <li><a href="#practice">ファイルの保存とコミットはどう違う？</a></li>
+        <li><a href="#staging">Gitで変更をコミットする</a></li>
+        <li><a href="#branches">ブランチとマージ</a></li>
+        <li><a href="#conflicts">競合（コンフリクト）を解消する</a></li>
+        <li><a href="#trace">コミットした変更を取り消す（<code>git revert</code>）</a></li>
+        <li><a href="#git-and-github">GitとGitHubの違い</a></li>
+        <li><a href="#remote">リモートと変更をやり取りする</a></li>
+        <li><a href="#review">プルリクエストの差分を見る</a></li>
+      </ul>
+    </nav>
+  </details>
+
+  <section class="git-panel" id="practice" aria-labelledby="practice-title">
+    <h2 id="practice-title">ファイルの保存とコミットはどう違う？</h2>
+    <figure class="git-example">
+      <figcaption>保存でファイルが変わり、コミットで履歴が増える</figcaption>
+      <ol class="git-visual-flow" role="list">
+        <li>
+          <strong>変更前</strong>
+          <div class="git-mini-file"><code>shop.txt</code><b>10時開店</b></div>
+          <small class="git-history-label">Gitの履歴</small>
+          <div class="git-commit-chain"><span>10時開店のコミット</span></div>
+        </li>
+        <li>
+          <strong>① ファイルに保存</strong>
+          <div class="git-mini-file"><code>shop.txt</code><b><span class="git-visual-icon git-icon-check" aria-hidden="true">✓</span> 9時開店に更新</b></div>
+          <small class="git-history-label">Gitの履歴</small>
+          <div class="git-commit-chain"><span>10時開店のコミット</span></div>
+          <small class="git-history-note">保存だけでは履歴は変わらない</small>
+        </li>
+        <li>
+          <strong>② コミット（履歴に記録）</strong>
+          <div class="git-mini-file"><code>shop.txt</code><b>9時開店</b></div>
+          <small class="git-history-label">Gitの履歴</small>
+          <div class="git-commit-chain"><span>10時開店のコミット</span><span>9時開店のコミット</span></div>
+          <small class="git-history-note">コミットすると履歴に追記される</small>
+        </li>
+      </ol>
+    </figure>
+    <p>お店の案内文を10時開店から9時開店に直してみましょう。<strong>保存</strong>はファイルを書き替える操作です。<strong>コミット</strong>は、保存した内容をGitの履歴に記録する操作です。</p>
+    <div class="git-demo-grid">
+      <div class="git-demo-card">
+        <h3>作業中のファイル</h3>
+        <p><code>shop.txt</code> <span class="git-demo-marker" id="saved-marker" hidden><span class="git-visual-icon git-icon-check" aria-hidden="true">✓</span> 保存済み</span></p>
+        <pre id="working-file">開店時刻：10:00</pre>
+        <div class="git-demo-actions">
+          <button class="button" type="button" id="edit-file" disabled>① 9時に変更して保存</button>
+          <button class="button" type="button" id="commit-file" disabled>② コミット（履歴に記録）</button>
+        </div>
+        <p id="demo-status" role="status">昨日の案内文はコミット済みです。まず①を押して、今日の案内文を9時開店に変えましょう。</p>
+      </div>
+      <div class="git-demo-card">
+        <h3>Gitのコミット履歴</h3>
+        <p class="git-demo-marker" id="committed-marker" hidden><span class="git-visual-icon git-icon-change" aria-hidden="true">+</span> 9時開店のコミットが追加</p>
+        <ol class="git-timeline" id="history-list">
+          <li><span>最初のコミット</span><button type="button" data-version="10:00" aria-haspopup="dialog" disabled>10時開店のコミットを開く</button></li>
+        </ol>
+      </div>
+    </div>
+    <dialog class="git-history-dialog" id="history-dialog" aria-labelledby="history-dialog-title">
+      <h3 id="history-dialog-title">コミット時点の <code>shop.txt</code></h3>
+      <pre id="history-file"></pre>
+      <form method="dialog">
+        <button type="submit" autofocus>閉じる</button>
+      </form>
+    </dialog>
+    <button type="button" id="reset-demo" disabled>最初に戻す</button>
+    <noscript><p>操作を試すにはJavaScriptを有効にしてください。</p></noscript>
+  </section>
+
+  <section class="git-panel" id="staging" aria-labelledby="commands-title">
+    <h2 id="commands-title">Gitで変更をコミットする</h2>
+    <p>さっき保存した <code>shop.txt</code> の「9時開店」を、コマンドでコミットする例です。コマンドはGitで管理しているフォルダー（リポジトリ）で実行します。</p>
+    <figure class="git-example">
+      <ol class="git-visual-flow" role="list">
+        <li>
+          <strong>① 変更を見る</strong>
+          <code>git status</code>
+          <div class="git-mini-file"><code>shop.txt</code><span>変更あり</span></div>
+          <small class="git-history-note">この例では「9時開店」に変更済み</small>
+        </li>
+        <li>
+          <strong>② ステージに入れる</strong>
+          <code>git add shop.txt</code>
+          <small class="git-history-note">次のコミットに入れる変更を置く場所が<strong>ステージ</strong>です。そこに変更を入れる操作を<strong>ステージング</strong>と呼びます。</small>
+          <div class="git-mini-file"><code>shop.txt</code><span><span class="git-visual-icon git-icon-check" aria-hidden="true">✓</span> ステージに追加済み</span></div>
+        </li>
+        <li>
+          <strong>③ コミットする</strong>
+          <code>git commit -m "開店を9時に変更"</code>
+          <small class="git-history-note"><code>-m</code> の後ろに、変更内容を短いメッセージで書きます。</small>
+          <div class="git-commit-chain"><span>10時開店のコミット</span><span>9時開店のコミット</span></div>
+        </li>
+      </ol>
+    </figure>
+    <details class="git-contents">
+      <summary>補足（ステージに入れる・外す）</summary>
+      <figure class="git-example">
+        <div class="git-demo-grid">
+          <div class="git-demo-card git-stage-card">
+            <strong>ステージに入れる</strong>
+            <div class="git-stage-group">
+              <span>ステージ</span>
+              <div class="git-mini-file"><code>shop.txt</code></div>
+            </div>
+            <div class="git-stage-move"><span aria-hidden="true">↑</span><code>git add shop.txt</code></div>
+            <div class="git-stage-group"><span>Changes（変更）</span><small>一覧は空</small></div>
+          </div>
+          <div class="git-demo-card git-stage-card">
+            <strong>ステージから外す</strong>
+            <div class="git-stage-group"><span>ステージ</span><small>一覧は空</small></div>
+            <div class="git-stage-move"><span aria-hidden="true">↓</span><code>git restore --staged shop.txt</code></div>
+            <div class="git-stage-group">
+              <span>Changes（変更）</span>
+              <div class="git-mini-file"><code>shop.txt</code></div>
+            </div>
+          </div>
+        </div>
+        <p class="git-figure-note">ステージから外すと、<strong>次のコミットには含まれません</strong>。</p>
+        <small class="git-history-note">※ ファイルの編集内容は消えません。</small>
+      </figure>
+      <p><code>git diff</code> でステージに入っていない変更、<code>git diff --staged</code> で入っている変更を確認できます。</p>
+      <p><code>git add</code> で入るのは、その時点の内容です。あとから追記した分もコミットするなら、もう一度 <code>git add</code> します。</p>
+    </details>
+  </section>
+
+  <section class="git-panel" id="branches" aria-labelledby="branches-title">
+    <h2 id="branches-title">ブランチとマージ</h2>
+    <p><strong>ブランチ</strong>は、別々に変更をコミットできる履歴の枝です。公開用の <code>main</code> から作業ブランチを作り、開店時刻を9時に変更します。確認が済んだら <code>main</code> に取り込みます。この取り込みを<strong>マージ</strong>と呼びます。</p>
+    <figure class="git-example">
+      <figcaption>10時開店のコミットから枝分かれし、9時開店のコミットを取り込む</figcaption>
+      <div class="git-branch-diagram" id="branch-diagram" data-stage="commit" aria-hidden="true">
+        <div class="git-branch-lines"></div>
+        <span class="git-branch-main-path">main は10時のまま</span>
+        <span class="git-branch-dot git-branch-dot-base"></span>
+        <span class="git-branch-dot git-branch-dot-work"></span>
+        <div class="git-branch-record git-branch-record-base">
+          <code class="git-branch-ref git-branch-ref-main">main</code>
+          <code class="git-branch-ref git-branch-ref-start">feature</code>
+          <strong>10時開店</strong>
+          <span class="git-branch-base-note">枝分かれの起点</span>
+          <span class="git-branch-created"><span class="git-visual-icon git-icon-change" aria-hidden="true">+</span> 作業ブランチを作成</span>
+        </div>
+        <div class="git-branch-record git-branch-record-work">
+          <code class="git-branch-ref git-branch-ref-main">main</code>
+          <code class="git-branch-ref git-branch-ref-feature">feature</code>
+          <strong>9時開店</strong>
+          <span class="git-branch-committed"><span class="git-visual-icon git-icon-change" aria-hidden="true">+</span> コミットを追加</span>
+          <span class="git-branch-merged"><span class="git-visual-icon git-icon-check" aria-hidden="true">✓</span> マージ完了</span>
+        </div>
+      </div>
+      <p class="git-branch-key">丸は1回分のコミット、線は履歴のつながりです。</p>
+      <div class="git-chapter-nav" id="branch-actions" aria-label="ブランチの流れ">
+        <button type="button" data-branch-step="start" aria-pressed="false" disabled>① 作業ブランチを作る</button>
+        <button type="button" data-branch-step="commit" aria-pressed="true" disabled>② 作業ブランチにコミット</button>
+        <button type="button" data-branch-step="merge" aria-pressed="false" disabled>③ mainにマージ</button>
+      </div>
+      <p id="branch-message" role="status" aria-atomic="true">作業ブランチは9時開店。main は10時開店のままです。</p>
+    </figure>
+    <p>図の <code>feature</code> は <code>feature/opening-hours</code> の略です。</p>
+    <ol class="git-steps">
+      <li><code>git switch -c feature/opening-hours</code> で作業ブランチを作って移動します。<code>git status</code> で今いるブランチを確認できます。</li>
+      <li>案内文を修正し、<code>git add shop.txt</code> と <code>git commit -m "開店時刻を9時に変更する"</code> で作業ブランチにコミットします。</li>
+      <li>確認が済んだら <code>git switch main</code> で取り込み先に移動し、<code>git merge feature/opening-hours</code> で取り込みます。<code>main</code> に別の変更がなければ、作業ブランチと同じコミットまで進みます。</li>
+    </ol>
+  </section>
+
+  <section class="git-panel" id="conflicts" aria-labelledby="conflicts-title">
+    <h2 id="conflicts-title">競合（コンフリクト）を解消する</h2>
+    <p>同じ行を別々に修正すると、Gitがどちらを残すか決められず、マージが止まることがあります。これが<strong>競合</strong>です。依頼や仕様を確認し、<strong>採用する修正を残して</strong>からマージを続けます。</p>
+    <figure class="git-example">
+      <figcaption><code>shop.txt</code> の同じ1行を、2つのブランチで修正</figcaption>
+      <div class="git-fork-graph git-conflict-graph">
+        <div class="git-conflict-record"><span>元の1行</span><strong>10:00〜19:00</strong></div>
+        <div class="git-fork-paths" aria-hidden="true"></div>
+        <div class="git-fork-endpoints">
+          <div class="git-conflict-record"><span><code>main</code> · 開始を変更</span><strong><mark class="git-pick-main">09:00</mark>〜19:00</strong></div>
+          <div class="git-conflict-record"><span><code>feature</code> · 終了を変更</span><strong>10:00〜<mark class="git-pick-feature">20:00</mark></strong></div>
+        </div>
+        <div class="git-fork-paths git-join-paths" aria-hidden="true"></div>
+        <div class="git-conflict-stop"><span class="git-visual-icon git-icon-stop" aria-hidden="true">!</span> 同じ行で競合。Gitが停止</div>
+        <div class="git-down-arrow" aria-hidden="true"></div>
+        <div class="git-conflict-record git-conflict-resolved"><span>採用する修正を1行にまとめる</span><strong><mark class="git-pick-main">09:00</mark>〜<mark class="git-pick-feature">20:00</mark></strong><small>開始は <code>main</code>、終了は <code>feature</code></small></div>
+        <p class="git-figure-note git-conflict-finish">保存 → <code>git add shop.txt</code> → <code>git commit</code> <span class="git-result-badge">マージ完了</span></p>
+      </div>
+    </figure>
+    <figure class="git-example" id="conflict-before-after">
+      <figcaption><code>shop.txt</code> の競合ブロックを1行に置き換える</figcaption>
+      <div class="git-demo-grid">
+        <div class="git-code-window git-conflict-replace"><strong>変更前 · この5行を置き換える</strong><pre><code><span class="git-conflict-source git-conflict-source-main" data-branch-label="main（取り込み先）">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</span>
+営業時間：<mark class="git-pick-main">09:00</mark>〜19:00
+<span class="git-conflict-source git-conflict-source-work" data-branch-label="作業ブランチ（取り込む側）">=======</span>
+営業時間：10:00〜<mark class="git-pick-feature">20:00</mark>
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature/closing-time</code></pre></div>
+        <div class="git-code-window git-conflict-keep"><strong>変更後 · この1行を残す</strong><pre><code>営業時間：<mark class="git-pick-main">09:00</mark>〜<mark class="git-pick-feature">20:00</mark></code></pre></div>
+      </div>
+      <p class="git-figure-note">上の <code>main</code> から開始の <strong>09:00</strong>、下の作業ブランチから終了の <strong>20:00</strong> を採用します。枠内の競合マーカー3行と、候補の2行をまとめて置き換えます。</p>
+    </figure>
+    <h3>競合の解消手順</h3>
+    <ol class="git-steps">
+      <li><strong>何を残すか決める。</strong> この例の依頼は「開始を9時に、終了を20時にする」です。<code>main</code> の開始時刻と、取り込み側の終了時刻を残します。判断に迷ったら、依頼者に正しい内容を確認します。</li>
+      <li><strong>採用する内容に置き換えて保存する。</strong> <code>shop.txt</code> を開き、<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> から <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> までを、印や採用しない行も含めて <code>営業時間：09:00〜20:00</code> の1行に置き換えます。</li>
+      <li><strong>Gitに解消したことを伝える。</strong> <code>git add shop.txt</code> で修正した内容をステージに入れ、<code>git commit -m "営業時間を9時から20時に統一する"</code> でマージを完了します。</li>
+    </ol>
+  </section>
+
+  <section class="git-panel" id="trace" aria-labelledby="trace-title">
+    <h2 id="trace-title">コミットした変更を取り消す（<code>git revert</code>）</h2>
+    <figure class="git-example">
+      <figcaption>予約枠を20組に戻す。写真の追加は残す。</figcaption>
+      <ol class="git-visual-flow git-trace-flow" role="list">
+        <li>
+          <strong>① 履歴からコミットIDを探す</strong>
+          <code>git log --oneline</code>
+          <div class="git-code-window"><strong>実行結果（新しい順）</strong><pre><code><mark class="git-trace-id">b26ef13</mark> 予約設定を更新
+a33db81 写真を追加</code></pre></div>
+        </li>
+        <li>
+          <strong>② ①で見つけたコミットIDで差分を確認</strong>
+          <code>git show <mark class="git-trace-id">b26ef13</mark></code>
+          <div class="git-code-window"><strong><code>booking.txt</code></strong><pre><code>-予約枠：20組
+<span class="git-trace-cause">+予約枠：2組</span></code></pre></div>
+          <small class="git-history-note"><code>-</code> の行は変更前、<code>+</code> の行は変更後です。</small>
+        </li>
+        <li>
+          <strong>③ <code>git revert</code> で変更を取り消す</strong>
+          <small class="git-history-note">①で見つけたコミットIDを使う</small>
+          <code>git revert --no-edit <mark class="git-trace-id">b26ef13</mark></code>
+          <small class="git-history-note"><code>--no-edit</code> で、Gitが用意したコミットメッセージをそのまま使います。</small>
+          <small class="git-history-note">取り消し後の履歴（古い順）</small>
+          <div class="git-commit-chain git-commit-chain-vertical">
+            <span>写真を追加 <code>a33db81</code></span>
+            <span>予約設定を更新 <code>b26ef13</code></span>
+            <span><small><span class="git-visual-icon git-icon-change" aria-hidden="true">+</span> 取り消し用のコミットが自動で追加される</small>予約枠を20組に戻す</span>
+          </div>
+        </li>
+      </ol>
+    </figure>
+    <p><code>git log --oneline</code> で調べたいコミットIDを探します。<code>git show</code> の後ろに、見つけたコミットIDを入れると、変更前と変更後を確認できます。</p>
+    <p>原因が分かったら <code>git revert --no-edit b26ef13</code> を実行します。競合がなければ、<code>git revert</code> が予約枠を20組に戻すコミットを自動で追加します。店舗写真と元のコミットは残ります。</p>
+  </section>
+
+  <section class="git-panel" id="git-and-github" aria-labelledby="github-title">
+    <h2 id="github-title">GitとGitHubの違い</h2>
+    <p><strong>Git</strong>は変更を履歴に残す道具です。<strong>GitHub</strong>は、Gitで管理するプロジェクトをオンラインで共有し、チームで確認できるサービスです。</p>
+    <figure class="git-example">
+      <figcaption>ローカル（自分のPC）で記録し、リモート（GitHubなどの共有先）でチームに見せる</figcaption>
+      <ol class="git-visual-flow git-visual-flow-two" role="list">
+        <li><span class="git-visual-icon git-icon-pc" aria-hidden="true"></span><strong>ローカル · Git</strong><div class="git-commit-chain"><span>変更をコミット</span><span>履歴を確認</span></div><span>オフラインでも使える</span></li>
+        <li><span class="git-visual-icon git-icon-server" aria-hidden="true"></span><strong>リモートの例 · GitHubリポジトリ</strong><div class="git-mini-file"><strong><span class="git-visual-icon git-icon-check" aria-hidden="true">✓</span> 作業ブランチが届く</strong><span>チームが変更をレビュー</span></div></li>
+      </ol>
+    </figure>
+  </section>
+
+  <section class="git-panel" id="remote" aria-labelledby="remote-title">
+    <h2 id="remote-title">リモートと変更をやり取りする</h2>
+    <h3 id="remote-receive-title">リモートから変更を受け取る（<code>fetch</code>・<code>pull</code>）</h3>
+    <figure class="git-example">
+      <figcaption>リモートで開店が9時に。<code>fetch</code> と <code>pull</code> でどこまで変わる？</figcaption>
+      <div class="git-transfer">
+        <div class="git-transfer-node git-transfer-remote">
+          <strong>リモート</strong>
+          <span>名前は <code>origin</code></span>
+          <span>9時開店のコミット</span>
+        </div>
+        <div class="git-transfer-local">
+          <strong class="git-transfer-local-title">ローカル（自分のPC）</strong>
+          <div class="git-transfer-node"><strong>最後に取得した時点の<br>リモートの <code>main</code></strong><code>origin/main</code></div>
+          <div class="git-transfer-node"><strong>ローカルの</strong><code>main</code></div>
+        </div>
+        <div class="git-transfer-lane git-transfer-fetch">
+          <code>git fetch origin</code>
+          <small class="git-history-note">リモートの変更を取得します。その時点でリモートの <code>main</code> がどのコミットを指しているかを、自分のPCの <code>origin/main</code> に記録します。ローカルの <code>main</code> はそのままです。</small>
+          <span class="git-transfer-line" aria-hidden="true"></span>
+          <div class="git-transfer-results">
+            <div><code>origin/main</code><strong>9時開店に更新</strong></div>
+            <div class="git-transfer-unchanged"><code>main</code><strong>10時開店のまま</strong></div>
+          </div>
+        </div>
+        <div class="git-transfer-lane git-transfer-pull">
+          <code>git pull</code>
+          <span class="git-transfer-line" aria-hidden="true"></span>
+          <div class="git-transfer-results">
+            <div><code>origin/main</code><strong>9時開店に更新</strong></div>
+            <div><code>main</code><strong>9時開店に更新</strong></div>
+          </div>
+        </div>
+      </div>
+      <p class="git-figure-note"><code>git pull</code> は取得もするので、先に <code>git fetch</code> を実行する必要はありません。</p>
+    </figure>
+    <ul>
+      <li><strong>内容を確認するだけ</strong>なら <code>git fetch origin</code> で取得し、<code>git log --oneline HEAD..origin/main</code> でリモートにだけあるコミット、<code>git show コミットID</code> で差分を確認します。<code>HEAD</code> は今見ているコミットです。</li>
+      <li><strong>変更を取り込む</strong>ときは、ローカルの <code>main</code> で <code>git status</code> を確認します。リモートだけが先に進んでいれば、<code>git pull</code> でローカルも同じ地点まで進められます。この例ではローカルの <code>main</code> が <code>origin/main</code> を追跡する設定になっています。</li>
+    </ul>
+    <details class="git-contents">
+      <summary>補足（ローカルとリモートの両方に変更があるとき）</summary>
+      <figure class="git-example">
+        <figcaption>同じコミットから、ローカルとリモートが別々に進んだ例</figcaption>
+        <div class="git-fork-graph">
+          <div class="git-mini-file"><strong>共通のコミット</strong><span>10時開店</span></div>
+          <div class="git-fork-paths" aria-hidden="true"></div>
+          <div class="git-fork-endpoints">
+            <div class="git-mini-file"><strong>ローカルだけのコミット</strong><span>定休日を月曜に変更</span></div>
+            <div class="git-mini-file"><strong>リモートだけのコミット</strong><span>9時開店に変更</span></div>
+          </div>
+        </div>
+        <p class="git-figure-note"><span class="git-visual-icon git-icon-stop" aria-hidden="true">!</span> <code>git pull --ff-only</code> は、履歴が分かれていると取り込みを止めます。両方の変更を残して、取り込み方を相談します。</p>
+      </figure>
+      <p><code>git log --oneline origin/main..HEAD</code> で、ローカルにだけあるコミットを確認できます。</p>
+    </details>
+    <h3 id="remote-push-title">リモートに作業ブランチを送る（<code>push</code>）</h3>
+    <figure class="git-example">
+      <figcaption>マージ前に作業ブランチだけ送ると、リモートの main はそのまま</figcaption>
+      <ol class="git-visual-flow git-visual-flow-two" role="list">
+        <li><span class="git-visual-icon git-icon-pc" aria-hidden="true"></span><strong>ローカルから送る</strong><code>git push -u origin feature/opening-hours</code></li>
+        <li><span class="git-visual-icon git-icon-server" aria-hidden="true"></span><strong>リモートに届く</strong><div class="git-mini-file"><code>feature/opening-hours</code><span><span class="git-visual-icon git-icon-change" aria-hidden="true">+</span> 9時開店のコミット</span></div><span><span class="git-visual-icon git-icon-same" aria-hidden="true">=</span> <code>main</code> は10時のまま</span></li>
+      </ol>
+    </figure>
+    <p>送る前に <code>git status</code> と <code>git log --oneline</code> でブランチとコミットを確認します。図の <code>git push -u</code> でリモートに同名の作業ブランチを作り、ローカルの作業ブランチと対応づけます。</p>
+  </section>
+
+  <section class="git-panel" id="review" aria-labelledby="review-title">
+    <h2 id="review-title">プルリクエストの差分を見る</h2>
+    <p><strong>プルリクエスト（PR）</strong>は、変更を取り込む前にチームに確認を頼む仕組みです。</p>
+    <figure class="git-example">
+      <figcaption>PRレビューは、依頼と変更されたファイルを見比べる</figcaption>
+      <ol class="git-visual-flow git-review-flow" role="list">
+        <li><strong>① 依頼を読む</strong><div class="git-code-window"><strong>プルリクエスト</strong><div class="git-window-content"><b>営業時間の案内を更新する</b><span><code>feature/opening-hours</code> から <code>main</code> へ</span></div></div></li>
+        <li>
+          <strong>② ファイルの差分を見る</strong>
+          <div class="git-review-files">
+            <div class="git-code-window git-review-diff"><strong><code>shop.txt</code><span class="git-review-marker" hidden>依頼どおり</span></strong><code class="git-diff-minus">− 開店 10:00</code><code class="git-diff-plus">＋ 開店 09:00</code></div>
+            <div class="git-code-window git-review-diff"><strong><code>menu.txt</code><span class="git-review-marker" hidden><span class="git-visual-icon git-icon-stop" aria-hidden="true">!</span> 依頼の範囲外</span></strong><code class="git-diff-minus">− コーヒー 400円</code><code class="git-diff-plus">＋ コーヒー 450円</code></div>
+          </div>
+        </li>
+        <li>
+          <form id="review-quiz">
+            <fieldset disabled>
+              <legend><strong>③ どうレビューする？</strong></legend>
+              <label><input type="radio" name="decision" value="approve" required> このまま承認する</label>
+              <label><input type="radio" name="decision" value="shop"> <code>shop.txt</code> に修正を依頼</label>
+              <label><input type="radio" name="decision" value="menu"> <code>menu.txt</code> に修正を依頼</label>
+              <button type="submit">判断を確かめる</button>
+            </fieldset>
+            <output id="review-feedback" role="status"></output>
+            <div class="git-code-window" id="review-answer" hidden><strong>コメントの例</strong><div class="git-window-content"><span><code>menu.txt</code> の価格変更は別のPRに分けてください。</span></div></div>
+          </form>
+          <noscript><p>自分の判断を確かめるにはJavaScriptを有効にしてください。</p></noscript>
+        </li>
+      </ol>
+    </figure>
+    <p>作業ブランチで <code>git diff main...HEAD</code> を実行すると、<code>main</code> との共通地点から作業ブランチで追加した変更を見られます。</p>
+    <p>いまの依頼と関係のない変更が混じっていたら、ファイル名と修正してほしい内容を伝えます。</p>
+    <figure class="git-example" id="javascript-diff">
+      <figcaption>別のPR例（商品一覧の表示を変える）</figcaption>
+      <p>依頼は「商品一覧に500円未満の商品だけを表示する」です。350円と500円の商品が1つずつあるとき、2つのファイルの差分を見て、どちらが依頼に必要かを確認します。</p>
+      <div class="git-demo-grid">
+        <div class="git-demo-card">
+          <strong>依頼に必要な変更</strong>
+          <div class="git-code-window git-review-diff"><strong><code>products.js</code></strong><code class="git-diff-minus">− const visibleItems = items;</code><code class="git-diff-plus">＋ const visibleItems = items.filter(item =&gt; item.price &lt; 500);</code></div>
+          <p class="git-figure-note"><code>price &lt; 500</code> は「価格が500円より小さい」という条件です。</p>
+          <div class="git-mini-file"><span>350円の商品</span><strong><span class="git-visual-icon git-icon-check" aria-hidden="true">✓</span> 一覧に表示される</strong></div>
+          <div class="git-mini-file"><span>500円の商品</span><strong><span class="git-visual-icon git-icon-remove" aria-hidden="true">−</span> 一覧から外れる</strong></div>
+        </div>
+        <div class="git-demo-card">
+          <strong>依頼の範囲外</strong>
+          <div class="git-code-window git-review-diff"><strong><code>cart.js</code></strong><code class="git-diff-plus">＋ console.log("商品数", items.length);</code></div>
+          <div class="git-code-window"><strong>開発者向けのコンソール</strong><pre><code>商品数 2</code></pre></div>
+          <p class="git-figure-note"><code>console.log</code> は開発者向けの画面に商品数を出します。商品一覧の表示はそのままです。</p>
+        </div>
+      </div>
+      <p class="git-figure-note"><strong>レビューコメントの例</strong>　<code>cart.js</code> の動作確認用ログは、このPRから外してください。</p>
+    </figure>
+  </section>
+
+  <section class="git-panel" aria-labelledby="next-title">
+    <h2 id="next-title">ブラウザーでGitのコマンドを試す</h2>
+    <figure class="git-example">
+      <figcaption>演習で見る場所</figcaption>
+      <ol class="git-visual-flow" role="list">
+        <li><strong>① 依頼とファイルを見る</strong><div class="git-mini-file"><span>今回のコミットに含める変更は？</span></div></li>
+        <li><strong>② コマンドを入力する</strong><div class="git-code-window"><strong>コマンドを入力</strong><pre><code>git status</code></pre></div></li>
+        <li><strong>③ 実行結果を確かめる</strong><div class="git-code-window"><strong>実行結果</strong><div class="git-window-content"><span><span class="git-visual-icon git-icon-check" aria-hidden="true">✓</span> 確認する場所は「作業中」と「ステージ」</span></div></div></li>
+      </ol>
+    </figure>
+    <p>仕事の依頼を読み、指定されたファイルだけをコミットする2問に挑戦できます。Gitのインストールや登録は不要です。</p>
+    <a class="button" href="/materials/git/trial/" data-analytics-event="material_click" data-material-id="git-trial" data-click-location="git_intro_end">無料で2問試す →</a>
+  </section>
+  <footer><a href="/materials/">無料教材一覧に戻る</a></footer>
+</main>
+</body>
+</html>

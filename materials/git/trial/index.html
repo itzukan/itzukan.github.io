@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Git実務トレーニング 無料体験｜IT図鑑</title>
+  <link rel='stylesheet' href='./style.css?v=2'>
+  <link rel='canonical' href='https://free.itzukan.com/materials/git/trial/'>
+  <script defer src='/assets/analytics.js'></script>
+  <script defer src='/assets/material-feedback.js'></script>
+  <script defer src="./trial-missions.js?v=3"></script>
+  <script defer src="./app.js?v=4"></script>
+</head>
+<body>
+  <header><div class="wrap header"><strong>IT図鑑</strong><span>Git実務トレーニング</span></div></header>
+  <main class="wrap">
+    <nav aria-label='教材ナビゲーション'><a href='/materials/git/' style='color:#f1cf83'>← はじめてのGit</a></nav>
+    <h1>Git実務トレーニング 無料2問</h1>
+    <p class="lead">仕事の依頼を読んで、変更の確認やコミットなど、Gitを使った作業を練習します。画面内の練習環境で完結します。</p>
+    <div class="layout">
+      <nav aria-label="問題を選ぶ">
+        <div id="missions"></div>
+        <p id="progress" class="muted">進捗 0 / 2問</p>
+      </nav>
+      <article aria-labelledby="mission-title" class="card">
+        <h2 id="mission-title" tabindex="-1"></h2>
+        <p id="request"></p>
+        <p id="initial-files" class="muted"></p>
+        <div class="two-columns">
+          <section class="workspace" aria-labelledby="workspace-title">
+            <h3 id="workspace-title">ファイルの状態</h3>
+            <p id="branch" class="muted"></p>
+            <div id="workspace"></div>
+          </section>
+          <section aria-labelledby="commands-title">
+            <h3 id="commands-title">使えるコマンド</h3>
+            <dl>
+              <dt><code>git status</code></dt><dd>変更の状態を確認する</dd>
+              <dt><code>git diff</code> / <code>git diff --staged</code></dt><dd>ステージに入っていない差分 / 入っている差分を見る</dd>
+              <dt><code>git add ファイル名</code></dt><dd>今の内容をステージに入れる</dd>
+              <dt><code>git commit -m "メッセージ"</code></dt><dd>ステージに入れた内容を、何を変えたか伝わる一文と一緒に履歴に残す</dd>
+            </dl>
+          </section>
+        </div>
+        <form id="terminal">
+          <label for="command">コマンドを入力</label>
+          <div class="input-row"><input id="command" autocomplete="off" spellcheck="false" placeholder="git status" disabled><button id="run-command" disabled>実行</button></div>
+        </form>
+        <h3 id="output-title">実行結果</h3>
+        <pre id="output" aria-labelledby="output-title" aria-live="polite">練習環境を読み込んでいます。</pre>
+        <noscript><p>演習を実行するには、ブラウザーのJavaScriptを有効にしてください。</p></noscript>
+        <p id="feedback" role="status"></p>
+        <div class="actions">
+          <button type="button" id="reset" class="secondary">この問題をやり直す</button>
+          <button type="button" id="next" hidden>次の問題へ →</button>
+        </div>
+        <details>
+          <summary>ヒントを見る</summary>
+          <p id="hint"></p>
+          <p id="commit-example-row" class="commit-example"><strong>コミットメッセージの例</strong><code id="commit-example"></code></p>
+        </details>
+        <details id="solution" hidden><summary>解説を見る</summary><p id="explanation"></p></details>
+      </article>
+    </div>
+  </main>
+</body>
+</html>
