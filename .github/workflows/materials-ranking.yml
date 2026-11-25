@@ -1,0 +1,47 @@
+name: Update free materials ranking
+
+on:
+  schedule:
+    - cron: '23 1 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: materials-ranking
+  cancel-in-progress: false
+
+jobs:
+  update:
+    if: github.repository == 'itzukan/itzukan.github.io' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Get a short-lived GA4 read token
+        id: google-auth
+        uses: google-github-actions/auth@v3
+        with:
+          workload_identity_provider: projects/1045420194338/locations/global/workloadIdentityPools/github-ranking/providers/github-actions
+          service_account: ga4-ranking-reader@itzukan-materials-ranking.iam.gserviceaccount.com
+          token_format: access_token
+          access_token_scopes: https://www.googleapis.com/auth/analytics.readonly
+          create_credentials_file: false
+      - name: Read GA4 and generate JSON
+        env:
+          GA4_PROPERTY_ID: '564377995'
+          GA4_ACCESS_TOKEN: ${{ steps.google-auth.outputs.access_token }}
+        run: python3 scripts/update-materials-ranking.py "$RUNNER_TEMP/materials-ranking.json"
+      - name: Publish only the ranking JSON
+        run: |
+          if git ls-remote --exit-code --heads origin ranking-data > /dev/null; then
+            git fetch origin refs/heads/ranking-data
+            git switch --detach FETCH_HEAD
+          else
+            test "$?" -eq 2
+            git switch --orphan ranking-data
+          fi
+          cp "$RUNNER_TEMP/materials-ranking.json" materials-ranking.json
+          git add -- materials-ranking.json
+          git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' commit -m 'Update free materials ranking'
+          git push origin HEAD:refs/heads/ranking-data
