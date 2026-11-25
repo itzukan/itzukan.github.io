@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>データベースの正規化とは？｜ITパスポート | IT図鑑</title>
+  <meta name="description" content="データベースの正規化はなぜ必要？ 注文表と商品表を使って、重複や更新漏れを減らす仕組みを図解と確認問題で学びます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/it-passport/normalization/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+  <style>
+    :root { color-scheme: dark; background: #0b1120; color: #eef5ff; font: 1rem/1.7 system-ui, sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .wrap { width: min(860px, calc(100% - 32px)); margin-inline: auto; }
+    header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px 20px; padding: 16px 0; border-bottom: 1px solid #31465d; }
+    a { color: #8beaf6; text-underline-offset: .2em; }
+    header > a { font-weight: 800; }
+    main { padding-block: 24px 48px; }
+    h1, h2, p { margin: 0; }
+    h1 { font-size: clamp(1.65rem, 5vw, 2.5rem); line-height: 1.28; margin: 6px 0 12px; }
+    h2 { font-size: 1.25rem; line-height: 1.4; }
+    .topic { color: #8beaf6; font-weight: 750; font-size: .9rem; }
+    .lead, figcaption, footer { color: #c1d0e4; }
+    .panel { margin-top: 20px; padding: clamp(12px, 3vw, 22px); border: 1px solid #344a66; background: #132036; border-radius: 14px; }
+    .panel > p { margin-top: 8px; }
+    figure { margin: 14px 0 0; }
+    figcaption { margin-top: 10px; font-size: .94rem; }
+    .split-tables { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; }
+    .table-card { border: 1px solid #3a5573; border-radius: 10px; overflow: hidden; background: #101a2e; }
+    table { width: 100%; border-collapse: collapse; font-size: .94rem; }
+    caption { text-align: start; padding: 5px 8px; background: #20354e; font-weight: 800; }
+    th, td { padding: 5px 8px; border-top: 1px solid #31465d; text-align: start; white-space: nowrap; }
+    th { color: #c9d9ec; font-size: .82rem; }
+    .updated { background: #174457; color: #d5f9ff; font-weight: 750; }
+    .stale { background: #532e33; color: #ffd1c9; font-weight: 750; }
+    .join { display: grid; justify-items: center; gap: 4px; color: #8beaf6; font-size: .84rem; font-weight: 750; }
+    .join .arrow { font-size: 1.5rem; line-height: 1; }
+    .join .down { display: none; }
+    fieldset { border: 0; margin: 10px 0 0; padding: 0; min-inline-size: 0; }
+    legend { padding: 0; font-weight: 750; }
+    label { display: flex; gap: 8px; align-items: center; min-height: 44px; padding: 6px 10px; margin-top: 7px; border: 1px solid #4b6382; border-radius: 8px; cursor: pointer; }
+    label:has(input:checked) { border-color: #8beaf6; background: #174457; }
+    input { accent-color: #8beaf6; }
+    .check { margin-top: 12px; padding: 8px 14px; min-height: 44px; border: 0; border-radius: 8px; background: #8beaf6; color: #0b1120; font: inherit; font-weight: 800; cursor: pointer; }
+    .result:not(:empty) { margin-top: 8px; padding: 8px 10px; border-inline-start: 3px solid #8beaf6; background: #101a2e; }
+    :focus-visible { outline: 2px solid #fbd38d; outline-offset: 3px; }
+    footer { border-top: 1px solid #31465d; padding: 14px 0 24px; font-size: .9rem; }
+    @media (max-width: 580px) {
+      .split-tables { grid-template-columns: 1fr; gap: 6px; }
+      .join { display: flex; justify-content: center; align-items: center; }
+      .join .right { display: none; }
+      .join .down { display: inline; }
+    }
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="it-passport-normalization">
+    <p class="topic">ITパスポートのデータベース入門</p>
+    <h1>データベースの正規化とは？</h1>
+    <p class="lead">お店の商品名を「りんご」から「赤りんご」に変更します。同じ商品名を注文ごとに記録していると、どこを直せばいいでしょう？</p>
+
+    <section class="panel" aria-labelledby="before">
+      <h2 id="before">変更前の設計では、直し忘れが起きる</h2>
+      <figure>
+        <div class="table-card">
+          <table>
+            <caption>🧾 注文表に商品名も入れる</caption>
+            <thead><tr><th scope="col">注文ID</th><th scope="col">商品ID</th><th scope="col">商品名</th></tr></thead>
+            <tbody>
+              <tr><td>501</td><td>101</td><td class="updated">赤りんご ✓</td></tr>
+              <tr><td>502</td><td>102</td><td>みかん</td></tr>
+              <tr><td>503</td><td>101</td><td class="stale">りんご ⚠</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <figcaption>501だけ変更すると、同じ商品ID 101なのに、注文によって名前が違って見えます。</figcaption>
+      </figure>
+    </section>
+
+    <section class="panel" aria-labelledby="after">
+      <h2 id="after">表を分けると、商品名の変更は1か所</h2>
+      <figure>
+        <div class="split-tables">
+          <div class="table-card">
+            <table>
+              <caption>🧾 注文表</caption>
+              <thead><tr><th scope="col">注文ID</th><th scope="col">商品ID</th></tr></thead>
+              <tbody><tr><td>501</td><td class="updated">101</td></tr><tr><td>502</td><td>102</td></tr><tr><td>503</td><td class="updated">101</td></tr></tbody>
+            </table>
+          </div>
+          <div class="join"><span>商品IDで参照</span><span class="arrow right" aria-hidden="true">→</span><span class="arrow down" aria-hidden="true">↓</span></div>
+          <div class="table-card">
+            <table>
+              <caption>🍎 商品表</caption>
+              <thead><tr><th scope="col">商品ID</th><th scope="col">商品名</th></tr></thead>
+              <tbody><tr><td class="updated">101</td><td class="updated">赤りんご ✓</td></tr><tr><td>102</td><td>みかん</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+        <figcaption>501と503は、どちらも商品表の101を参照します。101の商品名を1か所変えると、両方の注文から新しい名前を参照できます。</figcaption>
+      </figure>
+      <p><strong>正規化</strong>とは、データの関係を整理して表を分け、同じ情報の重複や更新時の食い違いを減らすことです。この例では、注文に関する情報は注文表に、商品名は商品表に置き、<a href="/materials/it-passport/primary-foreign-key/">主キーと外部キー</a>でつなぎます。</p>
+    </section>
+
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form id="quiz">
+        <fieldset>
+          <legend>表を分けた後、「みかん」の名前を「温州みかん」に変更する場所はどこですか？</legend>
+          <label><input type="radio" name="answer" value="order" required> 注文表の注文ID 502の行</label>
+          <label><input type="radio" name="answer" value="product"> 商品表の商品ID 102の行</label>
+          <label><input type="radio" name="answer" value="both"> 注文表と商品表の両方</label>
+        </fieldset>
+        <button class="check" type="submit">答え合わせ</button>
+        <p class="result" id="result" role="status"></p>
+      </form>
+      <noscript><details><summary>答えを見る</summary><p>商品表の商品ID 102の行で商品名を変更します。注文表は商品IDを使って参照します。</p></details></noscript>
+    </section>
+  </main>
+  <footer class="wrap">
+    <a href="/materials/">無料教材一覧</a>
+    <p>出題範囲の参考：<a href="https://www.ipa.go.jp/shiken/syllabus/omgdg50000005kn1-att/syllabus_ip_ver6_5.pdf#page=54">IPA「ITパスポート試験」シラバス Ver.6.5（データベース設計）</a></p>
+  </footer>
+  <script>
+    const quiz = document.querySelector('#quiz');
+    const result = document.querySelector('#result');
+    quiz.addEventListener('change', () => { result.textContent = ''; });
+    quiz.addEventListener('submit', event => {
+      event.preventDefault();
+      const answer = new FormData(quiz).get('answer');
+      result.textContent = answer === 'product'
+        ? '正解！ 商品表の102を変更すると、注文502から新しい商品名を参照できます。'
+        : 'もう一度。商品名が入っている列を、正規化後の2つの表から探してみましょう。';
+    });
+  </script>
+</body>
+</html>

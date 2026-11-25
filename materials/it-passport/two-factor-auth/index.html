@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>二段階認証と二要素認証の違い｜ITパスポート | IT図鑑</title>
+  <meta name="description" content="二段階認証と二要素認証の違いをスマホのログイン画面で図解。知識・所持・生体の3種類と、ITパスポート向けの確認問題。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/it-passport/two-factor-auth/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+  <style>
+    :root { color-scheme: dark; background: #0b1120; color: #eef5ff; font: 1rem/1.65 system-ui,sans-serif; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .wrap { width: min(860px, calc(100% - 32px)); margin-inline: auto; }
+    header.wrap { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 20px; padding: 16px 0; border-bottom: 1px solid #31465d; }
+    a { color: #8beaf6; text-underline-offset: .2em; }
+    header.wrap > a { font-weight: 800; }
+    main { padding: 24px 0 36px; }
+    h1, h2, h3, p, ol, ul { margin: 0; }
+    h1 { margin: 6px 0 12px; font-size: clamp(1.65rem, 5vw, 2.5rem); line-height: 1.25; }
+    h2 { font-size: 1.22rem; line-height: 1.4; }
+    h3 { font-size: 1rem; margin-bottom: 8px; }
+    .topic { color: #8beaf6; font-weight: 750; font-size: .9rem; }
+    .lead, .hint, footer { color: #c1d0e4; }
+    .panel { margin-top: 20px; padding: clamp(12px, 3vw, 22px); border: 1px solid #344a66; border-radius: 14px; background: #132036; }
+    .panel > p { margin-top: 9px; }
+    .factors, .compare, .steps { display: grid; gap: 8px; }
+    .factors { grid-template-columns: repeat(3, 1fr); padding: 0; margin-top: 12px; list-style: none; }
+    .factors li { padding: 7px; background: #1d3049; border-radius: 8px; text-align: center; font-size: .82rem; }
+    .factors strong { display: block; color: #b8f6ff; font-size: .94rem; }
+    .compare { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 12px; gap: 12px; }
+    .case { min-width: 0; padding: 12px; border: 1px solid #3c5571; border-radius: 10px; background: #0f192c; }
+    .steps { list-style: none; padding: 0; }
+    .steps li { display: grid; gap: 2px; padding: 7px 9px; border: 1px solid #3c5571; border-radius: 8px; background: #172940; }
+    .kind { width: fit-content; margin-top: 1px; padding: 0 7px; border-radius: 5px; background: #233e60; color: #cde6ff; font-size: .8rem; }
+    .kind.device { background: #1e5048; color: #c5f7e9; }
+    .mock-field { display: block; padding: 2px 8px; border: 1px solid #53749a; border-radius: 5px; background: #0b1527; color: #d5e9ff; font: .88rem/1.5 ui-monospace, monospace; letter-spacing: .15em; }
+    .down { color: #8beaf6; text-align: center; line-height: 1; }
+    .outcome { margin-top: 8px; padding: 7px 9px; border-inline-start: 3px solid #e9b969; color: #ffe3b3; font-size: .9rem; font-weight: 750; }
+    .outcome.two { border-color: #8beaf6; color: #b8f6ff; }
+    fieldset { border: 0; min-inline-size: 0; padding: 0; margin: 10px 0 0; }
+    legend { padding: 0; font-weight: 750; }
+    #quiz label { display: flex; gap: 8px; align-items: center; min-height: 44px; padding: 6px 10px; margin-top: 7px; border: 1px solid #4b6382; border-radius: 8px; cursor: pointer; }
+    #quiz label:has(input:checked) { border-color: #8beaf6; background: #174457; }
+    #quiz input { accent-color: #8beaf6; }
+    .check { margin-top: 12px; padding: 8px 14px; min-height: 44px; border: 0; border-radius: 8px; background: #8beaf6; color: #0b1120; font: inherit; font-weight: 800; cursor: pointer; }
+    #result:not(:empty) { margin-top: 8px; padding: 8px 10px; background: #101a2e; border-inline-start: 3px solid #8beaf6; }
+    :focus-visible { outline: 2px solid #fbd38d; outline-offset: 3px; }
+    footer { border-top: 1px solid #31465d; padding: 14px 0 24px; font-size: .9rem; }
+    @media (max-width: 590px) { .compare { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="it-passport-two-factor">
+    <p class="topic">ITパスポートのセキュリティ入門</p>
+    <h1>二段階認証と二要素認証の違い</h1>
+    <p class="lead">スマホでログインするとき、パスワードのあとにもう一度確認を求められました。追加で何を使うかによって、認証の種類が変わります。</p>
+
+    <section class="panel" aria-labelledby="factors-title">
+      <h2 id="factors-title">本人確認に使う3種類の要素</h2>
+      <ul class="factors">
+        <li><span aria-hidden="true">🧠</span><strong>知識</strong>知っている<br>パスワード</li>
+        <li><span aria-hidden="true">📱</span><strong>所持</strong>持っている<br>登録済みスマホ</li>
+        <li><span aria-hidden="true">👆</span><strong>生体</strong>身体の特徴<br>指紋・顔</li>
+      </ul>
+    </section>
+
+    <section class="panel" aria-labelledby="compare-title">
+      <h2 id="compare-title">手順はどちらも2回。要素の種類は？</h2>
+      <div class="compare">
+        <section class="case" aria-labelledby="case-a">
+          <h3 id="case-a">A　パスワードと暗証番号</h3>
+          <ol class="steps">
+            <li><strong>① パスワードを入力</strong><span class="mock-field" aria-hidden="true">••••••••</span><span class="kind">🧠 知識</span></li>
+            <li><span class="down" aria-hidden="true">↓</span><strong>② 覚えている暗証番号を入力</strong><span class="mock-field" aria-hidden="true">••••</span><span class="kind">🧠 知識</span></li>
+          </ol>
+          <p class="outcome">2段階・1種類 → 二段階認証</p>
+        </section>
+        <section class="case" aria-labelledby="case-b">
+          <h3 id="case-b">B　パスワードと認証アプリ</h3>
+          <ol class="steps">
+            <li><strong>① パスワードを入力</strong><span class="mock-field" aria-hidden="true">••••••••</span><span class="kind">🧠 知識</span></li>
+            <li><span class="down" aria-hidden="true">↓</span><strong>② 登録済みスマホの認証アプリで表示したコードを入力</strong><span class="mock-field" aria-hidden="true">381 624</span><span class="kind device">📱 所持</span></li>
+          </ol>
+          <p class="outcome two">2段階・2種類 → 二段階認証 ＋ 二要素認証</p>
+        </section>
+      </div>
+      <p class="hint"><strong>二段階認証</strong>は本人確認の手順が2回。<strong>二要素認証</strong>は異なる種類の要素を2つ使います。異なる要素を2つ以上使う方法を<strong>多要素認証（MFA）</strong>と呼びます。</p>
+    </section>
+
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form id="quiz">
+        <fieldset>
+          <legend>パスワードを入力したあと、登録済みのセキュリティキーを使いました。どれに当てはまりますか？</legend>
+          <label><input type="radio" name="answer" value="steps" required> 二段階認証だけ</label>
+          <label><input type="radio" name="answer" value="both"> 二段階認証かつ二要素認証</label>
+          <label><input type="radio" name="answer" value="one"> 1種類の要素を使う認証</label>
+        </fieldset>
+        <button class="check" type="submit">答え合わせ</button>
+        <p id="result" role="status"></p>
+      </form>
+      <noscript><details><summary>答えを見る</summary><p>二段階認証かつ二要素認証です。パスワードは知識、セキュリティキーは所持です。</p></details></noscript>
+    </section>
+
+    <section class="panel" aria-labelledby="next-title">
+      <h2 id="next-title">次は、ログイン後の仕組みを学ぼう</h2>
+      <p><a href="/materials/security/" data-analytics-event="material_click" data-material-id="security-intro" data-click-location="it_passport_two_factor">Webセキュリティ入門でCookieとセッションを学ぶ →</a></p>
+    </section>
+  </main>
+  <footer class="wrap">
+    <a href="/materials/">無料教材一覧</a>
+    <p>参考　<a href="https://www.ipa.go.jp/shiken/syllabus/omgdg50000005kn1-att/syllabus_ip_ver6_5.pdf#page=65">IPAの試験シラバス（利用者認証）</a> · <a href="https://www.ipa.go.jp/security/10threats/ps6vr7000000avr6-att/000100431.pdf">IPAの多要素認証の解説</a></p>
+  </footer>
+  <script>
+    const quiz = document.querySelector('#quiz');
+    const result = document.querySelector('#result');
+    quiz.addEventListener('change', () => { result.textContent = ''; });
+    quiz.addEventListener('submit', event => {
+      event.preventDefault();
+      result.textContent = new FormData(quiz).get('answer') === 'both'
+        ? '正解！ 2回の手順で、知識（パスワード）と所持（セキュリティキー）を確認しています。'
+        : 'もう一度。本人確認の回数と、使った要素が何種類あるかを別々に数えてみましょう。';
+    });
+  </script>
+</body>
+</html>
