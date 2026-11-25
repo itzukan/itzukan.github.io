@@ -11,6 +11,30 @@
 :root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#0B1120;color:#f8fafc;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans JP",sans-serif;line-height:1.75}a{color:inherit}a:focus-visible{outline:3px solid #fff;outline-offset:4px}.wrap{max-width:850px;margin:auto;padding:28px 22px 75px}.brand{font-weight:900;letter-spacing:.08em;color:#37D9EC;text-decoration:none}.hero h1 em{font-style:normal;color:#37D9EC}.lead{font-size:1.05rem;color:#cbd5e1;max-width:680px}.section-title{font-size:1.5rem;margin:45px 0 20px}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,310px),1fr));gap:20px}.card{background:#142239;border:1px solid #30415c;border-radius:20px;padding:25px;display:flex;flex-direction:column}.card h3{font-size:1.35rem;line-height:1.5;margin:15px 0 8px}.card p{color:#cbd5e1;margin:0 0 18px}.meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}.meta span{font-size:.8rem;background:#243650;border-radius:8px;padding:5px 10px}.status{color:#FFA755;font-weight:800;font-size:.84rem}.button{display:block;background:#37D9EC;color:#0B1120;text-decoration:none;text-align:center;font-weight:900;padding:14px 18px;border-radius:12px;margin-top:auto}.note{font-size:.85rem;color:#94a3b8}.about{background:#142239;border:1px solid #30415c;border-radius:20px;padding:24px;margin-top:40px}.about h2{margin:0 0 8px;font-size:1.25rem}.about p{margin:0 0 12px;color:#cbd5e1}.about a,footer a{color:#37D9EC}footer{border-top:1px solid #30415c;color:#94a3b8;font-size:.86rem;padding-top:20px;margin-top:48px}@media(max-width:520px){.wrap{padding:22px 20px 55px}}
 .starter{margin:28px 0 12px;padding:25px;background:#142b40;border:1px solid #37d9ec;border-radius:20px}.starter-label{color:#67e8f9;font-size:.85rem;font-weight:800}.starter h2{font-size:1.4rem;margin:9px 0}.starter p{color:#cbd5e1;margin:0 0 17px}.starter .button{max-width:360px}.routes{margin-top:36px}.routes h2{font-size:1.5rem}.route-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:14px}.route-card{padding:20px;border:1px solid #30415c;background:#142239;border-radius:16px}.route-card h3{margin:0 0 8px;font-size:1.1rem}.route-card p{color:#cbd5e1;font-size:.92rem;margin:0 0 12px}.route-card ol{list-style:none;margin:0;padding:0;display:grid;gap:10px;counter-reset:learning-step}.route-card li{margin:0;counter-increment:learning-step}.route-card li a{display:flex;align-items:center;gap:10px;min-height:52px;padding:12px 14px;border:1px solid #446078;border-radius:12px;background:#0b192d;color:#e2e8f0;text-decoration:none;line-height:1.5;font-weight:750;overflow-wrap:anywhere}.route-card li a:before{content:counter(learning-step);flex:0 0 28px;width:28px;height:28px;display:grid;place-items:center;background:#24526b;color:#a5f3fc;border-radius:50%;font-size:.85rem}.route-card li a:hover{border-color:#67e8f9;background:#123348}.route-card li a:focus-visible{outline:3px solid #ffa755;outline-offset:3px}.route-note{color:#94a3b8;font-size:.87rem;margin-top:14px}</style>
 <link rel="stylesheet" href="/assets/materials-home.css?v=6">
+<style>
+  .category-menu { position: relative; }
+  .category-menu summary {
+    display: flex; align-items: center; gap: 7px; min-height: 44px; padding: 0 8px;
+    border: 1px solid #57718d; border-radius: 8px; background: #142239;
+    color: #e0e9f6; cursor: pointer; font-weight: 750;
+  }
+  .category-menu summary::after { content: ""; width: 6px; height: 6px; border: solid currentColor; border-width: 0 2px 2px 0; transform: translateY(-2px) rotate(45deg); }
+  .category-menu[open] summary::after { transform: translateY(2px) rotate(225deg); }
+  .category-menu summary:focus-visible { outline: 2px solid #67e8f9; outline-offset: 2px; }
+  .category-menu ul {
+    position: absolute; z-index: 10; inset-inline-start: 0; inset-block-start: calc(100% + 4px);
+    list-style: none; width: max-content; max-width: min(230px, calc(100vw - 40px)); margin: 0;
+    padding: 5px; border: 1px solid #57718d; border-radius: 10px; background: #142239;
+    box-shadow: 0 10px 25px #0008;
+  }
+  .materials-header .category-menu li a { display: flex; padding: 6px 10px; border-radius: 5px; }
+  .category-menu li a:hover { background: #243650; }
+  .route-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #learning-routes { scroll-margin-top: 16px; }
+  .hero .route-jump { display: inline-flex; align-items: center; min-height: 44px; color: #8beaf6; }
+  .route-card .category-list-link { display: inline-flex; align-items: center; min-height: 44px; margin-top: 6px; color: #8beaf6; }
+  @media (max-width: 560px) { .route-grid { grid-template-columns: 1fr; } }
+</style>
 <script defer src="/assets/materials-search.js?v=3"></script>
 <script defer src="/assets/materials-pins.js"></script>
 <script defer src="/assets/materials-ranking.js"></script>
@@ -26,12 +50,23 @@
   </div>
 </div>
   <nav aria-label="教材メニュー">
+    <details class="category-menu">
+      <summary>カテゴリ</summary>
+      <ul>
+        <li><a href="/materials/categories/#it-passport">ITパスポート</a></li>
+        <li><a href="/materials/categories/#data">SQL・データベース</a></li>
+        <li><a href="/materials/categories/#web">Web・開発</a></li>
+        <li><a href="/materials/categories/#network">ネットワーク</a></li>
+        <li><a href="/materials/categories/#security">セキュリティ</a></li>
+        <li><a href="/materials/categories/">カテゴリ別一覧</a></li>
+      </ul>
+    </details>
     <a href="#free-materials">無料教材</a>
     <a href="/materials/sql/training-demo/">SQL無料体験</a>
     <a class="materials-paid-link" href="https://premium.itzukan.com/">有料教材</a>
   </nav>
 </header>
-<section class="hero"><h1>図解で学ぶ<em>無料IT教材</em></h1><p class="lead">ITの仕組みを図で理解し、ブラウザで試せます。</p></section>
+<section class="hero"><h1>図解で学ぶ<em>無料IT教材</em></h1><p class="lead">ITの仕組みを図で理解し、ブラウザで試せます。</p><a class="route-jump" href="#learning-routes">目的から選ぶ学習ルート ↓</a></section>
 <section id="free-materials" aria-labelledby="materials-title">
 <h2 class="section-title" id="materials-title">公開中の教材</h2>
 <p id="materials-count" role="status"></p>
@@ -107,7 +142,18 @@
 </section>
 <section class="starter" aria-labelledby="starter-title"><span class="starter-label">🌱 はじめての方におすすめ</span><h2 id="starter-title">まずはネットワークの仕組みから</h2><p>Wi-Fi・IPアドレス・DNSなど、普段使うインターネットの仕組みを自分のPCで確かめながら学べます。登録不要・無料、Windows/Mac対応です。</p><a class="button" href="/materials/network/" data-analytics-event="material_click" data-material-id="network-intro" data-click-location="starter_cta">ネットワーク入門を始める →</a></section>
 <section class="about"><h2>💡 IT図鑑について</h2><p>ネットワーク・セキュリティ・クラウド・開発などのIT技術を、図解を中心にわかりやすく解説しています。</p><a href="https://www.instagram.com/itzukan/" target="_blank" rel="noopener noreferrer">Instagram @itzukan で解説を見る</a></section>
-<section class="routes" aria-labelledby="routes-title"><h2 id="routes-title">🧭 目的から選ぶ学習ルート</h2><div class="route-grid"><article class="route-card"><h3>🌐 ITの仕組みを理解したい</h3><p>通信からWebサービスの動作、安全性へ。</p><ol><li><a href="/materials/network/" data-analytics-event="material_click" data-material-id="network-intro" data-click-location="learning_route" data-learning-route="it_basics">ネットワーク入門</a></li><li><a href="/materials/api/" data-analytics-event="material_click" data-material-id="api-intro" data-click-location="learning_route" data-learning-route="it_basics">API入門</a></li><li><a href="/materials/security/" data-analytics-event="material_click" data-material-id="security-intro" data-click-location="learning_route" data-learning-route="it_basics">Webセキュリティ入門</a></li></ol></article><article class="route-card"><h3>💻 Webサイトを作りたい</h3><p>画面を作り、データ連携と安全性を学ぶ。</p><ol><li><a href="/materials/html-javascript/" data-analytics-event="material_click" data-material-id="html-javascript-intro" data-click-location="learning_route" data-learning-route="web_development">HTML・JavaScript入門</a></li><li><a href="/materials/api/" data-analytics-event="material_click" data-material-id="api-intro" data-click-location="learning_route" data-learning-route="web_development">API入門</a></li><li><a href="/materials/security/" data-analytics-event="material_click" data-material-id="security-intro" data-click-location="learning_route" data-learning-route="web_development">Webセキュリティ入門</a></li></ol></article><article class="route-card"><h3>🗄️ データを扱いたい</h3><p>SQLの検索・集計を学び、問題に挑戦。</p><ol><li><a href="/materials/sql/" data-analytics-event="material_click" data-material-id="sql-intro" data-click-location="learning_route" data-learning-route="data_skills">SQL・データベース入門</a></li><li><a href="/materials/sql/training-demo/" data-analytics-event="material_click" data-material-id="sql-demo" data-click-location="learning_route" data-learning-route="data_skills">SQL無料体験3問</a></li></ol></article></div><p class="route-note">ルートはおすすめの一例です。順番どおりでなくても大丈夫。興味のある教材から始められます。</p></section>
+<section class="routes" id="learning-routes" aria-labelledby="routes-title"><h2 id="routes-title">🧭 目的から選ぶ学習ルート</h2><div class="route-grid"><article class="route-card"><h3>🌐 ITの仕組みを理解したい</h3><p>通信からWebサービスの動作、安全性へ。</p><ol><li><a href="/materials/network/" data-analytics-event="material_click" data-material-id="network-intro" data-click-location="learning_route" data-learning-route="it_basics">ネットワーク入門</a></li><li><a href="/materials/api/" data-analytics-event="material_click" data-material-id="api-intro" data-click-location="learning_route" data-learning-route="it_basics">API入門</a></li><li><a href="/materials/security/" data-analytics-event="material_click" data-material-id="security-intro" data-click-location="learning_route" data-learning-route="it_basics">Webセキュリティ入門</a></li></ol></article><article class="route-card"><h3>💻 Webサイトを作りたい</h3><p>画面を作り、データ連携と安全性を学ぶ。</p><ol><li><a href="/materials/html-javascript/" data-analytics-event="material_click" data-material-id="html-javascript-intro" data-click-location="learning_route" data-learning-route="web_development">HTML・JavaScript入門</a></li><li><a href="/materials/api/" data-analytics-event="material_click" data-material-id="api-intro" data-click-location="learning_route" data-learning-route="web_development">API入門</a></li><li><a href="/materials/security/" data-analytics-event="material_click" data-material-id="security-intro" data-click-location="learning_route" data-learning-route="web_development">Webセキュリティ入門</a></li></ol></article><article class="route-card"><h3>🗄️ データを扱いたい</h3><p>SQLの検索・集計を学び、問題に挑戦。</p><ol><li><a href="/materials/sql/" data-analytics-event="material_click" data-material-id="sql-intro" data-click-location="learning_route" data-learning-route="data_skills">SQL・データベース入門</a></li><li><a href="/materials/sql/training-demo/" data-analytics-event="material_click" data-material-id="sql-demo" data-click-location="learning_route" data-learning-route="data_skills">SQL無料体験3問</a></li></ol></article>
+<article class="route-card">
+  <h3>📘 ITパスポートを勉強したい</h3>
+  <p>ストラテジ・マネジメント・テクノロジを、図解と確認問題で1テーマずつ学ぶ。</p>
+  <ol>
+    <li><a href="/materials/it-passport/break-even/" data-analytics-event="material_click" data-material-id="it-passport-break-even" data-click-location="learning_route" data-learning-route="it_passport">損益分岐点</a></li>
+    <li><a href="/materials/it-passport/sla/" data-analytics-event="material_click" data-material-id="it-passport-sla" data-click-location="learning_route" data-learning-route="it_passport">SLA</a></li>
+    <li><a href="/materials/it-passport/two-factor-auth/" data-analytics-event="material_click" data-material-id="it-passport-two-factor" data-click-location="learning_route" data-learning-route="it_passport">二段階認証と二要素認証</a></li>
+  </ol>
+  <a class="category-list-link" href="/materials/categories/#it-passport">ITパスポートの教材一覧 →</a>
+</article>
+</div><p class="route-note">ルートはおすすめの一例です。順番どおりでなくても大丈夫。興味のある教材から始められます。</p></section>
 <footer class="materials-footer">
   <nav aria-label="フッターメニュー">
     <a href="#free-materials">無料教材</a>

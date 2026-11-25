@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>カテゴリ別の無料教材 | IT図鑑</title>
+  <meta name="description" content="ITパスポート、SQL、Web・開発、ネットワーク、セキュリティの無料教材をカテゴリ別に探せます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/categories/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <style>
+    .subject-title { margin: 0 0 8px; font-size: 1rem; color: #c1d0e4; }
+    .subject-grid { display: grid; gap: 12px; margin-top: 12px; }
+    .subject { min-width: 0; }
+    .subject-grid > .subject { padding: 10px; background: #0e192c; border: 1px solid #344a66; border-radius: 8px; }
+    .subject ul { display: grid; gap: 4px; list-style: none; margin: 0; padding: 0; }
+    .subject a { display: flex; align-items: center; min-height: 44px; padding: 5px 2px; }
+    .panel[id] { scroll-margin-top: 16px; }
+    .panel:target { border-color: #8beaf6; }
+    .topics { display: flex; flex-wrap: wrap; gap: 4px 16px; margin-top: 10px; }
+    .topics a { display: inline-flex; align-items: center; min-height: 44px; }
+    @media (min-width: 690px) {
+      .subject-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap">
+    <h1>カテゴリ別の無料教材</h1>
+    <nav class="topics" aria-label="教材カテゴリ">
+      <a href="#it-passport">ITパスポート</a>
+      <a href="#data">SQL・データベース</a>
+      <a href="#web">Web・開発</a>
+      <a href="#network">ネットワーク</a>
+      <a href="#security">セキュリティ</a>
+    </nav>
+    <section id="it-passport" class="panel" aria-labelledby="it-passport-title">
+      <h2 id="it-passport-title">📘 ITパスポート</h2>
+      <div class="subject-grid">
+        <div class="subject">
+          <h3 class="subject-title">ストラテジ系</h3>
+          <ul>
+            <li><a href="/materials/it-passport/break-even/" data-analytics-event="material_click" data-material-id="it-passport-break-even" data-click-location="category_list">損益分岐点とは？</a></li>
+          </ul>
+        </div>
+        <div class="subject">
+          <h3 class="subject-title">マネジメント系</h3>
+          <ul>
+            <li><a href="/materials/it-passport/sla/" data-analytics-event="material_click" data-material-id="it-passport-sla" data-click-location="category_list">SLAとは？</a></li>
+          </ul>
+        </div>
+        <div class="subject">
+          <h3 class="subject-title">テクノロジ系</h3>
+          <ul>
+            <li><a href="/materials/it-passport/two-factor-auth/" data-analytics-event="material_click" data-material-id="it-passport-two-factor" data-click-location="category_list">二段階認証と二要素認証</a></li>
+            <li><a href="/materials/it-passport/primary-foreign-key/" data-analytics-event="material_click" data-material-id="it-passport-keys" data-click-location="category_list">主キーと外部キー</a></li>
+            <li><a href="/materials/it-passport/normalization/" data-analytics-event="material_click" data-material-id="it-passport-normalization" data-click-location="category_list">データベースの正規化</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <section id="data" class="panel subject" aria-labelledby="data-title">
+      <h2 id="data-title">🗄️ SQL・データベース</h2>
+      <ul>
+        <li><a href="/materials/sql/" data-analytics-event="material_click" data-material-id="sql-intro" data-click-location="category_list">はじめてのSQL・データベース入門</a></li>
+        <li><a href="/materials/sql/training-demo/" data-analytics-event="material_click" data-material-id="sql-demo" data-click-location="category_list">SQL実務トレーニング 無料3問</a></li>
+      </ul>
+    </section>
+    <section id="web" class="panel subject" aria-labelledby="web-title">
+      <h2 id="web-title">💻 Web・開発</h2>
+      <ul>
+        <li><a href="/materials/html-javascript/" data-analytics-event="material_click" data-material-id="html-javascript-intro" data-click-location="category_list">はじめてのHTML・JavaScript入門</a></li>
+        <li><a href="/materials/api/" data-analytics-event="material_click" data-material-id="api-intro" data-click-location="category_list">はじめてのAPI入門</a></li>
+        <li><a href="/materials/api-key/" data-analytics-event="material_click" data-material-id="api-key-intro" data-click-location="category_list">はじめてのAPIキー</a></li>
+        <li><a href="/materials/git/" data-analytics-event="material_click" data-material-id="git-intro" data-click-location="category_list">はじめてのGit</a></li>
+      </ul>
+    </section>
+    <section id="network" class="panel subject" aria-labelledby="network-title">
+      <h2 id="network-title">🌐 ネットワーク</h2>
+      <ul>
+        <li><a href="/materials/network/" data-analytics-event="material_click" data-material-id="network-intro" data-click-location="category_list">はじめてのネットワーク入門</a></li>
+      </ul>
+    </section>
+    <section id="security" class="panel subject" aria-labelledby="security-title">
+      <h2 id="security-title">🔐 セキュリティ</h2>
+      <ul>
+        <li><a href="/materials/security/" data-analytics-event="material_click" data-material-id="security-intro" data-click-location="category_list">はじめてのWebセキュリティ入門</a></li>
+        <li><a href="/materials/it-passport/two-factor-auth/" data-analytics-event="material_click" data-material-id="it-passport-two-factor" data-click-location="category_list">二段階認証と二要素認証</a></li>
+      </ul>
+    </section>
+  </main>
+  <footer class="wrap"><a href="/materials/">無料教材一覧へ戻る</a></footer>
+</body>
+</html>
