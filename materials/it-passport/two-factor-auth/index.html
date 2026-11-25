@@ -100,7 +100,7 @@
       <h2 id="quiz-title">確認問題</h2>
       <form id="quiz">
         <fieldset>
-          <legend>パスワードを入力したあと、登録済みのセキュリティキーを使いました。どれに当てはまりますか？</legend>
+          <legend>パスワードを入力したあと、登録済みスマホの認証アプリに表示されたコードを入力しました。どれに当てはまりますか？</legend>
           <label><input type="radio" name="answer" value="steps" required> 二段階認証だけ</label>
           <label><input type="radio" name="answer" value="both"> 二段階認証かつ二要素認証</label>
           <label><input type="radio" name="answer" value="one"> 1種類の要素を使う認証</label>
@@ -108,7 +108,7 @@
         <button class="check" type="submit">答え合わせ</button>
         <p id="result" role="status"></p>
       </form>
-      <noscript><details><summary>答えを見る</summary><p>二段階認証かつ二要素認証です。パスワードは知識、セキュリティキーは所持です。</p></details></noscript>
+      <noscript><details><summary>答えを見る</summary><p>二段階認証かつ二要素認証です。パスワードで知識を、認証アプリのコードで登録済みスマホの所持を確認します。</p></details></noscript>
     </section>
 
     <section class="panel" aria-labelledby="next-title">
@@ -127,7 +127,7 @@
     quiz.addEventListener('submit', event => {
       event.preventDefault();
       result.textContent = new FormData(quiz).get('answer') === 'both'
-        ? '正解！ 2回の手順で、知識（パスワード）と所持（セキュリティキー）を確認しています。'
+        ? '正解！ パスワードで知識を、認証アプリのコードで登録済みスマホの所持を確認します。2段階で異なる要素を2種類使っています。'
         : 'もう一度。本人確認の回数と、使った要素が何種類あるかを別々に数えてみましょう。';
     });
   </script>
