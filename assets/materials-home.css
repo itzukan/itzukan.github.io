@@ -95,3 +95,26 @@
 #materials-count { margin: 6px 0 0; color: #cbd5e1; }
 #materials-count:empty { margin: 0; }
 .materials-search[hidden], #material-cards .card[hidden] { display: none; }
+
+#pinned-materials { margin-bottom: 24px; }
+#pinned-materials h3#pinned-materials-title { margin: 0 0 10px; font-size: 1rem; color: #e0e9f6; }
+.card:has(.material-pin) { position: relative; }
+.card:has(.material-pin) > .status { min-height: 26px; padding-inline-end: 40px; }
+.material-pin {
+  position: absolute;
+  inset-block-start: 12px;
+  inset-inline-end: 12px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #57718d;
+  border-radius: 8px;
+  background: #142239;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+.material-pin span { filter: grayscale(1); }
+.material-pin[aria-pressed="true"] { background: #4a3e2b; border-color: #f4d799; }
+.material-pin[aria-pressed="true"] span, .material-pin:hover span { filter: none; }
