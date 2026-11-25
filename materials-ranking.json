@@ -1,4 +1,17 @@
 {
-  "generatedAt": "2026-11-25T14:34:23+00:00",
-  "popular": []
+  "generatedAt": "2026-11-25T15:28:22+00:00",
+  "popular": [
+    {
+      "id": "api-intro",
+      "rank": 1
+    },
+    {
+      "id": "api-key-intro",
+      "rank": 1
+    },
+    {
+      "id": "security-intro",
+      "rank": 1
+    }
+  ]
 }
