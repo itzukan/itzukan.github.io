@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>主キーと外部キーの違い｜ITパスポートのデータベース入門 | IT図鑑</title>
+  <meta name="description" content="主キーと外部キーの違いを、商品表と注文表で図解。ITパスポートで学ぶデータベースの基礎を、無料の確認問題で確かめられます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/it-passport/primary-foreign-key/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+  <style>
+    :root{color-scheme:dark;font-family:system-ui,sans-serif;background:#0b1120;color:#eef5ff;line-height:1.7}
+    *{box-sizing:border-box}
+    body{margin:0}
+    .wrap{width:min(860px,calc(100% - 32px));margin:auto}
+    header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 20px;padding:16px 0;border-bottom:1px solid #31465d}
+    a{color:#67e8f9;text-underline-offset:.18em}header a:first-child{font-weight:800}
+    main{padding:24px 0 48px}
+    h1,h2,p{margin:0}h1{font-size:clamp(1.65rem,5vw,2.6rem);line-height:1.25;margin:.2em 0 .4em}h2{font-size:clamp(1.15rem,3.5vw,1.4rem);line-height:1.4}
+    .topic{color:#8beaf6;font-size:.9rem;font-weight:700}.lead{color:#cad8eb}
+    section{margin-top:28px}.panel{background:#132036;border:1px solid #344a66;border-radius:14px;padding:clamp(12px,2.7vw,22px)}
+    figure{margin:12px 0 0}.diagram{display:grid;grid-template-columns:1fr minmax(105px,.37fr) 1fr;gap:10px;align-items:stretch}
+    .data-card{min-width:0;border:1px solid #3a5573;border-radius:10px;overflow:hidden;background:#101a2e}
+    table{width:100%;border-collapse:collapse;font-size:.94rem}caption{text-align:left;padding:6px 10px;background:#1d3049;font-weight:800}
+    th,td{padding:5px 8px;text-align:left;border-top:1px solid #31465d}th{font-size:.8rem;color:#c9d9ec}th small{display:block;color:#8beaf6}
+    .match{background:#174457;color:#c5f7ff;font-weight:800}.bridge{display:grid;place-content:center;text-align:center;color:#8beaf6;font-size:.88rem;font-weight:800}
+    .bridge-line{display:block;margin:3px 4px 9px;height:2px;background:currentColor;position:relative}
+    .bridge-line::after{content:"";position:absolute;right:0;top:-4px;width:8px;height:8px;border:solid currentColor;border-width:2px 2px 0 0;transform:rotate(45deg)}
+    figcaption,.note{font-size:.92rem;color:#c1d0e4;margin-top:9px}
+    .meanings{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0 0}.meanings div{border-left:3px solid #67e8f9;padding-left:9px}.meanings dd{margin:0;color:#c1d0e4;font-size:.92rem}.meanings dt{font-weight:800}
+    fieldset{padding:0;border:0;margin:12px 0 0;min-inline-size:0}legend{padding:0;font-weight:700}
+    #quiz label{display:flex;gap:8px;align-items:center;border:1px solid #4b6382;border-radius:8px;padding:7px 10px;margin-top:7px;cursor:pointer}input{accent-color:#67e8f9}#quiz label:has(input:checked){border-color:#67e8f9;background:#174457}
+    button,.button{display:inline-block;margin-top:12px;background:#67e8f9;color:#0b1120;text-decoration:none;border:0;border-radius:8px;padding:9px 13px;font:inherit;font-weight:800;cursor:pointer}
+    :focus-visible{outline:2px solid #fbd38d;outline-offset:3px}
+    #result:not(:empty){margin-top:10px;padding:8px 10px;background:#101a2e;border-left:3px solid #67e8f9}
+    .next p{margin-top:6px}footer{border-top:1px solid #31465d;padding:14px 0 28px;color:#c1d0e4;font-size:.9rem}
+    @media(max-width:580px){
+      .diagram{grid-template-columns:1fr;gap:5px}
+      .bridge{grid-auto-flow:column;gap:10px;align-items:center;padding:2px}
+      .bridge-line{width:2px;height:19px;margin:0 4px 4px}
+      .bridge-line::after{right:-4px;top:auto;bottom:0;transform:rotate(135deg)}
+    }
+    @media(max-width:360px){.meanings{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/sql/">SQL・データベース入門</a>
+  </header>
+  <main class="wrap" data-feedback-material="it-passport-keys">
+    <p class="topic">ITパスポートのデータベース入門</p>
+    <h1>主キーと外部キーの違い</h1>
+    <p class="lead">注文に「商品ID 101」とあったら、何が売れた？ 2つの表をたどって、商品名を調べてみましょう。</p>
+
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">注文表の「101」から商品表の「りんご」へ</h2>
+      <figure>
+        <div class="diagram">
+          <div class="data-card">
+            <table>
+              <caption>🧾 注文表</caption>
+              <thead><tr><th scope="col">注文ID<small>主キー</small></th><th scope="col">商品ID<small>外部キー</small></th></tr></thead>
+              <tbody><tr><td>501</td><td class="match">101</td></tr><tr><td>502</td><td>102</td></tr><tr><td>503</td><td class="match">101</td></tr></tbody>
+            </table>
+          </div>
+          <div class="bridge"><span class="bridge-line" aria-hidden="true"></span><span>商品ID 101<br>を参照</span></div>
+          <div class="data-card">
+            <table>
+              <caption>🍎 商品表</caption>
+              <thead><tr><th scope="col">商品ID<small>主キー</small></th><th scope="col">商品名</th></tr></thead>
+              <tbody><tr><td class="match">101</td><td class="match">りんご</td></tr><tr><td>102</td><td>みかん</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+        <figcaption>注文501と注文503は、どちらも商品表の101（りんご）を指しています。</figcaption>
+      </figure>
+      <dl class="meanings">
+        <div><dt>主キー</dt><dd>その表の行を1件に特定します。主キーの値は重複できず、値なし（NULL）にもできません。</dd></div>
+        <div><dt>外部キー</dt><dd>この例では別の表の主キーを指します。複数の注文で同じ商品IDを使えます。</dd></div>
+      </dl>
+    </section>
+
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form id="quiz">
+        <fieldset>
+          <legend>注文504でも「みかん」が売れました。注文表のどの列に 102 を入れますか？</legend>
+          <label><input type="radio" name="answer" value="order" required> 注文ID（主キー）</label>
+          <label><input type="radio" name="answer" value="product"> 商品ID（外部キー）</label>
+        </fieldset>
+        <button type="submit">答え合わせ</button>
+        <p id="result" role="status"></p>
+      </form>
+      <noscript><details><summary>答えを見る</summary><p>商品ID（外部キー）に102を入れます。</p></details></noscript>
+    </section>
+
+    <section class="panel next" aria-labelledby="next-title">
+      <h2 id="next-title">次はSQLで2つの表をつないでみよう</h2>
+      <p>表のつながりが分かったら、ブラウザで検索・結合・集計を3問練習できます。</p>
+      <a class="button" href="/materials/sql/training-demo/" data-analytics-event="material_click" data-material-id="sql-demo" data-click-location="it_passport_keys">SQLを無料で3問試す →</a>
+    </section>
+  </main>
+  <footer class="wrap"><a href="/materials/">無料教材一覧</a><p class="note">出題範囲の参考：<a href="https://www.ipa.go.jp/shiken/syllabus/gaiyou.html">IPAのITパスポート試験シラバス（データベース設計）</a></p></footer>
+  <script>
+    const quiz = document.querySelector('#quiz');
+    const result = document.querySelector('#result');
+
+    quiz.addEventListener('change', () => {
+      result.textContent = '';
+    });
+
+    quiz.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const answer = new FormData(quiz).get('answer');
+      result.textContent = answer === 'product'
+        ? '正解！ 注文IDには504、商品IDには商品表のみかんを指す102を入れます。'
+        : 'もう一度。注文IDは今回の注文を特定する番号です。商品表の102を参照する列を選びましょう。';
+    });
+  </script>
+</body>
+</html>

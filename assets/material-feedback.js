@@ -1,11 +1,12 @@
 (function(){
 'use strict';
 var m=location.pathname.match(/^\/materials\/(network|api|api-key|sql|security|html-javascript|git)\//);
-if(!m)return;
-var demo=m[1]==='sql'&&location.pathname.includes('/training-demo/');
-var playground=m[1]==='sql'&&location.pathname.includes('/playground/');
-var gitTrial=m[1]==='git'&&location.pathname.includes('/trial/');
-var material_id=demo?'sql-demo':playground?'sql-playground':gitTrial?'git-trial':m[1]+'-intro';
+var explicit=document.querySelector('[data-feedback-material]')?.dataset.feedbackMaterial;
+if(!m&&!explicit)return;
+var demo=m?.[1]==='sql'&&location.pathname.includes('/training-demo/');
+var playground=m?.[1]==='sql'&&location.pathname.includes('/playground/');
+var gitTrial=m?.[1]==='git'&&location.pathname.includes('/trial/');
+var material_id=explicit||(demo?'sql-demo':playground?'sql-playground':gitTrial?'git-trial':m[1]+'-intro');
 function emit(name,extra){if(window.itzukanAnalyticsOptOut || window['ga-disable-G-J0PDHL2KZL'])return;if(typeof window.gtag==='function')window.gtag('event',name,Object.assign({material_id:material_id},extra||{}));}
 var box=document.createElement('section');box.setAttribute('aria-label','教材のフィードバック');
 box.style.cssText='max-width:760px;margin:32px auto;padding:24px;background:#142239;color:#f8fafc;border:1px solid #334761;border-radius:16px;font:16px/1.7 system-ui,sans-serif';
