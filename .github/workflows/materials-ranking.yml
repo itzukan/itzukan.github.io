@@ -3,6 +3,12 @@ name: Update free materials ranking
 on:
   schedule:
     - cron: '23 1 * * *'
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/materials-ranking.yml
+      - scripts/update-materials-ranking.py
+      - materials/index.html
   workflow_dispatch:
 
 concurrency:
