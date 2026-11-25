@@ -13,7 +13,7 @@ body { margin: 0; }
 .wrap { width: min(calc(100% - 2rem), 72rem); margin-inline: auto; }
 header { border-bottom: 1px solid var(--line); background: #111d31; }
 .header { display: flex; flex-wrap: wrap; gap: .35rem 1.3rem; align-items: center; padding-block: 1rem; }
-.header strong { color: var(--gold); }
+.home-link { color: var(--gold); font-weight: 700; text-underline-offset: .2em; }
 .header span, .muted, .lead { color: var(--muted); }
 main { padding-block: clamp(1.5rem, 4vw, 3.5rem); }
 h1, h2, h3 { line-height: 1.38; }
