@@ -42,6 +42,7 @@ function renderFiles() {
   });
   byId('workspace').replaceChildren(...rows);
   byId('progress').textContent = '進捗 ' + completed.size + ' / ' + missions.length + '問';
+  byId('trial-continuation').hidden = completed.size !== missions.length;
   menu.forEach((button, index) => {
     button.textContent = (completed.has(index) ? '✓ ' : '') + missions[index].title;
   });
