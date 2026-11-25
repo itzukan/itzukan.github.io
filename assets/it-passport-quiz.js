@@ -1,7 +1,7 @@
 (() => {
   'use strict';
-  for (const form of document.querySelectorAll('form.quiz')) {
-    const result = form.querySelector('output');
+  for (const form of document.querySelectorAll('form[data-answer]')) {
+    const result = form.querySelector('output, [role="status"]');
     form.addEventListener('change', () => { result.textContent = ''; });
     form.addEventListener('submit', event => {
       event.preventDefault();

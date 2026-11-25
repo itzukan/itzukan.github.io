@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>情報セキュリティの3要素｜ITパスポート | IT図鑑</title>
+  <meta name="description" content="ネットショップの注文台帳を守ります。漏えい、書き換え、使えない状態を、それぞれどう防ぐでしょうか。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/it-passport/security-cia/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/it-passport-visuals.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/it-passport-quiz.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="it-passport-security-cia">
+    <p class="topic">ITパスポート入門・テクノロジ系</p>
+    <h1>情報セキュリティの3要素</h1>
+    <p class="lead">ネットショップの注文台帳を守ります。漏えい、書き換え、使えない状態を、それぞれどう防ぐでしょうか。</p>
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">📋 注文台帳に必要な3つのこと</h2>
+      <ol class="visual-steps">
+        <li><span class="visual-icon" aria-hidden="true">🔒</span><div><strong>機密性</strong>許可された人だけが見られる<br><small>注文台帳を担当者だけに公開する</small></div></li>
+        <li><span class="visual-icon" aria-hidden="true">🛡️</span><div><strong>完全性</strong>内容が正しく、勝手に書き換えられない<br><small>注文数や配送先の不正な変更を防ぐ</small></div></li>
+        <li><span class="visual-icon" aria-hidden="true">✅</span><div><strong>可用性</strong>必要なときに使える<br><small>障害時にも予備の仕組みで注文台帳を使う</small></div></li>
+      </ol>
+      <p class="callout">機密性（Confidentiality）、完全性（Integrity）、可用性（Availability）の頭文字を取ってCIAと呼びます。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="3" data-correct="正解。必要なときに台帳を利用できるようにしたので、主に可用性を高めています。" data-retry="故障しても「使える」ようにした点に注目しましょう。">
+        <fieldset>
+          <legend>注文台帳のサーバーが故障しても、担当者が予備サーバーで配送先を確認できるようにしました。主に高めたのはどれですか？</legend>
+          <label><input type="radio" name="answer" value="1" required>機密性</label>
+          <label><input type="radio" name="answer" value="2" required>完全性</label>
+          <label><input type="radio" name="answer" value="3" required>可用性</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+    <p class="next-lesson"><a href="/materials/categories/#it-passport">ITパスポートの教材一覧へ</a></p>
+  </main>
+  <footer class="wrap"><a href="/materials/">無料教材一覧</a> · <a href="https://www.ipa.go.jp/shiken/syllabus/omgdg50000005kn1-att/syllabus_ip_ver6_5.pdf#page=63">IPAの出題範囲（PDF）</a></footer>
+</body>
+</html>

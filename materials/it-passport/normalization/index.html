@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
   <script defer src="/assets/materials-search.js?v=3"></script>
   <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/material-feedback.js"></script>
   <style>
     :root { color-scheme: dark; background: #0b1120; color: #eef5ff; font: 1rem/1.7 system-ui, sans-serif; }
@@ -112,9 +113,9 @@
 
     <section class="panel" aria-labelledby="quiz-title">
       <h2 id="quiz-title">確認問題</h2>
-      <form id="quiz">
+      <form id="quiz" data-answer="product" data-correct="正解！ 商品表の102を変更すると、注文502から新しい商品名を参照できます。" data-retry="もう一度。商品名が入っている列を、正規化後の2つの表から探してみましょう。">
         <fieldset>
-          <legend>表を分けた後、「みかん」の名前を「温州みかん」に変更する場所はどこですか？</legend>
+          <legend>注文表の注文502には商品ID 102が入っています。商品ID 102の「みかん」を「温州みかん」に改名するとき、どの行を編集しますか？</legend>
           <label><input type="radio" name="answer" value="order" required> 注文表の注文ID 502の行</label>
           <label><input type="radio" name="answer" value="product"> 商品表の商品ID 102の行</label>
           <label><input type="radio" name="answer" value="both"> 注文表と商品表の両方</label>
@@ -129,17 +130,5 @@
     <a href="/materials/">無料教材一覧</a>
     <p>出題範囲の参考：<a href="https://www.ipa.go.jp/shiken/syllabus/omgdg50000005kn1-att/syllabus_ip_ver6_5.pdf#page=54">IPA「ITパスポート試験」シラバス Ver.6.5（データベース設計）</a></p>
   </footer>
-  <script>
-    const quiz = document.querySelector('#quiz');
-    const result = document.querySelector('#result');
-    quiz.addEventListener('change', () => { result.textContent = ''; });
-    quiz.addEventListener('submit', event => {
-      event.preventDefault();
-      const answer = new FormData(quiz).get('answer');
-      result.textContent = answer === 'product'
-        ? '正解！ 商品表の102を変更すると、注文502から新しい商品名を参照できます。'
-        : 'もう一度。商品名が入っている列を、正規化後の2つの表から探してみましょう。';
-    });
-  </script>
 </body>
 </html>

@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
   <script defer src="/assets/materials-search.js?v=3"></script>
   <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/material-feedback.js"></script>
   <style>
     :root { color-scheme: dark; background: #0b1120; color: #eef5ff; font: 1rem/1.65 system-ui,sans-serif; }
@@ -98,7 +99,7 @@
 
     <section class="panel" aria-labelledby="quiz-title">
       <h2 id="quiz-title">確認問題</h2>
-      <form id="quiz">
+      <form id="quiz" data-answer="both" data-correct="正解！ パスワードで知識を、認証アプリのコードで登録済みスマホの所持を確認します。2段階で異なる要素を2種類使っています。" data-retry="もう一度。本人確認の回数と、使った要素が何種類あるかを別々に数えてみましょう。">
         <fieldset>
           <legend>パスワードを入力したあと、登録済みスマホの認証アプリに表示されたコードを入力しました。どれに当てはまりますか？</legend>
           <label><input type="radio" name="answer" value="steps" required> 二段階認証だけ</label>
@@ -120,16 +121,5 @@
     <a href="/materials/">無料教材一覧</a>
     <p>参考　<a href="https://www.ipa.go.jp/shiken/syllabus/omgdg50000005kn1-att/syllabus_ip_ver6_5.pdf#page=65">IPAの試験シラバス（利用者認証）</a> · <a href="https://www.ipa.go.jp/security/10threats/ps6vr7000000avr6-att/000100431.pdf">IPAの多要素認証の解説</a></p>
   </footer>
-  <script>
-    const quiz = document.querySelector('#quiz');
-    const result = document.querySelector('#result');
-    quiz.addEventListener('change', () => { result.textContent = ''; });
-    quiz.addEventListener('submit', event => {
-      event.preventDefault();
-      result.textContent = new FormData(quiz).get('answer') === 'both'
-        ? '正解！ パスワードで知識を、認証アプリのコードで登録済みスマホの所持を確認します。2段階で異なる要素を2種類使っています。'
-        : 'もう一度。本人確認の回数と、使った要素が何種類あるかを別々に数えてみましょう。';
-    });
-  </script>
 </body>
 </html>

@@ -8,6 +8,7 @@
   <link rel="canonical" href="https://free.itzukan.com/materials/it-passport/primary-foreign-key/">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/material-feedback.js"></script>
   <style>
     :root{color-scheme:dark;font-family:system-ui,sans-serif;background:#0b1120;color:#eef5ff;line-height:1.7}
@@ -84,9 +85,9 @@
 
     <section class="panel" aria-labelledby="quiz-title">
       <h2 id="quiz-title">確認問題</h2>
-      <form id="quiz">
+      <form id="quiz" data-answer="product" data-correct="正解！ 注文IDには504、商品IDには商品表のみかんを指す102を入れます。" data-retry="もう一度。注文IDは今回の注文を特定する番号です。商品表の102を参照する列を選びましょう。">
         <fieldset>
-          <legend>注文504でも「みかん」が売れました。注文表のどの列に 102 を入れますか？</legend>
+          <legend>商品表で「みかん」の商品IDは102です。新しい注文の注文IDは504です。注文表で102を入れる列はどれですか？</legend>
           <label><input type="radio" name="answer" value="order" required> 注文ID（主キー）</label>
           <label><input type="radio" name="answer" value="product"> 商品ID（外部キー）</label>
         </fieldset>
@@ -104,21 +105,5 @@
     </section>
   </main>
   <footer class="wrap"><a href="/materials/">無料教材一覧</a><p class="note">出題範囲の参考：<a href="https://www.ipa.go.jp/shiken/syllabus/gaiyou.html">IPAのITパスポート試験シラバス（データベース設計）</a></p></footer>
-  <script>
-    const quiz = document.querySelector('#quiz');
-    const result = document.querySelector('#result');
-
-    quiz.addEventListener('change', () => {
-      result.textContent = '';
-    });
-
-    quiz.addEventListener('submit', (event) => {
-      event.preventDefault();
-      const answer = new FormData(quiz).get('answer');
-      result.textContent = answer === 'product'
-        ? '正解！ 注文IDには504、商品IDには商品表のみかんを指す102を入れます。'
-        : 'もう一度。注文IDは今回の注文を特定する番号です。商品表の102を参照する列を選びましょう。';
-    });
-  </script>
 </body>
 </html>
