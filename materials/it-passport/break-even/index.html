@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>損益分岐点とは？ 固定費・変動費から計算する｜ITパスポート | IT図鑑</title>
+  <meta name="description" content="文化祭のジュース屋さんを例に、固定費・変動費と損益分岐点を図解。売れる杯数を動かして、赤字と黒字の境目を確かめます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/it-passport/break-even/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/it-passport-quiz.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/">IT図鑑</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="it-passport-break-even">
+    <p class="topic">ITパスポート入門・ストラテジ系</p>
+    <h1>損益分岐点とは？</h1>
+    <p class="lead">文化祭でジュースを売ります。出店料と材料代を払うには、何杯売ればいいでしょうか。</p>
+    <section class="panel" aria-labelledby="stall-title">
+      <h2 id="stall-title">🥤 ジュースを何杯売ると赤字を抜ける？</h2>
+      <ul class="cards">
+        <li><strong>販売価格</strong>1杯300円</li>
+        <li><strong>固定費 · 出店料</strong>売れなくても3,000円</li>
+        <li><strong>変動費 · 材料とカップ代</strong>1杯増えるごとに100円</li>
+      </ul>
+      <p class="note">販売数を動かすと、売上と費用の棒の長さが変わります。</p>
+      <figure class="diagram">
+        <figcaption><label for="cups">販売数 <strong id="cup-count">15杯</strong></label></figcaption>
+        <input id="cups" type="range" min="0" max="30" value="15" aria-valuetext="15杯">
+        <div class="bar-row">
+          <span>売上</span>
+          <span class="bar-track" aria-hidden="true"><span id="sales-bar" class="sales-bar" style="width:50%"></span></span>
+          <strong id="sales">4,500円</strong>
+        </div>
+        <div class="bar-row">
+          <span>費用</span>
+          <span class="bar-track" aria-hidden="true"><span class="fixed-bar" style="width:33.333%"></span><span id="variable-bar" class="variable-bar" style="width:16.667%"></span></span>
+          <strong id="cost">4,500円</strong>
+        </div>
+        <div class="legend">
+          <span style="--swatch:#be9bf5">固定費 <strong>3,000円</strong></span>
+          <span style="--swatch:#f8c780">変動費 <strong id="variable-cost">1,500円</strong></span>
+        </div>
+        <p class="callout" id="profit" aria-live="polite">利益 0円 · 売上と費用がぴったり同じ</p>
+      </figure>
+    </section>
+    <section class="panel" aria-labelledby="calculation-title">
+      <h2 id="calculation-title">計算で何杯かを求める</h2>
+      <ol class="cards">
+        <li><strong>① 1杯売ると残る金額</strong>300円 − 100円 ＝ 200円</li>
+        <li><strong>② 出店料を回収する杯数</strong>3,000円 ÷ 200円 ＝ 15杯</li>
+      </ol>
+      <p>1杯売るたびに、材料とカップ代を引いた200円を出店料の回収に回せます。15杯で出店料を回収し、利益が0円になります。この境目を<strong>損益分岐点</strong>と呼びます。売上高で表すと15杯 × 300円で<strong>4,500円</strong>です。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="20" data-correct="正解。1杯あたり200円が残るので、4,000円 ÷ 200円 ＝ 20杯です。" data-retry="販売価格300円から1杯分の材料とカップ代100円を引き、その金額で出店料を割ってみましょう。">
+        <fieldset>
+          <legend>出店料が4,000円に上がりました。販売価格と1杯分の材料・カップ代が同じなら、何杯売ると利益が0円になりますか？</legend>
+          <label><input type="radio" name="answer" value="15" required>15杯</label>
+          <label><input type="radio" name="answer" value="20" required>20杯</label>
+          <label><input type="radio" name="answer" value="40" required>40杯</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+  </main>
+  <footer class="wrap"><a href="/materials/">無料教材一覧へ戻る</a> · <a href="https://www.ipa.go.jp/shiken/syllabus/omgdg50000005kn1-att/syllabus_ip_ver6_5.pdf#page=11">IPAの出題範囲（PDF）</a></footer>
+  <script>
+    const cups = document.querySelector('#cups');
+    const price = 300;
+    const unitCost = 100;
+    const fixedCost = 3000;
+    const maxRevenue = Number(cups.max) * price;
+    const fields = Object.fromEntries(
+      ['cup-count', 'sales-bar', 'variable-bar', 'sales', 'cost', 'variable-cost', 'profit']
+        .map(id => [id, document.getElementById(id)])
+    );
+    const yen = amount => amount.toLocaleString('ja-JP') + '円';
+    function showEstimate() {
+      const count = cups.valueAsNumber;
+      const revenue = count * price;
+      const materials = count * unitCost;
+      const cost = fixedCost + materials;
+      const profit = revenue - cost;
+      const status = profit === 0 ? '売上と費用がぴったり同じ' : profit < 0 ? '赤字' : '黒字';
+      fields['cup-count'].textContent = count + '杯';
+      cups.setAttribute('aria-valuetext', count + '杯');
+      fields['sales-bar'].style.width = revenue / maxRevenue * 100 + '%';
+      fields['variable-bar'].style.width = materials / maxRevenue * 100 + '%';
+      fields.sales.textContent = yen(revenue);
+      fields.cost.textContent = yen(cost);
+      fields['variable-cost'].textContent = yen(materials);
+      fields.profit.textContent = '利益 ' + yen(profit) + ' · ' + status;
+    }
+    cups.addEventListener('input', showEstimate);
+    showEstimate();
+  </script>
+</body>
+</html>

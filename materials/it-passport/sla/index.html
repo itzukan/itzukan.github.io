@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SLAとは？ SLI・SLOとの違いを図解｜ITパスポート | IT図鑑</title>
+  <meta name="description" content="ネットショップが使う注文サービスを例に、サービスレベル合意（SLA）、測る指標（SLI）、目標（SLO）の違いを図と確認問題で学びます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/it-passport/sla/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/it-passport-quiz.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/">IT図鑑</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="it-passport-sla">
+    <p class="topic">ITパスポート入門・マネジメント系</p>
+    <h1>SLAとは？</h1>
+    <p class="lead">ネットショップの注文サービスが止まると、注文を受けられません。お店はサービスにどんな品質を求め、守られたかをどう確かめるのでしょうか。</p>
+    <section class="panel" aria-labelledby="agreement-title">
+      <h2 id="agreement-title">提供会社とお店で、サービスの品質を約束する</h2>
+      <figure class="diagram">
+        <div class="agreement">
+          <p><span aria-hidden="true">☁️</span><strong>提供会社</strong>注文サービスを提供</p>
+          <p class="shared"><strong>← 合意 →</strong>月間稼働率<br>99.9%以上</p>
+          <p><span aria-hidden="true">🛒</span><strong>お店</strong>注文サービスを利用</p>
+        </div>
+      </figure>
+      <p>この約束が<strong>SLA（サービスレベル合意）</strong>です。どの期間を測るか、計画メンテナンスを計算に含めるか、目標を下回ったらどう対応するかなども合意します。</p>
+    </section>
+    <section class="panel" aria-labelledby="comparison-title">
+      <h2 id="comparison-title">実測値を目標と見比べる</h2>
+      <p><strong>SLI（サービスレベル指標）</strong>は品質を測るものさしです。ここでは、注文サービスを使えた時間の割合を示す<strong>月間稼働率</strong>を使います。</p>
+      <figure class="diagram">
+        <div class="comparison">
+          <p>月間稼働率の実測値 <strong class="below">99.8%</strong></p>
+          <span aria-label="は目標を下回る">＜</span>
+          <p>SLO（目標値） <strong>99.9%</strong></p>
+        </div>
+        <figcaption class="callout"><strong>目標未達。</strong> 対応はSLAの条件を確認します。</figcaption>
+      </figure>
+      <p>この例の<strong>SLO（サービスレベル目標）</strong>は、月間稼働率99.9%以上です。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="apply" data-correct="正解。実測値99.7%が目標値99.9%を下回っています。対応の内容はSLAに書かれた条件で決まります。" data-retry="実測値の99.7%と目標値の99.9%を見比べましょう。目標を下回ったときの対応は、提供会社とお店の約束で確かめます。">
+        <fieldset>
+          <legend>翌月の実測値が99.7%でした。目標は99.9%以上です。お店はどう判断しますか？</legend>
+          <label><input type="radio" name="answer" value="met" required>目標を達成したと判断する</label>
+          <label><input type="radio" name="answer" value="refund" required>自動で全額返金されると判断する</label>
+          <label><input type="radio" name="answer" value="apply" required>目標未達と判断し、SLAで対応を確認する</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+  </main>
+  <footer class="wrap"><a href="/materials/">無料教材一覧へ戻る</a> · <a href="https://www.ipa.go.jp/shiken/syllabus/omgdg50000005kn1-att/syllabus_ip_ver6_5.pdf#page=35">IPAの出題範囲（PDF）</a></footer>
+</body>
+</html>
