@@ -19,7 +19,10 @@
     .index-compare .chapter-node { display: flex; flex-direction: column; gap: .5rem; text-align: left; padding: .85rem; }
     .index-compare h3, .index-compare p { margin: 0; }
     .index-demo { scroll-margin-top: 1rem; }
-    .index-demo button { margin: 0 0 .75rem; }
+    .index-demo button { margin: 0; }
+    .index-controls { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin-bottom: .75rem; }
+    .index-controls[hidden], .index-track li[hidden] { display: none; }
+    .index-controls select { font: inherit; color: inherit; background: #14253d; border: 1px solid #587590; border-radius: .3rem; padding: .35rem; }
     .index-demo .index-lane + .index-lane { margin-top: .65rem; }
     .index-lane h3, .index-lane p { margin: 0; }
     .index-lane .index-track {
@@ -72,13 +75,22 @@
 <section class="chapter-flow index-demo" id="index-search-demo" aria-labelledby="index-demo-title">
   <h2 id="index-demo-title">図で仕組みを理解しよう</h2>
   <p>🔎 5万件から<strong>注文番号 4242</strong> を探します。黄色い点が、今見ている場所です。</p>
-  <button type="button" id="play-index-search" hidden>2つの探し方を再生</button>
+  <div class="index-controls" hidden>
+    <label for="index-example">一致する件数</label>
+    <select id="index-example">
+      <option value="1">4242が1件</option>
+      <option value="2">4242が2件</option>
+    </select>
+    <button type="button" id="play-index-search">2つの探し方を再生</button>
+  </div>
   <section class="chapter-node index-lane" data-index-lane="scan">
     <h3>📄 インデックスなし｜注文表を順に見る</h3>
     <ol class="index-track" aria-label="注文表の行">
       <li>1</li><li aria-label="途中の行">…</li>
       <li data-target>4242<small>探す番号</small></li>
-      <li>…<small>残りも確認</small></li><li>50000<small>末尾</small></li>
+      <li>…<small>残りも確認</small></li>
+      <li data-target data-duplicate hidden>4242<small>別の行</small></li>
+      <li>50000<small>末尾</small></li>
     </ol>
     <p class="index-result" role="status">確認する注文表の行 <strong>50,000行</strong></p>
   </section>
@@ -86,14 +98,16 @@
     <h3>📇 インデックスあり｜索引から該当行へ</h3>
     <ol class="index-track" aria-label="索引から注文表に進む順番">
       <li>索引<small>範囲を絞る</small></li>
-      <li data-index-match>4242<small>索引で一致</small></li>
+      <li data-index-match>4242<small>1件目</small></li>
+      <li data-index-match data-duplicate hidden>4242<small>2件目</small></li>
       <li data-index-end>4243<small>ここで打ち切り</small></li>
-      <li data-target>注文表<small>4242の行へ</small></li>
+      <li data-target>注文表<small id="index-table-rows">1行を取得</small></li>
     </ol>
     <p class="index-result" role="status">確認する注文表の行 <strong>該当の1行</strong></p>
     <p>番号順の索引では、同じ4242があれば隣に並びます。次が4243なら、4242の並びはそこで終わりです。</p>
   </section>
   <p><strong>4242を見つけても、同じ番号がほかにないか確認します。</strong> このSQLは、条件に合う行をすべて返す指定です。注文番号の重複を禁止する設定がないので、索引なしでは末尾まで調べます。</p>
+  <p><strong>重複する列にも索引を作れます。</strong> たとえば注文表の顧客IDは、同じ人が注文するたびに繰り返し出ます。顧客ごとの注文履歴をよく検索し、少数の行に絞れるなら索引の候補です。注文を1件ずつ識別する番号には主キーを使う設計が一般的です。この図では重複を許す列での探し方を示しています。 <a href="https://www.postgresql.org/docs/current/indexes-unique.html">PostgreSQLの一意インデックス</a></p>
   <p class="note">比較のために流れを簡略化しています。「…」は省略した行です。点の速さは実測時間ではありません。下のSQL演習では注文番号だけを取得するため、索引だけで結果を返せる場合もあります。</p>
   <p>✏️ 注文の追加時は、注文表と索引の両方に反映します。索引には更新の手間と保存容量がかかります。</p>
 </section>
@@ -193,6 +207,8 @@ ROLLBACK;</code></pre></div>
   (() => {
     const demo = document.getElementById('index-search-demo');
     const play = document.getElementById('play-index-search');
+    const example = document.getElementById('index-example');
+    const tableRows = document.getElementById('index-table-rows');
     const lanes = [...demo.querySelectorAll('[data-index-lane]')].map(lane => {
       const track = lane.querySelector('.index-track');
       const dot = document.createElement('li');
@@ -211,10 +227,11 @@ ROLLBACK;</code></pre></div>
     const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
     let run = 0;
 
-    async function animateLane(lane, currentRun) {
-      const { track, dot, result, steps, scan, summary } = lane;
+    async function animateLane(lane, currentRun, count) {
+      const { track, dot, result, scan, summary } = lane;
       for (const animation of dot.getAnimations()) animation.cancel();
-      for (const step of steps) {
+      for (const step of lane.steps) {
+        step.hidden = step.hasAttribute('data-duplicate') && count === 1;
         step.removeAttribute('data-checked');
         step.removeAttribute('data-found');
       }
@@ -224,13 +241,14 @@ ROLLBACK;</code></pre></div>
         const box = step.getBoundingClientRect();
         return 'translateX(' + (box.left + box.width / 2 - track.getBoundingClientRect().left) + 'px) translateX(-50%)';
       };
+      const steps = lane.steps.filter(step => !step.hidden);
       let previous = steps[0];
-      let found = false;
+      let matches = 0;
       for (const step of steps) {
         if (!dot.hidden) {
           const animation = dot.animate(
             [{transform: position(previous)}, {transform: position(step)}],
-            {duration: scan ? (found ? 700 : 470) : 410, fill: 'forwards'},
+            {duration: scan ? (matches ? 700 : 470) : 410, fill: 'forwards'},
           );
           try { await animation.finished; } catch { return; }
           if (currentRun !== run) return;
@@ -239,27 +257,38 @@ ROLLBACK;</code></pre></div>
         }
         step.setAttribute('data-checked', '');
         if (step.hasAttribute('data-index-match')) {
-          result.textContent = '索引で4242を発見 → 次の番号を確認';
+          matches++;
+          step.setAttribute('data-found', '');
+          result.textContent = '索引で4242の' + matches + '件目を発見 → 次の番号を確認';
         }
         if (step.hasAttribute('data-index-end')) {
-          result.textContent = '次は4243 → 4242は1件。注文表の該当行へ';
+          result.textContent = '次は4243 → 4242は' + matches + '件で確定。注文表の該当行へ';
         }
         if (step.hasAttribute('data-target')) {
           step.setAttribute('data-found', '');
-          found = true;
-          if (scan && !dot.hidden) result.textContent = '4242を1件発見 → 同じ番号がないか残りも確認中';
+          if (scan) {
+            matches++;
+            if (!dot.hidden) result.textContent = '4242を' + matches + '件発見 → 同じ番号がないか残りも確認中';
+          }
         }
         previous = step;
       }
       dot.hidden = true;
-      result.innerHTML = scan ? '末尾まで確認完了。4242は1件 ／ ' + summary : summary;
+      result.innerHTML = scan
+        ? '末尾まで確認完了。4242は' + matches + '件 ／ ' + summary
+        : '4243で探索終了。確認する注文表の行 <strong>該当の' + matches + '行</strong>';
     }
 
-    play.addEventListener('click', () => {
+    function replay() {
       const currentRun = ++run;
-      for (const lane of lanes) animateLane(lane, currentRun);
-    });
-    play.hidden = false;
+      const count = Number(example.value);
+      tableRows.textContent = count + '行を取得';
+      for (const lane of lanes) animateLane(lane, currentRun, count);
+    }
+
+    play.addEventListener('click', replay);
+    example.addEventListener('change', replay);
+    demo.querySelector('.index-controls').hidden = false;
   })();
 </script>
 </body>
