@@ -25,6 +25,18 @@
     }
     .index-compare .index-rows .hit, .index-compare .index-route .hit { background: #a5eef2; color: #0c1727; font-weight: 750; }
     .index-compare .index-total { margin-top: auto; padding-top: .35rem; }
+    .index-decision { scroll-margin-top: 1rem; }
+    .index-compare .decision-step { padding: .45rem .55rem; border-radius: .35rem; background: #14253d; }
+    .index-compare .decision-arrow { align-self: center; color: #a5eef2; line-height: 1; }
+    .index-compare .decision-outcome { margin-top: auto; padding-top: .35rem; }
+    .index-compare .decision-outcome strong { color: #a5eef2; }
+    .index-match-bar { height: .5rem; display: flex; border-radius: 1rem; overflow: hidden; background: #101c2d; }
+    .index-match-bar span { width: var(--match-share); min-width: 3px; background: #a5eef2; }
+    .index-compare code { overflow-wrap: anywhere; }
+    @media print {
+      .index-compare .decision-step { background: #fff; color: #111; border: 1px solid #587590; }
+      .index-compare .decision-arrow, .index-compare .decision-outcome strong { color: #111; }
+    }
     @media (max-width: 650px) { .index-compare { grid-template-columns: 1fr; } }
   </style>
 </head>
@@ -67,10 +79,55 @@
   <p>✏️ 注文の追加時は、注文表と索引の両方に反映します。検索が速くなる一方、更新の手間と保存容量が増えます。</p>
 </div>
 <div class="panel block-learn"><h2>❓ 疑問</h2><p>検索が速くなるなら、すべての列にインデックスを作るとよい？</p></div>
-<div class="panel block-learn"><h2>💡 理由</h2><p>索引があると少数の行を探しやすくなります。一方、行の追加や索引対象の値の変更時には、テーブルに加えて索引の維持も必要です。索引を保存する容量も増えます。多くの行を読む場合などは、データベースが索引を使わずに表を順に読むことがあります。</p></div>
+<section class="chapter-flow index-decision" id="choose-index" aria-labelledby="choose-index-title">
+  <h2 id="choose-index-title">① 人が決める｜どの列にインデックスを作る？</h2>
+  <p>注文表は5万件。<strong>よく使う検索で、何件まで絞れるか</strong>を見ます。</p>
+  <div class="index-compare">
+    <section class="chapter-node">
+      <h3>🔎 注文番号で探す</h3>
+      <p class="decision-step">問い合わせで指定された注文番号を検索（例 4242）</p>
+      <span class="decision-arrow" aria-hidden="true">↓</span>
+      <p>該当する注文 <strong>5万件のうち1件</strong></p>
+      <div class="index-match-bar" aria-hidden="true"><span style="--match-share: .002%"></span></div>
+      <p class="decision-outcome">📇 <strong>注文番号の列に作る候補</strong></p>
+    </section>
+    <section class="chapter-node">
+      <h3>📋 ステータスで探す</h3>
+      <p class="decision-step">「処理済み」の注文をすべて一覧で見る</p>
+      <span class="decision-arrow" aria-hidden="true">↓</span>
+      <p>該当する注文 <strong>5万件のうち4万9千件</strong></p>
+      <div class="index-match-bar" aria-hidden="true"><span style="--match-share: 98%"></span></div>
+      <p class="decision-outcome">💾 <strong>この検索だけなら作る優先度は低い</strong></p>
+    </section>
+  </div>
+  <p>インデックスを増やすと、注文を追加したり索引対象の値を変えたりするときに索引も更新します。検索が速くなる効果と、登録・更新の時間や保存容量を比べて決めます。</p>
+</section>
+<section class="chapter-flow index-decision" id="use-index" aria-labelledby="use-index-title">
+  <h2 id="use-index-title">② DBが決める｜この検索でインデックスを使う？</h2>
+  <p><strong>どちらも注文番号のインデックスは作成済み。</strong> 検索条件が変わると、DBが選ぶ探し方も変わります。</p>
+  <div class="index-compare">
+    <section class="chapter-node">
+      <h3>🔎 注文番号が 4242</h3>
+      <p class="decision-step">該当 <strong>1件</strong></p>
+      <span class="decision-arrow" aria-hidden="true">↓</span>
+      <p class="decision-step">索引で場所を絞り、1件を取り出す</p>
+      <span class="decision-arrow" aria-hidden="true">↓</span>
+      <p class="decision-outcome">📇 <strong>索引を使うほうが有利になりやすい</strong></p>
+    </section>
+    <section class="chapter-node">
+      <h3>📋 注文番号が 49000 以下</h3>
+      <p class="decision-step">該当 <strong>4万9千件</strong></p>
+      <span class="decision-arrow" aria-hidden="true">↓</span>
+      <p class="decision-step">注文表のほとんどの行が必要になる</p>
+      <span class="decision-arrow" aria-hidden="true">↓</span>
+      <p class="decision-outcome">📄 <strong>注文表を順に読むほうが有利なことがある</strong></p>
+    </section>
+  </div>
+  <p>DBはデータの件数や値の分布をもとに、読み取りの手間を見積もります。何％なら索引を使うという一律の基準はありません。</p>
+</section>
 <div class="panel block-try">
   <h2>⌨️ 操作</h2>
-  <p>架空の注文5万件から1件を探します。「実行計画を比べる」を押すと、ブラウザー内のPostgreSQLで下のSQLを実行します。</p>
+  <p>「実行計画を比べる」を押すと、ブラウザー内のPostgreSQLで下のSQLを実行します。演習結果の②と③を見比べると、同じ注文番号のインデックスがあっても、1件と4万9千件ではDBが選ぶ探し方が変わることを確認できます。</p>
   <button type="button" id="run-index-plans" hidden>実行計画を比べる</button>
   <p id="index-run-status" role="status"></p>
   <div id="index-live-results" hidden>
@@ -106,7 +163,7 @@ ROLLBACK;</code></pre></div>
 
 ③ <mark>Seq Scan</mark> on index_lesson_orders
      Filter: (order_no &lt;= 49000)</code></pre></div><p>Seq Scanは表を順に読む、Index Scan / Index Only Scan などは索引を使う計画です。③のように多くの行が対象だと、索引を作ってもSeq Scanが選ばれることがあります。版や統計情報で表示は変わります。</p></div></div>
-<div class="panel block-check"><h2>✅ 答え</h2><p>よく使う絞り込み条件を候補にし、あわせて登録や更新への影響を確かめて決めます。</p></div>
+<div class="panel block-check"><h2>✅ 答え</h2><p>人は、よく使う検索で少数の行に絞れる列を候補にします。DBは、検索ごとに索引を使う場合と注文表を順に読む場合の手間を比べます。</p></div>
 <div class="panel block-check"><h2>まとめ</h2><p>実際に近い件数・値の偏りを練習用DBに用意し、実行計画・検索時間・更新時間・索引の容量を作成前後で比べます。EXPLAINだけでは実測時間は出ません。</p></div>
 <p class="note">参考資料 <a href="https://www.postgresql.org/docs/current/using-explain.html">PostgreSQLの実行計画の解説</a></p>
 <nav class="chapter-nav" aria-label="章の移動"><a href="/materials/sql/">← 入門の目次</a></nav>
