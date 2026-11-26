@@ -14,13 +14,16 @@ if (osButtons.length) {
 
 const run = document.getElementById('run-index-plans');
 if (run) {
+  const results = document.getElementById('index-live-results');
+  const title = document.getElementById('index-result-title');
+  const plans = [...results.querySelectorAll('code')];
+  const methods = [...results.querySelectorAll('.index-plan-method')];
+  const examples = plans.map(plan => plan.innerHTML);
+  const exampleMethods = methods.map(method => method.textContent);
   run.hidden = false;
   run.addEventListener('click', async () => {
     const status = document.getElementById('index-run-status');
-    const results = document.getElementById('index-live-results');
-    const plans = [...results.querySelectorAll('code')];
     run.disabled = true;
-    results.hidden = true;
     status.textContent = 'PostgreSQLを読み込んで実行しています…';
     let db;
     try {
@@ -33,7 +36,7 @@ if (run) {
       for (const [index, plan] of plans.entries()) {
         const lines = output[index].rows.map(row => row['QUERY PLAN']);
         const scanType = lines[0]?.match(/^(?:Parallel )?(Seq Scan|Index Only Scan|Index Scan|Bitmap Heap Scan)/);
-        const method = plan.closest('.chapter-code').querySelector('.index-plan-method');
+        const method = methods[index];
         if (method) {
           method.textContent = scanType?.[1] === 'Seq Scan' ? '表を順に読む'
             : scanType ? '索引を使う' : '下の実行計画を確認';
@@ -46,10 +49,16 @@ if (run) {
           return [mark, text.slice(token.length)];
         }));
       }
+      if (title) title.textContent = '実行結果';
       results.hidden = false;
-      status.textContent = '実行しました。3つの枠で、DBが選んだ読み方を比べてみましょう。';
+      status.textContent = '';
     } catch {
-      status.textContent = 'ブラウザーで実行できませんでした。下の結果例を確認するか、PostgreSQLでSQLを実行してください。';
+      for (const [index, plan] of plans.entries()) {
+        plan.innerHTML = examples[index];
+      }
+      for (const [index, method] of methods.entries()) method.textContent = exampleMethods[index];
+      if (title) title.textContent = '表示例';
+      status.textContent = 'ブラウザーで実行できなかったため、表示例を載せています。';
     } finally {
       if (db) await db.close().catch(() => {});
       run.disabled = false;

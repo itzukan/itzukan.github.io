@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
   <script defer src="/assets/materials-search.js?v=6"></script>
   <script defer src="/assets/analytics.js"></script>
-  <script defer src="/assets/extra-chapters.js?v=2"></script>
+  <script defer src="/assets/extra-chapters.js?v=3"></script>
 
   <style>
     .index-compare { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
@@ -249,10 +249,14 @@
   <p>②の2件と③の4万9千件で、DBが選ぶ探し方を比べてみましょう。</p>
   <button type="button" id="run-index-plans" hidden>実行計画を比べる</button>
   <p id="index-run-status" role="status"></p>
-  <div id="index-live-results" hidden>
-    <div class="chapter-code"><strong>① 索引なし・2件<span class="index-plan-method"></span></strong><pre tabindex="0"><code></code></pre></div>
-    <div class="chapter-code"><strong>② 索引あり・2件<span class="index-plan-method"></span></strong><pre tabindex="0"><code></code></pre></div>
-    <div class="chapter-code"><strong>③ 索引あり・4万9千件<span class="index-plan-method"></span></strong><pre tabindex="0"><code></code></pre></div>
+  <h3 id="index-result-title">表示例</h3>
+  <div id="index-live-results" aria-labelledby="index-result-title">
+    <div class="chapter-code"><strong>① 索引なし・2件 <span class="index-plan-method">表を順に読む</span></strong><pre tabindex="0"><code><mark>Seq Scan</mark> on index_lesson_orders
+     Filter: (customer_id = 4242)</code></pre></div>
+    <div class="chapter-code"><strong>② 索引あり・2件 <span class="index-plan-method">索引を使う</span></strong><pre tabindex="0"><code><mark>Index Scan</mark> using index_lesson_orders_customer_id_idx on index_lesson_orders
+     Index Cond: (customer_id = 4242)</code></pre></div>
+    <div class="chapter-code"><strong>③ 索引あり・4万9千件 <span class="index-plan-method">表を順に読む</span></strong><pre tabindex="0"><code><mark>Seq Scan</mark> on index_lesson_orders
+     Filter: (customer_id &lt;= 49000)</code></pre></div>
   </div>
   <details class="index-notes"><summary>実行するSQLを表示（PostgreSQL）</summary><div class="chapter-code"><pre tabindex="0"><code id="index-example-sql"><span class="index-sql-keyword">BEGIN</span>;  <span class="index-sql-comment">-- 練習を始める</span>
 <span class="index-sql-keyword">CREATE</span> <span class="index-sql-keyword">TEMP</span> <span class="index-sql-keyword">TABLE</span> index_lesson_orders <span class="index-sql-keyword">AS</span>  <span class="index-sql-comment">-- 練習用の注文表を作る</span>
@@ -278,14 +282,6 @@
 <span class="index-sql-keyword">SELECT</span> * <span class="index-sql-keyword">FROM</span> index_lesson_orders <span class="index-sql-keyword">WHERE</span> customer_id &lt;= 49000;  <span class="index-sql-comment">-- 条件に当てはまる4万9千件を探す</span>
 <span class="index-sql-keyword">ROLLBACK</span>;  <span class="index-sql-comment">-- 練習で作った表と索引を取り消す</span></code></pre></div></details>
 </div>
-<div class="panel block-result"><h2>📋 結果を見てみよう（表示例）</h2><div class="chapter-example"><div class="chapter-code"><strong>表示例</strong><pre tabindex="0"><code>① <mark>Seq Scan</mark> on index_lesson_orders
-     Filter: (customer_id = 4242)
-
-② <mark>Index Scan</mark> using index_lesson_orders_customer_id_idx on index_lesson_orders
-     Index Cond: (customer_id = 4242)
-
-③ <mark>Seq Scan</mark> on index_lesson_orders
-     Filter: (customer_id &lt;= 49000)</code></pre></div><p><code>Seq Scan</code> は表を順に読み、<code>Index Scan</code> は索引を使います。表示はデータの分布やDBの設定で変わります。</p></div></div>
 <div class="panel block-check"><h2>✅ 答え</h2><p>よく使う検索で少数の行に絞れる列から、索引を検討します。</p></div>
 <div class="panel block-check"><h2>まとめ</h2><p>実データに近い環境で、実行計画・検索と更新の時間・索引の容量を比べます。実測時間を見るには <code>EXPLAIN ANALYZE</code> を使います。</p></div>
 <p class="note">参考資料 <a href="https://www.postgresql.org/docs/current/using-explain.html">PostgreSQLの実行計画</a>・<a href="https://www.postgresql.org/docs/current/btree.html#BTREE-STRUCTURE">B-tree索引と注文表の行への参照</a></p>
