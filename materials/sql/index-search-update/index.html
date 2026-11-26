@@ -79,7 +79,9 @@
     .index-tree-row .index-tree-node[data-selected]::before { width: 2px; background: #ffe175; }
     .index-tree-root { padding-inline: .6rem; }
     .index-tree-dot { top: 0; z-index: 3; }
-    .index-tree-note { font-size: .82rem; }
+    .index-takeaway { margin: .8rem 0 .45rem; }
+    .index-notes summary { width: fit-content; cursor: pointer; color: #a5eef2; }
+    .index-notes ul { margin: .4rem 0; }
     .index-result { min-height: 1.5em; }
     .index-decision { scroll-margin-top: 1rem; }
     .index-compare .decision-step { padding: .45rem .55rem; border-radius: .35rem; background: #14253d; }
@@ -176,15 +178,17 @@
         <li data-duplicate>注文 #18000</li>
       </ul>
     </div>
-    <p id="index-lookup-result" class="index-result" role="status">索引で場所を見つけたら、注文表の該当行へ移動します。</p>
-    <p><strong>4242が入る範囲を選び、枝を下ります。</strong> 図では <strong>4001〜5000 → 4201〜5000</strong> の順に範囲を絞って、最初の4242へ進みます。</p>
-    <p><strong>索引には、顧客IDと注文表の行の場所が入っています。</strong> 注文が2件の例では、顧客4242の索引から注文 #308 と #18000 の行へ直接たどれます。</p>
-    <p>顧客ID順に並んでいるので、次の索引が4243なら、4242の注文はそこで終わりです。<strong>顧客4243の注文行は読みません。</strong></p>
+    <p id="index-lookup-result" class="index-result" role="status">再生すると、索引をたどる順番が見られます。</p>
   </section>
-  <p><strong>顧客4242の注文を見つけても、同じ顧客の注文がほかにないか確認します。</strong> このSQLは、条件に合う行をすべて返す指定です。注文表には同じ顧客の注文が離れて並ぶこともあるので、索引なしでは末尾まで調べます。</p>
-  <p><strong>重複する列にも索引を作れます。</strong> 同じ人が何度注文しても顧客IDは同じです。注文番号は注文ごとに異なり、主キーとして使えます。顧客IDで注文履歴をよく探し、少数の注文に絞れるなら索引の候補です。 <a href="https://www.postgresql.org/docs/current/indexes-unique.html">PostgreSQLの一意インデックス</a></p>
-  <p class="note">注文表と索引は、説明用に一部を抜き出しています。下のSQL演習は、顧客4242の注文が2件ある場合です。</p>
-  <p>✏️ 注文の追加時は、注文表と索引の両方に反映します。索引には更新の手間と保存容量がかかります。</p>
+  <p class="index-takeaway"><strong>索引なし</strong>は表を最後まで。<strong>索引あり</strong>は場所を絞って該当行へ。</p>
+  <details class="index-notes">
+    <summary>補足｜探索を止める条件</summary>
+    <ul>
+      <li><strong>索引なし：</strong> 同じ顧客の注文は表の離れた場所にもあるので、条件に合う注文をすべて返すには最後まで見ます。</li>
+      <li><strong>索引あり：</strong> 枝を下って最初の4242へ。索引で4243に変わったら探索を終え、4242の項目が指す注文行に進みます。</li>
+    </ul>
+    <p class="note">図では注文表と索引の一部を表示しています。SQL演習は注文が2件の例です。</p>
+  </details>
 </section>
 <div class="panel block-learn"><h2>❓ 疑問</h2><p>検索が速くなるなら、すべての列にインデックスを作るとよい？</p></div>
 <section class="chapter-flow index-decision" id="choose-index" aria-labelledby="choose-index-title">
@@ -325,7 +329,7 @@ ROLLBACK;</code></pre></div>
         step.removeAttribute('data-found');
       }
       orders.setAttribute('data-waiting', '');
-      lookupResult.textContent = '索引で場所を見つけたら、注文表の該当行へ移動します。';
+      lookupResult.textContent = '再生すると、索引をたどる順番が見られます。';
     }
 
     async function move(element, from, to, duration, via = []) {
@@ -407,7 +411,7 @@ ROLLBACK;</code></pre></div>
       }
       dot.hidden = true;
       orders.removeAttribute('data-waiting');
-      lookupResult.textContent = '索引の参照を使って、顧客4242の注文' + matches + '件を直接取得。';
+      lookupResult.textContent = '顧客4242の注文を' + matches + '件取得。';
     });
 
     example.addEventListener('change', () => {
