@@ -40,30 +40,19 @@
 <div class="chapter-example os-specific os-mac"><div class="chapter-code"><strong>Mac ターミナル</strong><pre tabindex="0"><code>HTTP/2 200
 <mark>cache-control: max-age=600</mark></code></pre></div></div>
   <p><code>max-age=600</code> は、<strong>保存済みの応答を、元のサーバーに確認せずに使える期間が600秒（10分）</strong>という指定です。CDNにコピーがあり、ほかの設定で再確認が求められていない場合を考えます。</p>
-  <div class="chapter-flow" role="group" aria-label="初回アクセスからキャッシュの期限が切れるまで">
+  <div class="chapter-flow" role="group" aria-label="600秒の前後で通信先がどう変わるか">
     <div class="chapter-flow-row">
-      <div class="chapter-node"><strong>🕒 10:00｜初回アクセス</strong><small>CDNにコピーがない</small></div>
+      <div class="chapter-node"><strong>🕒 3分後に同じページを開く</strong></div>
       <span class="chapter-arrow" aria-hidden="true">→</span>
-      <div class="chapter-node"><strong>🌐 元のサーバーから取得</strong><small>サーバーが10:00に作った応答を、CDNが保存して返す</small></div>
-      <span class="chapter-arrow" aria-hidden="true">→</span>
-      <div class="chapter-node"><strong>⏱️ 残り10分</strong><small>そのまま使える期限は10:10</small></div>
+      <div class="chapter-node"><strong>📦 CDNがコピーを返す</strong><small>通信はCDNまで。元のサーバーには取りに行かない</small></div>
     </div>
     <div class="chapter-flow-row">
-      <div class="chapter-node"><strong>🕒 10:03｜初回から3分後</strong><small>同じページを開く</small></div>
+      <div class="chapter-node"><strong>🕒 11分後に同じページを開く</strong></div>
       <span class="chapter-arrow" aria-hidden="true">→</span>
-      <div class="chapter-node"><strong>📦 CDNがコピーを返す</strong><small>元のサーバーには取りに行かない</small></div>
-      <span class="chapter-arrow" aria-hidden="true">→</span>
-      <div class="chapter-node"><strong>⏱️ 残り7分</strong><small>コピーを返した後も期限は10:10</small></div>
-    </div>
-    <div class="chapter-flow-row">
-      <div class="chapter-node"><strong>🕒 10:11｜初回から11分後</strong><small>同じページを開く</small></div>
-      <span class="chapter-arrow" aria-hidden="true">→</span>
-      <div class="chapter-node"><strong>🌐 CDNが元のサーバーに確認</strong><small>変更がなければコピーを再利用。変更があれば新しい応答を取得</small></div>
-      <span class="chapter-arrow" aria-hidden="true">→</span>
-      <div class="chapter-node"><strong>⏱️ 確認後に期限を計算し直す</strong><small>引き続き600秒なら、次の期限は10:21</small></div>
+      <div class="chapter-node"><strong>🌐 CDNが元のサーバーに確認する</strong><small>変更がなければコピーを再利用。変更があれば新しい応答を取得</small></div>
     </div>
   </div>
-  <p>この例では、元のサーバーが応答を作った10:00から600秒を数えます。コピーを返すだけでは残り時間は増えません。ブラウザー自身のキャッシュを使えるときは、CDNへの通信も省けます。</p>
+  <p>図の時刻は、元のサーバーが応答を作った時点からの例です。ブラウザー自身のキャッシュを使えるときは、CDNへの通信も省けます。</p>
 </div>
 <div class="panel block-check"><h2>✅ 答え</h2><p>利用者ごとの応答を共有キャッシュに保存させないようにします。<code>Cache-Control: private</code> は共有キャッシュに保存しない指定、<code>no-store</code> はブラウザーなどのキャッシュにも保存しない指定です。</p></div>
 <div class="panel block-check"><h2>まとめ</h2><p>表示されたヘッダーだけで、実際にCDNが保存したかどうかは判断できません。サービス管理者は個人用ページを共有キャッシュの対象から外し、設定と応答を確認します。</p></div>
