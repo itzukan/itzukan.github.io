@@ -7,10 +7,14 @@
   const review = get('review');
   const previewContainer = get('review-content');
   const parser = new DOMParser();
+  const storageKey = 'itzukan.it-passport.practice.v1';
   let bank = [];
   let questions = [];
   let index = 0;
-  let correctCount = 0;
+  let answers = [];
+  let draft = null;
+  let savedRaw = null;
+  let resumable = null;
 
   async function readPage(path) {
     const response = await fetch(path, { signal: AbortSignal.timeout(10000) });
@@ -69,9 +73,73 @@
       get('bank-status').textContent = '出題できる問題は現在' + bank.length + '問です。'
         + (partial ? '一部の教材を読み込めませんでした。' : availability);
       get('retry').hidden = !partial && bank.length > 0;
+      showResume();
     } catch {
       get('bank-status').textContent = '問題を読み込めませんでした。再読み込みを試してください。';
       get('retry').hidden = false;
+    }
+  }
+
+  function showResume() {
+    resumable = null;
+    get('resume-panel').hidden = true;
+    get('resume').hidden = true;
+    get('restart-note').hidden = true;
+    let saved;
+    try {
+      savedRaw = localStorage.getItem(storageKey);
+      saved = JSON.parse(savedRaw);
+    } catch {
+      return;
+    }
+    if (!saved || !Array.isArray(saved.questions) || !Array.isArray(saved.answers)) return;
+    const count = saved.questions.length;
+    if (!countButtons.some(button => Number(button.dataset.count) === count)) return;
+    if (!Number.isInteger(saved.index) || saved.index < 0 || saved.index >= count
+        || ![saved.index, saved.index + 1].includes(saved.answers.length)) return;
+
+    const byPrompt = new Map(bank.map(question => [question.prompt, question]));
+    const restored = saved.questions.map(entry => {
+      const question = byPrompt.get(entry?.prompt);
+      if (!question || question.path !== entry.path || !Array.isArray(entry.order)) return null;
+      const choices = entry.order.map(value => question.choices.find(choice => choice.value === value));
+      if (choices.length !== question.choices.length || choices.some(choice => !choice)
+          || new Set(entry.order).size !== choices.length) return null;
+      return { ...question, choices };
+    });
+    get('resume-panel').hidden = false;
+    get('restart-note').hidden = false;
+    if (restored.some(question => !question) || new Set(restored.map(question => question.prompt)).size !== count
+        || saved.answers.some((value, position) => !restored[position].choices.some(choice => choice.value === value))) {
+      get('resume-status').textContent = '保存済みの問題を読み込めませんでした。再読み込みをお試しください。';
+      get('retry').hidden = false;
+      return;
+    }
+    resumable = { ...saved, questions: restored };
+    get('resume-status').textContent = count + '問コース · ' + saved.answers.length + '問回答済み';
+    get('resume').hidden = false;
+  }
+
+  function saveProgress(replace = false) {
+    const status = get('storage-status');
+    try {
+      if (!replace && localStorage.getItem(storageKey) !== savedRaw) {
+        status.textContent = '別のタブで保存内容が更新されました。このタブの進み具合は保存されません。';
+        return;
+      }
+      const value = JSON.stringify({
+        questions: questions.map(question => ({
+          path: question.path,
+          prompt: question.prompt,
+          order: question.choices.map(choice => choice.value),
+        })),
+        index, answers, draft,
+      });
+      localStorage.setItem(storageKey, value);
+      savedRaw = value;
+      status.textContent = '進み具合はこのブラウザに自動で保存されます。';
+    } catch {
+      status.textContent = 'このブラウザでは途中経過を保存できません。';
     }
   }
 
@@ -88,13 +156,14 @@
     const question = questions[index];
     get('progress').textContent = (index + 1) + ' / ' + questions.length + '問';
     get('prompt').textContent = question.prompt;
-    const labels = shuffled(question.choices).map(choice => {
+    const labels = question.choices.map(choice => {
       const label = document.createElement('label');
       const radio = document.createElement('input');
       radio.type = 'radio';
       radio.name = 'answer';
       radio.value = choice.value;
       radio.required = true;
+      radio.checked = choice.value === (answers[index] ?? draft);
       label.append(radio, choice.text);
       return label;
     });
@@ -107,17 +176,27 @@
     get('source').href = question.path;
     get('source').textContent = question.title + 'の教材ページを開く';
     get('progress').focus();
+    if (answers[index] !== undefined) showAnswer(answers[index]);
   }
 
-  function start(count) {
-    if (count > bank.length) return;
-    questions = shuffled(bank).slice(0, count);
-    index = 0;
-    correctCount = 0;
+  function openExercise() {
     get('setup').hidden = true;
     get('summary').hidden = true;
     get('exercise').hidden = false;
     showQuestion();
+  }
+
+  function start(count) {
+    if (count > bank.length) return;
+    questions = shuffled(bank).slice(0, count).map(question => ({
+      ...question,
+      choices: shuffled(question.choices),
+    }));
+    index = 0;
+    answers = [];
+    draft = null;
+    openExercise();
+    saveProgress(true);
   }
 
   function resizeReview() {
@@ -157,14 +236,9 @@
     previewContainer.append(frame);
   }
 
-  form.addEventListener('submit', event => {
-    event.preventDefault();
-    if (!get('result').hidden) return;
+  function showAnswer(selected) {
     const question = questions[index];
-    const selected = new FormData(form).get('answer');
-    if (selected === null) return;
     const correct = selected === question.answer;
-    if (correct) correctCount++;
     for (const input of form.querySelectorAll('input')) input.disabled = true;
     form.querySelector('button').hidden = true;
     const answer = question.choices.find(choice => choice.value === question.answer);
@@ -175,14 +249,36 @@
     get('next').textContent = index + 1 === questions.length ? '結果を見る' : '次の問題';
     get('next').hidden = false;
     review.open = true;
+  }
+
+  form.addEventListener('change', event => {
+    if (event.target.name !== 'answer' || answers[index] !== undefined) return;
+    draft = event.target.value;
+    saveProgress();
+  });
+  form.addEventListener('submit', event => {
+    event.preventDefault();
+    if (answers[index] !== undefined) return;
+    const selected = new FormData(form).get('answer');
+    if (selected === null) return;
+    answers.push(selected);
+    draft = null;
+    saveProgress();
+    showAnswer(selected);
     get('result').focus();
   });
 
   get('next').addEventListener('click', () => {
+    if (get('next').hidden) return;
     if (++index < questions.length) {
       showQuestion();
+      saveProgress();
       return;
     }
+    try {
+      if (localStorage.getItem(storageKey) === savedRaw) localStorage.removeItem(storageKey);
+    } catch {}
+    const correctCount = answers.filter((answer, position) => answer === questions[position].answer).length;
     get('exercise').hidden = true;
     get('summary').hidden = false;
     get('score').textContent = questions.length + '問中 ' + correctCount + '問正解';
@@ -192,7 +288,14 @@
   get('choose').addEventListener('click', () => {
     get('summary').hidden = true;
     get('setup').hidden = false;
+    showResume();
     get('setup-title').focus();
+  });
+  get('resume').addEventListener('click', () => {
+    if (!resumable) return;
+    ({ questions, index, answers, draft } = resumable);
+    openExercise();
+    saveProgress();
   });
   get('retry').addEventListener('click', loadBank);
   countButtons.forEach(button => button.addEventListener('click', () => start(Number(button.dataset.count))));
