@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>二次元配列で行ごとの合計を求める｜基本情報技術者試験 科目B | IT図鑑</title>
+  <meta name="description" content="行ごとに合計を0から計算し、結果を別の配列に保存します。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe-b/matrix-row-total/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/fe-pseudocode.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/fe-b/practice/">基本情報道場 科目B</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="fe-b-matrix-row-total">
+    <p class="topic">基本情報技術者試験・科目B</p>
+    <h1>二次元配列で行ごとの合計を求める</h1>
+    <p class="lead">行ごとに合計を0から計算し、結果を別の配列に保存します。</p>
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">🧮 次の行に移ったら sum を0に戻す</h2>
+      <p>内側のループは列を進み、外側のループは行を進みます。</p>
+      <table class="trace-table">
+        <caption>変数の値の変化</caption>
+        <thead><tr><th scope="col">実行した処理</th><th scope="col">sum</th><th scope="col">out</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">1行目を開始</th><td>0</td><td>{0, 0}</td></tr>
+          <tr><th scope="row">1行1列：2を足す</th><td><mark>2</mark></td><td>{0, 0}</td></tr>
+          <tr><th scope="row">1行2列：4を足す</th><td><mark>6</mark></td><td>{0, 0}</td></tr>
+          <tr><th scope="row">1行目を保存</th><td>6</td><td>{<mark>6</mark>, 0}</td></tr>
+          <tr><th scope="row">2行目を開始</th><td><mark>0</mark></td><td>{6, 0}</td></tr>
+          <tr><th scope="row">2行1列：1を足す</th><td><mark>1</mark></td><td>{6, 0}</td></tr>
+          <tr><th scope="row">2行2列：7を足す</th><td><mark>8</mark></td><td>{6, 0}</td></tr>
+          <tr><th scope="row">2行目を保存</th><td>8</td><td>{6, <mark>8</mark>}</td></tr>
+        </tbody>
+      </table>
+      <p class="callout">sum の初期化が外側のループの中にあるため、1行目の合計は2行目に持ち越されません。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="4" data-correct="正解。1行目は2＋4＝6、2行目は sum を0に戻して1＋7＝8です。out には {6, 8} が入ります。" data-retry="col を増やすのは同じ行の中です。次の row では sum を0に戻す行に注目しましょう。">
+        <fieldset>
+          <legend>table は行と列がそれぞれ1から始まる二次元配列です。out の要素番号も1から始まります。処理後の out はどうなりますか？</legend>
+          <pre class="question-code" aria-label="擬似言語のコード">整数型の二次元配列: table ← {{2, 4}, {1, 7}}
+整数型の配列: out ← {0, 0}
+整数型: row, col, sum
+
+for (row を 1 から 2 まで 1 ずつ増やす)
+  sum ← 0
+  for (col を 1 から 2 まで 1 ずつ増やす)
+    sum ← sum + table[row, col]
+  endfor
+  out[row] ← sum
+endfor</pre>
+          <label><input type="radio" name="answer" value="1" required>{3, 11}</label>
+          <label><input type="radio" name="answer" value="2" required>{6, 14}</label>
+          <label><input type="radio" name="answer" value="3" required>{4, 7}</label>
+          <label><input type="radio" name="answer" value="4" required>{6, 8}</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+  </main>
+  <footer class="wrap"><a href="/materials/categories/#fe-b">科目Bの教材一覧</a> · <a href="https://www.ipa.go.jp/shiken/syllabus/henkou/2022/gmcbt80000007cfs-att/fe_kamoku_b_set_sample_qs.pdf">IPAの擬似言語の記述形式（PDF）</a></footer>
+</body>
+</html>

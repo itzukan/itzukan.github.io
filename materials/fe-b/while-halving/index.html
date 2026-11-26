@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>値を半分にしながら終了条件を追う｜基本情報技術者試験 科目B | IT図鑑</title>
+  <meta name="description" content="整数を半分にする処理を、条件が偽になるまで繰り返します。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe-b/while-halving/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/fe-pseudocode.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/fe-b/practice/">基本情報道場 科目B</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="fe-b-while-halving">
+    <p class="topic">基本情報技術者試験・科目B</p>
+    <h1>値を半分にしながら終了条件を追う</h1>
+    <p class="lead">整数を半分にする処理を、条件が偽になるまで繰り返します。</p>
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">🌓 商だけを残す while ループ</h2>
+      <p>表の各行はループの本体を1回実行した直後です。</p>
+      <table class="trace-table">
+        <caption>変数の値の変化</caption>
+        <thead><tr><th scope="col">状態</th><th scope="col">x</th><th scope="col">times</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">初期値</th><td>20</td><td>0</td></tr>
+          <tr><th scope="row">1回目</th><td><mark>10</mark></td><td><mark>1</mark></td></tr>
+          <tr><th scope="row">2回目</th><td><mark>5</mark></td><td><mark>2</mark></td></tr>
+          <tr><th scope="row">3回目</th><td><mark>2</mark></td><td><mark>3</mark></td></tr>
+          <tr><th scope="row">4回目</th><td><mark>1</mark></td><td><mark>4</mark></td></tr>
+        </tbody>
+      </table>
+      <p class="callout">次の条件判定は 1 ＞ 1 で偽。x を0にする周回はありません。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="2" data-correct="正解。x は20 → 10 → 5 → 2 → 1と変わります。x が1になった時点で止まるため、times は4です。" data-retry="5を2で割った商は2です。毎回、更新後の x で条件を確かめましょう。">
+        <fieldset>
+          <legend>次の処理が終わったとき、times はいくつですか？</legend>
+          <pre class="question-code" aria-label="擬似言語のコード">整数型: x ← 20
+整数型: times ← 0
+
+while (x ＞ 1)
+  x ← (x ÷ 2) の商
+  times ← times + 1
+endwhile</pre>
+          <label><input type="radio" name="answer" value="1" required>3</label>
+          <label><input type="radio" name="answer" value="2" required>4</label>
+          <label><input type="radio" name="answer" value="3" required>5</label>
+          <label><input type="radio" name="answer" value="4" required>10</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+  </main>
+  <footer class="wrap"><a href="/materials/categories/#fe-b">科目Bの教材一覧</a> · <a href="https://www.ipa.go.jp/shiken/syllabus/henkou/2022/gmcbt80000007cfs-att/fe_kamoku_b_set_sample_qs.pdf">IPAの擬似言語の記述形式（PDF）</a></footer>
+</body>
+</html>
