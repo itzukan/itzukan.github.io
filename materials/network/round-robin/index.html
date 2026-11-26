@@ -28,8 +28,17 @@
 <div class="chapter-flow"><h2>図で仕組みを理解しよう</h2><div class="chapter-flow-row"><div class="chapter-node"><strong>① 1件目</strong><small>🖥️ サーバーA</small></div><span class="chapter-arrow" aria-hidden="true">→</span><div class="chapter-node"><strong>② 2件目</strong><small>🖥️ サーバーB</small></div><span class="chapter-arrow" aria-hidden="true">→</span><div class="chapter-node"><strong>③ 3件目</strong><small>🖥️ サーバーC</small></div><span class="chapter-arrow" aria-hidden="true">→</span><div class="chapter-node"><strong>④ 4件目</strong><small>🔁 またサーバーA</small></div></div><p class="note">この図では、ロードバランサー（アクセスを複数のサーバーに配る仕組み）が、1件ずつ順に振り分けています。</p></div>
 <div class="panel block-learn"><h2>❓ 疑問</h2><p>3台に同じ件数を振り分ければ、それぞれの負荷も同じになる？</p></div>
 <div class="panel block-learn"><h2>💡 理由</h2><p>画像を1枚返す処理と大きな集計では、1件にかかる時間が違います。ラウンドロビンがそろえるのは割り当て順で、負荷は処理内容にも左右されます。故障したサーバーを候補から外すには、応答を調べるヘルスチェックと、その結果を振り分けに反映する仕組みが必要です。</p></div>
-<div class="panel block-try"><h2>⌨️ 操作</h2><div class="chapter-example"><p><strong>共通</strong>　WindowsのPowerShell、またはMacのターミナルで、同じコマンドを3回実行し、教材サイトの名前に対応するIPv4アドレスを比べます。ここで観察するのはDNSの回答です。図のようにアクセスを配る動きとは別です。</p><div class="chapter-code"><strong>表示例</strong><pre tabindex="0"><code>nslookup -type=A free.itzukan.com</code></pre></div></div></div>
-<div class="panel block-result">
+<div class="panel block-learn">
+  <h2>🔄 DNSでも「順番を回す」ことがある</h2>
+  <p>上の図では、ロードバランサーがアクセス1件ごとに転送先を選びます。<strong>DNSラウンドロビン</strong>では、同じサイト名に複数のIPアドレスを登録し、DNSが返す候補の順番を入れ替えます。</p>
+  <div class="chapter-paired-results">
+    <div class="chapter-node"><strong>1回目の回答例</strong><small>🖥️ A → B → C</small><small>先頭から試すアプリなら、まずAに接続を試す</small></div>
+    <div class="chapter-node"><strong>2回目の回答例</strong><small>🖥️ B → C → A</small><small>先頭から試すアプリなら、まずBに接続を試す</small></div>
+  </div>
+  <p>最初に試される候補が変われば、接続先が分散することがあります。実際にどのIPアドレスを使うかは、OSやブラウザーなど、接続する側の動作によります。</p>
+</div>
+<div class="panel block-try"><h2>⌨️ 操作</h2><div class="chapter-example"><p>WindowsのPowerShell、またはMacのターミナルで、同じコマンドを3回実行します。<code>-type=A</code> はIPv4アドレスを尋ねる指定です。Webページを開く代わりに、DNSへ接続先の候補を尋ねます。</p><div class="chapter-code"><strong>実行するコマンド</strong><pre tabindex="0"><code>nslookup -type=A free.itzukan.com</code></pre></div></div></div>
+<div class="panel block-result" id="dns-result">
   <h2>📋 結果を見てみよう（回答欄の表示例）</h2>
   <div class="chapter-paired-results">
     <div class="chapter-code"><strong>1回目</strong><pre tabindex="0"><code><mark>185.199.109.153</mark>
@@ -41,10 +50,11 @@
 185.199.108.153
 185.199.109.153</code></pre></div>
   </div>
-  <p>返った4つのIPアドレスは同じで、先頭のIPアドレスが変わっています。DNSのキャッシュ（以前の回答を一時保存する仕組み）などで順番が変わらない場合もあります。DNSサーバーのアドレスは問い合わせ先の情報です。回答欄にあるWebサイトのアドレスを見比べます。</p>
+  <p>この例で変わったのは、<strong>同じ4つのIPアドレスのうち、先頭に表示された候補</strong>です。先頭のIPアドレスを見ても、そこに実際に接続したか、どのサーバーがリクエストを処理したかは分かりません。</p>
+  <p><code>free.itzukan.com</code> は候補の一覧を観察するための例です。順番が変わる理由にはDNSサーバー側の並べ替えなどもあり、この結果だけでサイトの構成は断定できません。DNSが前の回答を一時保存している場合などは、同じ順番で返ることもあります。</p>
 </div>
-<div class="panel block-check"><h2>✅ 答え</h2><p>割り当て件数が近くても、負荷が同じとは限りません。DNSでIPの順序が変わる場合もありますが、結果が同じ場合や複数IPがまとめて返る場合があります。</p></div>
-<div class="panel block-check"><h2>まとめ</h2><p>DNSの応答から実際にどのサーバーが処理したか、振り分け順や故障を検知できたかまでは判断できません。図は振り分け役が1件ずつ割り当てる例です。</p></div>
+<div class="panel block-check"><h2>✅ 答え</h2><p>各サーバーに同じ件数を配っても、1件ごとの処理の重さが違えば負荷は変わります。</p></div>
+<div class="panel block-check"><h2>まとめ</h2><p>ロードバランサーは届いたアクセスを転送し、DNSは接続先の候補を返します。<code>nslookup</code> で見られるのは、接続する前の候補の一覧です。</p></div>
 <p class="note">参考資料 <a href="https://learn.microsoft.com/en-us/troubleshoot/windows-server/networking/how-to-use-netmask-ordering-round-robin-feature">MicrosoftのDNSラウンドロビンの解説</a></p>
 <nav class="chapter-nav" aria-label="章の移動"><a href="/materials/network/cdn-cache/">← 前のテーマ</a></nav>
 </article>
