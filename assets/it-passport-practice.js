@@ -8,9 +8,9 @@
   const previewContainer = get('review-content');
   const parser = new DOMParser();
   const course = document.body.dataset.dojo;
-  const series = ['fe', 'fe-b'].includes(course) ? course : 'it-passport';
+  const series = ['fe', 'fe-b', 'fe-b-security'].includes(course) ? course : 'it-passport';
   const storageKey = 'itzukan.' + series + '.practice.v1';
-  const questionKey = question => JSON.stringify([question.prompt, question.code || '']);
+  const questionKey = question => JSON.stringify([question.prompt, question.code || '', question.context]);
   let bank = [];
   let questions = [];
   let index = 0;
@@ -23,9 +23,10 @@
   let transferToken = location.hash.startsWith('#resume=') ? location.hash : '';
   if (transferToken) history.replaceState(history.state, '', location.pathname + location.search);
 
-  function questionId(path, prompt, answer, choices, code) {
+  function questionId(path, prompt, answer, choices, code, context) {
     const parts = [path, prompt, answer, choices];
     if (code) parts.push(code);
+    if (context.length) parts.push(context);
     const content = JSON.stringify(parts);
     // Keep portable links short and distinguish questions whose content has changed.
     let hash = 2166136261;
@@ -60,6 +61,7 @@
         eligible = true;
         const prompt = quiz.querySelector('legend')?.textContent.trim();
         const code = quiz.querySelector('.question-code')?.textContent.trim();
+        const context = [...quiz.querySelectorAll('.question-context li')].map(item => item.textContent.trim());
         const { answer, correct } = quiz.dataset;
         const choices = [...quiz.querySelectorAll('label:has(input[name="answer"])')].map(label => ({
           text: label.textContent.trim(),
@@ -69,8 +71,8 @@
             && choices.some(choice => choice.value === answer)
             && new Set(choices.map(choice => choice.value)).size === choices.length) {
           const explanation = correct.replace(/^正解[。！!]\s*/, '');
-          const id = questionId(path, prompt, answer, choices, code);
-          found.push({ id, title, path, prompt, code, answer, explanation, choices, page, sections: [...sections] });
+          const id = questionId(path, prompt, answer, choices, code, context);
+          found.push({ id, title, path, prompt, code, context, answer, explanation, choices, page, sections: [...sections] });
         }
       }
     }
@@ -86,7 +88,7 @@
       const catalogue = await readPage('/materials/categories/');
       const links = catalogue.querySelectorAll('#' + series + ' .subject a[data-material-id]');
       const paths = [...new Set([...links].map(link => link.getAttribute('href')))]
-        .filter(path => /^\/materials\/(fe|fe-b|it-passport)\/(?!practice\/)[a-z0-9-]+\/$/.test(path));
+        .filter(path => /^\/materials\/(fe|fe-b|fe-b-security|it-passport)\/(?!practice\/)[a-z0-9-]+\/$/.test(path));
       const loaded = await Promise.allSettled(paths.map(async path => readQuestions(await readPage(path), path)));
       const unique = new Map();
       for (const lesson of loaded) {
@@ -227,7 +229,7 @@
         questions: questions.map(question => ({
           path: question.path,
           prompt: question.prompt,
-          id: question.code ? question.id : undefined,
+          id: question.code || question.context.length ? question.id : undefined,
           order: question.choices.map(choice => choice.value),
         })),
         index, answers, draft,
@@ -255,6 +257,15 @@
     get('resume-link').hidden = true;
     get('progress').textContent = (index + 1) + ' / ' + questions.length + '問';
     get('prompt').textContent = question.prompt;
+    const context = get('question-context');
+    if (context) {
+      context.replaceChildren(...question.context.map(text => {
+        const item = document.createElement('li');
+        item.textContent = text;
+        return item;
+      }));
+      context.hidden = !question.context.length;
+    }
     const code = get('question-code');
     if (code) {
       code.textContent = question.code || '';
@@ -276,7 +287,7 @@
     get('result').hidden = true;
     get('next').hidden = true;
     review.open = false;
-    review.hidden = Boolean(question.code);
+    review.hidden = Boolean(question.code || question.context.length);
     previewContainer.replaceChildren();
     get('source').href = question.path;
     get('source').textContent = question.title + 'の教材ページを開く';

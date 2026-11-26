@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ランサムウェアから安全にデータを戻す｜基本情報技術者試験 科目B | IT図鑑</title>
+  <meta name="description" content="バックアップの時刻と状態を見比べて、復旧元と復旧先を選びます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe-b-security/backup-restore/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/fe-security-case.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/fe-b-security/practice/">科目B・情報セキュリティ</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="fe-b-security-backup-restore">
+    <p class="topic">基本情報技術者試験・科目B</p>
+    <h1>ランサムウェアから安全にデータを戻す</h1>
+    <p class="lead">バックアップの時刻と状態を見比べて、復旧元と復旧先を選びます。</p>
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">💾 戻せるデータを、安全な場所に復元する</h2>
+      <ol class="security-flow">
+        <li><span class="case-icon" aria-hidden="true">🕗</span><div><strong>前日20:00 → 復元元</strong>オフラインバックアップ。暗号化の影響がなく、復元できることを確認済み。</div></li>
+        <li><span class="case-icon" aria-hidden="true">⚠️</span><div><strong>当日9:00 → 被害発生</strong>10:00のコピーには暗号化されたファイルが含まれる。</div></li>
+        <li><span class="case-icon" aria-hidden="true">✅</span><div><strong>復旧 → クリーンな環境</strong>安全を確認した環境に復元し、ファイルを開けることを確認する。</div></li>
+      </ol>
+      <p class="callout">復旧後はバックアップ時点より後の変更が欠けるので、業務記録と照合して埋め直します。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="1" data-correct="正解。暗号化の影響がなく、復元できると確認した前日のバックアップを使います。復旧先も安全を確認した環境にします。" data-retry="新しさだけではなく、データが使えることと、復元先が安全なことを確認しましょう。">
+        <fieldset>
+          <legend>担当チームがデータを復旧するとき、どの対応が適切ですか？</legend>
+          <ul class="question-context" aria-label="事例の条件">
+            <li>ファイルサーバーで午前9時にファイルの暗号化が始まったことを確認しました。対象サーバーはネットワークから切り離しています。</li>
+            <li>午前10時のネットワーク上のコピーには暗号化後のファイルが含まれます。前日午後8時のオフラインバックアップは、内容と復元できることを確認済みです。</li>
+          </ul>
+          <label><input type="radio" name="answer" value="1" required>前日午後8時のバックアップを、確認済みのクリーンな環境に復元する</label>
+          <label><input type="radio" name="answer" value="2" required>午前10時のコピーを、最新という理由だけで復元する</label>
+          <label><input type="radio" name="answer" value="3" required>感染したサーバーをネットワークに戻し、その場で復元を始める</label>
+          <label><input type="radio" name="answer" value="4" required>前日のバックアップを感染したサーバーにつなぎ、次の自動同期を待つ</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+  </main>
+  <footer class="wrap"><a href="/materials/categories/#fe-b-security">情報セキュリティの教材一覧</a> · <a href="https://www.ipa.go.jp/security/guide/sme/ug65p90000019cbk-att/sme_guideline_v4.0_app_8.pdf">IPAのインシデント対応の手引き（PDF）</a></footer>
+</body>
+</html>

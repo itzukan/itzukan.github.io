@@ -16,3 +16,6 @@
 #review summary { min-height: 44px; padding-block: 8px; color: #8beaf6; cursor: pointer; }
 #review iframe { display: block; width: 100%; min-height: 140px; margin-block: 8px; border: 1px solid #344a66; border-radius: 8px; background: #0b1120; }
 [hidden] { display: none !important; }
+.subject-switch { display: flex; flex-wrap: wrap; gap: 6px 12px; margin: 8px 0 4px; }
+.subject-switch a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 8px; }
+.subject-switch a[aria-current="page"] { border-bottom: 2px solid #8beaf6; color: #eef5ff; font-weight: 750; text-decoration: none; }
