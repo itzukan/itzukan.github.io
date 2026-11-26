@@ -10,6 +10,7 @@
   const course = document.body.dataset.dojo;
   const series = ['fe', 'fe-b'].includes(course) ? course : 'it-passport';
   const storageKey = 'itzukan.' + series + '.practice.v1';
+  const questionKey = question => JSON.stringify([question.prompt, question.code || '']);
   let bank = [];
   let questions = [];
   let index = 0;
@@ -90,7 +91,7 @@
       const unique = new Map();
       for (const lesson of loaded) {
         if (lesson.status === 'fulfilled') {
-          for (const question of lesson.value) unique.set(question.prompt, question);
+          for (const question of lesson.value) unique.set(questionKey(question), question);
         }
       }
       bank = [...unique.values()];
@@ -123,7 +124,7 @@
           || new Set(entry.order).size !== choices.length) return null;
       return { ...question, choices };
     });
-    if (restored.some(question => !question) || new Set(restored.map(question => question.prompt)).size !== count
+    if (restored.some(question => !question) || new Set(restored.map(questionKey)).size !== count
         || saved.answers.some((value, position) => !restored[position].choices.some(choice => choice.value === value))
         || (saved.draft != null && !restored[saved.index].choices.some(choice => choice.value === saved.draft))) return null;
     return { ...saved, questions: restored };
@@ -146,7 +147,8 @@
       return;
     }
     if (!saved) return;
-    resumable = restore(saved, entry => bank.find(question => question.prompt === entry?.prompt && question.path === entry?.path));
+    resumable = restore(saved, entry => bank.find(question => question.prompt === entry?.prompt
+      && question.path === entry.path && (!entry.id || question.id === entry.id)));
     get('resume-panel').hidden = false;
     get('restart-note').hidden = false;
     if (!resumable) {
@@ -225,6 +227,7 @@
         questions: questions.map(question => ({
           path: question.path,
           prompt: question.prompt,
+          id: question.code ? question.id : undefined,
           order: question.choices.map(choice => choice.value),
         })),
         index, answers, draft,

@@ -4,11 +4,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>基本情報道場 科目B｜IT図鑑</title>
-  <meta name="description" content="基本情報技術者試験・科目Bの擬似言語を3問で練習。答え合わせのあと、変数の値を図で追えます。">
+  <meta name="description" content="基本情報技術者試験・科目Bの擬似言語を3問または10問で練習。答え合わせのあと、変数の値を図で追えます。">
   <link rel="canonical" href="https://free.itzukan.com/materials/fe-b/practice/">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/it-passport-lesson.css">
-  <script defer src="/assets/it-passport-practice.js?v=6"></script>
+  <script defer src="/assets/it-passport-practice.js?v=7"></script>
   <script defer src="/assets/analytics.js"></script>
   <link rel="stylesheet" href="/assets/practice-dojo.css">
   <link rel="stylesheet" href="/assets/fe-pseudocode.css">
@@ -21,7 +21,7 @@
   </header>
   <main class="wrap">
     <h1>基本情報道場 科目B</h1>
-    <p class="lead">擬似言語のオリジナル問題3問。答え合わせのあと、変数の値が変わる順番を図で追えます。</p>
+    <p class="lead">擬似言語のオリジナル問題。答え合わせのあと、変数の値が変わる順番を図で追えます。</p>
     <section id="setup" class="panel" aria-labelledby="setup-title">
       <div class="resume" id="transfer-panel" hidden>
         <h2>別の端末からの続き</h2>
@@ -36,11 +36,12 @@
         <p class="note" id="resume-status"></p>
         <div class="actions"><button type="button" id="resume" hidden>続きから再開</button></div>
       </div>
-      <h2 id="setup-title" tabindex="-1">擬似言語の練習</h2>
+      <h2 id="setup-title" tabindex="-1">何問解きますか？</h2>
       <p id="bank-status" class="note" role="status">教材の確認問題を読み込み中…</p>
       <p id="restart-note" class="note" hidden>ここで新しく始めると、保存済みの途中経過が置き換わります。</p>
       <div class="actions">
         <button type="button" data-count="3" disabled>3問を解く</button>
+        <button type="button" data-count="10" disabled>10問を解く</button>
         <button type="button" id="retry" class="secondary" hidden>再読み込み</button>
       </div>
       <noscript><p>問題を解くにはJavaScriptを有効にしてください。</p></noscript>

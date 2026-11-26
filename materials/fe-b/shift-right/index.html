@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>配列の値を後ろからずらす｜基本情報技術者試験 科目B | IT図鑑</title>
+  <meta name="description" content="同じ配列を読み書きするので、まだ使う値を上書きしない順番が重要です。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe-b/shift-right/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/fe-pseudocode.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/fe-b/practice/">基本情報道場 科目B</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="fe-b-shift-right">
+    <p class="topic">基本情報技術者試験・科目B</p>
+    <h1>配列の値を後ろからずらす</h1>
+    <p class="lead">同じ配列を読み書きするので、まだ使う値を上書きしない順番が重要です。</p>
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">➡️ 後ろの要素から順に書き換える</h2>
+      <p>各代入で、書き換わった要素を強調しています。</p>
+      <table class="trace-table">
+        <caption>変数の値の変化</caption>
+        <thead><tr><th scope="col">実行した処理</th><th scope="col">更新後の data</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">初期値</th><td>{2, 4, 6, 8}</td></tr>
+          <tr><th scope="row">i = 4</th><td>{2, 4, 6, <mark>6</mark>}</td></tr>
+          <tr><th scope="row">i = 3</th><td>{2, 4, <mark>4</mark>, 6}</td></tr>
+          <tr><th scope="row">i = 2</th><td>{2, <mark>2</mark>, 4, 6}</td></tr>
+          <tr><th scope="row">先頭を0にする</th><td>{<mark>0</mark>, 2, 4, 6}</td></tr>
+        </tbody>
+      </table>
+      <p class="callout">前から書き換えると、次の周回で元の左隣の値を読めません。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="4" data-correct="正解。末尾から順に左隣の値を写し、最後に先頭を0にするので {0, 2, 4, 6} です。" data-retry="i は4から減っていきます。書き換える場所と読む場所を、1回ずつ確かめましょう。">
+        <fieldset>
+          <legend>配列 data の要素番号は1から始まります。処理後の data はどうなりますか？</legend>
+          <pre class="question-code" aria-label="擬似言語のコード">整数型の配列: data ← {2, 4, 6, 8}
+整数型: i
+
+for (i を 4 から 2 まで 1 ずつ減らす)
+  data[i] ← data[i - 1]
+endfor
+data[1] ← 0</pre>
+          <label><input type="radio" name="answer" value="1" required>{0, 2, 2, 2}</label>
+          <label><input type="radio" name="answer" value="2" required>{2, 2, 4, 6}</label>
+          <label><input type="radio" name="answer" value="3" required>{4, 6, 8, 0}</label>
+          <label><input type="radio" name="answer" value="4" required>{0, 2, 4, 6}</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+  </main>
+  <footer class="wrap"><a href="/materials/categories/#fe-b">科目Bの教材一覧</a> · <a href="https://www.ipa.go.jp/shiken/syllabus/henkou/2022/gmcbt80000007cfs-att/fe_kamoku_b_set_sample_qs.pdf">IPAの擬似言語の記述形式（PDF）</a></footer>
+</body>
+</html>
