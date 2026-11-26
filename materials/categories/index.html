@@ -19,6 +19,7 @@
     .subject-grid > .subject { padding: 10px; background: #0e192c; border: 1px solid #344a66; border-radius: 8px; }
     .subject ul { display: grid; gap: 4px; list-style: none; margin: 0; padding: 0; }
     .subject a { display: flex; align-items: center; min-height: 44px; padding: 5px 2px; }
+    .common-material { flex: none; margin-inline-start: 6px; border: 1px solid #496680; border-radius: 5px; padding: 1px 5px; color: #c1d0e4; font-size: .75rem; }
     .panel[id] { scroll-margin-top: 16px; }
     .panel:target { border-color: #8beaf6; }
     .topics { display: flex; flex-wrap: wrap; gap: 4px 16px; margin-top: 10px; }
@@ -51,7 +52,7 @@
         <div class="subject">
           <h3 class="subject-title">ストラテジ系</h3>
           <ul>
-            <li><a href="/materials/it-passport/break-even/" data-analytics-event="material_click" data-material-id="it-passport-break-even" data-click-location="category_list">損益分岐点とは？</a></li>
+            <li><a href="/materials/it-passport/break-even/" data-analytics-event="material_click" data-material-id="it-passport-break-even" data-click-location="category_list">損益分岐点とは？<small class="common-material">共通</small></a></li>
             <li><a href="/materials/it-passport/swot/" data-analytics-event="material_click" data-material-id="it-passport-swot" data-click-location="category_list">SWOT分析とは？</a></li>
             <li><a href="/materials/it-passport/kgi-kpi/" data-analytics-event="material_click" data-material-id="it-passport-kgi-kpi" data-click-location="category_list">KGIとKPIの違い</a></li>
           </ul>
@@ -60,7 +61,7 @@
           <h3 class="subject-title">マネジメント系</h3>
           <ul>
             <li><a href="/materials/it-passport/sla/" data-analytics-event="material_click" data-material-id="it-passport-sla" data-click-location="category_list">SLAとは？</a></li>
-            <li><a href="/materials/it-passport/project-schedule/" data-analytics-event="material_click" data-material-id="it-passport-project-schedule" data-click-location="category_list">アローダイアグラムで作業日程を読む</a></li>
+            <li><a href="/materials/it-passport/project-schedule/" data-analytics-event="material_click" data-material-id="it-passport-project-schedule" data-click-location="category_list">アローダイアグラムで作業日程を読む<small class="common-material">共通</small></a></li>
             <li><a href="/materials/it-passport/incident-problem/" data-analytics-event="material_click" data-material-id="it-passport-incident-problem" data-click-location="category_list">インシデント管理と問題管理の違い</a></li>
           </ul>
         </div>
@@ -71,7 +72,8 @@
             <li><a href="/materials/it-passport/primary-foreign-key/" data-analytics-event="material_click" data-material-id="it-passport-keys" data-click-location="category_list">主キーと外部キー</a></li>
             <li><a href="/materials/it-passport/normalization/" data-analytics-event="material_click" data-material-id="it-passport-normalization" data-click-location="category_list">データベースの正規化</a></li>
             <li><a href="/materials/it-passport/cpu-memory-storage/" data-analytics-event="material_click" data-material-id="it-passport-cpu-memory-storage" data-click-location="category_list">CPU・メモリ・ストレージの違い</a></li>
-            <li><a href="/materials/it-passport/security-cia/" data-analytics-event="material_click" data-material-id="it-passport-security-cia" data-click-location="category_list">情報セキュリティの3要素</a></li>
+            <li><a href="/materials/it-passport/security-cia/" data-analytics-event="material_click" data-material-id="it-passport-security-cia" data-click-location="category_list">情報セキュリティの3要素<small class="common-material">共通</small></a></li>
+            <li><a href="/materials/fe/binary-search/" data-analytics-event="material_click" data-material-id="fe-binary-search" data-click-location="category_list">二分探索の手順<small class="common-material">共通</small></a></li>
           </ul>
         </div>
       </div>
@@ -79,14 +81,31 @@
     <section id="fe" class="panel" aria-labelledby="fe-title">
       <h2 id="fe-title">💻 基本情報技術者試験</h2>
       <p><a class="practice-link" href="/materials/fe/practice/">基本情報道場で問題を解く →</a></p>
-      <div class="subject">
-        <ul>
-          <li><a href="/materials/fe/binary-search/" data-analytics-event="material_click" data-material-id="fe-binary-search" data-click-location="category_list">二分探索の手順</a></li>
-          <li><a href="/materials/fe/stack-queue/" data-analytics-event="material_click" data-material-id="fe-stack-queue" data-click-location="category_list">スタックとキューの違い</a></li>
-          <li><a href="/materials/fe/bit-operations/" data-analytics-event="material_click" data-material-id="fe-bit-operations" data-click-location="category_list">AND・OR・XORの違い</a></li>
-          <li><a href="/materials/fe/left-join/" data-analytics-event="material_click" data-material-id="fe-left-join" data-click-location="category_list">LEFT JOINで残る行</a></li>
-          <li><a href="/materials/fe/cache-hit/" data-analytics-event="material_click" data-material-id="fe-cache-hit" data-click-location="category_list">キャッシュのヒット率と平均時間</a></li>
-        </ul>
+      <!-- To share a lesson, list its existing URL here and under IT Passport. Tag individual quiz forms only to limit their audience. -->
+      <div class="subject-grid">
+        <div class="subject">
+          <h3 class="subject-title">ストラテジ系</h3>
+          <ul>
+            <li><a href="/materials/it-passport/break-even/" data-analytics-event="material_click" data-material-id="it-passport-break-even" data-click-location="category_list">損益分岐点とは？<small class="common-material">共通</small></a></li>
+          </ul>
+        </div>
+        <div class="subject">
+          <h3 class="subject-title">マネジメント系</h3>
+          <ul>
+            <li><a href="/materials/it-passport/project-schedule/" data-analytics-event="material_click" data-material-id="it-passport-project-schedule" data-click-location="category_list">アローダイアグラムで作業日程を読む<small class="common-material">共通</small></a></li>
+          </ul>
+        </div>
+        <div class="subject">
+          <h3 class="subject-title">テクノロジ系</h3>
+          <ul>
+            <li><a href="/materials/fe/binary-search/" data-analytics-event="material_click" data-material-id="fe-binary-search" data-click-location="category_list">二分探索の手順<small class="common-material">共通</small></a></li>
+            <li><a href="/materials/fe/stack-queue/" data-analytics-event="material_click" data-material-id="fe-stack-queue" data-click-location="category_list">スタックとキューの違い</a></li>
+            <li><a href="/materials/fe/bit-operations/" data-analytics-event="material_click" data-material-id="fe-bit-operations" data-click-location="category_list">AND・OR・XORの違い</a></li>
+            <li><a href="/materials/fe/left-join/" data-analytics-event="material_click" data-material-id="fe-left-join" data-click-location="category_list">LEFT JOINで残る行</a></li>
+            <li><a href="/materials/fe/cache-hit/" data-analytics-event="material_click" data-material-id="fe-cache-hit" data-click-location="category_list">キャッシュのヒット率と平均時間</a></li>
+            <li><a href="/materials/it-passport/security-cia/" data-analytics-event="material_click" data-material-id="it-passport-security-cia" data-click-location="category_list">情報セキュリティの3要素<small class="common-material">共通</small></a></li>
+          </ul>
+        </div>
       </div>
     </section>
     <section id="data" class="panel subject" aria-labelledby="data-title">
