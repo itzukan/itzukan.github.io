@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>累計の差から途中の範囲の合計を求める｜基本情報技術者試験 科目B | IT図鑑</title>
+  <meta name="description" content="先頭からの累計を並べておくと、欲しい区間より前の合計を引けます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe-b/range-sum/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/fe-pseudocode.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/fe-b/practice/">基本情報道場 科目B</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="fe-b-range-sum">
+    <p class="topic">基本情報技術者試験・科目B</p>
+    <h1>累計の差から途中の範囲の合計を求める</h1>
+    <p class="lead">先頭からの累計を並べておくと、欲しい区間より前の合計を引けます。</p>
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">➖ 終点までの累計から、始点の手前までの累計を引く</h2>
+      <p>prefix[i + 1] に、data の先頭から要素番号 i までの合計を保存します。</p>
+      <table class="trace-table">
+        <caption>変数の値の変化</caption>
+        <thead><tr><th scope="col">i</th><th scope="col">この回の足し算</th><th scope="col">保存した値</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">初期値</th><td>—</td><td>prefix[1] = 0</td></tr>
+          <tr><th scope="row">1</th><td>0 ＋ 2</td><td>prefix[2] = <mark>2</mark></td></tr>
+          <tr><th scope="row">2</th><td>2 ＋ 5</td><td>prefix[3] = <mark>7</mark></td></tr>
+          <tr><th scope="row">3</th><td>7 ＋ 3</td><td>prefix[4] = <mark>10</mark></td></tr>
+          <tr><th scope="row">4</th><td>10 ＋ 4</td><td>prefix[5] = <mark>14</mark></td></tr>
+          <tr><th scope="row">ループ後</th><td>14 − 2</td><td>result = <mark>12</mark></td></tr>
+        </tbody>
+      </table>
+      <p class="callout">prefix[2] を引くと、先頭の data[1] だけが合計から取り除かれます。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="3" data-correct="正解。prefix[5] は14、prefix[2] は2です。差の12は、data の2番目から4番目までの 5＋3＋4 と同じです。" data-retry="prefix[1] は0です。prefix[2] に data の何番目までが入るかを追ってください。">
+        <fieldset>
+          <legend>配列 data と prefix の要素番号は1から始まります。処理後の result はいくつですか？</legend>
+          <pre class="question-code" aria-label="擬似言語のコード">整数型の配列: data ← {2, 5, 3, 4}
+整数型の配列: prefix ← {0, 0, 0, 0, 0}
+整数型: i, result
+
+for (i を 1 から 4 まで 1 ずつ増やす)
+  prefix[i + 1] ← prefix[i] + data[i]
+endfor
+result ← prefix[5] - prefix[2]</pre>
+          <label><input type="radio" name="answer" value="1" required>14</label>
+          <label><input type="radio" name="answer" value="2" required>9</label>
+          <label><input type="radio" name="answer" value="3" required>12</label>
+          <label><input type="radio" name="answer" value="4" required>10</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+  </main>
+  <footer class="wrap"><a href="/materials/categories/#fe-b">科目Bの教材一覧</a> · <a href="https://www.ipa.go.jp/shiken/syllabus/henkou/2022/gmcbt80000007cfs-att/fe_kamoku_b_set_sample_qs.pdf">IPAの擬似言語の記述形式（PDF）</a></footer>
+</body>
+</html>

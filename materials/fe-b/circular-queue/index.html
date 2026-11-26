@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>循環キューで末尾から先頭へ戻る｜基本情報技術者試験 科目B | IT図鑑</title>
+  <meta name="description" content="配列に並べたキューを読み、末尾の次は要素番号1へ戻ります。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe-b/circular-queue/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/fe-pseudocode.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/fe-b/practice/">基本情報道場 科目B</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="fe-b-circular-queue">
+    <p class="topic">基本情報技術者試験・科目B</p>
+    <h1>循環キューで末尾から先頭へ戻る</h1>
+    <p class="lead">配列に並べたキューを読み、末尾の次は要素番号1へ戻ります。</p>
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">🔄 front は4の次に1へ戻る</h2>
+      <p>front は次に取り出す要素番号です。</p>
+      <table class="trace-table">
+        <caption>変数の値の変化</caption>
+        <thead><tr><th scope="col">i</th><th scope="col">読んだ位置</th><th scope="col">次の front</th><th scope="col">out</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">初期値</th><td>—</td><td>3</td><td>{0, 0, 0}</td></tr>
+          <tr><th scope="row">1</th><td>3</td><td><mark>4</mark></td><td>{<mark>4</mark>, 0, 0}</td></tr>
+          <tr><th scope="row">2</th><td>4</td><td><mark>1</mark></td><td>{4, <mark>6</mark>, 0}</td></tr>
+          <tr><th scope="row">3</th><td>1</td><td><mark>2</mark></td><td>{4, 6, <mark>8</mark>}</td></tr>
+        </tbody>
+      </table>
+      <p class="callout">位置4の次は余り0に1を足して位置1になります。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="2" data-correct="正解。front が3、4、1と進むので、読む値は4、6、8の順です。" data-retry="4を4で割った余りは0です。そのあと1を足すことに注目しましょう。">
+        <fieldset>
+          <legend>配列 queue の要素番号は1から始まり、取り出せる要素が3つあります。処理後の out はどうなりますか？</legend>
+          <pre class="question-code" aria-label="擬似言語のコード">整数型の配列: queue ← {8, 0, 4, 6}
+整数型の配列: out ← {0, 0, 0}
+整数型: front ← 3, i
+
+for (i を 1 から 3 まで 1 ずつ増やす)
+  out[i] ← queue[front]
+  front ← (front ÷ 4) の余り + 1
+endfor</pre>
+          <label><input type="radio" name="answer" value="1" required>{4, 6, 0}</label>
+          <label><input type="radio" name="answer" value="2" required>{4, 6, 8}</label>
+          <label><input type="radio" name="answer" value="3" required>{8, 4, 6}</label>
+          <label><input type="radio" name="answer" value="4" required>{6, 8, 4}</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+  </main>
+  <footer class="wrap"><a href="/materials/categories/#fe-b">科目Bの教材一覧</a> · <a href="https://www.ipa.go.jp/shiken/syllabus/henkou/2022/gmcbt80000007cfs-att/fe_kamoku_b_set_sample_qs.pdf">IPAの擬似言語の記述形式（PDF）</a></footer>
+</body>
+</html>
