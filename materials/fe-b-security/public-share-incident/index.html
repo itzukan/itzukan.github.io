@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>公開になったクラウドフォルダを初動で止める｜基本情報技術者試験 科目B | IT図鑑</title>
+  <meta name="description" content="閲覧できる状態を止める操作と、公開中の影響を調べる操作に分けます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe-b-security/public-share-incident/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/fe-security-case.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/fe-b-security/practice/">科目B・情報セキュリティ</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="fe-b-security-public-share-incident">
+    <p class="topic">基本情報技術者試験・科目B</p>
+    <h1>公開になったクラウドフォルダを初動で止める</h1>
+    <p class="lead">閲覧できる状態を止める操作と、公開中の影響を調べる操作に分けます。</p>
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">☁️ 公開を止める → 記録を残す → 影響確認</h2>
+      <ol class="security-flow">
+        <li><span class="case-icon" aria-hidden="true">🔒</span><div><strong>公開設定を解除</strong>外部から閲覧できる状態を止め、社内窓口へ報告する。</div></li>
+        <li><span class="case-icon" aria-hidden="true">📋</span><div><strong>記録を保存</strong>設定の変更履歴と、取得できるアクセスログを残す。</div></li>
+        <li><span class="case-icon" aria-hidden="true">🔎</span><div><strong>確認できた範囲を整理</strong>公開時間、対象の資料、閲覧の記録と記録の欠落を調べる。</div></li>
+      </ol>
+      <p class="callout">ログに記録がないことだけでは、外部から閲覧されなかったとは判断できません。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="2" data-correct="正解。まず公開を止めて被害の拡大を防ぎ、設定履歴やアクセスログで影響を調べます。記録されない閲覧の有無は、ログだけでは決められません。" data-retry="今も開ける状態です。被害の拡大を防ぐ操作と、後で事実を確かめる記録の両方が必要です。">
+        <fieldset>
+          <legend>管理担当者は、どの順番で対応すべきですか？</legend>
+          <ul class="question-context" aria-label="事例の条件">
+            <li>社内だけで使う契約書のフォルダが「リンクを知っている全員」に公開されていたと分かりました。現在も閲覧できます。</li>
+            <li>担当者は、記録を残したまま公開設定を解除できます。アクセスログには記録されない閲覧もあります。</li>
+          </ul>
+          <label><input type="radio" name="answer" value="1" required>ダウンロードの証拠が出るまで公開を続ける</label>
+          <label><input type="radio" name="answer" value="2" required>公開を止めて窓口に報告し、残っている設定履歴とアクセスログを保存して調べる</label>
+          <label><input type="radio" name="answer" value="3" required>フォルダとログを一緒に削除する</label>
+          <label><input type="radio" name="answer" value="4" required>ログに閲覧記録がなければ、公開を止めるだけで対応を終える</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+  </main>
+  <footer class="wrap"><a href="/materials/categories/#fe-b-security">情報セキュリティの教材一覧</a> · <a href="https://www.ipa.go.jp/security/guide/sme/ug65p90000019cbk-att/sme_guideline_v4.0_app_8.pdf">IPAのインシデント対応の手引き（PDF）</a></footer>
+</body>
+</html>

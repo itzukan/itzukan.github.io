@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>公開されたAPIキーの対応を決める｜基本情報技術者試験 科目B | IT図鑑</title>
+  <meta name="description" content="キーを含むファイルの公開後に、何を優先して止めるか考えます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe-b-security/exposed-api-key/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/fe-security-case.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/fe-b-security/practice/">科目B・情報セキュリティ</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="fe-b-security-exposed-api-key">
+    <p class="topic">基本情報技術者試験・科目B</p>
+    <h1>公開されたAPIキーの対応を決める</h1>
+    <p class="lead">キーを含むファイルの公開後に、何を優先して止めるか考えます。</p>
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">🔑 公開されたキーを使えなくする</h2>
+      <ol class="security-flow">
+        <li><span class="case-icon" aria-hidden="true">⚠️</span><div><strong>外部に渡った可能性を考える</strong>ファイルを直しても、公開中にコピーされたキーは残り得る。</div></li>
+        <li><span class="case-icon" aria-hidden="true">🔒</span><div><strong>元のキーを無効にする</strong>発行元で失効させ、必要なサービスを新しいキーに切り替える。</div></li>
+        <li><span class="case-icon" aria-hidden="true">📋</span><div><strong>利用状況を確認</strong>漏えい期間の記録を調べ、対象サービスと影響範囲を確認する。</div></li>
+      </ol>
+      <p class="callout">新しいキーは、サービスが承認した秘密情報の保管先で管理します。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="3" data-correct="正解。公開中にキーがコピーされた可能性があります。元のキーを発行元で無効にして使えなくし、新しいキーへの切り替えと利用状況の確認を進めます。" data-retry="今見えるファイルと、公開中に外部へ渡ったかもしれないコピーを分けて考えましょう。">
+        <fieldset>
+          <legend>鍵の管理担当者が優先すべき対応はどれですか？</legend>
+          <ul class="question-context" aria-label="事例の条件">
+            <li>まだ有効な業務用APIキーが、公開リポジトリのファイルに誤って入りました。ファイルが公開されたのは30分前です。</li>
+            <li>担当者には発行元でキーを無効にする権限があります。キーを使うサービスの切り替え手順もあります。</li>
+          </ul>
+          <label><input type="radio" name="answer" value="1" required>ファイルから文字列を削除し、同じキーを使い続ける</label>
+          <label><input type="radio" name="answer" value="2" required>公開リポジトリを非公開にし、同じキーを次の月まで使う</label>
+          <label><input type="radio" name="answer" value="3" required>公開されたキーを発行元で無効にし、必要な箇所を新しいキーへ切り替える</label>
+          <label><input type="radio" name="answer" value="4" required>ログに異常が出るまでは同じキーを使い続ける</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+  </main>
+  <footer class="wrap"><a href="/materials/categories/#fe-b-security">情報セキュリティの教材一覧</a> · <a href="https://docs.github.com/en/code-security/tutorials/remediate-leaked-secrets/remediating-a-leaked-secret">GitHub公式の漏えい時の対応</a></footer>
+</body>
+</html>

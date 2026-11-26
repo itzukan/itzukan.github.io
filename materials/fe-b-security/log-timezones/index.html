@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>異なる時刻表記のログを照合する｜基本情報技術者試験 科目B | IT図鑑</title>
+  <meta name="description" content="別々のシステムのログを、同じ時間の基準に揃えてから読みます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe-b-security/log-timezones/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/fe-security-case.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/fe-b-security/practice/">科目B・情報セキュリティ</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="fe-b-security-log-timezones">
+    <p class="topic">基本情報技術者試験・科目B</p>
+    <h1>異なる時刻表記のログを照合する</h1>
+    <p class="lead">別々のシステムのログを、同じ時間の基準に揃えてから読みます。</p>
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">🕒 UTCと日本時間を同じ基準で比べる</h2>
+      <ol class="security-flow">
+        <li><span class="case-icon" aria-hidden="true">☁️</span><div><strong>クラウド側：01:20 UTC</strong>この時刻にログイン成功が記録されている。</div></li>
+        <li><span class="case-icon" aria-hidden="true">➕</span><div><strong>9時間を足す</strong>01:20 UTC → 日本時間10:20。変換は調査用に行い、元の記録は残す。</div></li>
+        <li><span class="case-icon" aria-hidden="true">🔎</span><div><strong>社内側：10:20 日本時間</strong>時刻の基準を揃えてから、他の記録で操作のつながりを調べる。</div></li>
+      </ol>
+      <p class="callout">同じ時刻は手掛かりです。時刻だけで同一人物の操作と判断することはできません。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="1" data-correct="正解。UTCに9時間を足すと日本時間10:20です。時刻の基準を揃えてから、利用者や対象、操作順なども照合します。" data-retry="数字をそのまま比べる前に、両方の時刻表記を同じ時間帯へ換算しましょう。">
+        <fieldset>
+          <legend>担当者は、2つのログの時刻をどのように比較するべきですか？</legend>
+          <ul class="question-context" aria-label="事例の条件">
+            <li>クラウドのログには、同じ日の01:20にログイン成功と記録されています。このログの時刻はUTCです。</li>
+            <li>社内システムのログには、日本時間10:20に権限変更と記録されています。日本時間はUTCより9時間進んでいます。</li>
+          </ul>
+          <label><input type="radio" name="answer" value="1" required>クラウドの01:20を日本時間10:20に換算し、他の記録も使って関連を確認する</label>
+          <label><input type="radio" name="answer" value="2" required>時刻の数字が違うので、2件は無関係と判断する</label>
+          <label><input type="radio" name="answer" value="3" required>2件とも10:20に書き換え、元のログは削除する</label>
+          <label><input type="radio" name="answer" value="4" required>同じ時刻なら同一人物による操作と確定する</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+  </main>
+  <footer class="wrap"><a href="/materials/categories/#fe-b-security">情報セキュリティの教材一覧</a> · <a href="https://www.ipa.go.jp/security/guide/sme/ug65p90000019cbk-att/sme_guideline_v4.0_app_8.pdf">IPAのインシデント対応の手引き（PDF）</a></footer>
+</body>
+</html>

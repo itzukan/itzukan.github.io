@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>動作確認に使う顧客データを選ぶ｜基本情報技術者試験 科目B | IT図鑑</title>
+  <meta name="description" content="テストで確かめたい条件から、用意するデータを絞ります。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe-b-security/synthetic-test-data/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/fe-security-case.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/fe-b-security/practice/">科目B・情報セキュリティ</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="fe-b-security-synthetic-test-data">
+    <p class="topic">基本情報技術者試験・科目B</p>
+    <h1>動作確認に使う顧客データを選ぶ</h1>
+    <p class="lead">テストで確かめたい条件から、用意するデータを絞ります。</p>
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">🧪 確認したい条件からテストデータを作る</h2>
+      <ol class="security-flow">
+        <li><span class="case-icon" aria-hidden="true">📋</span><div><strong>条件を書き出す</strong>同姓のデータが複数あることと、電話番号が空欄の行があること。</div></li>
+        <li><span class="case-icon" aria-hidden="true">🧩</span><div><strong>架空の行を用意</strong>条件を満たす架空の氏名と、入力例・空欄を用意する。</div></li>
+        <li><span class="case-icon" aria-hidden="true">✅</span><div><strong>テストして確認</strong>本番データを複製せず、検索画面の結果を確認する。</div></li>
+      </ol>
+      <p class="callout">ここで必要なのはデータの形と組み合わせです。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="4" data-correct="正解。試験に必要なのは同姓や空欄という条件です。架空データでその条件を満たせば、実際の顧客情報を持ち込まずに確認できます。" data-retry="テストで確かめたい条件と、本番の人を識別する情報を分けて考えましょう。">
+        <fieldset>
+          <legend>このテストには、どのデータを用意するのが適切ですか？</legend>
+          <ul class="question-context" aria-label="事例の条件">
+            <li>検索画面の試験で、同姓の人が複数いる場合と、電話番号が空欄の場合を確認します。</li>
+            <li>テスト環境は本番より閲覧できる人数が多く、実在の氏名や連絡先は試験に不要です。</li>
+          </ul>
+          <label><input type="radio" name="answer" value="1" required>本番の顧客データを全件コピーする</label>
+          <label><input type="radio" name="answer" value="2" required>氏名だけ置き換え、実際の電話番号を使う</label>
+          <label><input type="radio" name="answer" value="3" required>本番データの少量コピーを複数人に配る</label>
+          <label><input type="radio" name="answer" value="4" required>同姓や空欄の条件を満たす架空データを作る</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+  </main>
+  <footer class="wrap"><a href="/materials/categories/#fe-b-security">情報セキュリティの教材一覧</a> · <a href="https://www.ipa.go.jp/security/guide/sme/about.html">IPAの情報セキュリティ対策ガイドライン</a></footer>
+</body>
+</html>

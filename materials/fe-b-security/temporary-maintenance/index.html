@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>外部保守のために一時的な権限を付ける｜基本情報技術者試験 科目B | IT図鑑</title>
+  <meta name="description" content="保守に必要な権限を、作業範囲と時間に合わせて決めます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe-b-security/temporary-maintenance/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/fe-security-case.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/fe-b-security/practice/">科目B・情報セキュリティ</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="fe-b-security-temporary-maintenance">
+    <p class="topic">基本情報技術者試験・科目B</p>
+    <h1>外部保守のために一時的な権限を付ける</h1>
+    <p class="lead">保守に必要な権限を、作業範囲と時間に合わせて決めます。</p>
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">🛠️ 保守の対象と時間に合わせて権限を付ける</h2>
+      <ol class="security-flow">
+        <li><span class="case-icon" aria-hidden="true">👤</span><div><strong>担当者を特定</strong>実際に作業する1名のアカウントを選ぶ。</div></li>
+        <li><span class="case-icon" aria-hidden="true">🔎</span><div><strong>閲覧範囲を限定</strong>対象システムのログだけが読めるようにする。</div></li>
+        <li><span class="case-icon" aria-hidden="true">⏱️</span><div><strong>作業終了時に失効</strong>15時に権限が切れたことを確認し、作業の記録を残す。</div></li>
+      </ol>
+      <p class="callout">作業内容が変わって追加の権限が要る場合は、その場で恒久的に広げず申請して確認します。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="2" data-correct="正解。対象者、読めるログ、作業時間の3つを限定します。終了後は一時権限が無効になったことを確認します。" data-retry="作業に必要なのは、対象システムのログ閲覧だけです。作業する人と時間も決まっています。">
+        <fieldset>
+          <legend>外部の保守担当者に与えるアクセスとして、どれが適切ですか？</legend>
+          <ul class="question-context" aria-label="事例の条件">
+            <li>外部保守の担当者1名が、土曜日13時から15時まで受付システムのログを調査します。設定変更は不要です。</li>
+            <li>システムは、個別アカウント、ログの閲覧権限、アクセスの有効期限を設定できます。</li>
+          </ul>
+          <label><input type="radio" name="answer" value="1" required>担当者全員が使える共有管理アカウントを、期限を設けずに渡す</label>
+          <label><input type="radio" name="answer" value="2" required>担当者1名のアカウントに、対象ログの閲覧権限を作業時間だけ与える</label>
+          <label><input type="radio" name="answer" value="3" required>担当者1名に全サーバーの管理権限を作業時間だけ与える</label>
+          <label><input type="radio" name="answer" value="4" required>ログの閲覧権限を担当者1名に与え、次の契約更新まで残す</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+  </main>
+  <footer class="wrap"><a href="/materials/categories/#fe-b-security">情報セキュリティの教材一覧</a> · <a href="https://www.ipa.go.jp/security/guide/sme/about.html">IPAの情報セキュリティ対策ガイドライン</a></footer>
+</body>
+</html>

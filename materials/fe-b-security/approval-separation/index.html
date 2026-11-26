@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>申請者と承認者の権限を分ける｜基本情報技術者試験 科目B | IT図鑑</title>
+  <meta name="description" content="重要な変更を一人で完結できるとき、操作の権限をどう分けるか考えます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe-b-security/approval-separation/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/fe-security-case.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/fe-b-security/practice/">科目B・情報セキュリティ</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="fe-b-security-approval-separation">
+    <p class="topic">基本情報技術者試験・科目B</p>
+    <h1>申請者と承認者の権限を分ける</h1>
+    <p class="lead">重要な変更を一人で完結できるとき、操作の権限をどう分けるか考えます。</p>
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">👥 申請 → 別の担当者が確認 → 承認</h2>
+      <ol class="security-flow">
+        <li><span class="case-icon" aria-hidden="true">📝</span><div><strong>申請者が変更を登録</strong>新しい振込先と確認した根拠を申請に添える。</div></li>
+        <li><span class="case-icon" aria-hidden="true">🔎</span><div><strong>承認者が照合</strong>別の担当者が、確認記録と入力された口座情報を照合する。</div></li>
+        <li><span class="case-icon" aria-hidden="true">✅</span><div><strong>承認された変更を反映</strong>申請と承認の記録を残し、承認後に口座情報を更新する。</div></li>
+      </ol>
+      <p class="callout">申請と承認を分けることで、同じ人が変更を一人で完結させるのを防げます。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="4" data-correct="正解。申請者と承認者を分け、別の担当者が内容を確認します。プログラムや権限設定でも、自己承認ができないようにします。" data-retry="運用ルールに「別担当者」と書くだけでなく、システム上でも同じ人が両方を操作できるかを確認しましょう。">
+        <fieldset>
+          <legend>口座変更の誤りや不正を抑えるために、どの権限設定が適切ですか？</legend>
+          <ul class="question-context" aria-label="事例の条件">
+            <li>振込先の登録には、変更の申請と承認が必要です。いまは同じ担当者が自分の申請を承認できます。</li>
+            <li>運用上、別担当者が変更内容を照合することにしました。</li>
+          </ul>
+          <label><input type="radio" name="answer" value="1" required>申請者が自分で承認できる状態にし、後で変更一覧を配る</label>
+          <label><input type="radio" name="answer" value="2" required>全員に申請権限と承認権限を与え、誰でも先に進めるようにする</label>
+          <label><input type="radio" name="answer" value="3" required>申請だけで変更を確定できるようにする</label>
+          <label><input type="radio" name="answer" value="4" required>申請者は自分の申請を承認できず、別の担当者が内容を確認して承認する</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+  </main>
+  <footer class="wrap"><a href="/materials/categories/#fe-b-security">情報セキュリティの教材一覧</a> · <a href="https://www.ipa.go.jp/security/guide/sme/about.html">IPAの情報セキュリティ対策ガイドライン</a></footer>
+</body>
+</html>

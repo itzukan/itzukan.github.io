@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ダウンロードしたファイルのハッシュを照合する｜基本情報技術者試験 科目B | IT図鑑</title>
+  <meta name="description" content="配布元が示した値と手元のファイルから計算した値を見比べ、差が出たときの対応を考えます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe-b-security/download-integrity/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/fe-security-case.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/fe-b-security/practice/">科目B・情報セキュリティ</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="fe-b-security-download-integrity">
+    <p class="topic">基本情報技術者試験・科目B</p>
+    <h1>ダウンロードしたファイルのハッシュを照合する</h1>
+    <p class="lead">配布元が示した値と手元のファイルから計算した値を見比べ、差が出たときの対応を考えます。</p>
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">🧮 公式の値と手元の値を比較する</h2>
+      <ol class="security-flow">
+        <li><span class="case-icon" aria-hidden="true">📄</span><div><strong>公式の値を確認</strong>対象ファイルとバージョンに対応するSHA-256値を読む。</div></li>
+        <li><span class="case-icon" aria-hidden="true">🔍</span><div><strong>手元の値と照合</strong>同じ方式で計算して比較する。この事例では不一致。</div></li>
+        <li><span class="case-icon" aria-hidden="true">🛑</span><div><strong>実行を止める</strong>ファイルと公式情報を確認し直し、再取得した場合も照合してから使う。</div></li>
+      </ol>
+      <p class="callout">ハッシュは、信頼できる配布元が示した値と比べて使います。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="4" data-correct="正解。値が一致しないファイルは実行せず、正しいバージョンと配布元の値を確認して、必要なら公式配布先から再取得します。" data-retry="照合は、配布元が示した内容と手元のファイルが対応しているかを確認するために行います。">
+        <fieldset>
+          <legend>担当者は、このファイルをどう扱うべきですか？</legend>
+          <ul class="question-context" aria-label="事例の条件">
+            <li>公式配布ページで、対象バージョンのインストーラのSHA-256値を確認しました。</li>
+            <li>同じバージョンとしてダウンロードしたファイルのSHA-256値を計算したところ、配布ページの値と一致しません。</li>
+          </ul>
+          <label><input type="radio" name="answer" value="1" required>ファイル名と容量が合えば、そのまま実行する</label>
+          <label><input type="radio" name="answer" value="2" required>実行してから、異常があれば照合をやり直す</label>
+          <label><input type="radio" name="answer" value="3" required>手元で計算した値を基準にして、確認済みとして記録する</label>
+          <label><input type="radio" name="answer" value="4" required>実行を止め、対象のファイルと公式の値を照合し直してから再取得する</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+  </main>
+  <footer class="wrap"><a href="/materials/categories/#fe-b-security">情報セキュリティの教材一覧</a> · <a href="https://ubuntu.com/tutorials/how-to-verify-ubuntu">Ubuntu公式のダウンロード検証手順</a></footer>
+</body>
+</html>

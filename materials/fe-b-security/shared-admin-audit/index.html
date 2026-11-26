@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>管理画面の操作履歴から担当者を特定する｜基本情報技術者試験 科目B | IT図鑑</title>
+  <meta name="description" content="操作記録とアカウントの使い方を見比べて、誰が何をしたか追えるようにします。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe-b-security/shared-admin-audit/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/fe-security-case.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/fe-b-security/practice/">科目B・情報セキュリティ</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="fe-b-security-shared-admin-audit">
+    <p class="topic">基本情報技術者試験・科目B</p>
+    <h1>管理画面の操作履歴から担当者を特定する</h1>
+    <p class="lead">操作記録とアカウントの使い方を見比べて、誰が何をしたか追えるようにします。</p>
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">🧾 アカウントと操作を結び付ける</h2>
+      <ol class="security-flow">
+        <li><span class="case-icon" aria-hidden="true">👥</span><div><strong>現状を確認</strong>3人が共有アカウントを使うので、どの操作も同じ名前で記録される。</div></li>
+        <li><span class="case-icon" aria-hidden="true">👤</span><div><strong>個別アカウントに変更</strong>担当者ごとに発行し、業務に必要な管理権限を割り当てる。</div></li>
+        <li><span class="case-icon" aria-hidden="true">🔎</span><div><strong>操作ログで確認</strong>アカウント、操作、対象、時刻を照合し、変更の経緯を確認する。</div></li>
+      </ol>
+      <p class="callout">個別アカウントの割り当て記録も管理し、誰が利用するアカウントか追えるようにします。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="1" data-correct="正解。個別アカウントと操作ログを組み合わせると、どのアカウントで、いつ、何が変更されたかを追跡できます。" data-retry="今あるログには、操作時刻だけでなくアカウント名も入っています。その名前が誰を指すかが重要です。">
+        <fieldset>
+          <legend>今後、権限変更を誰が行ったか調べられるようにするには、どの対策が適切ですか？</legend>
+          <ul class="question-context" aria-label="事例の条件">
+            <li>担当者3名が同じ管理アカウントを使っています。操作ログにはアカウント名、対象、操作時刻が残ります。</li>
+            <li>先週、意図しない権限変更がありましたが、アカウント名だけでは担当者を特定できませんでした。</li>
+          </ul>
+          <label><input type="radio" name="answer" value="1" required>担当者ごとの管理アカウントを発行し、操作ログに各アカウントが記録されるようにする</label>
+          <label><input type="radio" name="answer" value="2" required>共有アカウントの表示名だけを変更する</label>
+          <label><input type="radio" name="answer" value="3" required>操作時刻の表示を秒単位に変え、アカウント運用はそのままにする</label>
+          <label><input type="radio" name="answer" value="4" required>調査の負担を減らすため、操作ログの記録を停止する</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+  </main>
+  <footer class="wrap"><a href="/materials/categories/#fe-b-security">情報セキュリティの教材一覧</a> · <a href="https://www.ipa.go.jp/security/guide/sme/about.html">IPAの情報セキュリティ対策ガイドライン</a></footer>
+</body>
+</html>
