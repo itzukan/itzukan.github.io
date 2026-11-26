@@ -1,0 +1,24 @@
+.extra-chapter { scroll-margin-top: 16px; }
+.extra-chapter .chapter-flow { margin: 16px 0; padding: 12px; background: #111d30; border: 1px solid #496886; border-radius: 10px; }
+.extra-chapter .chapter-flow h3, .extra-chapter .chapter-flow-label { margin: 0 0 8px; }
+.extra-chapter .chapter-flow-label:not(:first-of-type) { margin-top: 12px; }
+.extra-chapter .chapter-flow-row { display: flex; align-items: stretch; gap: 5px; margin-bottom: 8px; }
+.extra-chapter .chapter-node { flex: 1 1 0; min-width: 0; padding: 8px; background: #203550; border: 1px solid #587590; border-radius: 7px; }
+.extra-chapter .chapter-node strong, .extra-chapter .chapter-node small { display: block; }
+.extra-chapter .chapter-node strong { color: #bdedfa; }
+.extra-chapter .chapter-node small { color: #e1eaf8; }
+.extra-chapter .chapter-arrow { align-self: center; font-weight: bold; color: #9ee7f4; }
+.extra-chapter .chapter-example + .chapter-example { margin-top: 12px; }
+.extra-chapter .chapter-code { min-width: 0; border: 1px solid #496886; border-radius: 8px; background: #0a1422; color: #e7f0fd; }
+.extra-chapter .chapter-code > strong { display: block; padding: 6px 10px; border-bottom: 1px solid #496886; }
+.extra-chapter .chapter-code pre { padding: 9px 10px; margin: 0; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; }
+@media (max-width: 520px) {
+  .extra-chapter .chapter-flow-row { flex-direction: column; }
+  .extra-chapter .chapter-arrow { transform: rotate(90deg); }
+}
+@media print {
+  .extra-chapter .chapter-example.os-specific { display: block !important; }
+  .extra-chapter .chapter-flow, .extra-chapter .chapter-node, .extra-chapter .chapter-code { background: #fff; color: #111; }
+  .extra-chapter .chapter-node strong, .extra-chapter .chapter-node small, .extra-chapter .chapter-arrow { color: #111; }
+  .extra-chapter .chapter-code { break-inside: avoid; }
+}
