@@ -7,7 +7,9 @@
   const review = get('review');
   const previewContainer = get('review-content');
   const parser = new DOMParser();
-  const storageKey = 'itzukan.it-passport.practice.v1';
+  const series = document.body.dataset.dojo === 'fe' ? 'fe' : 'it-passport';
+  const storageKey = 'itzukan.' + series + '.practice.v1';
+  const lessonPrefix = '/materials/' + series + '/';
   let bank = [];
   let questions = [];
   let index = 0;
@@ -69,9 +71,9 @@
     countButtons.forEach(button => { button.disabled = true; });
     try {
       const catalogue = await readPage('/materials/categories/');
-      const links = catalogue.querySelectorAll('#it-passport .subject a[data-material-id]');
+      const links = catalogue.querySelectorAll('#' + series + ' .subject a[data-material-id]');
       const paths = [...new Set([...links].map(link => link.getAttribute('href')))]
-        .filter(path => /^\/materials\/it-passport\/[a-z0-9-]+\/$/.test(path));
+        .filter(path => /^\/materials\/[a-z0-9-]+\/[a-z0-9-]+\/$/.test(path) && path.startsWith(lessonPrefix));
       const loaded = await Promise.allSettled(paths.map(async path => readQuestions(await readPage(path), path)));
       const unique = new Map();
       for (const lesson of loaded) {

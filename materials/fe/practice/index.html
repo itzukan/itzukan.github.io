@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>基本情報道場｜IT図鑑</title>
+  <meta name="description" content="基本情報技術者試験の科目Aテーマを使ったオリジナル問題をランダムに出題。答え合わせのあと、その場で教材の図解を読み返せます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe/practice/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <script defer src="/assets/it-passport-practice.js?v=4"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <link rel="stylesheet" href="/assets/practice-dojo.css">
+</head>
+<body data-dojo="fe">
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/practice/">問題シリーズ</a>
+    <a href="/materials/categories/#fe">基本情報の教材一覧</a>
+  </header>
+  <main class="wrap">
+    <h1>基本情報道場</h1>
+    <p class="lead">科目Aのオリジナル問題を1問ずつ解き、対応する図解で復習できます。</p>
+    <section id="setup" class="panel" aria-labelledby="setup-title">
+      <div class="resume" id="transfer-panel" hidden>
+        <h2>別の端末からの続き</h2>
+        <p id="transfer-status" class="note" role="status"></p>
+        <div class="actions">
+          <button type="button" id="accept-transfer" hidden>リンクの続きから再開</button>
+          <button type="button" id="cancel-transfer" class="secondary">閉じる</button>
+        </div>
+      </div>
+      <div class="resume" id="resume-panel" hidden>
+        <h2>途中の練習</h2>
+        <p class="note" id="resume-status"></p>
+        <div class="actions"><button type="button" id="resume" hidden>続きから再開</button></div>
+      </div>
+      <h2 id="setup-title" tabindex="-1">何問解きますか？</h2>
+      <p id="bank-status" class="note" role="status">教材の確認問題を読み込み中…</p>
+      <p id="restart-note" class="note" hidden>ここで新しく始めると、保存済みの途中経過が置き換わります。</p>
+      <div class="actions">
+        <button type="button" data-count="10" disabled>10問</button>
+        <button type="button" data-count="20" disabled>20問</button>
+        <button type="button" data-count="30" disabled>30問</button>
+        <button type="button" id="retry" class="secondary" hidden>再読み込み</button>
+      </div>
+      <noscript><p>問題を解くにはJavaScriptを有効にしてください。</p></noscript>
+    </section>
+    <section id="exercise" aria-labelledby="progress" hidden>
+      <div class="panel">
+        <h2 id="progress" tabindex="-1"></h2>
+        <form id="practice-question" class="quiz">
+          <fieldset>
+            <legend id="prompt"></legend>
+            <div id="choices"></div>
+          </fieldset>
+          <button type="submit">答えを確認</button>
+        </form>
+        <div id="result" class="practice-result" tabindex="-1" hidden>
+          <p><strong id="verdict"></strong></p>
+          <p id="explanation"></p>
+        </div>
+        <div class="actions"><button type="button" id="next" hidden>次の問題</button></div>
+      </div>
+      <div class="practice-continuity">
+        <div class="continuity-row">
+          <p class="note" id="storage-status" role="status"></p>
+          <button type="button" id="copy-progress">続きのリンクをコピー</button>
+        </div>
+        <p class="note" id="copy-status" role="status"></p>
+        <input type="text" id="resume-link" aria-label="続きのリンク" readonly hidden>
+      </div>
+      <details id="review">
+        <summary>解説を見る（教材の図解）</summary>
+        <div id="review-content"></div>
+        <a id="source">教材ページを開く</a>
+      </details>
+    </section>
+    <section id="summary" class="panel" aria-labelledby="summary-title" hidden>
+      <h2 id="summary-title" tabindex="-1">結果</h2>
+      <p id="score"></p>
+      <div class="actions">
+        <button type="button" id="again">もう一度解く</button>
+        <button type="button" id="choose" class="secondary">問題数を選び直す</button>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

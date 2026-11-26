@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LEFT JOINで残る行｜基本情報技術者試験 | IT図鑑</title>
+  <meta name="description" content="顧客一覧から、注文した人も注文がない人も含めて確認したいときに、LEFT JOINを使えます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe/left-join/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/it-passport-visuals.css">
+  <link rel="stylesheet" href="/assets/fe-lesson.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/fe/practice/">基本情報道場</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="fe-left-join">
+    <p class="topic">基本情報技術者試験・科目A</p>
+    <h1>LEFT JOINで残る行</h1>
+    <p class="lead">顧客一覧から、注文した人も注文がない人も含めて確認したいときに、LEFT JOINを使えます。</p>
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">🔗 左の顧客は全員残る</h2>
+      <div class="duo">
+        <table class="fe-table"><caption>左 · 顧客</caption><thead><tr><th scope="col">顧客ID</th><th scope="col">名前</th></tr></thead><tbody><tr><td>1</td><td>佐藤</td></tr><tr><td>2</td><td>山田</td></tr></tbody></table>
+        <table class="fe-table"><caption>右 · 注文</caption><thead><tr><th scope="col">顧客ID</th><th scope="col">注文ID</th></tr></thead><tbody><tr><td>1</td><td>201</td></tr><tr><td>1</td><td>202</td></tr></tbody></table>
+      </div>
+      <p class="join-arrow" aria-hidden="true">↓</p>
+      <table class="fe-table"><caption>顧客IDでLEFT JOINした結果</caption><thead><tr><th scope="col">顧客ID</th><th scope="col">名前</th><th scope="col">注文ID</th></tr></thead><tbody><tr><td>1</td><td>佐藤</td><td>201</td></tr><tr><td>1</td><td>佐藤</td><td>202</td></tr><tr><td>2</td><td>山田</td><td class="one">NULL</td></tr></tbody></table>
+      <p class="callout">右に一致する行が複数あればその数だけ行ができ、一致しない場合も左の行は残ります。対応する右の列は<strong>NULL（値なし）</strong>です。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="4" data-correct="正解。左の顧客表にある顧客2は残り、一致する注文がないため注文IDはNULLです。" data-retry="LEFT JOINで基準になるのは左の表です。一致する注文がないとき、右の列の値を考えましょう。">
+        <fieldset>
+          <legend>左の顧客表に顧客1と2がいます。右の注文表に顧客1の注文だけがあります。顧客IDでLEFT JOINすると、顧客2はどうなりますか？</legend>
+          <label><input type="radio" name="answer" value="1" required>結果から消える</label>
+          <label><input type="radio" name="answer" value="2" required>注文IDが0の行として残る</label>
+          <label><input type="radio" name="answer" value="3" required>顧客1の注文IDが付く</label>
+          <label><input type="radio" name="answer" value="4" required>注文IDがNULLの行として残る</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+      <form class="quiz" data-answer="1" data-correct="正解。顧客1の3行と、注文がない顧客2の1行を合わせて4行です。" data-retry="一致する注文の数と、注文がなくても残る顧客の行を数えましょう。">
+        <fieldset>
+          <legend>左の顧客表には顧客1と2が各1行、右の注文表には顧客1の注文が3行あります。顧客IDでLEFT JOINした直後に何行になりますか？</legend>
+          <label><input type="radio" name="answer" value="1" required>4行</label>
+          <label><input type="radio" name="answer" value="2" required>3行</label>
+          <label><input type="radio" name="answer" value="3" required>2行</label>
+          <label><input type="radio" name="answer" value="4" required>1行</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+    <p class="next-lesson"><a href="/materials/fe/practice/">基本情報道場でランダムに解く →</a></p>
+  </main>
+  <footer class="wrap"><a href="/materials/categories/#fe">基本情報の教材一覧</a> · <a href="https://www.ipa.go.jp/shiken/syllabus/gaiyou.html">IPAの出題範囲</a></footer>
+</body>
+</html>

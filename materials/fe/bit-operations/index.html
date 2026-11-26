@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AND・OR・XORの違い｜基本情報技術者試験 | IT図鑑</title>
+  <meta name="description" content="ビット列を演算するときは、左から同じ位置の0・1を1組ずつ見比べます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe/bit-operations/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/it-passport-visuals.css">
+  <link rel="stylesheet" href="/assets/fe-lesson.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/fe/practice/">基本情報道場</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="fe-bit-operations">
+    <p class="topic">基本情報技術者試験・科目A</p>
+    <h1>AND・OR・XORの違い</h1>
+    <p class="lead">ビット列を演算するときは、左から同じ位置の0・1を1組ずつ見比べます。</p>
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">💡 0と1の組み合わせで結果を決める</h2>
+      <table class="fe-table">
+        <thead><tr><th scope="col">入力</th><th scope="col">AND<br><small>両方1</small></th><th scope="col">OR<br><small>少なくとも一方が1</small></th><th scope="col">XOR<br><small>片方だけ1</small></th></tr></thead>
+        <tbody>
+          <tr><th scope="row">0・0</th><td>0</td><td>0</td><td>0</td></tr>
+          <tr><th scope="row">0・1</th><td>0</td><td class="one">1</td><td class="one">1</td></tr>
+          <tr><th scope="row">1・0</th><td>0</td><td class="one">1</td><td class="one">1</td></tr>
+          <tr><th scope="row">1・1</th><td class="one">1</td><td class="one">1</td><td>0</td></tr>
+        </tbody>
+      </table>
+      <p class="callout"><strong>1001 XOR 0011 → 1010</strong><br>左から「1と0」「0と0」「0と1」「1と1」を計算します。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="3" data-correct="正解。両方が1なのは左端だけなので1000です。" data-retry="ANDは同じ位置の2つがどちらも1のときだけ、結果が1になります。">
+        <fieldset>
+          <legend>2つの4ビット列 1100 と 1010 を、同じ位置ごとにANDで演算した結果はどれですか？</legend>
+          <label><input type="radio" name="answer" value="1" required>0110</label>
+          <label><input type="radio" name="answer" value="2" required>1110</label>
+          <label><input type="radio" name="answer" value="3" required>1000</label>
+          <label><input type="radio" name="answer" value="4" required>0000</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+      <form class="quiz" data-answer="2" data-correct="正解。2つのビットが異なるのは左から2番目と3番目なので0110です。" data-retry="XORは0・1または1・0なら1です。1・1は0になります。">
+        <fieldset>
+          <legend>2つの4ビット列 1100 と 1010 を、同じ位置ごとにXORで演算した結果はどれですか？</legend>
+          <label><input type="radio" name="answer" value="1" required>1110</label>
+          <label><input type="radio" name="answer" value="2" required>0110</label>
+          <label><input type="radio" name="answer" value="3" required>1000</label>
+          <label><input type="radio" name="answer" value="4" required>0101</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+    <p class="next-lesson"><a href="/materials/fe/practice/">基本情報道場でランダムに解く →</a></p>
+  </main>
+  <footer class="wrap"><a href="/materials/categories/#fe">基本情報の教材一覧</a> · <a href="https://www.ipa.go.jp/shiken/syllabus/gaiyou.html">IPAの出題範囲</a></footer>
+</body>
+</html>

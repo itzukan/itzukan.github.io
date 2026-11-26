@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>二分探索の手順｜基本情報技術者試験 | IT図鑑</title>
+  <meta name="description" content="昇順に並んだ棚番号から「42」を見つけます。中央を調べるたびに、探す範囲を絞れます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe/binary-search/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/it-passport-visuals.css">
+  <link rel="stylesheet" href="/assets/fe-lesson.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/fe/practice/">基本情報道場</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="fe-binary-search">
+    <p class="topic">基本情報技術者試験・科目A</p>
+    <h1>二分探索の手順</h1>
+    <p class="lead">昇順に並んだ棚番号から「42」を見つけます。中央を調べるたびに、探す範囲を絞れます。</p>
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">🔎 中央を調べ、片側に絞る</h2>
+      <ol class="trace">
+        <li><strong>① 中央の28を調べる</strong><div class="number-row"><span>12</span><span>18</span><span>24</span><mark>28</mark><span>35</span><span>42</span><span>60</span></div><p>42は28より大きいので、右側の35・42・60だけに絞る。</p></li>
+        <li><strong>② 右側の中央を調べる</strong><div class="number-row"><span>35</span><mark>42</mark><span>60</span></div><p>中央が42と一致。ここで探索終了。</p></li>
+      </ol>
+      <p class="callout"><strong>二分探索の前提は整列済み。</strong> 昇順では、探す値が中央より小さければ左、大きければ右へ進みます。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="1" data-correct="正解。12は中央の26より小さいので、26より左にある5・12・18だけを調べます。" data-retry="配列は昇順です。探す値と中央の値を比べて、結果があり得る側を選びましょう。">
+        <fieldset>
+          <legend>昇順の配列 [5, 12, 18, 26, 39, 44, 57] から12を二分探索します。最初に中央の26を調べた直後、次に調べる範囲はどれですか？</legend>
+          <label><input type="radio" name="answer" value="1" required>[5, 12, 18]</label>
+          <label><input type="radio" name="answer" value="2" required>[26, 39, 44]</label>
+          <label><input type="radio" name="answer" value="3" required>[39, 44, 57]</label>
+          <label><input type="radio" name="answer" value="4" required>[12, 18, 26, 39]</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+      <form class="quiz" data-answer="3" data-correct="正解。中央の26、右側の中央44、残りの57の順に調べるので3回目です。" data-retry="1回目に26を調べたら、残った範囲の中央を選び直しましょう。">
+        <fieldset>
+          <legend>昇順の配列 [5, 12, 18, 26, 39, 44, 57] から57を二分探索します。毎回、中央の値と探す値を1回比較するとき、何回目の比較で見つかりますか？</legend>
+          <label><input type="radio" name="answer" value="1" required>1回目</label>
+          <label><input type="radio" name="answer" value="2" required>2回目</label>
+          <label><input type="radio" name="answer" value="3" required>3回目</label>
+          <label><input type="radio" name="answer" value="4" required>4回目</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+    <p class="next-lesson"><a href="/materials/fe/practice/">基本情報道場でランダムに解く →</a></p>
+  </main>
+  <footer class="wrap"><a href="/materials/categories/#fe">基本情報の教材一覧</a> · <a href="https://www.ipa.go.jp/shiken/syllabus/gaiyou.html">IPAの出題範囲</a></footer>
+</body>
+</html>

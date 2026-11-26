@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>キャッシュのヒット率と平均時間｜基本情報技術者試験 | IT図鑑</title>
+  <meta name="description" content="よく使うデータを速いキャッシュに置くと、見つかる割合に応じて読み出しの平均時間が変わります。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe/cache-hit/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/it-passport-visuals.css">
+  <link rel="stylesheet" href="/assets/fe-lesson.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/fe/practice/">基本情報道場</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="fe-cache-hit">
+    <p class="topic">基本情報技術者試験・科目A</p>
+    <h1>キャッシュのヒット率と平均時間</h1>
+    <p class="lead">よく使うデータを速いキャッシュに置くと、見つかる割合に応じて読み出しの平均時間が変わります。</p>
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">⚡ 速い場合と遅い場合を割合で足す</h2>
+      <div class="duo">
+        <div class="example"><h3>⚡ ヒット</h3><p>キャッシュにある<br><strong>全体の80% × 10ns</strong></p></div>
+        <div class="example"><h3>📦 ミス</h3><p>キャッシュになく、主記憶まで読みに行く<br><strong>全体の20% × 60ns</strong></p></div>
+      </div>
+      <p class="callout"><strong>平均 ＝ 0.8 × 10 ＋ 0.2 × 60 ＝ 20ns</strong><br>ここでの60nsは、キャッシュの確認も含め、ミスした場合の処理全体の時間です。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="2" data-correct="正解。90%は5ns、残り10%は45nsなので、0.9 × 5 ＋ 0.1 × 45 ＝ 9nsです。" data-retry="ミス率は1 − 0.9 ＝ 0.1です。それぞれの時間に割合を掛けて足しましょう。">
+        <fieldset>
+          <legend>キャッシュのヒット率が90%、ヒット時は5ns、ミス時の処理全体は45nsです。アクセス1回あたりの平均時間はどれですか？</legend>
+          <label><input type="radio" name="answer" value="1" required>5ns</label>
+          <label><input type="radio" name="answer" value="2" required>9ns</label>
+          <label><input type="radio" name="answer" value="3" required>25ns</label>
+          <label><input type="radio" name="answer" value="4" required>45ns</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+      <form class="quiz" data-answer="3" data-correct="正解。ヒットは1,000 − 250 ＝ 750回です。750 ÷ 1,000 × 100 ＝ 75%です。" data-retry="250回はミスした回数です。全体から引いて、見つかった回数を求めましょう。">
+        <fieldset>
+          <legend>1,000回のアクセスのうち、キャッシュに見つからなかったのが250回でした。ヒット率は何%ですか？</legend>
+          <label><input type="radio" name="answer" value="1" required>25%</label>
+          <label><input type="radio" name="answer" value="2" required>50%</label>
+          <label><input type="radio" name="answer" value="3" required>75%</label>
+          <label><input type="radio" name="answer" value="4" required>80%</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+    <p class="next-lesson"><a href="/materials/fe/practice/">基本情報道場でランダムに解く →</a></p>
+  </main>
+  <footer class="wrap"><a href="/materials/categories/#fe">基本情報の教材一覧</a> · <a href="https://www.ipa.go.jp/shiken/syllabus/gaiyou.html">IPAの出題範囲</a></footer>
+</body>
+</html>
