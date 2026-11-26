@@ -14,7 +14,18 @@
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/extra-chapters.js"></script>
   <style>
+    .round-robin-balancer { width: fit-content; margin: .85rem auto 0; text-align: center; }
+    .round-robin-stem { display: block; width: 2px; height: .65rem; margin: 0 auto; background: #587590; }
     .round-robin-servers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .4rem; }
+    .round-robin-route { position: relative; padding-top: 1.5rem; color: #587590; }
+    .round-robin-arrow { position: absolute; inset: 0 0 auto; height: 1.5rem; pointer-events: none; }
+    .round-robin-arrow::before { content: ""; position: absolute; top: 0; height: 2px; background: currentColor; }
+    .round-robin-route:first-child .round-robin-arrow::before { left: calc(50% - 1px); width: calc(100% + .4rem + 1px); }
+    .round-robin-route:last-child .round-robin-arrow::before { right: calc(50% - 1px); width: calc(100% + .4rem + 1px); }
+    .round-robin-arrow::after { content: ""; position: absolute; inset: 0 auto .4rem calc(50% - 1px); width: 2px; background: currentColor; }
+    .round-robin-arrow i { position: absolute; bottom: .15rem; left: calc(50% - .28rem); border: .28rem solid transparent; border-top-color: currentColor; border-bottom: 0; }
+    .round-robin-route:has([data-current]) { color: #a5eef2; z-index: 1; }
+    #round-robin-practice:has([data-current]) .round-robin-stem { background: #a5eef2; }
     .round-robin-servers .chapter-node { display: flex; flex-direction: column; align-items: center; text-align: center; }
     .round-robin-servers .chapter-node[data-current] { background: #15394a; border-color: #a5eef2; }
     .round-robin-servers small { min-height: 1.5em; }
@@ -46,12 +57,25 @@
     <button id="send-round-robin" type="button">アクセスを送る</button>
     <button id="reset-round-robin" type="button">最初から</button>
   </div>
-  <p id="round-robin-status" role="status">まだアクセスは送っていません。</p>
-  <div class="round-robin-servers" role="group" aria-label="振り分け先のサーバー">
-    <div class="chapter-node" data-server="A"><strong>🖥️ サーバーA</strong><small></small></div>
-    <div class="chapter-node" data-server="B"><strong>🖥️ サーバーB</strong><small></small></div>
-    <div class="chapter-node" data-server="C"><strong>🖥️ サーバーC</strong><small></small></div>
+  <div role="group" aria-label="ロードバランサーから3台のサーバーへの振り分け図">
+    <div class="chapter-node round-robin-balancer"><strong>🔀 ロードバランサー</strong></div>
+    <span class="round-robin-stem" aria-hidden="true"></span>
+    <div class="round-robin-servers">
+      <div class="round-robin-route">
+        <span class="round-robin-arrow" aria-hidden="true"><i></i></span>
+        <div class="chapter-node" data-server="A"><strong>🖥️ サーバーA</strong><small></small></div>
+      </div>
+      <div class="round-robin-route">
+        <span class="round-robin-arrow" aria-hidden="true"><i></i></span>
+        <div class="chapter-node" data-server="B"><strong>🖥️ サーバーB</strong><small></small></div>
+      </div>
+      <div class="round-robin-route">
+        <span class="round-robin-arrow" aria-hidden="true"><i></i></span>
+        <div class="chapter-node" data-server="C"><strong>🖥️ サーバーC</strong><small></small></div>
+      </div>
+    </div>
   </div>
+  <p id="round-robin-status" role="status">まだアクセスは送っていません。</p>
   <p class="round-robin-history"><strong>届いた順番</strong> <span id="round-robin-history">—</span></p>
   <p class="note">ブラウザー上のシミュレーションです。実際のサーバーには通信しません。</p>
   <noscript><p>ミニ演習を試すにはJavaScriptを有効にしてください。</p></noscript>
