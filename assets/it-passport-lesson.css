@@ -42,6 +42,7 @@ h2 { font-size: 1.22rem; line-height: 1.4; }
 .comparison p { padding: 7px 5px; border: 1px solid #496886; border-radius: 8px; background: #1d3049; }
 .comparison strong { display: block; font-size: 1.3rem; }
 .below { color: #ffd1c9; }
+.quiz + .quiz { margin-top: 18px; padding-top: 8px; border-top: 1px solid #344a66; }
 .quiz fieldset { border: 0; min-inline-size: 0; padding: 0; margin: 10px 0 0; }
 .quiz legend { padding: 0; font-weight: 750; }
 .quiz label { display: flex; gap: 8px; align-items: center; min-height: 44px; padding: 6px 10px; margin-top: 7px; border: 1px solid #4b6382; border-radius: 8px; cursor: pointer; }

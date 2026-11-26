@@ -56,6 +56,26 @@
         <button type="submit">答えを確認</button>
         <output aria-live="polite"></output>
       </form>
+      <form class="quiz" data-answer="2" data-correct="正解。店の内側にある、店にとって有利な特徴なので「強み」です。" data-retry="店の外で起きた変化か、店自身の特徴かを考えましょう。">
+        <fieldset>
+          <legend>駅前のパン屋には、朝早くからパンを焼ける職人がいます。この事情はどれですか？</legend>
+          <label><input type="radio" name="answer" value="1" required>機会（O）</label>
+          <label><input type="radio" name="answer" value="2" required>強み（S）</label>
+          <label><input type="radio" name="answer" value="3" required>脅威（T）</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+      <form class="quiz" data-answer="3" data-correct="正解。オーブンの制約は店の内側にある不利な特徴なので「弱み」です。" data-retry="オーブンの大きさは、お店の設備に関する事情です。">
+        <fieldset>
+          <legend>駅前のパン屋で、オーブンが小さく、一度に焼けるパンの数が少ない場合はどれですか？</legend>
+          <label><input type="radio" name="answer" value="1" required>脅威（T）</label>
+          <label><input type="radio" name="answer" value="2" required>機会（O）</label>
+          <label><input type="radio" name="answer" value="3" required>弱み（W）</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
     </section>
     <p class="next-lesson"><a href="/materials/categories/#it-passport">ITパスポートの教材一覧へ</a></p>
   </main>
