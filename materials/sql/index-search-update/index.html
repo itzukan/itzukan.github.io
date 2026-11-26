@@ -21,10 +21,27 @@
     .index-demo { scroll-margin-top: 1rem; }
     .index-demo button { margin: 0; }
     .index-controls { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin-bottom: .75rem; }
-    .index-controls[hidden], .index-track [hidden] { display: none; }
+    .index-demo [hidden] { display: none; }
     .index-controls select { font: inherit; color: inherit; background: #14253d; border: 1px solid #587590; border-radius: .3rem; padding: .35rem; }
     .index-demo .index-lane + .index-lane { margin-top: .65rem; }
     .index-lane h3, .index-lane p { margin: 0; }
+    .index-lane button { margin: .5rem 0; }
+    .scan-window { position: relative; height: 8rem; overflow: hidden; margin: .4rem 0; background: #14253d; border: 1px solid #587590; border-radius: .4rem; }
+    .scan-window[data-playing]::after { content: ""; position: absolute; inset: 0 0 auto; height: 2rem; border: 2px solid #ffe175; box-sizing: border-box; pointer-events: none; }
+    .scan-rows { position: relative; margin: 0; padding: 0 0 6rem; list-style: none; }
+    .scan-rows li, .index-order-list li { display: flex; align-items: center; justify-content: space-between; gap: .4rem; padding: 0 .55rem; }
+    .scan-rows li { height: 2rem; box-sizing: border-box; border-bottom: 1px solid #587590; }
+    .scan-rows li[data-found] { background: #a5eef2; color: #0c1727; font-weight: 750; }
+    .index-orders { padding: .4rem .55rem; background: #14253d; border: 1px solid #587590; border-radius: .4rem; }
+    .index-orders[data-waiting] { visibility: hidden; }
+    .index-orders strong { color: #a5eef2; }
+    .index-order-list { margin: .15rem 0 0; padding: 0; list-style: none; }
+    .index-order-list li { padding: .15rem 0; }
+    @media print {
+      .scan-window { height: auto; }
+      .scan-rows { transform: none !important; }
+      .index-orders[data-waiting] { visibility: visible; }
+    }
     .index-lane .index-track {
       position: relative; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr);
       align-items: stretch; gap: .25rem; margin: .4rem 0; padding: 1.25rem 0 0; list-style: none;
@@ -40,7 +57,6 @@
     .index-track li { overflow-wrap: anywhere; }
     .index-track li small { font-size: .72em; line-height: 1.25; }
     .index-track li[data-checked] { border-color: #ffe175; }
-    .index-track li[data-target] { font-weight: 750; }
     .index-track li[data-found] { background: #a5eef2; border-color: #a5eef2; color: #0c1727; }
     .index-dot {
       position: absolute; z-index: 1; top: .27rem; left: 0; width: .5rem; height: .5rem;
@@ -75,42 +91,66 @@
 <p class="lead">5万件の注文から同じ顧客の注文履歴を探し、インデックスのあり・なしを比べます。</p>
 <section class="chapter-flow index-demo" id="index-search-demo" aria-labelledby="index-demo-title">
   <h2 id="index-demo-title">図で仕組みを理解しよう</h2>
-  <p>🔎 5万件の注文から<strong>顧客ID 4242の注文</strong>を探します。黄色い点が、今見ている場所です。</p>
+  <p>🔎 5万件の注文から<strong>顧客ID 4242の注文</strong>を探します。</p>
   <div class="index-controls" hidden>
     <label for="index-example">一致する件数</label>
     <select id="index-example">
       <option value="1">注文が1件</option>
       <option value="2" selected>注文が2件</option>
     </select>
-    <button type="button" id="play-index-search">2つの探し方を再生</button>
+
   </div>
   <section class="chapter-node index-lane" data-index-lane="scan">
     <h3>📄 インデックスなし｜注文表を順に見る</h3>
-    <ol class="index-track" aria-label="注文表の行">
-      <li>注文 #1</li><li aria-label="途中の行">…</li>
-      <li data-target>注文 #308<small>顧客 4242</small></li>
-      <li>…<small>残りも確認</small></li>
-      <li data-target data-duplicate>注文 #18000<small>顧客 4242</small></li>
-      <li>末尾<small>注文 #50000</small></li>
-    </ol>
-    <p class="index-result" role="status">確認する注文表の行 <strong>50,000行</strong></p>
+    <button type="button" id="play-index-scan" hidden>注文表を順に見る</button>
+    <div class="scan-window">
+      <ol class="scan-rows" aria-label="注文表の行（抜粋）">
+        <li><span>注文 #1</span><span>顧客 1</span></li>
+        <li><span>注文 #2</span><span>顧客 2</span></li>
+        <li><span>注文 #3</span><span>顧客 3</span></li>
+        <li><span>注文 #4</span><span>顧客 4</span></li>
+        <li><span>…</span><span>途中の注文</span></li>
+        <li><span>注文 #307</span><span>顧客 307</span></li>
+        <li data-scan-match><span>注文 #308</span><span>顧客 4242</span></li>
+        <li><span>注文 #309</span><span>顧客 309</span></li>
+        <li><span>注文 #310</span><span>顧客 310</span></li>
+        <li><span>…</span><span>途中の注文</span></li>
+        <li><span>注文 #17998</span><span>顧客 17998</span></li>
+        <li><span>注文 #17999</span><span>顧客 17999</span></li>
+        <li data-scan-match data-duplicate><span>注文 #18000</span><span>顧客 4242</span></li>
+        <li><span>注文 #18001</span><span>顧客 18001</span></li>
+        <li><span>注文 #18002</span><span>顧客 18002</span></li>
+        <li><span>…</span><span>途中の注文</span></li>
+        <li><span>注文 #49998</span><span>顧客 49998</span></li>
+        <li><span>注文 #49999</span><span>顧客 49999</span></li>
+        <li><span>注文 #50000</span><span>顧客 50000</span></li>
+      </ol>
+    </div>
+    <p id="index-scan-result" class="index-result" role="status">確認する注文表の行 <strong>50,000行</strong></p>
   </section>
   <section class="chapter-node index-lane" data-index-lane="lookup">
     <h3>📇 インデックスあり｜索引から該当行へ</h3>
-    <ol class="index-track" aria-label="索引から注文表に進む順番">
+    <button type="button" id="play-index-lookup" hidden>索引から探す</button>
+    <ol class="index-track" aria-label="顧客ID順の索引">
       <li>索引<small>範囲を絞る</small></li>
       <li data-index-match>顧客 4242<small>注文 #308</small></li>
       <li data-index-match data-duplicate>顧客 4242<small>注文 #18000</small></li>
       <li data-index-end>顧客 4243<small>索引だけ確認</small></li>
-      <li data-target>注文表<small>#308</small><small id="index-second-order">#18000</small></li>
     </ol>
-    <p class="index-result" role="status">確認する注文表の行 <strong>該当の2行</strong></p>
+    <p id="index-lookup-result" class="index-result" role="status">索引で場所を見つけたら、注文表の該当行へ移動します。</p>
+    <div class="index-orders" id="index-orders">
+      <strong>↳ 注文表から取得した行</strong>
+      <ul class="index-order-list">
+        <li><span>注文 #308</span><span>顧客 4242</span></li>
+        <li data-duplicate><span>注文 #18000</span><span>顧客 4242</span></li>
+      </ul>
+    </div>
     <p><strong>索引には、顧客IDと注文表の行の場所が入っています。</strong> 注文が2件の例では、顧客4242の索引から注文 #308 と #18000 の行へ直接たどれます。</p>
     <p>顧客ID順に並んでいるので、次の索引が4243なら、4242の注文はそこで終わりです。<strong>顧客4243の注文行は読みません。</strong></p>
   </section>
   <p><strong>顧客4242の注文を見つけても、同じ顧客の注文がほかにないか確認します。</strong> このSQLは、条件に合う行をすべて返す指定です。注文表には同じ顧客の注文が離れて並ぶこともあるので、索引なしでは末尾まで調べます。</p>
   <p><strong>重複する列にも索引を作れます。</strong> 同じ人が何度注文しても顧客IDは同じです。注文番号は注文ごとに異なり、主キーとして使えます。顧客IDで注文履歴をよく探し、少数の注文に絞れるなら索引の候補です。 <a href="https://www.postgresql.org/docs/current/indexes-unique.html">PostgreSQLの一意インデックス</a></p>
-  <p class="note">比較のために流れを簡略化しています。「…」は省略した行です。点の速さは実測時間ではありません。下のSQL演習は、顧客4242の注文が2件ある場合です。</p>
+  <p class="note">注文表と索引は、説明用に一部を抜き出しています。下のSQL演習は、顧客4242の注文が2件ある場合です。</p>
   <p>✏️ 注文の追加時は、注文表と索引の両方に反映します。索引には更新の手間と保存容量がかかります。</p>
 </section>
 <div class="panel block-learn"><h2>❓ 疑問</h2><p>検索が速くなるなら、すべての列にインデックスを作るとよい？</p></div>
@@ -212,89 +252,107 @@ ROLLBACK;</code></pre></div>
 <script>
   (() => {
     const demo = document.getElementById('index-search-demo');
-    const play = document.getElementById('play-index-search');
     const example = document.getElementById('index-example');
-    const secondOrder = document.getElementById('index-second-order');
-    const lanes = [...demo.querySelectorAll('[data-index-lane]')].map(lane => {
-      const track = lane.querySelector('.index-track');
-      const dot = document.createElement('li');
-      dot.className = 'index-dot';
-      dot.setAttribute('aria-hidden', 'true');
-      dot.hidden = true;
-      track.append(dot);
-      const result = lane.querySelector('.index-result');
-      return {
-        track, dot, result,
-        steps: [...track.querySelectorAll('li:not(.index-dot)')],
-        scan: lane.dataset.indexLane === 'scan',
-        summary: result.innerHTML,
-      };
-    });
-    const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
-    let run = 0;
+    const scanButton = document.getElementById('play-index-scan');
+    const lookupButton = document.getElementById('play-index-lookup');
+    const scanResult = document.getElementById('index-scan-result');
+    const lookupResult = document.getElementById('index-lookup-result');
+    const scanWindow = demo.querySelector('.scan-window');
+    const scanRows = scanWindow.querySelector('.scan-rows');
+    const track = demo.querySelector('.index-track');
+    const steps = [...track.children];
+    const orders = document.getElementById('index-orders');
+    const motion = matchMedia('(prefers-reduced-motion: reduce)');
+    const dot = document.createElement('li');
+    dot.className = 'index-dot';
+    dot.setAttribute('aria-hidden', 'true');
+    track.append(dot);
+    function resetScan() {
+      for (const animation of scanRows.getAnimations?.() ?? []) animation.cancel();
+      for (const row of scanRows.children) row.removeAttribute('data-found');
+      scanRows.style.transform = '';
+      scanWindow.removeAttribute('data-playing');
+      scanResult.textContent = '確認する注文表の行 50,000行';
+    }
 
-    async function animateLane(lane, currentRun, count) {
-      const { track, dot, result, scan, summary } = lane;
-      for (const animation of dot.getAnimations()) animation.cancel();
-      for (const step of lane.steps) {
-        step.hidden = step.hasAttribute('data-duplicate') && count === 1;
+    function resetLookup() {
+      for (const animation of dot.getAnimations?.() ?? []) animation.cancel();
+      for (const step of steps) {
         step.removeAttribute('data-checked');
         step.removeAttribute('data-found');
       }
-      dot.hidden = reduceMotion.matches || !dot.animate;
-      result.textContent = '検索中…';
-      const position = step => {
-        const box = step.getBoundingClientRect();
-        return 'translateX(' + (box.left + box.width / 2 - track.getBoundingClientRect().left) + 'px) translateX(-50%)';
-      };
-      const steps = lane.steps.filter(step => !step.hidden);
-      let previous = steps[0];
-      let matches = 0;
-      for (const step of steps) {
-        if (!dot.hidden) {
-          const animation = dot.animate(
-            [{transform: position(previous)}, {transform: position(step)}],
-            {duration: scan ? (matches ? 700 : 470) : 410, fill: 'forwards'},
-          );
-          try { await animation.finished; } catch { return; }
-          if (currentRun !== run) return;
-          dot.style.transform = position(step);
-          animation.cancel();
+      dot.hidden = true;
+      orders.setAttribute('data-waiting', '');
+      lookupResult.textContent = '索引で場所を見つけたら、注文表の該当行へ移動します。';
+    }
+
+    async function move(element, from, to, duration) {
+      if (!motion.matches && element.animate) {
+        const animation = element.animate([{transform: from}, {transform: to}], {duration, fill: 'forwards'});
+        try { await animation.finished; } catch { return false; }
+        element.style.transform = to;
+        animation.cancel();
+      }
+      return true;
+    }
+
+    scanButton.addEventListener('click', async () => {
+      resetScan();
+      const matches = [...scanRows.querySelectorAll('[data-scan-match]:not([hidden])')];
+      scanWindow.setAttribute('data-playing', '');
+      scanResult.textContent = '注文表を先頭から確認中…';
+      let from = 'translateY(0px)';
+      for (const row of [...matches, scanRows.lastElementChild]) {
+        const to = 'translateY(-' + row.offsetTop + 'px)';
+        if (!await move(scanRows, from, to, 650)) return;
+        from = to;
+        if (row.hasAttribute('data-scan-match')) {
+          row.setAttribute('data-found', '');
+          scanResult.textContent = row.firstElementChild.textContent + ' が一致。残りの行も確認中…';
+          if (!await move(scanRows, from, from, 430)) return;
         }
+      }
+      scanWindow.removeAttribute('data-playing');
+      scanResult.textContent = '50,000行を確認。顧客4242の注文は' + matches.length + '件。';
+    });
+
+    lookupButton.addEventListener('click', async () => {
+      resetLookup();
+      const visible = steps.filter(step => !step.hidden);
+      const center = step => 'translateX(' + (step.offsetLeft + step.offsetWidth / 2) + 'px) translateX(-50%)';
+      let from = center(visible[0]);
+      let matches = 0;
+      dot.hidden = motion.matches || !dot.animate;
+      lookupResult.textContent = '索引で顧客4242の場所を探しています…';
+      for (const step of visible) {
+        const to = center(step);
+        if (!await move(dot, from, to, 470)) return;
+        from = to;
         step.setAttribute('data-checked', '');
         if (step.hasAttribute('data-index-match')) {
           matches++;
           step.setAttribute('data-found', '');
-          result.textContent = '索引で顧客4242の注文を' + matches + '件発見 → 次の顧客IDを確認';
+          lookupResult.textContent = '索引で顧客4242の注文を' + matches + '件発見。';
         }
         if (step.hasAttribute('data-index-end')) {
-          result.textContent = '索引が顧客4243に変わった → 4242の注文は' + matches + '件で確定。注文表の該当行へ';
+          lookupResult.textContent = '索引が4243に変わったので、ここで探索を終了。';
+          if (!await move(dot, from, from, 550)) return;
         }
-        if (step.hasAttribute('data-target')) {
-          step.setAttribute('data-found', '');
-          if (scan) {
-            matches++;
-            if (!dot.hidden) result.textContent = '顧客4242の注文を' + matches + '件発見 → 同じ顧客の注文がないか確認中';
-          }
-        }
-        previous = step;
       }
       dot.hidden = true;
-      result.innerHTML = scan
-        ? '末尾まで確認完了。顧客4242の注文は' + matches + '件 ／ ' + summary
-        : '4243で探索終了。確認する注文表の行 <strong>該当の' + matches + '行</strong>';
-    }
+      orders.removeAttribute('data-waiting');
+      lookupResult.textContent = '索引の参照を使って、顧客4242の注文' + matches + '件を直接取得。';
+    });
 
-    function replay() {
-      const currentRun = ++run;
-      const count = Number(example.value);
-      secondOrder.hidden = count === 1;
-      for (const lane of lanes) animateLane(lane, currentRun, count);
-    }
-
-    play.addEventListener('click', replay);
-    example.addEventListener('change', replay);
+    example.addEventListener('change', () => {
+      for (const item of demo.querySelectorAll('[data-duplicate]')) item.hidden = example.value === '1';
+      resetScan();
+      resetLookup();
+    });
+    example.dispatchEvent(new Event('change'));
     demo.querySelector('.index-controls').hidden = false;
+    scanButton.hidden = false;
+    lookupButton.hidden = false;
   })();
 </script>
 </body>
