@@ -247,29 +247,29 @@
     <div class="chapter-code"><strong>② 索引あり・2件</strong><pre tabindex="0"><code></code></pre></div>
     <div class="chapter-code"><strong>③ 索引あり・多くの行</strong><pre tabindex="0"><code></code></pre></div>
   </div>
-  <details class="index-notes"><summary>実行するSQLを表示（PostgreSQL）</summary><div class="chapter-code"><pre tabindex="0"><code id="index-example-sql">BEGIN;
-CREATE TEMP TABLE index_lesson_orders AS
+  <details class="index-notes"><summary>実行するSQLを表示（PostgreSQL）</summary><div class="chapter-code"><pre tabindex="0"><code id="index-example-sql">BEGIN;  -- 練習を始める
+CREATE TEMP TABLE index_lesson_orders AS  -- 練習用の注文表を作る
 SELECT n AS order_no,
-       CASE WHEN n IN (308, 18000) THEN 4242
-            WHEN n = 4242 THEN 308
+       CASE WHEN n IN (308, 18000) THEN 4242  -- 注文 #308 と #18000 の顧客IDを4242にする
+            WHEN n = 4242 THEN 308  -- 注文 #4242 は別の顧客にして、該当を2件にする
             ELSE n END AS customer_id
-FROM generate_series(1, 50000) AS n;
-ANALYZE index_lesson_orders;
+FROM generate_series(1, 50000) AS n;  -- 注文番号を1から50000まで用意
+ANALYZE index_lesson_orders;  -- DBが見積もりに使う統計を更新
 
 -- ① 索引なし
-EXPLAIN (COSTS OFF)
+EXPLAIN (COSTS OFF)  -- DBが選ぶ探し方を表示
 SELECT * FROM index_lesson_orders WHERE customer_id = 4242;
 
 -- ② 索引あり
-CREATE INDEX ON index_lesson_orders (customer_id);
+CREATE INDEX ON index_lesson_orders (customer_id);  -- 顧客IDで探せる索引を作る
 ANALYZE index_lesson_orders;
 EXPLAIN (COSTS OFF)
 SELECT * FROM index_lesson_orders WHERE customer_id = 4242;
 
 -- ③ 多くの行が該当する場合
 EXPLAIN (COSTS OFF)
-SELECT * FROM index_lesson_orders WHERE customer_id &lt;= 49000;
-ROLLBACK;</code></pre></div></details>
+SELECT * FROM index_lesson_orders WHERE customer_id &lt;= 49000;  -- 条件に当てはまる4万9千件を探す
+ROLLBACK;  -- 練習で作った表と索引を取り消す</code></pre></div></details>
 </div>
 <div class="panel block-result"><h2>📋 結果を見てみよう（表示例）</h2><div class="chapter-example"><div class="chapter-code"><strong>表示例</strong><pre tabindex="0"><code>① <mark>Seq Scan</mark> on index_lesson_orders
      Filter: (customer_id = 4242)
