@@ -21,7 +21,7 @@
     .index-demo { scroll-margin-top: 1rem; }
     .index-demo button { margin: 0; }
     .index-controls { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin-bottom: .75rem; }
-    .index-demo [hidden] { display: none; }
+    .index-demo [hidden], .index-demo .index-track [hidden] { display: none; }
     .index-controls select { font: inherit; color: inherit; background: #14253d; border: 1px solid #587590; border-radius: .3rem; padding: .35rem; }
     .index-demo .index-lane + .index-lane { margin-top: .65rem; }
     .index-lane h3, .index-lane p { margin: 0; }
@@ -29,14 +29,20 @@
     .scan-window { position: relative; height: 8rem; overflow: hidden; margin: .4rem 0; background: #14253d; border: 1px solid #587590; border-radius: .4rem; }
     .scan-window[data-playing]::after { content: ""; position: absolute; inset: 0 0 auto; height: 2rem; border: 2px solid #ffe175; box-sizing: border-box; pointer-events: none; }
     .scan-rows { position: relative; margin: 0; padding: 0 0 6rem; list-style: none; }
-    .scan-rows li, .index-order-list li { display: flex; align-items: center; justify-content: space-between; gap: .4rem; padding: 0 .55rem; }
-    .scan-rows li { height: 2rem; box-sizing: border-box; border-bottom: 1px solid #587590; }
+    .scan-rows li { display: flex; align-items: center; justify-content: space-between; gap: .4rem; padding: 0 .55rem; height: 2rem; box-sizing: border-box; border-bottom: 1px solid #587590; }
     .scan-rows li[data-found] { background: #a5eef2; color: #0c1727; font-weight: 750; }
-    .index-orders { padding: .4rem .55rem; background: #14253d; border: 1px solid #587590; border-radius: .4rem; }
+    .index-orders { display: grid; grid-template-columns: repeat(var(--lookup-columns, 4), minmax(0, 1fr)); gap: .25rem; padding-top: 1.6rem; align-items: stretch; }
     .index-orders[data-waiting] { visibility: hidden; }
-    .index-orders strong { color: #a5eef2; }
-    .index-order-list { margin: .15rem 0 0; padding: 0; list-style: none; }
-    .index-order-list li { padding: .15rem 0; }
+    .index-orders > strong { align-self: center; color: #a5eef2; text-align: center; font-size: .85rem; }
+    .index-order-list { display: contents; }
+    .index-order-list li {
+      position: relative; min-width: 0; padding: .25rem .1rem; text-align: center; overflow-wrap: anywhere;
+      color: #e9f4ff; background: #14253d; border: 1px solid #a5eef2; border-radius: .3rem;
+      font-size: clamp(.71rem, 3.3vw, 1rem);
+    }
+    .index-order-list li::before, .index-order-list li::after { content: ""; position: absolute; left: 50%; }
+    .index-order-list li::before { bottom: 100%; height: 1.6rem; width: 2px; background: #a5eef2; transform: translateX(-50%); }
+    .index-order-list li::after { bottom: calc(100% + .15rem); width: .4rem; height: .4rem; border: solid #a5eef2; border-width: 0 2px 2px 0; transform: translateX(-50%) rotate(45deg); }
     @media print {
       .scan-window { height: auto; }
       .scan-rows { transform: none !important; }
@@ -44,7 +50,7 @@
     }
     .index-lane .index-track {
       position: relative; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr);
-      align-items: stretch; gap: .25rem; margin: .4rem 0; padding: 1.25rem 0 0; list-style: none;
+      align-items: stretch; gap: .25rem; margin: .4rem 0 0; padding: 1.25rem 0 0; list-style: none;
     }
     .index-track::before {
       content: ""; position: absolute; top: .48rem; left: 0; right: 0; height: 2px; background: #587590;
@@ -132,19 +138,20 @@
     <h3>📇 インデックスあり｜索引から該当行へ</h3>
     <button type="button" id="play-index-lookup" hidden>索引から探す</button>
     <ol class="index-track" aria-label="顧客ID順の索引">
-      <li>索引<small>範囲を絞る</small></li>
+      <li>🌳 B-tree<small>4242の範囲へ</small></li>
       <li data-index-match>顧客 4242<small>注文 #308</small></li>
       <li data-index-match data-duplicate>顧客 4242<small>注文 #18000</small></li>
       <li data-index-end>顧客 4243<small>索引だけ確認</small></li>
     </ol>
-    <p id="index-lookup-result" class="index-result" role="status">索引で場所を見つけたら、注文表の該当行へ移動します。</p>
     <div class="index-orders" id="index-orders">
-      <strong>↳ 注文表から取得した行</strong>
-      <ul class="index-order-list">
-        <li><span>注文 #308</span><span>顧客 4242</span></li>
-        <li data-duplicate><span>注文 #18000</span><span>顧客 4242</span></li>
+      <strong>注文表</strong>
+      <ul class="index-order-list" aria-label="取得した注文">
+        <li>注文 #308</li>
+        <li data-duplicate>注文 #18000</li>
       </ul>
     </div>
+    <p id="index-lookup-result" class="index-result" role="status">索引で場所を見つけたら、注文表の該当行へ移動します。</p>
+    <p><strong>B-treeの枝をたどって、4242の範囲へ。</strong> そこから、並んでいる索引の項目を順に確認します。</p>
     <p><strong>索引には、顧客IDと注文表の行の場所が入っています。</strong> 注文が2件の例では、顧客4242の索引から注文 #308 と #18000 の行へ直接たどれます。</p>
     <p>顧客ID順に並んでいるので、次の索引が4243なら、4242の注文はそこで終わりです。<strong>顧客4243の注文行は読みません。</strong></p>
   </section>
@@ -345,7 +352,9 @@ ROLLBACK;</code></pre></div>
     });
 
     example.addEventListener('change', () => {
-      for (const item of demo.querySelectorAll('[data-duplicate]')) item.hidden = example.value === '1';
+      const single = example.value === '1';
+      for (const item of demo.querySelectorAll('[data-duplicate]')) item.hidden = single;
+      orders.style.setProperty('--lookup-columns', single ? '3' : '4');
       resetScan();
       resetLookup();
     });
