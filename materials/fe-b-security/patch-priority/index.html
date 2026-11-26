@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>セキュリティ更新の優先順位を決める｜基本情報技術者試験 科目B | IT図鑑</title>
+  <meta name="description" content="同じ更新が必要なシステムでも、公開範囲と再起動の影響を合わせて考えます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe-b-security/patch-priority/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/fe-security-case.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/fe-b-security/practice/">科目B・情報セキュリティ</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="fe-b-security-patch-priority">
+    <p class="topic">基本情報技術者試験・科目B</p>
+    <h1>セキュリティ更新の優先順位を決める</h1>
+    <p class="lead">同じ更新が必要なシステムでも、公開範囲と再起動の影響を合わせて考えます。</p>
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">🛠️ 公開範囲を比べ、更新前後を確かめる</h2>
+      <ol class="security-flow">
+        <li><span class="case-icon" aria-hidden="true">🌐</span><div><strong>優先順位を付ける</strong>公開範囲と業務への影響を見比べ、受付サーバーを優先する。</div></li>
+        <li><span class="case-icon" aria-hidden="true">📋</span><div><strong>更新を準備</strong>動作を事前確認し、停止時間と切り戻し手順を関係者と共有する。</div></li>
+        <li><span class="case-icon" aria-hidden="true">✅</span><div><strong>適用して確認</strong>更新後に受付が使えることを確認し、残る検証サーバーも計画に入れる。</div></li>
+      </ol>
+      <p class="callout">優先順位は公開範囲だけで決まりません。脆弱性の深刻さや業務への影響も合わせて判断します。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="1" data-correct="正解。公開サーバーはインターネットからアクセスできるため、今回の条件では対応を優先します。停止と障害の影響を抑える準備をしたうえで更新します。" data-retry="同じ更新が必要でも、アクセスできる範囲は違います。計画的に停止できる点にも注目しましょう。">
+        <fieldset>
+          <legend>担当チームは、どの方針で更新の優先順位を決めるべきですか？</legend>
+          <ul class="question-context" aria-label="事例の条件">
+            <li>同じ製品に対するセキュリティ更新が公開されました。対象はインターネット公開の受付サーバーと、社内からしか使えない検証サーバーです。</li>
+            <li>受付サーバーは短時間停止できます。更新前に動作確認をし、障害時には前の状態に戻す手順もあります。</li>
+          </ul>
+          <label><input type="radio" name="answer" value="1" required>公開サーバーの更新を優先し、動作確認と切り戻しの準備をして適用する</label>
+          <label><input type="radio" name="answer" value="2" required>公開サーバーは停止を避け、検証サーバーだけを更新する</label>
+          <label><input type="radio" name="answer" value="3" required>対応順はリスクを見ず、サーバー名の順にする</label>
+          <label><input type="radio" name="answer" value="4" required>利用者から苦情が出るまで、両方の更新を見送る</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+  </main>
+  <footer class="wrap"><a href="/materials/categories/#fe-b-security">情報セキュリティの教材一覧</a> · <a href="https://www.ipa.go.jp/security/guide/sme/about.html">IPAの情報セキュリティ対策ガイドライン</a></footer>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>業務用ノートPCを紛失したときの初動｜基本情報技術者試験 科目B | IT図鑑</title>
+  <meta name="description" content="端末を捜す動きと、情報を守るための初動を並行できるようにします。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe-b-security/lost-laptop/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/fe-security-case.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/fe-b-security/practice/">科目B・情報セキュリティ</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="fe-b-security-lost-laptop">
+    <p class="topic">基本情報技術者試験・科目B</p>
+    <h1>業務用ノートPCを紛失したときの初動</h1>
+    <p class="lead">端末を捜す動きと、情報を守るための初動を並行できるようにします。</p>
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">💻 端末を特定 → 窓口に連絡 → 影響を抑える</h2>
+      <ol class="security-flow">
+        <li><span class="case-icon" aria-hidden="true">🔎</span><div><strong>分かる情報を整理</strong>端末の識別情報、最後に確認した時刻と場所、紛失に気付いた時刻を整理する。</div></li>
+        <li><span class="case-icon" aria-hidden="true">📞</span><div><strong>気付いた時点で報告</strong>捜索や交通機関への問い合わせと並行して、社内窓口に連絡する。</div></li>
+        <li><span class="case-icon" aria-hidden="true">🔒</span><div><strong>担当者が端末を保護</strong>遠隔ロックなどの手順を進め、保存された情報やアクセス状況を確認する。</div></li>
+      </ol>
+      <p class="callout">暗号化の有無は、担当者が影響を調べる際の判断材料になります。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="2" data-correct="正解。窓口が端末を特定してロックや影響確認を進められるよう、紛失に気付いた時点で連絡します。" data-retry="見つかるかどうかはまだ分かりません。捜索中でも、社内でできる対応があります。">
+        <fieldset>
+          <legend>紛失に気付いた社員が最初に対応することはどれですか？</legend>
+          <ul class="question-context" aria-label="事例の条件">
+            <li>帰宅途中、業務用ノートPCが入ったかばんが手元にないことに気付きました。最後にPCを使ったのは18時ごろです。</li>
+            <li>社内窓口は端末を管理しており、必要に応じて遠隔ロックができます。</li>
+          </ul>
+          <label><input type="radio" name="answer" value="1" required>翌朝、見つからなかった場合だけ窓口に連絡する</label>
+          <label><input type="radio" name="answer" value="2" required>窓口にすぐ連絡し、端末の情報と最後に確認した時刻・場所を伝える</label>
+          <label><input type="radio" name="answer" value="3" required>端末が暗号化されていれば、見つかるまで報告しない</label>
+          <label><input type="radio" name="answer" value="4" required>個人のアカウントのパスワードだけを変え、社内には連絡しない</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+  </main>
+  <footer class="wrap"><a href="/materials/categories/#fe-b-security">情報セキュリティの教材一覧</a> · <a href="https://www.ipa.go.jp/security/guide/sme/ug65p90000019cbk-att/sme_guideline_v4.0_app_8.pdf">IPAのインシデント対応の手引き（PDF）</a></footer>
+</body>
+</html>

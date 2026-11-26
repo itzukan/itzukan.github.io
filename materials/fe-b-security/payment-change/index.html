@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>振込先の変更依頼を確認する｜基本情報技術者試験 科目B | IT図鑑</title>
+  <meta name="description" content="いつもの取引先から急な変更連絡が届いたとき、確認の経路を選びます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe-b-security/payment-change/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/fe-security-case.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/fe-b-security/practice/">科目B・情報セキュリティ</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="fe-b-security-payment-change">
+    <p class="topic">基本情報技術者試験・科目B</p>
+    <h1>振込先の変更依頼を確認する</h1>
+    <p class="lead">いつもの取引先から急な変更連絡が届いたとき、確認の経路を選びます。</p>
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">☎️ 保留 → 台帳の番号で確認 → 手続き</h2>
+      <ol class="security-flow">
+        <li><span class="case-icon" aria-hidden="true">⏸️</span><div><strong>振込を保留</strong>送金も、台帳への新口座の登録もいったん止める。</div></li>
+        <li><span class="case-icon" aria-hidden="true">☎️</span><div><strong>登録済みの番号で確認</strong>取引先台帳の番号に電話し、振込先が本当に変わったか聞く。</div></li>
+        <li><span class="case-icon" aria-hidden="true">✅</span><div><strong>確認後に承認を受ける</strong>確認結果を記録し、社内の口座変更と承認の手順を踏む。</div></li>
+      </ol>
+      <p class="callout">確認が取れない間は保留を続け、社内の経理や窓口に相談します。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="3" data-correct="正解。依頼を受けた経路から独立した、確認済みの番号で取引先に連絡します。振込は、変更の事実を確認して社内手順を踏んでからです。" data-retry="依頼メール自体が不正だった場合、返信先やメールに書かれた番号も相手が用意している可能性があります。">
+        <fieldset>
+          <legend>経理担当者は、振り込む前に何をすべきですか？</legend>
+          <ul class="question-context" aria-label="事例の条件">
+            <li>取引先名で「今日から振込先が変わった」というメールが届きました。本文に新しい口座と確認用の電話番号が書かれています。</li>
+            <li>社内の取引先台帳には、以前から登録してある取引先の代表電話番号があります。</li>
+          </ul>
+          <label><input type="radio" name="answer" value="1" required>メールに返信して、変更が正しいと返事が来たら振り込む</label>
+          <label><input type="radio" name="answer" value="2" required>メール本文にある電話番号へかけ、回答を受けたら振り込む</label>
+          <label><input type="radio" name="answer" value="3" required>振込を保留し、取引先台帳の番号に電話して振込先が本当に変わったか確認する</label>
+          <label><input type="radio" name="answer" value="4" required>差出人の表示名が以前と同じなら、先に振り込む</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+  </main>
+  <footer class="wrap"><a href="/materials/categories/#fe-b-security">情報セキュリティの教材一覧</a> · <a href="https://www.ipa.go.jp/security/bec/bec_measures.html">IPAのビジネスメール詐欺対策</a></footer>
+</body>
+</html>

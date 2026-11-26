@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>証明書の警告が出たときの判断｜基本情報技術者試験 科目B | IT図鑑</title>
+  <meta name="description" content="ログイン画面を開いたとき、ブラウザが接続先を確認できない場合の対応を考えます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe-b-security/certificate-warning/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/fe-security-case.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/fe-b-security/practice/">科目B・情報セキュリティ</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="fe-b-security-certificate-warning">
+    <p class="topic">基本情報技術者試験・科目B</p>
+    <h1>証明書の警告が出たときの判断</h1>
+    <p class="lead">ログイン画面を開いたとき、ブラウザが接続先を確認できない場合の対応を考えます。</p>
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">⚠️ 警告 → 入力を止める → 正規の案内を確認</h2>
+      <ol class="security-flow">
+        <li><span class="case-icon" aria-hidden="true">🌐</span><div><strong>警告に気付く</strong>証明書の名前が接続先と一致していない。</div></li>
+        <li><span class="case-icon" aria-hidden="true">🛑</span><div><strong>ログインを止める</strong>パスワードは入力せず、警告を回避して進まない。</div></li>
+        <li><span class="case-icon" aria-hidden="true">📞</span><div><strong>担当窓口へ確認</strong>URLと警告内容を伝え、正規の案内に従う。</div></li>
+      </ol>
+      <p class="callout">証明書の警告は、設定ミスでも表示されます。利用者だけで原因を決めつけず、担当者に確認します。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="3" data-correct="正解。接続先の名前と証明書が一致せず、想定した相手か確認できません。入力を止め、URLと警告内容を窓口に伝えます。" data-retry="画面が普段と同じに見えても、接続先の確認ができているとは限りません。">
+        <fieldset>
+          <legend>社員がこの画面で取るべき対応はどれですか？</legend>
+          <ul class="question-context" aria-label="事例の条件">
+            <li>社内ポータルへのリンクを開くと「この接続ではプライバシーが保護されません」という警告が出ました。</li>
+            <li>警告には、証明書の名前がアクセス先の名前と一致しないと表示されています。個別の例外登録を認める社内案内はありません。</li>
+          </ul>
+          <label><input type="radio" name="answer" value="1" required>警告を回避し、いつもの画面なら認証情報を入力する</label>
+          <label><input type="radio" name="answer" value="2" required>サイトの鍵アイコンが戻るまで、URLの文字を少しずつ変える</label>
+          <label><input type="radio" name="answer" value="3" required>ログインせず画面を閉じ、URLと警告内容を担当窓口に伝える</label>
+          <label><input type="radio" name="answer" value="4" required>証明書の検証を無効にして他のサイトも使い続ける</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+  </main>
+  <footer class="wrap"><a href="/materials/categories/#fe-b-security">情報セキュリティの教材一覧</a> · <a href="https://www.ipa.go.jp/security/guide/sme/about.html">IPAの情報セキュリティ対策ガイドライン</a></footer>
+</body>
+</html>
