@@ -5,6 +5,29 @@
   const termsFor = value => normalize(value).split(/[\s、,]+/).filter(Boolean);
   const matches = (entry, terms) => terms.every(term => entry.searchText.includes(term));
 
+  function titleRank(entry, terms) {
+    const title = normalize(entry.title);
+    if (title === terms.join(' ')) return 3;
+    if (!terms.every(term => title.includes(term))) return 0;
+    // A prefix in the middle of a longer katakana word is a weaker match.
+    const katakana = /[ァ-ヺー]/u;
+    return terms.every(term => {
+      if (!katakana.test(term[0])) return true;
+      for (let at = title.indexOf(term); at !== -1; at = title.indexOf(term, at + 1)) {
+        if (at === 0 || !katakana.test(title[at - 1])) return true;
+      }
+      return false;
+    }) ? 2 : 1;
+  }
+
+  function rankedResults(entries, terms) {
+    return uniqueEntries(entries)
+      .filter(entry => matches(entry, terms))
+      .map(entry => ({entry, rank: titleRank(entry, terms)}))
+      .sort((a, b) => b.rank - a.rank)
+      .map(({entry}) => entry);
+  }
+
   function catalogueEntries(root) {
     return [...root.querySelectorAll('#material-cards .card')].map(card => ({
       card,
@@ -72,6 +95,8 @@
     const link = document.createElement('a');
     link.href = entry.path;
     link.textContent = entry.title;
+    const cardLink = entry.card?.querySelector('a[data-material-id]');
+    if (cardLink) Object.assign(link.dataset, cardLink.dataset);
     item.append(link);
     list.append(item);
   }
@@ -82,10 +107,12 @@
     const clear = search.querySelector('#materials-clear');
     const status = document.querySelector('#materials-count');
     const entries = catalogueEntries(document);
-    const cardPaths = new Set(entries.map(entry => entry.path));
+    const cards = document.querySelector('#material-cards');
     const topicLinks = document.createElement('ul');
     topicLinks.className = 'material-topic-results';
-    topicLinks.setAttribute('aria-label', 'テーマ・章の検索結果');
+    topicLinks.id = 'material-search-results';
+    topicLinks.setAttribute('aria-label', '教材・章の検索結果');
+    input.setAttribute('aria-controls', topicLinks.id);
     topicLinks.hidden = true;
     status.after(topicLinks);
     let currentSearch = 0;
@@ -101,17 +128,12 @@
         if (request !== currentSearch) return;
       }
 
-      let count = 0;
-      for (const entry of entries) {
-        entry.card.hidden = !matches(entry, terms);
-        if (!entry.card.hidden) count++;
-      }
-      const found = uniqueEntries(topics)
-        .filter(entry => !cardPaths.has(entry.path) && matches(entry, terms));
+      const found = terms.length ? rankedResults([...entries, ...topics], terms) : [];
+      cards.hidden = terms.length > 0;
       topicLinks.replaceChildren();
       found.forEach(entry => appendSearchResult(topicLinks, entry));
       topicLinks.hidden = found.length === 0;
-      count += found.length;
+      const count = found.length;
       status.textContent = terms.length === 0 ? ''
         : count === 0 ? '該当する教材がありません。別の用語で検索してください。'
         : count + '件の教材が見つかりました。';
@@ -181,9 +203,8 @@
       status.textContent = '教材を検索中…';
       try {
         const [catalogue, topics] = await Promise.all([getCatalogue(), getTopics()]);
-        const entries = uniqueEntries([...catalogue, ...topics]);
         if (search !== currentSearch) return;
-        const found = entries.filter(entry => matches(entry, terms));
+        const found = rankedResults([...catalogue, ...topics], terms);
         status.textContent = found.length ? found.length + '件の教材' : '該当する教材がありません。';
         found.forEach(entry => appendSearchResult(results, entry));
       } catch {
