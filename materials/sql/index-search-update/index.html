@@ -10,9 +10,23 @@
   <link rel="stylesheet" href="/assets/it-passport-lesson.css">
   <link rel="stylesheet" href="/assets/extra-chapters.css?v=2">
   <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
-  <script defer src="/assets/materials-search.js?v=5"></script>
+  <script defer src="/assets/materials-search.js?v=6"></script>
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/extra-chapters.js"></script>
+
+  <style>
+    .index-compare { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+    .index-compare .chapter-node { display: flex; flex-direction: column; gap: .5rem; text-align: left; padding: .85rem; }
+    .index-compare h3, .index-compare p { margin: 0; }
+    .index-compare .index-rows { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .25rem; }
+    .index-compare .index-route { display: grid; gap: .3rem; }
+    .index-compare .index-rows span, .index-compare .index-route span {
+      background: #1e3050; color: #e9f4ff; border-radius: .3rem; padding: .25rem .2rem; text-align: center;
+    }
+    .index-compare .index-rows .hit, .index-compare .index-route .hit { background: #a5eef2; color: #0c1727; font-weight: 750; }
+    .index-compare .index-total { margin-top: auto; padding-top: .35rem; }
+    @media (max-width: 650px) { .index-compare { grid-template-columns: 1fr; } }
+  </style>
 </head>
 <body data-material-id="sql-index-search-update">
   <header class="wrap">
@@ -25,9 +39,33 @@
     <article class="extra-chapter" data-published="2026-11-26" id="index-search-update" aria-labelledby="index-search-update-title">
 <h1 id="index-search-update-title">インデックスとは？検索と更新のトレードオフ</h1>
 <p class="lead">5万件の注文から1件を探すとき、索引があるとデータベースの探し方がどう変わるかを比べます。</p>
-<div class="chapter-flow"><h2>図で仕組みを理解しよう</h2><div class="chapter-flow-row"><div class="chapter-node"><strong>🔎 注文番号を探す</strong></div><span class="chapter-arrow" aria-hidden="true">→</span><div class="chapter-node"><strong>📄 インデックスなし</strong><small>注文表を順に読む</small></div><span class="chapter-arrow" aria-hidden="true">→</span><div class="chapter-node"><strong>📦 該当の注文</strong><small>条件に合う行を返す</small></div></div>
-<div class="chapter-flow-row"><div class="chapter-node"><strong>🔎 同じ注文番号を探す</strong></div><span class="chapter-arrow" aria-hidden="true">→</span><div class="chapter-node"><strong>📇 インデックスあり</strong><small>索引から行の場所を探す</small></div><span class="chapter-arrow" aria-hidden="true">→</span><div class="chapter-node"><strong>📦 該当の注文</strong><small>目的の行を取り出す</small></div></div>
-<div class="chapter-flow-row"><div class="chapter-node"><strong>✏️ 注文を追加・変更</strong></div><span class="chapter-arrow" aria-hidden="true">→</span><div class="chapter-node"><strong>📄 注文表に反映</strong></div><span class="chapter-arrow" aria-hidden="true">→</span><div class="chapter-node"><strong>📇 索引も維持</strong><small>作業と保存領域が増える</small></div></div><p class="note">インデックスは、データの場所を探すための索引です。</p></div>
+<div class="chapter-flow">
+  <h2>図で仕組みを理解しよう</h2>
+  <p>🔎 5万件の注文表から、<strong>注文番号 4242</strong> を探します。</p>
+  <div class="index-compare">
+    <section class="chapter-node">
+      <h3>📄 インデックスなし</h3>
+      <p>注文表を先頭から末尾まで確認</p>
+      <div class="index-rows">
+        <span>1</span><span aria-label="途中の注文">…</span><span class="hit">4242</span><span aria-label="途中の注文">…</span><span>50000</span>
+      </div>
+      <p class="index-total">確認する注文表の行 <strong>50,000行</strong></p>
+    </section>
+    <section class="chapter-node">
+      <h3>📇 インデックスあり</h3>
+      <p>番号順の索引で、注文の場所を絞る</p>
+      <div class="index-route">
+        <span>📇 索引で 1 〜 10000 の範囲へ</span>
+        <span>↓ 4242 がある索引項目へ</span>
+        <span class="hit">📄 注文表の 4242 へ直接移動</span>
+      </div>
+      <p class="index-total">確認する注文表の行 <strong>該当の1行</strong></p>
+    </section>
+  </div>
+  <p><strong>注文表の残りを読み飛ばせるので、1件を探すのが速くなります。</strong></p>
+  <p class="note">索引を使って注文の詳細を取り出す流れを簡略化した図です。下の演習では注文番号だけを取得するため、索引だけで結果を返せる実行計画も候補になります。</p>
+  <p>✏️ 注文の追加時は、注文表と索引の両方に反映します。検索が速くなる一方、更新の手間と保存容量が増えます。</p>
+</div>
 <div class="panel block-learn"><h2>❓ 疑問</h2><p>検索が速くなるなら、すべての列にインデックスを作るとよい？</p></div>
 <div class="panel block-learn"><h2>💡 理由</h2><p>索引があると少数の行を探しやすくなります。一方、行の追加や索引対象の値の変更時には、テーブルに加えて索引の維持も必要です。索引を保存する容量も増えます。多くの行を読む場合などは、データベースが索引を使わずに表を順に読むことがあります。</p></div>
 <div class="panel block-try">

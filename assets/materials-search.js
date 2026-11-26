@@ -3,7 +3,11 @@
 
   const normalize = value => value.normalize('NFKC').toLowerCase().trim();
   const termsFor = value => normalize(value).split(/[\s、,]+/).filter(Boolean);
-  const matches = (entry, terms) => terms.every(term => entry.searchText.includes(term));
+  const matches = (entry, terms) => terms.every(term => {
+    // The port query also occurs inside the name of the IT Passport exam.
+    const text = term === 'ポート' ? entry.searchText.replaceAll('パスポート', ' ') : entry.searchText;
+    return text.includes(term);
+  });
 
   function titleRank(entry, terms) {
     const title = normalize(entry.title);
