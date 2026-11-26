@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ラウンドロビンとは？順番に振り分ける仕組み｜ネットワーク入門 | IT図鑑</title>
-  <meta name="description" content="3台のサーバーに、1件ずつ順に仕事を割り当てる仕組みを見てみましょう。">
+  <meta name="description" content="Webへのアクセスを3台のサーバーへ順番に配る方法を、ラウンドロビンと呼びます。">
   <link rel="canonical" href="https://free.itzukan.com/materials/network/round-robin/">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/it-passport-lesson.css">
@@ -21,14 +21,14 @@
     <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
   </header>
   <main class="wrap" data-feedback-material="network-round-robin">
-    <p class="topic">ネットワーク入門 ／ 追加章</p>
-    <article class="extra-chapter" id="round-robin" aria-labelledby="round-robin-title">
+    <p class="topic">ネットワーク入門</p>
+    <article class="extra-chapter" data-published="2026-11-26" id="round-robin" aria-labelledby="round-robin-title">
 <h1 id="round-robin-title">ラウンドロビンとは？順番に振り分ける仕組み</h1>
-<p class="lead">3台のサーバーに、1件ずつ順に仕事を割り当てる仕組みを見てみましょう。</p>
-<div class="chapter-flow"><h2>図で仕組みを理解しよう</h2><div class="chapter-flow-row"><div class="chapter-node"><strong>① 1件目</strong><small>🖥️ サーバーA</small></div><span class="chapter-arrow" aria-hidden="true">→</span><div class="chapter-node"><strong>② 2件目</strong><small>🖥️ サーバーB</small></div><span class="chapter-arrow" aria-hidden="true">→</span><div class="chapter-node"><strong>③ 3件目</strong><small>🖥️ サーバーC</small></div><span class="chapter-arrow" aria-hidden="true">→</span><div class="chapter-node"><strong>④ 4件目</strong><small>🔁 またサーバーA</small></div></div><p class="note">振り分け役が順番を一周すると、最初に戻ります。</p></div>
+<p class="lead">Webへのアクセスを3台のサーバーへ順番に配る方法を、ラウンドロビンと呼びます。</p>
+<div class="chapter-flow"><h2>図で仕組みを理解しよう</h2><div class="chapter-flow-row"><div class="chapter-node"><strong>① 1件目</strong><small>🖥️ サーバーA</small></div><span class="chapter-arrow" aria-hidden="true">→</span><div class="chapter-node"><strong>② 2件目</strong><small>🖥️ サーバーB</small></div><span class="chapter-arrow" aria-hidden="true">→</span><div class="chapter-node"><strong>③ 3件目</strong><small>🖥️ サーバーC</small></div><span class="chapter-arrow" aria-hidden="true">→</span><div class="chapter-node"><strong>④ 4件目</strong><small>🔁 またサーバーA</small></div></div><p class="note">この図では、ロードバランサー（アクセスを複数のサーバーに配る仕組み）が、1件ずつ順に振り分けています。</p></div>
 <div class="panel block-learn"><h2>❓ 疑問</h2><p>3台に同じ件数を振り分ければ、それぞれの負荷も同じになる？</p></div>
 <div class="panel block-learn"><h2>💡 理由</h2><p>画像を1枚返す処理と大きな集計では、1件にかかる時間が違います。ラウンドロビンがそろえるのは割り当て順で、負荷は処理内容にも左右されます。故障したサーバーを候補から外すには、応答を調べるヘルスチェックと、その結果を振り分けに反映する仕組みが必要です。</p></div>
-<div class="panel block-try"><h2>⌨️ 操作</h2><div class="chapter-example"><p><strong>共通</strong>　WindowsのPowerShell、またはMacのターミナルで、同じコマンドを3回実行し、教材サイトの名前に対応するIPv4アドレスを比べます。</p><div class="chapter-code"><strong>表示例</strong><pre tabindex="0"><code>nslookup -type=A free.itzukan.com</code></pre></div></div></div>
+<div class="panel block-try"><h2>⌨️ 操作</h2><div class="chapter-example"><p><strong>共通</strong>　WindowsのPowerShell、またはMacのターミナルで、同じコマンドを3回実行し、教材サイトの名前に対応するIPv4アドレスを比べます。ここで観察するのはDNSの回答です。図のようにアクセスを配る動きとは別です。</p><div class="chapter-code"><strong>表示例</strong><pre tabindex="0"><code>nslookup -type=A free.itzukan.com</code></pre></div></div></div>
 <div class="panel block-result">
   <h2>📋 結果を見てみよう（回答欄の表示例）</h2>
   <div class="chapter-paired-results">
@@ -46,7 +46,7 @@
 <div class="panel block-check"><h2>✅ 答え</h2><p>割り当て件数が近くても、負荷が同じとは限りません。DNSでIPの順序が変わる場合もありますが、結果が同じ場合や複数IPがまとめて返る場合があります。</p></div>
 <div class="panel block-check"><h2>まとめ</h2><p>DNSの応答から実際にどのサーバーが処理したか、振り分け順や故障を検知できたかまでは判断できません。図は振り分け役が1件ずつ割り当てる例です。</p></div>
 <p class="note">参考資料 <a href="https://learn.microsoft.com/en-us/troubleshoot/windows-server/networking/how-to-use-netmask-ordering-round-robin-feature">MicrosoftのDNSラウンドロビンの解説</a></p>
-<nav class="chapter-nav" aria-label="章の移動"><a href="/materials/network/cdn-cache/">← 前の追加章</a></nav>
+<nav class="chapter-nav" aria-label="章の移動"><a href="/materials/network/cdn-cache/">← 前のテーマ</a></nav>
 </article>
   </main>
   <footer class="wrap"><a href="/materials/">無料教材一覧</a></footer>
