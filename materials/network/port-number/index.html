@@ -39,7 +39,7 @@
 <div class="chapter-example os-specific os-mac"><div class="chapter-code"><strong>Mac ターミナル</strong><pre tabindex="0"><code>COMMAND  PID  USER  FD  TYPE            DEVICE SIZE/OFF NODE NAME
 node    4212  demo  20u IPv4 0x0000000000000000      0t0  TCP <mark>127.0.0.1:3000</mark> <mark>(LISTEN)</mark></code></pre></div><p>右端のTCPと127.0.0.1:3000を見ます。LISTENは接続を待っている状態です。</p></div></div>
 <div class="panel block-check"><h2>✅ 答え</h2><p>IPアドレスに加え、TCPかUDPか、何番ポートかで通信先が分かれます。</p></div>
-<div class="panel block-check"><h2>まとめ</h2><p>443と22は代表例です。結果に番号が出ても、アプリ名や設定と照合して判断します。</p></div>
+<div class="panel block-check"><h2>まとめ</h2><p>443と22はよく使われる番号です。<strong>どのアプリがそのポートで接続を待っているか</strong>を知りたいときは、ポート番号と同じ行を見ます。上の表示例では、Windowsなら右端のプロセスID <code>4212</code> をタスク マネージャーの「詳細」で探し、Macなら先頭の <code>COMMAND</code> 欄を見ます。Macの例では、<code>node</code> がポート <code>3000</code> で待ち受けています。</p></div>
 <p class="note">参考資料 <a href="https://learn.microsoft.com/ja-jp/windows-server/administration/windows-commands/netstat">Microsoftのnetstatの説明</a></p>
 <nav class="chapter-nav" aria-label="章の移動"><a href="/materials/network/">← 入門の目次</a><a href="/materials/network/firewall/">次のテーマ →</a></nav>
 </article>
