@@ -14,6 +14,8 @@
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/extra-chapters.js"></script>
   <style>
+    .round-robin-diagram { position: relative; }
+    .round-robin-packet { position: absolute; z-index: 2; top: 0; left: 0; width: .65rem; height: .65rem; border-radius: 50%; background: #ffe175; box-shadow: 0 0 0 2px #142438; pointer-events: none; }
     .round-robin-balancer { width: fit-content; margin: .85rem auto 0; text-align: center; }
     .round-robin-stem { display: block; width: 2px; height: .65rem; margin: 0 auto; background: #587590; }
     .round-robin-servers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .4rem; }
@@ -52,12 +54,13 @@
 <div class="panel block-learn"><h2>💡 理由</h2><p>画像を1枚返す処理と大きな集計では、1件にかかる時間が違います。ラウンドロビンがそろえるのは割り当て順で、負荷は処理内容にも左右されます。故障したサーバーを候補から外すには、応答を調べるヘルスチェックと、その結果を振り分けに反映する仕組みが必要です。</p></div>
 <section class="panel block-try" id="round-robin-practice" aria-labelledby="round-robin-practice-title">
   <h2 id="round-robin-practice-title">⌨️ ミニ演習｜アクセスを振り分ける</h2>
-  <p>ボタンを押すと、ロードバランサーがアクセスを1件送ります。4件目がどのサーバーに届くか見てみましょう。</p>
+  <p>黄色い点は1件のアクセスです。ボタンを押して、ロードバランサーからどのサーバーに届くか見てみましょう。</p>
   <div class="round-robin-actions" hidden>
     <button id="send-round-robin" type="button">アクセスを送る</button>
     <button id="reset-round-robin" type="button">最初から</button>
   </div>
-  <div role="group" aria-label="ロードバランサーから3台のサーバーへの振り分け図">
+  <div class="round-robin-diagram" role="group" aria-label="ロードバランサーから3台のサーバーへの振り分け図">
+    <span class="round-robin-packet" aria-hidden="true" hidden></span>
     <div class="chapter-node round-robin-balancer"><strong>🔀 ロードバランサー</strong></div>
     <span class="round-robin-stem" aria-hidden="true"></span>
     <div class="round-robin-servers">
@@ -75,7 +78,7 @@
       </div>
     </div>
   </div>
-  <p id="round-robin-status" role="status">まだアクセスは送っていません。</p>
+  <p id="round-robin-status" role="status" style="min-height: 1.5em">まだアクセスは送っていません。</p>
   <p class="round-robin-history"><strong>届いた順番</strong> <span id="round-robin-history">—</span></p>
   <p class="note">ブラウザー上のシミュレーションです。実際のサーバーには通信しません。</p>
   <noscript><p>ミニ演習を試すにはJavaScriptを有効にしてください。</p></noscript>
@@ -128,30 +131,90 @@
     const servers = [...practice.querySelectorAll('[data-server]')];
     const status = document.getElementById('round-robin-status');
     const history = document.getElementById('round-robin-history');
+    const diagram = practice.querySelector('.round-robin-diagram');
+    const stem = diagram.querySelector('.round-robin-stem');
+    const packet = diagram.querySelector('.round-robin-packet');
+    const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
     const recent = [];
     let sent = 0;
+    let pending = 0;
+    let flight;
+
+    function animatePacket(destination) {
+      const bounds = diagram.getBoundingClientRect();
+      const start = stem.getBoundingClientRect();
+      const target = destination.getBoundingClientRect();
+      const fromX = start.left + start.width / 2 - bounds.left;
+      const fromY = start.top - bounds.top;
+      const cornerY = start.bottom + 1 - bounds.top;
+      const toX = target.left + target.width / 2 - bounds.left;
+      const toY = target.top - bounds.top;
+      const keyframe = (x, y, offset) => ({
+        transform: 'translate(' + x + 'px, ' + y + 'px) translate(-50%, -50%)', offset,
+      });
+
+      packet.hidden = false;
+      const route = Math.abs(fromX - toX) < 1
+        ? [keyframe(fromX, fromY, 0), keyframe(toX, toY, 1)]
+        : [
+          keyframe(fromX, fromY, 0), keyframe(fromX, cornerY, .2),
+          keyframe(toX, cornerY, .75), keyframe(toX, toY, 1),
+        ];
+      return packet.animate(route, { duration: 620 });
+    }
 
     function showDestination(destination) {
       for (const server of servers) {
         const current = server === destination;
         server.toggleAttribute('data-current', current);
-        server.querySelector('small').textContent = current ? '✓ ここに到着' : '';
+        server.querySelector('small').textContent = '';
       }
     }
 
-    document.getElementById('send-round-robin').addEventListener('click', () => {
-      const destination = servers[sent % servers.length];
+    function recordArrival(destination) {
       const name = destination.dataset.server;
       sent++;
-      showDestination(destination);
+      destination.querySelector('small').textContent = '✓ ここに到着';
       recent.push(name);
       if (recent.length > 6) recent.shift();
       history.textContent = (sent > recent.length ? '… → ' : '') + recent.join(' → ');
       status.textContent = sent + '件目はサーバー' + name + 'に届きました。' +
         (sent > 1 && destination === servers[0] ? ' 一周してAに戻りました。' : '');
+    }
+
+    function sendNext() {
+      if (flight || !pending) return;
+      pending--;
+      const destination = servers[sent % servers.length];
+      showDestination(destination);
+      if (reduceMotion.matches || !packet.animate) {
+        recordArrival(destination);
+        sendNext();
+        return;
+      }
+      status.textContent = '';
+      flight = animatePacket(destination);
+      flight.onfinish = () => {
+        flight = undefined;
+        packet.hidden = true;
+        recordArrival(destination);
+        sendNext();
+      };
+    }
+
+    document.getElementById('send-round-robin').addEventListener('click', () => {
+      pending++;
+      sendNext();
     });
 
     document.getElementById('reset-round-robin').addEventListener('click', () => {
+      if (flight) {
+        flight.onfinish = null;
+        flight.cancel();
+        flight = undefined;
+      }
+      packet.hidden = true;
+      pending = 0;
       sent = 0;
       recent.length = 0;
       showDestination(null);
