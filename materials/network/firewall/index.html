@@ -13,6 +13,35 @@
   <script defer src="/assets/materials-search.js?v=3"></script>
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/extra-chapters.js"></script>
+  <style>
+    .firewall-rule-trigger { margin: 2px 0 14px; }
+    .firewall-rule-trigger button { margin: 0; }
+    #firewall-rules {
+      box-sizing: border-box; width: min(640px, calc(100% - 24px));
+      max-height: calc(100dvh - 24px); padding: 0; overflow: auto;
+      border: 1px solid #587590; border-radius: 12px; background: #111d30; color: #edf5ff;
+    }
+    #firewall-rules::backdrop { background: rgb(4 10 19 / 78%); }
+    .rule-dialog-header, .rule-dialog-body { padding: 14px 16px; }
+    .rule-dialog-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; background: #203550; }
+    .rule-dialog-header h2, .rule-dialog-header p, .rule-dialog-header button { margin: 0; }
+    .rule-dialog-header button { background: #111d30; color: #edf5ff; border: 1px solid #8da8c1; }
+    .rule-table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: .9rem; }
+    .rule-table caption { text-align: left; padding-bottom: 6px; font-weight: bold; }
+    .rule-table th, .rule-table td { padding: 7px 5px; text-align: left; border: 1px solid #587590; overflow-wrap: anywhere; }
+    .rule-table th { background: #203550; }
+    .rule-table td { background: #152f3d; }
+    .rule-table th:last-child { width: 42%; }
+    .rule-table td code { white-space: normal; overflow-wrap: anywhere; }
+    .rule-decisions { display: grid; gap: 6px; padding-left: 0; list-style: none; }
+    .rule-decisions li { padding: 6px 9px; border: 1px solid #587590; border-radius: 7px; }
+    .rule-decisions strong { display: block; color: #b8f6ff; }
+    .rule-decisions li + li strong { color: #ffccad; }
+    @media (max-width: 420px) {
+      .rule-dialog-header, .rule-dialog-body { padding: 10px; }
+      .rule-dialog-header h2 { font-size: 1.05rem; }
+    }
+  </style>
 </head>
 <body data-material-id="network-firewall">
   <header class="wrap">
@@ -25,8 +54,35 @@
     <article class="extra-chapter" data-published="2026-11-26" id="firewall" aria-labelledby="firewall-title">
 <h1 id="firewall-title">ファイアウォールとは？</h1>
 <p class="lead">ファイアウォールが、通信をルールで許可したり拒否したりする様子を見てみましょう。</p>
-<div class="chapter-flow"><h2>図で仕組みを理解しよう</h2><div class="chapter-flow-row"><div class="chapter-node"><strong>💻 ブラウザー</strong><small>TCP 443</small></div><span class="chapter-arrow" aria-hidden="true">→</span><div class="chapter-node"><strong>🛡️ ルール確認</strong><small>✅ 許可</small></div><span class="chapter-arrow" aria-hidden="true">→</span><div class="chapter-node"><strong>🌐 Webサーバー</strong><small>通信が届く</small></div></div>
-<div class="chapter-flow-row"><div class="chapter-node"><strong>💻 管理端末</strong><small>TCP 22</small></div><span class="chapter-arrow" aria-hidden="true">→</span><div class="chapter-node"><strong>🛡️ ルール確認</strong><small>🛑 拒否</small></div><span class="chapter-arrow" aria-hidden="true">✕</span><div class="chapter-node"><strong>🖥️ 管理サービス</strong><small>通信が届かない</small></div></div><p class="note">TCP 443を許可、TCP 22を拒否する架空の設定例です。</p></div>
+<div class="chapter-flow">
+  <h2>図で仕組みを理解しよう</h2>
+  <div class="firewall-rule-trigger">
+    <button type="button" id="show-firewall-rules" aria-haspopup="dialog" aria-controls="firewall-rules" hidden>ルールの設定例を見る</button>
+    <noscript><p>設定例には、PCのIPアドレスから TCP 443 への許可ルールだけが登録されています。</p></noscript>
+  </div>
+  <div class="chapter-flow-row"><div class="chapter-node"><strong>💻 PCからWebを開く</strong><small>HTTPS / TCP 443</small></div><span class="chapter-arrow" aria-hidden="true">→</span><div class="chapter-node"><strong>🛡️ ルール確認</strong><small>✅ 許可ルールに一致</small></div><span class="chapter-arrow" aria-hidden="true">→</span><div class="chapter-node"><strong>🌐 Webサーバー</strong><small>通信が届く</small></div></div>
+  <div class="chapter-flow-row"><div class="chapter-node"><strong>💻 同じPCから管理する</strong><small>SSH / TCP 22</small></div><span class="chapter-arrow" aria-hidden="true">→</span><div class="chapter-node"><strong>🛡️ ルール確認</strong><small>🛑 一致する許可ルールがない</small></div><span class="chapter-arrow" aria-hidden="true">✕</span><div class="chapter-node"><strong>🖥️ 管理サービス</strong><small>通信が届かない</small></div></div>
+  <p class="note">同じPCから同じサーバーへの通信でも、ポート番号で結果が変わる架空の例です。</p>
+</div>
+<dialog id="firewall-rules" aria-labelledby="firewall-rules-title">
+  <div class="rule-dialog-header">
+    <div><h2 id="firewall-rules-title">セキュリティグループの設定例</h2><p class="note">対象　Webサーバー（架空）</p></div>
+    <form method="dialog"><button type="submit" autofocus>閉じる</button></form>
+  </div>
+  <div class="rule-dialog-body">
+    <table class="rule-table">
+      <caption>インバウンドルール（サーバーに入る通信）</caption>
+      <thead><tr><th scope="col">タイプ</th><th scope="col">プロトコル</th><th scope="col">ポート</th><th scope="col">送信元（接続する側）</th></tr></thead>
+      <tbody><tr><td>HTTPS</td><td>TCP</td><td><strong>443</strong></td><td><code>203.0.113.10/32</code></td></tr></tbody>
+    </table>
+    <p class="note"><code>/32</code> は、ここでは図のPCのIPアドレス1つだけを指定しています。</p>
+    <ul class="rule-decisions" aria-label="図の通信がどう判定されるか">
+      <li><strong>✅ TCP 443 は通る</strong>同じ送信元・プロトコル・ポートの許可ルールがある。</li>
+      <li><strong>🛑 TCP 22 は通らない</strong>送信元が同じでも、TCP 22 の許可ルールがない。</li>
+    </ul>
+    <p class="note">AWSのセキュリティグループに登録するのは許可ルールです。この例では、表に一致する通信だけを通します。 <a href="https://docs.aws.amazon.com/ja_jp/vpc/latest/userguide/security-group-rules.html">AWS公式のルール仕様</a></p>
+  </div>
+</dialog>
 <div class="panel block-learn"><h2>❓ 疑問</h2><p>ネットにつながっていても、一部のサービスだけ使えないのはなぜ？</p></div>
 <div class="panel block-learn"><h2>💡 理由</h2><p>ファイアウォールは、通信の向き、送信元・宛先IP、TCPかUDPか、宛先ポート番号などをルールと照合します。何を許可するかはネットワークの用途に合わせて決めるので、ネットワークが変わると同じ通信の扱いも変わる場合があります。</p></div>
 <div class="chapter-os-picker" role="group" aria-label="操作するOS" hidden>
@@ -46,5 +102,11 @@ free.itzukan.com         443             <mark>True</mark></code></pre></div><p>
 </article>
   </main>
   <footer class="wrap"><a href="/materials/">無料教材一覧</a></footer>
+  <script>
+    const ruleButton = document.getElementById('show-firewall-rules');
+    const ruleDialog = document.getElementById('firewall-rules');
+    ruleButton.hidden = false;
+    ruleButton.addEventListener('click', () => ruleDialog.showModal());
+  </script>
 </body>
 </html>
