@@ -34,6 +34,7 @@
       background: #1e3050; border: 1px solid #587590; border-radius: .3rem; color: #e9f4ff;
       font-size: clamp(.71rem, 3.3vw, 1rem);
     }
+    .index-track li small { font-size: .72em; line-height: 1.25; }
     .index-track li[data-checked] { border-color: #ffe175; }
     .index-track li[data-target] { font-weight: 750; }
     .index-track li[data-found] { background: #a5eef2; border-color: #a5eef2; color: #0c1727; }
@@ -75,7 +76,9 @@
   <section class="chapter-node index-lane" data-index-lane="scan">
     <h3>📄 インデックスなし｜注文表を順に見る</h3>
     <ol class="index-track" aria-label="注文表の行">
-      <li>1</li><li aria-label="途中の行">…</li><li data-target>4242</li><li aria-label="残りの行">…</li><li>50000</li>
+      <li>1</li><li aria-label="途中の行">…</li>
+      <li data-target>4242<small>探す番号</small></li>
+      <li>…<small>残りも確認</small></li><li>50000<small>末尾</small></li>
     </ol>
     <p class="index-result" role="status">確認する注文表の行 <strong>50,000行</strong></p>
   </section>
@@ -86,6 +89,7 @@
     </ol>
     <p class="index-result" role="status">確認する注文表の行 <strong>該当の1行</strong></p>
   </section>
+  <p><strong>4242を見つけても、同じ番号がほかにないか確認します。</strong> このSQLは、条件に合う行をすべて返す指定です。注文番号の重複を禁止する設定がないので、索引なしでは末尾まで調べます。</p>
   <p class="note">比較のために流れを簡略化しています。「…」は省略した行です。点の速さは実測時間ではありません。下のSQL演習では注文番号だけを取得するため、索引だけで結果を返せる場合もあります。</p>
   <p>✏️ 注文の追加時は、注文表と索引の両方に反映します。索引には更新の手間と保存容量がかかります。</p>
 </section>
@@ -196,7 +200,7 @@ ROLLBACK;</code></pre></div>
       return {
         track, dot, result,
         steps: [...track.querySelectorAll('li:not(.index-dot)')],
-        interval: lane.dataset.indexLane === 'scan' ? 470 : 290,
+        scan: lane.dataset.indexLane === 'scan',
         summary: result.innerHTML,
       };
     });
@@ -204,7 +208,7 @@ ROLLBACK;</code></pre></div>
     let run = 0;
 
     async function animateLane(lane, currentRun) {
-      const { track, dot, result, steps, interval, summary } = lane;
+      const { track, dot, result, steps, scan, summary } = lane;
       for (const animation of dot.getAnimations()) animation.cancel();
       for (const step of steps) {
         step.removeAttribute('data-checked');
@@ -217,11 +221,12 @@ ROLLBACK;</code></pre></div>
         return 'translateX(' + (box.left + box.width / 2 - track.getBoundingClientRect().left) + 'px) translateX(-50%)';
       };
       let previous = steps[0];
+      let found = false;
       for (const step of steps) {
         if (!dot.hidden) {
           const animation = dot.animate(
             [{transform: position(previous)}, {transform: position(step)}],
-            {duration: interval, fill: 'forwards'},
+            {duration: scan ? (found ? 700 : 470) : 290, fill: 'forwards'},
           );
           try { await animation.finished; } catch { return; }
           if (currentRun !== run) return;
@@ -229,11 +234,15 @@ ROLLBACK;</code></pre></div>
           animation.cancel();
         }
         step.setAttribute('data-checked', '');
-        if (step.hasAttribute('data-target')) step.setAttribute('data-found', '');
+        if (step.hasAttribute('data-target')) {
+          step.setAttribute('data-found', '');
+          found = true;
+          if (scan && !dot.hidden) result.textContent = '4242を1件発見 → 同じ番号がないか残りも確認中';
+        }
         previous = step;
       }
       dot.hidden = true;
-      result.innerHTML = summary;
+      result.innerHTML = scan ? '末尾まで確認完了。4242は1件 ／ ' + summary : summary;
     }
 
     play.addEventListener('click', () => {
