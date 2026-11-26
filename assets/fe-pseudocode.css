@@ -1,0 +1,27 @@
+.question-code {
+  margin: 10px 0 12px;
+  padding: 10px;
+  border: 1px solid #496886;
+  border-radius: 8px;
+  background: #0e192c;
+  color: #d3edff;
+  font: .875rem/1.65 ui-monospace, monospace;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  tab-size: 2;
+}
+.trace-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: .875rem;
+  text-align: center;
+}
+.trace-table caption { color: #b8f6ff; font-weight: 750; text-align: start; }
+.trace-table th, .trace-table td { padding: 7px 4px; border: 1px solid #496886; overflow-wrap: anywhere; }
+.trace-table thead th, .trace-table tbody th { background: #1d3049; }
+.trace-table tbody th { font-weight: normal; text-align: start; }
+.trace-table mark { padding: 0 3px; background: #b8f6ff; color: #0b1120; border-radius: 3px; font-weight: 750; }
+.trace-table .current { background: #174457; }
+.trace-table code { white-space: nowrap; }

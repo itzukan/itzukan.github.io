@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ループと条件分岐で合計する｜基本情報技術者試験 科目B | IT図鑑</title>
+  <meta name="description" content="配列を先頭からたどり、条件に合う値だけを足します。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe-b/loop-sum/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/fe-pseudocode.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/fe-b/practice/">基本情報道場 科目B</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="fe-b-loop-sum">
+    <p class="topic">基本情報技術者試験・科目B</p>
+    <h1>ループと条件分岐で合計する</h1>
+    <p class="lead">配列を先頭からたどり、条件に合う値だけを足します。</p>
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">🔁 4以上のときだけ足す</h2>
+      <p>i は配列の要素番号です。条件が偽なら、sum は前の値のままです。</p>
+      <table class="trace-table">
+        <caption>変数の値の変化</caption>
+        <thead><tr><th scope="col">i</th><th scope="col">data[i]</th><th scope="col">4以上？</th><th scope="col">処理後の sum</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">初期値</th><td>—</td><td>—</td><td>0</td></tr>
+          <tr><th scope="row">1</th><td>2</td><td>いいえ</td><td>0</td></tr>
+          <tr><th scope="row">2</th><td>5</td><td>はい</td><td><mark>5</mark></td></tr>
+          <tr><th scope="row">3</th><td>3</td><td>いいえ</td><td>5</td></tr>
+          <tr><th scope="row">4</th><td>8</td><td>はい</td><td><mark>13</mark></td></tr>
+        </tbody>
+      </table>
+      <p class="callout">sum ← sum + data[i] の右側では、更新する前の sum を使います。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="2" data-correct="正解。4以上なのは5と8なので、sum は 0 → 5 → 13 と変わります。" data-retry="i を1から進め、data[i] が4以上のときだけ sum を更新しましょう。">
+        <fieldset>
+          <legend>配列 data の要素番号は1から始まります。次の処理が終わったとき、sum の値はいくつですか？</legend>
+          <pre class="question-code" aria-label="擬似言語のコード">整数型の配列: data ← {2, 5, 3, 8}
+整数型: i, sum ← 0
+
+for (i を 1 から 4 まで 1 ずつ増やす)
+  if (data[i] ≧ 4)
+    sum ← sum + data[i]
+  endif
+endfor</pre>
+          <label><input type="radio" name="answer" value="1" required>8</label>
+          <label><input type="radio" name="answer" value="2" required>13</label>
+          <label><input type="radio" name="answer" value="3" required>18</label>
+          <label><input type="radio" name="answer" value="4" required>0</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+  </main>
+  <footer class="wrap"><a href="/materials/categories/#fe-b">科目Bの教材一覧</a> · <a href="https://www.ipa.go.jp/shiken/syllabus/henkou/2022/gmcbt80000007cfs-att/fe_kamoku_b_set_sample_qs.pdf">IPAの擬似言語の記述形式（PDF）</a></footer>
+</body>
+</html>
