@@ -15,6 +15,18 @@
   let draft = null;
   let savedRaw = null;
   let resumable = null;
+  let imported = null;
+  const transferPrefix = '#resume=v1.';
+  let transferToken = location.hash.startsWith('#resume=') ? location.hash : '';
+  if (transferToken) history.replaceState(history.state, '', location.pathname + location.search);
+
+  function questionId(path, prompt, answer, choices) {
+    const content = JSON.stringify([path, prompt, answer, choices]);
+    // Keep portable links short and distinguish questions whose content has changed.
+    let hash = 2166136261;
+    for (let i = 0; i < content.length; i++) hash = Math.imul(hash ^ content.charCodeAt(i), 16777619);
+    return (hash >>> 0).toString(36);
+  }
 
   async function readPage(path) {
     const response = await fetch(path, { signal: AbortSignal.timeout(10000) });
@@ -42,7 +54,8 @@
             && choices.some(choice => choice.value === answer)
             && new Set(choices.map(choice => choice.value)).size === choices.length) {
           const explanation = correct.replace(/^正解[。！!]\s*/, '');
-          found.push({ title, path, prompt, answer, explanation, choices, page, sections: [...sections] });
+          const id = questionId(path, prompt, answer, choices);
+          found.push({ id, title, path, prompt, answer, explanation, choices, page, sections: [...sections] });
         }
       }
     }
@@ -74,10 +87,36 @@
         + (partial ? '一部の教材を読み込めませんでした。' : availability);
       get('retry').hidden = !partial && bank.length > 0;
       showResume();
+      showTransfer();
     } catch {
       get('bank-status').textContent = '問題を読み込めませんでした。再読み込みを試してください。';
       get('retry').hidden = false;
     }
+  }
+
+  function restore(saved, findQuestion) {
+    if (!saved || !Array.isArray(saved.questions) || !Array.isArray(saved.answers)) return null;
+    const count = saved.questions.length;
+    if (!countButtons.some(button => Number(button.dataset.count) === count)) return null;
+    if (!Number.isInteger(saved.index) || saved.index < 0 || saved.index >= count
+        || ![saved.index, saved.index + 1].includes(saved.answers.length)) return null;
+
+    const restored = saved.questions.map(entry => {
+      const question = findQuestion(entry);
+      if (!question || !Array.isArray(entry.order)) return null;
+      const choices = entry.order.map(value => question.choices.find(choice => choice.value === value));
+      if (choices.length !== question.choices.length || choices.some(choice => !choice)
+          || new Set(entry.order).size !== choices.length) return null;
+      return { ...question, choices };
+    });
+    if (restored.some(question => !question) || new Set(restored.map(question => question.prompt)).size !== count
+        || saved.answers.some((value, position) => !restored[position].choices.some(choice => choice.value === value))
+        || (saved.draft != null && !restored[saved.index].choices.some(choice => choice.value === saved.draft))) return null;
+    return { ...saved, questions: restored };
+  }
+
+  function progressLabel(session) {
+    return session.questions.length + '問コース · ' + session.answers.length + '問回答済み';
   }
 
   function showResume() {
@@ -92,32 +131,73 @@
     } catch {
       return;
     }
-    if (!saved || !Array.isArray(saved.questions) || !Array.isArray(saved.answers)) return;
-    const count = saved.questions.length;
-    if (!countButtons.some(button => Number(button.dataset.count) === count)) return;
-    if (!Number.isInteger(saved.index) || saved.index < 0 || saved.index >= count
-        || ![saved.index, saved.index + 1].includes(saved.answers.length)) return;
-
-    const byPrompt = new Map(bank.map(question => [question.prompt, question]));
-    const restored = saved.questions.map(entry => {
-      const question = byPrompt.get(entry?.prompt);
-      if (!question || question.path !== entry.path || !Array.isArray(entry.order)) return null;
-      const choices = entry.order.map(value => question.choices.find(choice => choice.value === value));
-      if (choices.length !== question.choices.length || choices.some(choice => !choice)
-          || new Set(entry.order).size !== choices.length) return null;
-      return { ...question, choices };
-    });
+    if (!saved) return;
+    resumable = restore(saved, entry => bank.find(question => question.prompt === entry?.prompt && question.path === entry?.path));
     get('resume-panel').hidden = false;
     get('restart-note').hidden = false;
-    if (restored.some(question => !question) || new Set(restored.map(question => question.prompt)).size !== count
-        || saved.answers.some((value, position) => !restored[position].choices.some(choice => choice.value === value))) {
+    if (!resumable) {
       get('resume-status').textContent = '保存済みの問題を読み込めませんでした。再読み込みをお試しください。';
       get('retry').hidden = false;
       return;
     }
-    resumable = { ...saved, questions: restored };
-    get('resume-status').textContent = count + '問コース · ' + saved.answers.length + '問回答済み';
+    get('resume-status').textContent = progressLabel(resumable);
     get('resume').hidden = false;
+  }
+
+  function showTransfer() {
+    if (!transferToken) return;
+    imported = null;
+    get('transfer-panel').hidden = false;
+    get('accept-transfer').hidden = true;
+    const status = get('transfer-status');
+    try {
+      const encoded = transferToken.slice(transferPrefix.length);
+      if (!transferToken.startsWith(transferPrefix) || !/^[A-Za-z0-9_-]{1,5000}$/.test(encoded)) throw new Error();
+      const binary = atob(encoded.replaceAll('-', '+').replaceAll('_', '/'));
+      const saved = JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(Uint8Array.from(binary, c => c.charCodeAt(0))));
+      imported = restore(saved, entry => {
+        const matches = bank.filter(question => question.id === entry?.id);
+        return matches.length === 1 ? matches[0] : null;
+      });
+    } catch {
+      status.textContent = '続きのリンクを読み取れませんでした。リンク全体をコピーし直してください。';
+      return;
+    }
+    if (!imported) {
+      status.textContent = 'このリンクの問題を読み込めませんでした。問題が更新された場合は、元の端末で新しいリンクをコピーしてください。';
+      get('retry').hidden = false;
+      return;
+    }
+    status.textContent = progressLabel(imported) + (savedRaw ? '。再開すると、このブラウザの途中経過が置き換わります。' : '。');
+    get('accept-transfer').hidden = false;
+  }
+
+  function closeTransfer() {
+    transferToken = '';
+    imported = null;
+    get('transfer-panel').hidden = true;
+  }
+
+  async function copyProgress() {
+    const snapshot = {
+      questions: questions.map(question => ({ id: question.id, order: question.choices.map(choice => choice.value) })),
+      index, answers, draft,
+    };
+    const bytes = new TextEncoder().encode(JSON.stringify(snapshot));
+    const encoded = btoa(Array.from(bytes, byte => String.fromCharCode(byte)).join(''))
+      .replaceAll('+', '-').replaceAll('/', '_').replace(/=+$/, '');
+    const url = location.origin + location.pathname + transferPrefix + encoded;
+    const fallback = get('resume-link');
+    try {
+      await navigator.clipboard.writeText(url);
+      fallback.hidden = true;
+      get('copy-status').textContent = 'コピーしました。使いたい端末でこのリンクを開いてください。';
+    } catch {
+      fallback.value = url;
+      fallback.hidden = false;
+      fallback.select();
+      get('copy-status').textContent = '下のリンクをコピーして、使いたい端末で開いてください。';
+    }
   }
 
   function saveProgress(replace = false) {
@@ -154,6 +234,8 @@
 
   function showQuestion() {
     const question = questions[index];
+    get('copy-status').textContent = '';
+    get('resume-link').hidden = true;
     get('progress').textContent = (index + 1) + ' / ' + questions.length + '問';
     get('prompt').textContent = question.prompt;
     const labels = question.choices.map(choice => {
@@ -188,6 +270,7 @@
 
   function start(count) {
     if (count > bank.length) return;
+    closeTransfer();
     questions = shuffled(bank).slice(0, count).map(question => ({
       ...question,
       choices: shuffled(question.choices),
@@ -293,10 +376,20 @@
   });
   get('resume').addEventListener('click', () => {
     if (!resumable) return;
+    closeTransfer();
     ({ questions, index, answers, draft } = resumable);
     openExercise();
     saveProgress();
   });
+  get('copy-progress').addEventListener('click', copyProgress);
+  get('accept-transfer').addEventListener('click', () => {
+    if (!imported) return;
+    ({ questions, index, answers, draft } = imported);
+    closeTransfer();
+    openExercise();
+    saveProgress(true);
+  });
+  get('cancel-transfer').addEventListener('click', closeTransfer);
   get('retry').addEventListener('click', loadBank);
   countButtons.forEach(button => button.addEventListener('click', () => start(Number(button.dataset.count))));
   review.addEventListener('toggle', showReview);

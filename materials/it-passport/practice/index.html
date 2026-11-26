@@ -8,7 +8,7 @@
   <link rel="canonical" href="https://free.itzukan.com/materials/it-passport/practice/">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/it-passport-lesson.css">
-  <script defer src="/assets/it-passport-practice.js?v=2"></script>
+  <script defer src="/assets/it-passport-practice.js?v=3"></script>
   <script defer src="/assets/analytics.js"></script>
   <style>
     .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
@@ -17,6 +17,8 @@
     .actions .secondary { background: transparent; color: #8beaf6; }
     .resume { margin-bottom: 18px; padding-bottom: 16px; border-bottom: 1px solid #344a66; }
     #storage-status { margin-top: 10px; font-size: .875rem; }
+    #copy-status { font-size: .875rem; }
+    #resume-link { width: 100%; margin-top: 8px; min-height: 44px; padding: 8px; border: 1px solid #536782; border-radius: 8px; color: inherit; background: #0e192c; font: inherit; }
     .practice-result { margin-top: 14px; padding: 10px; border-inline-start: 3px solid currentColor; background: #0e192c; }
     .practice-result[data-correct="true"] { color: #a4ead2; }
     .practice-result[data-correct="false"] { color: #ffd1c9; }
@@ -36,6 +38,14 @@
     <h1>ITパスポート道場</h1>
     <p class="lead">問題を1問ずつ解いて、気になるところは教材の図解で復習できます。</p>
     <section id="setup" class="panel" aria-labelledby="setup-title">
+      <div class="resume" id="transfer-panel" hidden>
+        <h2>別の端末からの続き</h2>
+        <p id="transfer-status" class="note" role="status"></p>
+        <div class="actions">
+          <button type="button" id="accept-transfer" hidden>リンクの続きから再開</button>
+          <button type="button" id="cancel-transfer" class="secondary">閉じる</button>
+        </div>
+      </div>
       <div class="resume" id="resume-panel" hidden>
         <h2>途中の練習</h2>
         <p class="note" id="resume-status"></p>
@@ -55,6 +65,9 @@
     <section id="exercise" class="panel" aria-labelledby="progress" hidden>
       <h2 id="progress" tabindex="-1"></h2>
       <p class="note" id="storage-status" role="status"></p>
+      <div class="actions"><button type="button" id="copy-progress" class="secondary">続きのリンクをコピー</button></div>
+      <p class="note" id="copy-status" role="status"></p>
+      <input type="text" id="resume-link" aria-label="続きのリンク" readonly hidden>
       <form id="practice-question" class="quiz">
         <fieldset>
           <legend id="prompt"></legend>
