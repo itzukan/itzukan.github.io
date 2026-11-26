@@ -18,13 +18,30 @@
     .index-compare { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
     .index-compare .chapter-node { display: flex; flex-direction: column; gap: .5rem; text-align: left; padding: .85rem; }
     .index-compare h3, .index-compare p { margin: 0; }
-    .index-compare .index-rows { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .25rem; }
-    .index-compare .index-route { display: grid; gap: .3rem; }
-    .index-compare .index-rows span, .index-compare .index-route span {
-      background: #1e3050; color: #e9f4ff; border-radius: .3rem; padding: .25rem .2rem; text-align: center;
+    .index-demo { scroll-margin-top: 1rem; }
+    .index-demo button { margin: 0 0 .75rem; }
+    .index-demo .index-lane + .index-lane { margin-top: .65rem; }
+    .index-lane h3, .index-lane p { margin: 0; }
+    .index-lane .index-track {
+      position: relative; display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr);
+      align-items: stretch; gap: .25rem; margin: .4rem 0; padding: 1.25rem 0 0; list-style: none;
     }
-    .index-compare .index-rows .hit, .index-compare .index-route .hit { background: #a5eef2; color: #0c1727; font-weight: 750; }
-    .index-compare .index-total { margin-top: auto; padding-top: .35rem; }
+    .index-track::before {
+      content: ""; position: absolute; top: .48rem; left: 0; right: 0; height: 2px; background: #587590;
+    }
+    .index-track li:not(.index-dot) {
+      display: grid; place-items: center; min-width: 0; padding: .25rem .1rem; text-align: center;
+      background: #1e3050; border: 1px solid #587590; border-radius: .3rem; color: #e9f4ff;
+      font-size: clamp(.71rem, 3.3vw, 1rem);
+    }
+    .index-track li[data-checked] { border-color: #ffe175; }
+    .index-track li[data-target] { font-weight: 750; }
+    .index-track li[data-found] { background: #a5eef2; border-color: #a5eef2; color: #0c1727; }
+    .index-dot {
+      position: absolute; z-index: 1; top: .27rem; left: 0; width: .5rem; height: .5rem;
+      border-radius: 50%; background: #ffe175; box-shadow: 0 0 0 2px #142438; pointer-events: none;
+    }
+    .index-result { min-height: 1.5em; }
     .index-decision { scroll-margin-top: 1rem; }
     .index-compare .decision-step { padding: .45rem .55rem; border-radius: .35rem; background: #14253d; }
     .index-compare .decision-arrow { align-self: center; color: #a5eef2; line-height: 1; }
@@ -51,33 +68,27 @@
     <article class="extra-chapter" data-published="2026-11-26" id="index-search-update" aria-labelledby="index-search-update-title">
 <h1 id="index-search-update-title">インデックスとは？検索と更新のトレードオフ</h1>
 <p class="lead">5万件の注文から1件を探すとき、索引があるとデータベースの探し方がどう変わるかを比べます。</p>
-<div class="chapter-flow">
-  <h2>図で仕組みを理解しよう</h2>
-  <p>🔎 5万件の注文表から、<strong>注文番号 4242</strong> を探します。</p>
-  <div class="index-compare">
-    <section class="chapter-node">
-      <h3>📄 インデックスなし</h3>
-      <p>注文表を先頭から末尾まで確認</p>
-      <div class="index-rows">
-        <span>1</span><span aria-label="途中の注文">…</span><span class="hit">4242</span><span aria-label="途中の注文">…</span><span>50000</span>
-      </div>
-      <p class="index-total">確認する注文表の行 <strong>50,000行</strong></p>
-    </section>
-    <section class="chapter-node">
-      <h3>📇 インデックスあり</h3>
-      <p>番号順の索引で、注文の場所を絞る</p>
-      <div class="index-route">
-        <span>📇 索引で 1 〜 10000 の範囲へ</span>
-        <span>↓ 4242 がある索引項目へ</span>
-        <span class="hit">📄 注文表の 4242 へ直接移動</span>
-      </div>
-      <p class="index-total">確認する注文表の行 <strong>該当の1行</strong></p>
-    </section>
-  </div>
-  <p><strong>注文表の残りを読み飛ばせるので、1件を探すのが速くなります。</strong></p>
-  <p class="note">索引を使って注文の詳細を取り出す流れを簡略化した図です。下の演習では注文番号だけを取得するため、索引だけで結果を返せる実行計画も候補になります。</p>
-  <p>✏️ 注文の追加時は、注文表と索引の両方に反映します。検索が速くなる一方、更新の手間と保存容量が増えます。</p>
-</div>
+<section class="chapter-flow index-demo" id="index-search-demo" aria-labelledby="index-demo-title">
+  <h2 id="index-demo-title">図で仕組みを理解しよう</h2>
+  <p>🔎 5万件から<strong>注文番号 4242</strong> を探します。黄色い点が、今見ている場所です。</p>
+  <button type="button" id="play-index-search" hidden>2つの探し方を再生</button>
+  <section class="chapter-node index-lane" data-index-lane="scan">
+    <h3>📄 インデックスなし｜注文表を順に見る</h3>
+    <ol class="index-track" aria-label="注文表の行">
+      <li>1</li><li aria-label="途中の行">…</li><li data-target>4242</li><li aria-label="残りの行">…</li><li>50000</li>
+    </ol>
+    <p class="index-result" role="status">確認する注文表の行 <strong>50,000行</strong></p>
+  </section>
+  <section class="chapter-node index-lane" data-index-lane="lookup">
+    <h3>📇 インデックスあり｜索引から該当行へ</h3>
+    <ol class="index-track" aria-label="索引から注文表に進む順番">
+      <li>索引<br>1〜10000</li><li>索引<br>4242の場所</li><li data-target>注文表<br>4242</li>
+    </ol>
+    <p class="index-result" role="status">確認する注文表の行 <strong>該当の1行</strong></p>
+  </section>
+  <p class="note">比較のために流れを簡略化しています。「…」は省略した行です。点の速さは実測時間ではありません。下のSQL演習では注文番号だけを取得するため、索引だけで結果を返せる場合もあります。</p>
+  <p>✏️ 注文の追加時は、注文表と索引の両方に反映します。索引には更新の手間と保存容量がかかります。</p>
+</section>
 <div class="panel block-learn"><h2>❓ 疑問</h2><p>検索が速くなるなら、すべての列にインデックスを作るとよい？</p></div>
 <section class="chapter-flow index-decision" id="choose-index" aria-labelledby="choose-index-title">
   <h2 id="choose-index-title">① 人が決める｜どの列にインデックスを作る？</h2>
@@ -170,5 +181,67 @@ ROLLBACK;</code></pre></div>
 </article>
   </main>
   <footer class="wrap"><a href="/materials/">無料教材一覧</a></footer>
+<script>
+  (() => {
+    const demo = document.getElementById('index-search-demo');
+    const play = document.getElementById('play-index-search');
+    const lanes = [...demo.querySelectorAll('[data-index-lane]')].map(lane => {
+      const track = lane.querySelector('.index-track');
+      const dot = document.createElement('li');
+      dot.className = 'index-dot';
+      dot.setAttribute('aria-hidden', 'true');
+      dot.hidden = true;
+      track.append(dot);
+      const result = lane.querySelector('.index-result');
+      return {
+        track, dot, result,
+        steps: [...track.querySelectorAll('li:not(.index-dot)')],
+        interval: lane.dataset.indexLane === 'scan' ? 470 : 290,
+        summary: result.innerHTML,
+      };
+    });
+    const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
+    let run = 0;
+
+    async function animateLane(lane, currentRun) {
+      const { track, dot, result, steps, interval, summary } = lane;
+      for (const animation of dot.getAnimations()) animation.cancel();
+      for (const step of steps) {
+        step.removeAttribute('data-checked');
+        step.removeAttribute('data-found');
+      }
+      dot.hidden = reduceMotion.matches || !dot.animate;
+      result.textContent = '検索中…';
+      const position = step => {
+        const box = step.getBoundingClientRect();
+        return 'translateX(' + (box.left + box.width / 2 - track.getBoundingClientRect().left) + 'px) translateX(-50%)';
+      };
+      let previous = steps[0];
+      for (const step of steps) {
+        if (!dot.hidden) {
+          const animation = dot.animate(
+            [{transform: position(previous)}, {transform: position(step)}],
+            {duration: interval, fill: 'forwards'},
+          );
+          try { await animation.finished; } catch { return; }
+          if (currentRun !== run) return;
+          dot.style.transform = position(step);
+          animation.cancel();
+        }
+        step.setAttribute('data-checked', '');
+        if (step.hasAttribute('data-target')) step.setAttribute('data-found', '');
+        previous = step;
+      }
+      dot.hidden = true;
+      result.innerHTML = summary;
+    }
+
+    play.addEventListener('click', () => {
+      const currentRun = ++run;
+      for (const lane of lanes) animateLane(lane, currentRun);
+    });
+    play.hidden = false;
+  })();
+</script>
 </body>
 </html>
