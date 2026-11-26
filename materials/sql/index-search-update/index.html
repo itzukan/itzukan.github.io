@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>インデックスとは？検索と更新のトレードオフ｜SQL・データベース入門 | IT図鑑</title>
-  <meta name="description" content="5万件の注文から1件を探すとき、索引があるとデータベースの探し方がどう変わるかを比べます。">
+  <meta name="description" content="5万件の注文から同じ顧客の注文履歴を探し、インデックスのあり・なしを比べます。">
   <link rel="canonical" href="https://free.itzukan.com/materials/sql/index-search-update/">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/it-passport-lesson.css">
@@ -21,7 +21,7 @@
     .index-demo { scroll-margin-top: 1rem; }
     .index-demo button { margin: 0; }
     .index-controls { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin-bottom: .75rem; }
-    .index-controls[hidden], .index-track li[hidden] { display: none; }
+    .index-controls[hidden], .index-track [hidden] { display: none; }
     .index-controls select { font: inherit; color: inherit; background: #14253d; border: 1px solid #587590; border-radius: .3rem; padding: .35rem; }
     .index-demo .index-lane + .index-lane { margin-top: .65rem; }
     .index-lane h3, .index-lane p { margin: 0; }
@@ -37,6 +37,7 @@
       background: #1e3050; border: 1px solid #587590; border-radius: .3rem; color: #e9f4ff;
       font-size: clamp(.71rem, 3.3vw, 1rem);
     }
+    .index-track li { overflow-wrap: anywhere; }
     .index-track li small { font-size: .72em; line-height: 1.25; }
     .index-track li[data-checked] { border-color: #ffe175; }
     .index-track li[data-target] { font-weight: 750; }
@@ -71,26 +72,26 @@
     <p class="topic">SQL・データベース入門</p>
     <article class="extra-chapter" data-published="2026-11-26" id="index-search-update" aria-labelledby="index-search-update-title">
 <h1 id="index-search-update-title">インデックスとは？検索と更新のトレードオフ</h1>
-<p class="lead">5万件の注文から1件を探すとき、索引があるとデータベースの探し方がどう変わるかを比べます。</p>
+<p class="lead">5万件の注文から同じ顧客の注文履歴を探し、インデックスのあり・なしを比べます。</p>
 <section class="chapter-flow index-demo" id="index-search-demo" aria-labelledby="index-demo-title">
   <h2 id="index-demo-title">図で仕組みを理解しよう</h2>
-  <p>🔎 5万件から<strong>注文番号 4242</strong> を探します。黄色い点が、今見ている場所です。</p>
+  <p>🔎 5万件の注文から<strong>顧客ID 4242の注文</strong>を探します。黄色い点が、今見ている場所です。</p>
   <div class="index-controls" hidden>
     <label for="index-example">一致する件数</label>
     <select id="index-example">
-      <option value="1">4242が1件</option>
-      <option value="2">4242が2件</option>
+      <option value="1">注文が1件</option>
+      <option value="2" selected>注文が2件</option>
     </select>
     <button type="button" id="play-index-search">2つの探し方を再生</button>
   </div>
   <section class="chapter-node index-lane" data-index-lane="scan">
     <h3>📄 インデックスなし｜注文表を順に見る</h3>
     <ol class="index-track" aria-label="注文表の行">
-      <li>1</li><li aria-label="途中の行">…</li>
-      <li data-target>4242<small>探す番号</small></li>
+      <li>注文 #1</li><li aria-label="途中の行">…</li>
+      <li data-target>注文 #308<small>顧客 4242</small></li>
       <li>…<small>残りも確認</small></li>
-      <li data-target data-duplicate hidden>4242<small>別の行</small></li>
-      <li>50000<small>末尾</small></li>
+      <li data-target data-duplicate>注文 #18000<small>顧客 4242</small></li>
+      <li>末尾<small>注文 #50000</small></li>
     </ol>
     <p class="index-result" role="status">確認する注文表の行 <strong>50,000行</strong></p>
   </section>
@@ -98,17 +99,18 @@
     <h3>📇 インデックスあり｜索引から該当行へ</h3>
     <ol class="index-track" aria-label="索引から注文表に進む順番">
       <li>索引<small>範囲を絞る</small></li>
-      <li data-index-match>4242<small>1件目</small></li>
-      <li data-index-match data-duplicate hidden>4242<small>2件目</small></li>
-      <li data-index-end>4243<small>ここで打ち切り</small></li>
-      <li data-target>注文表<small id="index-table-rows">1行を取得</small></li>
+      <li data-index-match>顧客 4242<small>注文 #308</small></li>
+      <li data-index-match data-duplicate>顧客 4242<small>注文 #18000</small></li>
+      <li data-index-end>顧客 4243<small>索引だけ確認</small></li>
+      <li data-target>注文表<small>#308</small><small id="index-second-order">#18000</small></li>
     </ol>
-    <p class="index-result" role="status">確認する注文表の行 <strong>該当の1行</strong></p>
-    <p>番号順の索引では、同じ4242があれば隣に並びます。次が4243なら、4242の並びはそこで終わりです。</p>
+    <p class="index-result" role="status">確認する注文表の行 <strong>該当の2行</strong></p>
+    <p><strong>索引には、顧客IDと注文表の行の場所が入っています。</strong> 注文が2件の例では、顧客4242の索引から注文 #308 と #18000 の行へ直接たどれます。</p>
+    <p>顧客ID順に並んでいるので、次の索引が4243なら、4242の注文はそこで終わりです。<strong>顧客4243の注文行は読みません。</strong></p>
   </section>
-  <p><strong>4242を見つけても、同じ番号がほかにないか確認します。</strong> このSQLは、条件に合う行をすべて返す指定です。注文番号の重複を禁止する設定がないので、索引なしでは末尾まで調べます。</p>
-  <p><strong>重複する列にも索引を作れます。</strong> たとえば注文表の顧客IDは、同じ人が注文するたびに繰り返し出ます。顧客ごとの注文履歴をよく検索し、少数の行に絞れるなら索引の候補です。注文を1件ずつ識別する番号には主キーを使う設計が一般的です。この図では重複を許す列での探し方を示しています。 <a href="https://www.postgresql.org/docs/current/indexes-unique.html">PostgreSQLの一意インデックス</a></p>
-  <p class="note">比較のために流れを簡略化しています。「…」は省略した行です。点の速さは実測時間ではありません。下のSQL演習では注文番号だけを取得するため、索引だけで結果を返せる場合もあります。</p>
+  <p><strong>顧客4242の注文を見つけても、同じ顧客の注文がほかにないか確認します。</strong> このSQLは、条件に合う行をすべて返す指定です。注文表には同じ顧客の注文が離れて並ぶこともあるので、索引なしでは末尾まで調べます。</p>
+  <p><strong>重複する列にも索引を作れます。</strong> 同じ人が何度注文しても顧客IDは同じです。注文番号は注文ごとに異なり、主キーとして使えます。顧客IDで注文履歴をよく探し、少数の注文に絞れるなら索引の候補です。 <a href="https://www.postgresql.org/docs/current/indexes-unique.html">PostgreSQLの一意インデックス</a></p>
+  <p class="note">比較のために流れを簡略化しています。「…」は省略した行です。点の速さは実測時間ではありません。下のSQL演習は、顧客4242の注文が2件ある場合です。</p>
   <p>✏️ 注文の追加時は、注文表と索引の両方に反映します。索引には更新の手間と保存容量がかかります。</p>
 </section>
 <div class="panel block-learn"><h2>❓ 疑問</h2><p>検索が速くなるなら、すべての列にインデックスを作るとよい？</p></div>
@@ -117,12 +119,12 @@
   <p>注文表は5万件。<strong>よく使う検索で、何件まで絞れるか</strong>を見ます。</p>
   <div class="index-compare">
     <section class="chapter-node">
-      <h3>🔎 注文番号で探す</h3>
-      <p class="decision-step">問い合わせで指定された注文番号を検索（例 4242）</p>
+      <h3>🔎 顧客IDで探す</h3>
+      <p class="decision-step">顧客4242の注文履歴を検索</p>
       <span class="decision-arrow" aria-hidden="true">↓</span>
-      <p>該当する注文 <strong>5万件のうち1件</strong></p>
-      <div class="index-match-bar" aria-hidden="true"><span style="--match-share: .002%"></span></div>
-      <p class="decision-outcome">📇 <strong>注文番号の列に作る候補</strong></p>
+      <p>該当する注文 <strong>5万件のうち2件</strong></p>
+      <div class="index-match-bar" aria-hidden="true"><span style="--match-share: .004%"></span></div>
+      <p class="decision-outcome">📇 <strong>顧客IDの列に作る候補</strong></p>
     </section>
     <section class="chapter-node">
       <h3>📋 ステータスで探す</h3>
@@ -137,18 +139,18 @@
 </section>
 <section class="chapter-flow index-decision" id="use-index" aria-labelledby="use-index-title">
   <h2 id="use-index-title">② DBが決める｜この検索でインデックスを使う？</h2>
-  <p><strong>どちらも注文番号のインデックスは作成済み。</strong> 検索条件が変わると、DBが選ぶ探し方も変わります。</p>
+  <p><strong>どちらも顧客IDのインデックスは作成済み。</strong> 検索条件が変わると、DBが選ぶ探し方も変わります。</p>
   <div class="index-compare">
     <section class="chapter-node">
-      <h3>🔎 注文番号が 4242</h3>
-      <p class="decision-step">該当 <strong>1件</strong></p>
+      <h3>🔎 顧客IDが 4242</h3>
+      <p class="decision-step">該当 <strong>2件</strong></p>
       <span class="decision-arrow" aria-hidden="true">↓</span>
-      <p class="decision-step">索引で場所を絞り、1件を取り出す</p>
+      <p class="decision-step">索引で場所を絞り、2件を取り出す</p>
       <span class="decision-arrow" aria-hidden="true">↓</span>
       <p class="decision-outcome">📇 <strong>索引を使うほうが有利になりやすい</strong></p>
     </section>
     <section class="chapter-node">
-      <h3>📋 注文番号が 49000 以下</h3>
+      <h3>📋 顧客IDが 49000 以下</h3>
       <p class="decision-step">該当 <strong>4万9千件</strong></p>
       <span class="decision-arrow" aria-hidden="true">↓</span>
       <p class="decision-step">注文表のほとんどの行が必要になる</p>
@@ -160,45 +162,49 @@
 </section>
 <div class="panel block-try">
   <h2>⌨️ 操作</h2>
-  <p>「実行計画を比べる」を押すと、ブラウザー内のPostgreSQLで下のSQLを実行します。演習結果の②と③を見比べると、同じ注文番号のインデックスがあっても、1件と4万9千件ではDBが選ぶ探し方が変わることを確認できます。</p>
+  <p>「実行計画を比べる」を押すと、ブラウザー内のPostgreSQLで下のSQLを実行します。演習結果の②と③を見比べると、同じ顧客IDのインデックスがあっても、2件と4万9千件ではDBが選ぶ探し方が変わることを確認できます。</p>
   <button type="button" id="run-index-plans" hidden>実行計画を比べる</button>
   <p id="index-run-status" role="status"></p>
   <div id="index-live-results" hidden>
-    <div class="chapter-code"><strong>① 索引なし・1件</strong><pre tabindex="0"><code></code></pre></div>
-    <div class="chapter-code"><strong>② 索引あり・1件</strong><pre tabindex="0"><code></code></pre></div>
+    <div class="chapter-code"><strong>① 索引なし・2件</strong><pre tabindex="0"><code></code></pre></div>
+    <div class="chapter-code"><strong>② 索引あり・2件</strong><pre tabindex="0"><code></code></pre></div>
     <div class="chapter-code"><strong>③ 索引あり・多くの行</strong><pre tabindex="0"><code></code></pre></div>
   </div>
   <div class="chapter-code"><strong>実行するSQL（PostgreSQL）</strong><pre tabindex="0"><code id="index-example-sql">BEGIN;
 CREATE TEMP TABLE index_lesson_orders AS
-SELECT n AS order_no FROM generate_series(1, 50000) AS n;
+SELECT n AS order_no,
+       CASE WHEN n IN (308, 18000) THEN 4242
+            WHEN n = 4242 THEN 308
+            ELSE n END AS customer_id
+FROM generate_series(1, 50000) AS n;
 ANALYZE index_lesson_orders;
 
 -- ① 索引なし
 EXPLAIN (COSTS OFF)
-SELECT * FROM index_lesson_orders WHERE order_no = 4242;
+SELECT * FROM index_lesson_orders WHERE customer_id = 4242;
 
 -- ② 索引あり
-CREATE INDEX ON index_lesson_orders (order_no);
+CREATE INDEX ON index_lesson_orders (customer_id);
 ANALYZE index_lesson_orders;
 EXPLAIN (COSTS OFF)
-SELECT * FROM index_lesson_orders WHERE order_no = 4242;
+SELECT * FROM index_lesson_orders WHERE customer_id = 4242;
 
 -- ③ 多くの行が該当する場合
 EXPLAIN (COSTS OFF)
-SELECT * FROM index_lesson_orders WHERE order_no &lt;= 49000;
+SELECT * FROM index_lesson_orders WHERE customer_id &lt;= 49000;
 ROLLBACK;</code></pre></div>
 </div>
 <div class="panel block-result"><h2>📋 結果を見てみよう（表示例）</h2><div class="chapter-example"><div class="chapter-code"><strong>表示例</strong><pre tabindex="0"><code>① <mark>Seq Scan</mark> on index_lesson_orders
-     Filter: (order_no = 4242)
+     Filter: (customer_id = 4242)
 
-② <mark>Index Only Scan</mark> using index_lesson_orders_order_no_idx on index_lesson_orders
-     Index Cond: (order_no = 4242)
+② <mark>Index Scan</mark> using index_lesson_orders_customer_id_idx on index_lesson_orders
+     Index Cond: (customer_id = 4242)
 
 ③ <mark>Seq Scan</mark> on index_lesson_orders
-     Filter: (order_no &lt;= 49000)</code></pre></div><p>Seq Scanは表を順に読む、Index Scan / Index Only Scan などは索引を使う計画です。③のように多くの行が対象だと、索引を作ってもSeq Scanが選ばれることがあります。版や統計情報で表示は変わります。</p></div></div>
+     Filter: (customer_id &lt;= 49000)</code></pre></div><p>Seq Scanは表を順に読む、Index Scan / Index Only Scan などは索引を使う計画です。③のように多くの行が対象だと、索引を作ってもSeq Scanが選ばれることがあります。版や統計情報で表示は変わります。</p></div></div>
 <div class="panel block-check"><h2>✅ 答え</h2><p>人は、よく使う検索で少数の行に絞れる列を候補にします。DBは、検索ごとに索引を使う場合と注文表を順に読む場合の手間を比べます。</p></div>
 <div class="panel block-check"><h2>まとめ</h2><p>実際に近い件数・値の偏りを練習用DBに用意し、実行計画・検索時間・更新時間・索引の容量を作成前後で比べます。EXPLAINだけでは実測時間は出ません。</p></div>
-<p class="note">参考資料 <a href="https://www.postgresql.org/docs/current/using-explain.html">PostgreSQLの実行計画の解説</a></p>
+<p class="note">参考資料 <a href="https://www.postgresql.org/docs/current/using-explain.html">PostgreSQLの実行計画</a>・<a href="https://www.postgresql.org/docs/current/btree.html#BTREE-STRUCTURE">B-tree索引と注文表の行への参照</a></p>
 <nav class="chapter-nav" aria-label="章の移動"><a href="/materials/sql/">← 入門の目次</a></nav>
 </article>
   </main>
@@ -208,7 +214,7 @@ ROLLBACK;</code></pre></div>
     const demo = document.getElementById('index-search-demo');
     const play = document.getElementById('play-index-search');
     const example = document.getElementById('index-example');
-    const tableRows = document.getElementById('index-table-rows');
+    const secondOrder = document.getElementById('index-second-order');
     const lanes = [...demo.querySelectorAll('[data-index-lane]')].map(lane => {
       const track = lane.querySelector('.index-track');
       const dot = document.createElement('li');
@@ -259,30 +265,30 @@ ROLLBACK;</code></pre></div>
         if (step.hasAttribute('data-index-match')) {
           matches++;
           step.setAttribute('data-found', '');
-          result.textContent = '索引で4242の' + matches + '件目を発見 → 次の番号を確認';
+          result.textContent = '索引で顧客4242の注文を' + matches + '件発見 → 次の顧客IDを確認';
         }
         if (step.hasAttribute('data-index-end')) {
-          result.textContent = '次は4243 → 4242は' + matches + '件で確定。注文表の該当行へ';
+          result.textContent = '索引が顧客4243に変わった → 4242の注文は' + matches + '件で確定。注文表の該当行へ';
         }
         if (step.hasAttribute('data-target')) {
           step.setAttribute('data-found', '');
           if (scan) {
             matches++;
-            if (!dot.hidden) result.textContent = '4242を' + matches + '件発見 → 同じ番号がないか残りも確認中';
+            if (!dot.hidden) result.textContent = '顧客4242の注文を' + matches + '件発見 → 同じ顧客の注文がないか確認中';
           }
         }
         previous = step;
       }
       dot.hidden = true;
       result.innerHTML = scan
-        ? '末尾まで確認完了。4242は' + matches + '件 ／ ' + summary
+        ? '末尾まで確認完了。顧客4242の注文は' + matches + '件 ／ ' + summary
         : '4243で探索終了。確認する注文表の行 <strong>該当の' + matches + '行</strong>';
     }
 
     function replay() {
       const currentRun = ++run;
       const count = Number(example.value);
-      tableRows.textContent = count + '行を取得';
+      secondOrder.hidden = count === 1;
       for (const lane of lanes) animateLane(lane, currentRun, count);
     }
 
