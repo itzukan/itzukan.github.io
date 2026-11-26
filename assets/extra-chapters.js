@@ -31,9 +31,15 @@ if (run) {
       const output = response.filter(result => result.fields.some(field => field.name === 'QUERY PLAN'));
       if (output.length !== plans.length) throw new Error('Unexpected number of query plans');
       for (const [index, plan] of plans.entries()) {
-        plan.replaceChildren(...output[index].rows.flatMap((row, line) => {
-          const text = row['QUERY PLAN'];
-          const token = line === 0 && text.match(/^(?:Seq Scan|Index Only Scan|Index Scan|Bitmap Heap Scan)/)?.[0];
+        const lines = output[index].rows.map(row => row['QUERY PLAN']);
+        const scanType = lines[0]?.match(/^(?:Parallel )?(Seq Scan|Index Only Scan|Index Scan|Bitmap Heap Scan)/);
+        const method = plan.closest('.chapter-code').querySelector('.index-plan-method');
+        if (method) {
+          method.textContent = scanType?.[1] === 'Seq Scan' ? '表を順に読む'
+            : scanType ? '索引を使う' : '下の実行計画を確認';
+        }
+        plan.replaceChildren(...lines.flatMap((text, line) => {
+          const token = line === 0 && scanType?.[0];
           if (!token) return [line ? '\n' : '', text];
           const mark = document.createElement('mark');
           mark.textContent = token;
@@ -41,7 +47,7 @@ if (run) {
         }));
       }
       results.hidden = false;
-      status.textContent = '実行しました。3つの実行計画の先頭行を比べてください。';
+      status.textContent = '実行しました。3つの枠で、DBが選んだ読み方を比べてみましょう。';
     } catch {
       status.textContent = 'ブラウザーで実行できませんでした。下の結果例を確認するか、PostgreSQLでSQLを実行してください。';
     } finally {

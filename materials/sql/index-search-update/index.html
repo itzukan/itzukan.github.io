@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
   <script defer src="/assets/materials-search.js?v=6"></script>
   <script defer src="/assets/analytics.js"></script>
-  <script defer src="/assets/extra-chapters.js"></script>
+  <script defer src="/assets/extra-chapters.js?v=2"></script>
 
   <style>
     .index-compare { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
@@ -96,6 +96,7 @@
       .index-compare .decision-arrow, .index-compare .decision-outcome strong { color: #111; }
     }
     @media (max-width: 650px) { .index-compare { grid-template-columns: 1fr; } }
+    #index-live-results .index-plan-method { display: inline-block; margin-inline-start: .6em; color: #a5eef2; }
     #index-example-sql .index-sql-keyword { color: #a5eef2; font-weight: 700; }
     #index-example-sql .index-sql-comment { color: #aac6a8; }
     @media print {
@@ -249,9 +250,9 @@
   <button type="button" id="run-index-plans" hidden>実行計画を比べる</button>
   <p id="index-run-status" role="status"></p>
   <div id="index-live-results" hidden>
-    <div class="chapter-code"><strong>① 索引なし・2件</strong><pre tabindex="0"><code></code></pre></div>
-    <div class="chapter-code"><strong>② 索引あり・2件</strong><pre tabindex="0"><code></code></pre></div>
-    <div class="chapter-code"><strong>③ 索引あり・多くの行</strong><pre tabindex="0"><code></code></pre></div>
+    <div class="chapter-code"><strong>① 索引なし・2件<span class="index-plan-method"></span></strong><pre tabindex="0"><code></code></pre></div>
+    <div class="chapter-code"><strong>② 索引あり・2件<span class="index-plan-method"></span></strong><pre tabindex="0"><code></code></pre></div>
+    <div class="chapter-code"><strong>③ 索引あり・4万9千件<span class="index-plan-method"></span></strong><pre tabindex="0"><code></code></pre></div>
   </div>
   <details class="index-notes"><summary>実行するSQLを表示（PostgreSQL）</summary><div class="chapter-code"><pre tabindex="0"><code id="index-example-sql"><span class="index-sql-keyword">BEGIN</span>;  <span class="index-sql-comment">-- 練習を始める</span>
 <span class="index-sql-keyword">CREATE</span> <span class="index-sql-keyword">TEMP</span> <span class="index-sql-keyword">TABLE</span> index_lesson_orders <span class="index-sql-keyword">AS</span>  <span class="index-sql-comment">-- 練習用の注文表を作る</span>
@@ -272,7 +273,7 @@
 <span class="index-sql-keyword">EXPLAIN</span> (<span class="index-sql-keyword">COSTS</span> <span class="index-sql-keyword">OFF</span>)
 <span class="index-sql-keyword">SELECT</span> * <span class="index-sql-keyword">FROM</span> index_lesson_orders <span class="index-sql-keyword">WHERE</span> customer_id = 4242;
 
-<span class="index-sql-comment">-- ③ 多くの行が該当する場合</span>
+<span class="index-sql-comment">-- ③ 索引あり・4万9千件</span>
 <span class="index-sql-keyword">EXPLAIN</span> (<span class="index-sql-keyword">COSTS</span> <span class="index-sql-keyword">OFF</span>)
 <span class="index-sql-keyword">SELECT</span> * <span class="index-sql-keyword">FROM</span> index_lesson_orders <span class="index-sql-keyword">WHERE</span> customer_id &lt;= 49000;  <span class="index-sql-comment">-- 条件に当てはまる4万9千件を探す</span>
 <span class="index-sql-keyword">ROLLBACK</span>;  <span class="index-sql-comment">-- 練習で作った表と索引を取り消す</span></code></pre></div></details>
