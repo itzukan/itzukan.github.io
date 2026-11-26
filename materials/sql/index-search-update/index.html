@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
   <script defer src="/assets/materials-search.js?v=6"></script>
   <script defer src="/assets/analytics.js"></script>
-  <script defer src="/assets/extra-chapters.js?v=3"></script>
+  <script defer src="/assets/extra-chapters.js?v=4"></script>
 
   <style>
     .index-compare { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
@@ -249,8 +249,8 @@
   <p>②の2件と③の4万9千件で、DBが選ぶ探し方を比べてみましょう。</p>
   <button type="button" id="run-index-plans" hidden>実行計画を比べる</button>
   <p id="index-run-status" role="status"></p>
-  <h3 id="index-result-title">表示例</h3>
-  <div id="index-live-results" aria-labelledby="index-result-title">
+  <div id="index-live-results" aria-labelledby="index-result-title" hidden>
+    <h3 id="index-result-title">表示例</h3>
     <div class="chapter-code"><strong>① 索引なし・2件 <span class="index-plan-method">表を順に読む</span></strong><pre tabindex="0"><code><mark>Seq Scan</mark> on index_lesson_orders
      Filter: (customer_id = 4242)</code></pre></div>
     <div class="chapter-code"><strong>② 索引あり・2件 <span class="index-plan-method">索引を使う</span></strong><pre tabindex="0"><code><mark>Index Scan</mark> using index_lesson_orders_customer_id_idx on index_lesson_orders

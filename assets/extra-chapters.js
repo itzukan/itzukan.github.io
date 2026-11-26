@@ -24,6 +24,7 @@ if (run) {
   run.addEventListener('click', async () => {
     const status = document.getElementById('index-run-status');
     run.disabled = true;
+    results.hidden = true;
     status.textContent = 'PostgreSQLを読み込んで実行しています…';
     let db;
     try {
@@ -50,7 +51,6 @@ if (run) {
         }));
       }
       if (title) title.textContent = '実行結果';
-      results.hidden = false;
       status.textContent = '';
     } catch {
       for (const [index, plan] of plans.entries()) {
@@ -60,6 +60,7 @@ if (run) {
       if (title) title.textContent = '表示例';
       status.textContent = 'ブラウザーで実行できなかったため、表示例を載せています。';
     } finally {
+      results.hidden = false;
       if (db) await db.close().catch(() => {});
       run.disabled = false;
     }
