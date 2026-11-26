@@ -68,6 +68,18 @@
       position: absolute; z-index: 1; top: .27rem; left: 0; width: .5rem; height: .5rem;
       border-radius: 50%; background: #ffe175; box-shadow: 0 0 0 2px #142438; pointer-events: none;
     }
+    .index-tree-flow { position: relative; margin-top: .4rem; }
+    .index-tree-root { width: fit-content; margin: auto; }
+    .index-tree-row { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .25rem; margin-top: 1.25rem; }
+    .index-tree-row::before { content: ""; position: absolute; top: -1.25rem; left: 50%; width: 1px; height: .6rem; background: #89a4bf; }
+    .index-tree-row::after { content: ""; position: absolute; top: -.66rem; left: 16.5%; right: 16.5%; border-top: 1px solid #89a4bf; }
+    .index-tree-node { position: relative; padding: .3rem .1rem; border: 1px solid #587590; border-radius: .3rem; text-align: center; background: #14253d; font-size: clamp(.68rem, 3.1vw, .95rem); }
+    .index-tree-row .index-tree-node::before { content: ""; position: absolute; left: 50%; bottom: 100%; height: .66rem; width: 1px; background: #89a4bf; }
+    .index-tree-node[data-selected] { color: #102032; background: #a5eef2; border-color: #a5eef2; font-weight: 750; }
+    .index-tree-row .index-tree-node[data-selected]::before { width: 2px; background: #ffe175; }
+    .index-tree-root { padding-inline: .6rem; }
+    .index-tree-dot { top: 0; z-index: 3; }
+    .index-tree-note { font-size: .82rem; }
     .index-result { min-height: 1.5em; }
     .index-decision { scroll-margin-top: 1rem; }
     .index-compare .decision-step { padding: .45rem .55rem; border-radius: .35rem; background: #14253d; }
@@ -137,12 +149,26 @@
   <section class="chapter-node index-lane" data-index-lane="lookup">
     <h3>📇 インデックスあり｜索引から該当行へ</h3>
     <button type="button" id="play-index-lookup" hidden>索引から探す</button>
-    <ol class="index-track" aria-label="顧客ID順の索引">
-      <li>🌳 B-tree<small>4242の範囲へ</small></li>
+    <div class="index-tree-flow" id="index-tree-flow">
+      <span class="index-dot index-tree-dot" aria-hidden="true" hidden></span>
+      <div class="index-tree-node index-tree-root" id="index-tree-root">🌳 顧客ID 4242を探す</div>
+      <div class="index-tree-row" aria-label="最初に選べる範囲">
+        <div class="index-tree-node">1〜4000</div>
+        <div class="index-tree-node" id="index-tree-range">4001〜5000</div>
+        <div class="index-tree-node">5001以上</div>
+      </div>
+      <div class="index-tree-row" aria-label="4001から5000の範囲をさらに分ける">
+        <div class="index-tree-node">4001〜4100</div>
+        <div class="index-tree-node">4101〜4200</div>
+        <div class="index-tree-node" id="index-tree-leaf">4201〜5000</div>
+      </div>
+      <ol class="index-track" aria-label="顧客ID順に並んだ索引の項目">
+      <li>索引の末端<small>近くの項目を見る</small></li>
       <li data-index-match>顧客 4242<small>注文 #308</small></li>
       <li data-index-match data-duplicate>顧客 4242<small>注文 #18000</small></li>
       <li data-index-end>顧客 4243<small>索引だけ確認</small></li>
-    </ol>
+      </ol>
+    </div>
     <div class="index-orders" id="index-orders">
       <strong>注文表</strong>
       <ul class="index-order-list" aria-label="取得した注文">
@@ -151,7 +177,7 @@
       </ul>
     </div>
     <p id="index-lookup-result" class="index-result" role="status">索引で場所を見つけたら、注文表の該当行へ移動します。</p>
-    <p><strong>B-treeの枝をたどって、4242の範囲へ。</strong> そこから、並んでいる索引の項目を順に確認します。</p>
+    <p><strong>4242が入る範囲を選び、枝を下ります。</strong> 図では <strong>4001〜5000 → 4201〜5000</strong> の順に範囲を絞って、最初の4242へ進みます。</p>
     <p><strong>索引には、顧客IDと注文表の行の場所が入っています。</strong> 注文が2件の例では、顧客4242の索引から注文 #308 と #18000 の行へ直接たどれます。</p>
     <p>顧客ID順に並んでいるので、次の索引が4243なら、4242の注文はそこで終わりです。<strong>顧客4243の注文行は読みません。</strong></p>
   </section>
@@ -269,6 +295,11 @@ ROLLBACK;</code></pre></div>
     const track = demo.querySelector('.index-track');
     const steps = [...track.children];
     const orders = document.getElementById('index-orders');
+    const tree = document.getElementById('index-tree-flow');
+    const treeDot = tree.querySelector('.index-tree-dot');
+    const root = document.getElementById('index-tree-root');
+    const range = document.getElementById('index-tree-range');
+    const leaf = document.getElementById('index-tree-leaf');
     const motion = matchMedia('(prefers-reduced-motion: reduce)');
     const dot = document.createElement('li');
     dot.className = 'index-dot';
@@ -283,19 +314,23 @@ ROLLBACK;</code></pre></div>
     }
 
     function resetLookup() {
-      for (const animation of dot.getAnimations?.() ?? []) animation.cancel();
+      for (const marker of [dot, treeDot]) {
+        for (const animation of marker.getAnimations?.() ?? []) animation.cancel();
+        marker.hidden = true;
+      }
+      range.removeAttribute('data-selected');
+      leaf.removeAttribute('data-selected');
       for (const step of steps) {
         step.removeAttribute('data-checked');
         step.removeAttribute('data-found');
       }
-      dot.hidden = true;
       orders.setAttribute('data-waiting', '');
       lookupResult.textContent = '索引で場所を見つけたら、注文表の該当行へ移動します。';
     }
 
-    async function move(element, from, to, duration) {
+    async function move(element, from, to, duration, via = []) {
       if (!motion.matches && element.animate) {
-        const animation = element.animate([{transform: from}, {transform: to}], {duration, fill: 'forwards'});
+        const animation = element.animate([from, ...via, to].map(transform => ({transform})), {duration, fill: 'forwards'});
         try { await animation.finished; } catch { return false; }
         element.style.transform = to;
         animation.cancel();
@@ -327,11 +362,35 @@ ROLLBACK;</code></pre></div>
       resetLookup();
       const visible = steps.filter(step => !step.hidden);
       const center = step => 'translateX(' + (step.offsetLeft + step.offsetWidth / 2) + 'px) translateX(-50%)';
-      let from = center(visible[0]);
+      const point = (node, edge) => {
+        const box = node.getBoundingClientRect();
+        const bounds = tree.getBoundingClientRect();
+        return [box.left + box.width / 2 - bounds.left, box[edge] - bounds.top];
+      };
+      const translate = ([x, y]) => 'translate(' + x + 'px, ' + y + 'px) translate(-50%, -50%)';
+      const followBranch = (parent, child) => {
+        const start = point(parent, 'bottom');
+        const end = point(child, 'top');
+        const bend = (start[1] + end[1]) / 2;
+        const via = Math.abs(start[0] - end[0]) < 1 ? []
+          : [[start[0], bend], [end[0], bend]].map(translate);
+        return move(treeDot, translate(start), translate(end), 660, via);
+      };
+      treeDot.hidden = motion.matches || !treeDot.animate;
+      lookupResult.textContent = '4242は4001〜5000の範囲。中央の枝へ。';
+      if (!await followBranch(root, range)) return;
+      range.setAttribute('data-selected', '');
+      lookupResult.textContent = '4242は4201〜5000の範囲。右の枝へ。';
+      if (!await followBranch(range, leaf)) return;
+      leaf.setAttribute('data-selected', '');
+      lookupResult.textContent = '範囲を絞れたので、最初の4242へ。';
+      if (!await move(treeDot, translate(point(leaf, 'bottom')), translate(point(visible[1], 'top')), 540)) return;
+      treeDot.hidden = true;
+
+      let from = center(visible[1]);
       let matches = 0;
       dot.hidden = motion.matches || !dot.animate;
-      lookupResult.textContent = '索引で顧客4242の場所を探しています…';
-      for (const step of visible) {
+      for (const step of visible.slice(1)) {
         const to = center(step);
         if (!await move(dot, from, to, 470)) return;
         from = to;
