@@ -96,6 +96,12 @@
       .index-compare .decision-arrow, .index-compare .decision-outcome strong { color: #111; }
     }
     @media (max-width: 650px) { .index-compare { grid-template-columns: 1fr; } }
+    #index-example-sql .index-sql-keyword { color: #a5eef2; font-weight: 700; }
+    #index-example-sql .index-sql-comment { color: #aac6a8; }
+    @media print {
+      #index-example-sql .index-sql-keyword { color: #164c60; }
+      #index-example-sql .index-sql-comment { color: #385b39; }
+    }
   </style>
 </head>
 <body data-material-id="sql-index-search-update">
@@ -247,29 +253,29 @@
     <div class="chapter-code"><strong>② 索引あり・2件</strong><pre tabindex="0"><code></code></pre></div>
     <div class="chapter-code"><strong>③ 索引あり・多くの行</strong><pre tabindex="0"><code></code></pre></div>
   </div>
-  <details class="index-notes"><summary>実行するSQLを表示（PostgreSQL）</summary><div class="chapter-code"><pre tabindex="0"><code id="index-example-sql">BEGIN;  -- 練習を始める
-CREATE TEMP TABLE index_lesson_orders AS  -- 練習用の注文表を作る
-SELECT n AS order_no,
-       CASE WHEN n IN (308, 18000) THEN 4242  -- 注文 #308 と #18000 の顧客IDを4242にする
-            WHEN n = 4242 THEN 308  -- 注文 #4242 は別の顧客にして、該当を2件にする
-            ELSE n END AS customer_id
-FROM generate_series(1, 50000) AS n;  -- 注文番号を1から50000まで用意
-ANALYZE index_lesson_orders;  -- DBが見積もりに使う統計を更新
+  <details class="index-notes"><summary>実行するSQLを表示（PostgreSQL）</summary><div class="chapter-code"><pre tabindex="0"><code id="index-example-sql"><span class="index-sql-keyword">BEGIN</span>;  <span class="index-sql-comment">-- 練習を始める</span>
+<span class="index-sql-keyword">CREATE</span> <span class="index-sql-keyword">TEMP</span> <span class="index-sql-keyword">TABLE</span> index_lesson_orders <span class="index-sql-keyword">AS</span>  <span class="index-sql-comment">-- 練習用の注文表を作る</span>
+<span class="index-sql-keyword">SELECT</span> n <span class="index-sql-keyword">AS</span> order_no,
+       <span class="index-sql-keyword">CASE</span> <span class="index-sql-keyword">WHEN</span> n <span class="index-sql-keyword">IN</span> (308, 18000) <span class="index-sql-keyword">THEN</span> 4242  <span class="index-sql-comment">-- 注文 #308 と #18000 の顧客IDを4242にする</span>
+            <span class="index-sql-keyword">WHEN</span> n = 4242 <span class="index-sql-keyword">THEN</span> 308  <span class="index-sql-comment">-- 注文 #4242 は別の顧客にして、該当を2件にする</span>
+            <span class="index-sql-keyword">ELSE</span> n <span class="index-sql-keyword">END</span> <span class="index-sql-keyword">AS</span> customer_id
+<span class="index-sql-keyword">FROM</span> generate_series(1, 50000) <span class="index-sql-keyword">AS</span> n;  <span class="index-sql-comment">-- 注文番号を1から50000まで用意</span>
+<span class="index-sql-keyword">ANALYZE</span> index_lesson_orders;  <span class="index-sql-comment">-- DBが見積もりに使う統計を更新</span>
 
--- ① 索引なし
-EXPLAIN (COSTS OFF)  -- DBが選ぶ探し方を表示
-SELECT * FROM index_lesson_orders WHERE customer_id = 4242;
+<span class="index-sql-comment">-- ① 索引なし</span>
+<span class="index-sql-keyword">EXPLAIN</span> (<span class="index-sql-keyword">COSTS</span> <span class="index-sql-keyword">OFF</span>)  <span class="index-sql-comment">-- DBが選ぶ探し方を表示</span>
+<span class="index-sql-keyword">SELECT</span> * <span class="index-sql-keyword">FROM</span> index_lesson_orders <span class="index-sql-keyword">WHERE</span> customer_id = 4242;
 
--- ② 索引あり
-CREATE INDEX ON index_lesson_orders (customer_id);  -- 顧客IDで探せる索引を作る
-ANALYZE index_lesson_orders;
-EXPLAIN (COSTS OFF)
-SELECT * FROM index_lesson_orders WHERE customer_id = 4242;
+<span class="index-sql-comment">-- ② 索引あり</span>
+<span class="index-sql-keyword">CREATE</span> <span class="index-sql-keyword">INDEX</span> <span class="index-sql-keyword">ON</span> index_lesson_orders (customer_id);  <span class="index-sql-comment">-- 顧客IDで探せる索引を作る</span>
+<span class="index-sql-keyword">ANALYZE</span> index_lesson_orders;
+<span class="index-sql-keyword">EXPLAIN</span> (<span class="index-sql-keyword">COSTS</span> <span class="index-sql-keyword">OFF</span>)
+<span class="index-sql-keyword">SELECT</span> * <span class="index-sql-keyword">FROM</span> index_lesson_orders <span class="index-sql-keyword">WHERE</span> customer_id = 4242;
 
--- ③ 多くの行が該当する場合
-EXPLAIN (COSTS OFF)
-SELECT * FROM index_lesson_orders WHERE customer_id &lt;= 49000;  -- 条件に当てはまる4万9千件を探す
-ROLLBACK;  -- 練習で作った表と索引を取り消す</code></pre></div></details>
+<span class="index-sql-comment">-- ③ 多くの行が該当する場合</span>
+<span class="index-sql-keyword">EXPLAIN</span> (<span class="index-sql-keyword">COSTS</span> <span class="index-sql-keyword">OFF</span>)
+<span class="index-sql-keyword">SELECT</span> * <span class="index-sql-keyword">FROM</span> index_lesson_orders <span class="index-sql-keyword">WHERE</span> customer_id &lt;= 49000;  <span class="index-sql-comment">-- 条件に当てはまる4万9千件を探す</span>
+<span class="index-sql-keyword">ROLLBACK</span>;  <span class="index-sql-comment">-- 練習で作った表と索引を取り消す</span></code></pre></div></details>
 </div>
 <div class="panel block-result"><h2>📋 結果を見てみよう（表示例）</h2><div class="chapter-example"><div class="chapter-code"><strong>表示例</strong><pre tabindex="0"><code>① <mark>Seq Scan</mark> on index_lesson_orders
      Filter: (customer_id = 4242)
