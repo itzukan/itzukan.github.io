@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>APIをLambdaとコンテナのどちらで動かす？ | IT図鑑</title>
+  <meta name="description" content="注文APIにアクセスが集中する時間帯と、処理時間の条件を見ます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/topics/lambda-or-containers/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/topic-lessons.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/topics/#cloud">テーマ別の教材</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="topic-lambda-or-containers">
+    <p class="topic">クラウド・AWS</p>
+    <h1>APIをLambdaとコンテナのどちらで動かす？</h1>
+    <p class="lead">注文APIにアクセスが集中する時間帯と、処理時間の条件を見ます。</p>
+    <section class="panel topic-figure" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">図で仕組みを理解しよう</h2>
+      <ul class="parallel">
+        <li><span class="topic-icon" aria-hidden="true">⚡</span><strong>Lambda</strong><small>呼び出し単位で実行</small></li>
+        <li><span class="topic-icon" aria-hidden="true">📦</span><strong>コンテナ</strong><small>実行環境をまとめて運用</small></li>
+        <li><span class="topic-icon" aria-hidden="true">📏</span><strong>処理時間・負荷・費用を比較</strong></li>
+      </ul>
+    </section>
+    <section class="panel" aria-labelledby="point-title">
+      <h2 id="point-title">ポイント</h2>
+      <p>短いイベント処理と長時間の常駐処理では条件が異なります。Lambdaにもコンテナイメージを配布形式にできるため、ここでは実行基盤の違いを比較します。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="1" data-correct="正解。短いイベント処理と長時間の常駐処理では条件が異なります。Lambdaにもコンテナイメージを配布形式にできるため、ここでは実行基盤の違いを比較します。" data-retry="図とポイントを見返して、もう一度考えてみましょう。">
+        <fieldset>
+          <legend>長時間の常駐処理が必要なら？</legend>
+          <label><input type="radio" name="answer" value="1" required>制限を確認し、コンテナ基盤も候補にする</label>
+          <label><input type="radio" name="answer" value="2" required>配布形式の名前だけで決める</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+      <noscript><details><summary>答えを見る</summary><p>制限を確認し、コンテナ基盤も候補にする</p></details></noscript>
+    </section>
+    <p><a href="/materials/topics/#cloud">クラウド・AWSのほかの教材を見る →</a></p>
+  </main>
+  <footer class="wrap"><a href="/materials/">無料教材一覧</a></footer>
+</body>
+</html>

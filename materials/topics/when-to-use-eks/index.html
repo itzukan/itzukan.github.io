@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ECSからEKSを検討する条件 | IT図鑑</title>
+  <meta name="description" content="小さなサービスが増えたとき、コンテナ管理を切り替える価値を考えます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/topics/when-to-use-eks/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/topic-lessons.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/topics/#cloud">テーマ別の教材</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="topic-when-to-use-eks">
+    <p class="topic">クラウド・AWS</p>
+    <h1>ECSからEKSを検討する条件</h1>
+    <p class="lead">小さなサービスが増えたとき、コンテナ管理を切り替える価値を考えます。</p>
+    <section class="panel topic-figure" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">図で仕組みを理解しよう</h2>
+      <ol class="sequential">
+        <li><span class="topic-icon" aria-hidden="true">📦</span><strong>ECSで足りる要件を確認</strong></li>
+        <li><span class="topic-icon" aria-hidden="true">☸️</span><strong>Kubernetes固有の必要性を整理</strong></li>
+        <li><span class="topic-icon" aria-hidden="true">📏</span><strong>学習・故障対応・移行コストを比較</strong></li>
+      </ol>
+    </section>
+    <section class="panel" aria-labelledby="point-title">
+      <h2 id="point-title">ポイント</h2>
+      <p>たとえば全社でKubernetesの共通運用や既存の拡張機能が必要ならEKSを検討します。台数増加だけでは移行理由にならず、運用チームの体制が重要です。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="1" data-correct="正解。たとえば全社でKubernetesの共通運用や既存の拡張機能が必要ならEKSを検討します。台数増加だけでは移行理由にならず、運用チームの体制が重要です。" data-retry="図とポイントを見返して、もう一度考えてみましょう。">
+        <fieldset>
+          <legend>サービスが増えたら自動でEKSへ移る？</legend>
+          <label><input type="radio" name="answer" value="1" required>必要機能と運用コストを調べて決める</label>
+          <label><input type="radio" name="answer" value="2" required>件数だけで移行する</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+      <noscript><details><summary>答えを見る</summary><p>必要機能と運用コストを調べて決める</p></details></noscript>
+    </section>
+    <p><a href="/materials/topics/#cloud">クラウド・AWSのほかの教材を見る →</a></p>
+  </main>
+  <footer class="wrap"><a href="/materials/">無料教材一覧</a> · <a href="https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html">AWSのEKS公式ガイド</a></footer>
+</body>
+</html>

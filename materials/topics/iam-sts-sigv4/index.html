@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IAMロールでS3に接続する流れ | IT図鑑</title>
+  <meta name="description" content="アプリがS3へアクセスする際、AWS SDKが認証情報を取り扱う流れです。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/topics/iam-sts-sigv4/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/topic-lessons.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/topics/#cloud">テーマ別の教材</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="topic-iam-sts-sigv4">
+    <p class="topic">クラウド・AWS</p>
+    <h1>IAMロールでS3に接続する流れ</h1>
+    <p class="lead">アプリがS3へアクセスする際、AWS SDKが認証情報を取り扱う流れです。</p>
+    <section class="panel topic-figure" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">図で仕組みを理解しよう</h2>
+      <ol class="sequential">
+        <li><span class="topic-icon" aria-hidden="true">🤖</span><strong>実行環境のロールから期限付き認証情報を取得</strong></li>
+        <li><span class="topic-icon" aria-hidden="true">✍️</span><strong>SDKがSigV4でリクエストに署名</strong></li>
+        <li><span class="topic-icon" aria-hidden="true">🪣</span><strong>S3が署名とアクセス許可を確認</strong></li>
+      </ol>
+    </section>
+    <section class="panel" aria-labelledby="point-title">
+      <h2 id="point-title">ポイント</h2>
+      <p>実行環境が一時認証情報を提供し、SDKが使える場合があります。署名は要求の整合や認証のために使い、S3の操作可否はIAMなどの設定で決まります。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="1" data-correct="正解。実行環境が一時認証情報を提供し、SDKが使える場合があります。署名は要求の整合や認証のために使い、S3の操作可否はIAMなどの設定で決まります。" data-retry="図とポイントを見返して、もう一度考えてみましょう。">
+        <fieldset>
+          <legend>認証できればS3のすべてのバケットが読める？</legend>
+          <label><input type="radio" name="answer" value="1" required>対象のバケットを読む権限が必要</label>
+          <label><input type="radio" name="answer" value="2" required>署名が正しければ全バケットが読める</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+      <noscript><details><summary>答えを見る</summary><p>対象のバケットを読む権限が必要</p></details></noscript>
+    </section>
+    <p><a href="/materials/topics/#cloud">クラウド・AWSのほかの教材を見る →</a></p>
+  </main>
+  <footer class="wrap"><a href="/materials/">無料教材一覧</a> · <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp.html">AWS IAMの一時認証情報</a></footer>
+</body>
+</html>

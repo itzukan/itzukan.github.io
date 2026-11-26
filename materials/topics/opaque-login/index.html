@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OPAQUEでパスワードを送らずに認証する | IT図鑑</title>
+  <meta name="description" content="利用者がパスワードを入力しても、それ自体をサーバーへ渡さずに認証する方式です。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/topics/opaque-login/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/topic-lessons.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/topics/#security">テーマ別の教材</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="topic-opaque-login">
+    <p class="topic">セキュリティ・認証</p>
+    <h1>OPAQUEでパスワードを送らずに認証する</h1>
+    <p class="lead">利用者がパスワードを入力しても、それ自体をサーバーへ渡さずに認証する方式です。</p>
+    <section class="panel topic-figure" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">図で仕組みを理解しよう</h2>
+      <ol class="sequential">
+        <li><span class="topic-icon" aria-hidden="true">⌨️</span><strong>利用者が端末で入力</strong></li>
+        <li><span class="topic-icon" aria-hidden="true">🔄</span><strong>クライアントとサーバーが暗号プロトコルを実行</strong></li>
+        <li><span class="topic-icon" aria-hidden="true">✅</span><strong>双方が共有鍵を確立</strong></li>
+      </ol>
+    </section>
+    <section class="panel" aria-labelledby="point-title">
+      <h2 id="point-title">ポイント</h2>
+      <p>OPAQUEはパスワード認証付き鍵交換です。登録時の記録を使い、認証時にサーバーへ平文のパスワードを渡さずに双方を認証します。利用者を偽サイトから自動で守るわけではありません。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="1" data-correct="正解。OPAQUEはパスワード認証付き鍵交換です。登録時の記録を使い、認証時にサーバーへ平文のパスワードを渡さずに双方を認証します。利用者を偽サイトから自動で守るわけではありません。" data-retry="図とポイントを見返して、もう一度考えてみましょう。">
+        <fieldset>
+          <legend>サーバーへ平文のパスワードを送る？</legend>
+          <label><input type="radio" name="answer" value="1" required>送らずに認証と鍵交換を行う</label>
+          <label><input type="radio" name="answer" value="2" required>毎回パスワードを本文に入れて送る</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+      <noscript><details><summary>答えを見る</summary><p>送らずに認証と鍵交換を行う</p></details></noscript>
+    </section>
+    <p><a href="/materials/topics/#security">セキュリティ・認証のほかの教材を見る →</a></p>
+  </main>
+  <footer class="wrap"><a href="/materials/">無料教材一覧</a> · <a href="https://www.rfc-editor.org/rfc/rfc9807.html">RFC 9807</a></footer>
+</body>
+</html>

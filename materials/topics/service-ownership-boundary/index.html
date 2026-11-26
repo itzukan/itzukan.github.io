@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>サービスの管理責任の境界 | IT図鑑</title>
+  <meta name="description" content="注文サービスが、在庫サービスのデータを変更したい場面です。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/topics/service-ownership-boundary/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/topic-lessons.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/topics/#development">テーマ別の教材</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="topic-service-ownership-boundary">
+    <p class="topic">開発・運用</p>
+    <h1>サービスの管理責任の境界</h1>
+    <p class="lead">注文サービスが、在庫サービスのデータを変更したい場面です。</p>
+    <section class="panel topic-figure" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">図で仕組みを理解しよう</h2>
+      <ol class="sequential">
+        <li><span class="topic-icon" aria-hidden="true">🛒</span><strong>注文サービスが在庫更新を依頼</strong></li>
+        <li><span class="topic-icon" aria-hidden="true">📦</span><strong>在庫サービスが独自ルールで処理</strong></li>
+        <li><span class="topic-icon" aria-hidden="true">📋</span><strong>同じ入口に記録と権限をそろえる</strong></li>
+      </ol>
+    </section>
+    <section class="panel" aria-labelledby="point-title">
+      <h2 id="point-title">ポイント</h2>
+      <p>別サービスのDBを直接更新すると、在庫の整合性チェックや監査を通らない場合があります。管理者が決めたAPI・イベントなどの契約を使います。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="1" data-correct="正解。別サービスのDBを直接更新すると、在庫の整合性チェックや監査を通らない場合があります。管理者が決めたAPI・イベントなどの契約を使います。" data-retry="図とポイントを見返して、もう一度考えてみましょう。">
+        <fieldset>
+          <legend>在庫数を減らすときに使うのは？</legend>
+          <label><input type="radio" name="answer" value="1" required>在庫サービスが用意した更新の入口</label>
+          <label><input type="radio" name="answer" value="2" required>注文サービスから在庫DBの行を直接上書き</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+      <noscript><details><summary>答えを見る</summary><p>在庫サービスが用意した更新の入口</p></details></noscript>
+    </section>
+    <p><a href="/materials/topics/#development">開発・運用のほかの教材を見る →</a></p>
+  </main>
+  <footer class="wrap"><a href="/materials/">無料教材一覧</a></footer>
+</body>
+</html>

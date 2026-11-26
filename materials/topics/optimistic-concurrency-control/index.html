@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OCCとは？楽観的同時実行制御で上書きを防ぐ | IT図鑑</title>
+  <meta name="description" content="商品名を2人が同時に編集したとき、後から保存した人が先の変更を消さないようにします。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/topics/optimistic-concurrency-control/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/topic-lessons.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/topics/#data">テーマ別の教材</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="topic-optimistic-concurrency-control">
+    <p class="topic">データベース・分析</p>
+    <h1>OCCとは？楽観的同時実行制御で上書きを防ぐ</h1>
+    <p class="lead">商品名を2人が同時に編集したとき、後から保存した人が先の変更を消さないようにします。</p>
+    <section class="panel topic-figure" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">図で仕組みを理解しよう</h2>
+      <ol class="sequential">
+        <li><span class="topic-icon" aria-hidden="true">👤</span><strong>AさんとBさんが同じ版1を読み取る</strong></li>
+        <li><span class="topic-icon" aria-hidden="true">✅</span><strong>Aさんは版1のままなら保存し版2に進める</strong></li>
+        <li><span class="topic-icon" aria-hidden="true">⚠️</span><strong>Bさんの保存は版1が条件なので競合になる</strong></li>
+      </ol>
+    </section>
+    <section class="panel" aria-labelledby="point-title">
+      <h2 id="point-title">ポイント</h2>
+      <p>OCCは、先に編集を止めず、保存時に読み取った版が現在の版と一致するか確かめます。異なれば変更を確認してから再試行します。実装では、版の確認と更新を同じDB操作で行います。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="1" data-correct="正解。OCCは、先に編集を止めず、保存時に読み取った版が現在の版と一致するか確かめます。異なれば変更を確認してから再試行します。実装では、版の確認と更新を同じDB操作で行います。" data-retry="図とポイントを見返して、もう一度考えてみましょう。">
+        <fieldset>
+          <legend>版1で編集中に別の人が版2へ更新したら？</legend>
+          <label><input type="radio" name="answer" value="1" required>最新版を読み直し、変更を確認してから保存する</label>
+          <label><input type="radio" name="answer" value="2" required>版を無視して自分の編集で上書きする</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+      <noscript><details><summary>答えを見る</summary><p>最新版を読み直し、変更を確認してから保存する</p></details></noscript>
+    </section>
+    <p><a href="/materials/topics/#data">データベース・分析のほかの教材を見る →</a></p>
+  </main>
+  <footer class="wrap"><a href="/materials/">無料教材一覧</a> · <a href="https://learn.microsoft.com/en-us/ef/core/saving/concurrency">Microsoftの同時実行制御の解説</a></footer>
+</body>
+</html>

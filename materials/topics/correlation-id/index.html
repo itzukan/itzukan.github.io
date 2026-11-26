@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>X-Correlation-IDでログをつなぐ | IT図鑑</title>
+  <meta name="description" content="注文APIから在庫・発送APIまで、同じ注文処理の記録を追います。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/topics/correlation-id/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/topic-lessons.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/topics/#development">テーマ別の教材</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="topic-correlation-id">
+    <p class="topic">開発・運用</p>
+    <h1>X-Correlation-IDでログをつなぐ</h1>
+    <p class="lead">注文APIから在庫・発送APIまで、同じ注文処理の記録を追います。</p>
+    <section class="panel topic-figure" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">図で仕組みを理解しよう</h2>
+      <ol class="sequential">
+        <li><span class="topic-icon" aria-hidden="true">🏷️</span><strong>入口で追跡用IDを割り当て</strong></li>
+        <li><span class="topic-icon" aria-hidden="true">🔗</span><strong>サービスをまたいでIDを伝える</strong></li>
+        <li><span class="topic-icon" aria-hidden="true">🔍</span><strong>同じIDのログをまとめて見る</strong></li>
+      </ol>
+    </section>
+    <section class="panel" aria-labelledby="point-title">
+      <h2 id="point-title">ポイント</h2>
+      <p>X-Correlation-IDはよく見かける独自ヘッダー名です。標準化された分散トレースではtraceparentなどを利用する選択肢もあります。追跡IDには個人情報を入れないようにします。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="1" data-correct="正解。X-Correlation-IDはよく見かける独自ヘッダー名です。標準化された分散トレースではtraceparentなどを利用する選択肢もあります。追跡IDには個人情報を入れないようにします。" data-retry="図とポイントを見返して、もう一度考えてみましょう。">
+        <fieldset>
+          <legend>別サービスの記録を結び付ける鍵は？</legend>
+          <label><input type="radio" name="answer" value="1" required>同じ追跡用ID</label>
+          <label><input type="radio" name="answer" value="2" required>記録されたファイル名が似ていること</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+      <noscript><details><summary>答えを見る</summary><p>同じ追跡用ID</p></details></noscript>
+    </section>
+    <p><a href="/materials/topics/#development">開発・運用のほかの教材を見る →</a></p>
+  </main>
+  <footer class="wrap"><a href="/materials/">無料教材一覧</a> · <a href="https://www.w3.org/TR/trace-context/">W3C Trace Context</a></footer>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kafka・RabbitMQ・SQSの違い | IT図鑑</title>
+  <meta name="description" content="注文イベントを後から分析する場合と、発送ジョブを一度処理する場合を比べます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/topics/kafka-rabbitmq-sqs/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/topic-lessons.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/topics/#development">テーマ別の教材</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="topic-kafka-rabbitmq-sqs">
+    <p class="topic">開発・運用</p>
+    <h1>Kafka・RabbitMQ・SQSの違い</h1>
+    <p class="lead">注文イベントを後から分析する場合と、発送ジョブを一度処理する場合を比べます。</p>
+    <section class="panel topic-figure" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">図で仕組みを理解しよう</h2>
+      <ul class="parallel">
+        <li><span class="topic-icon" aria-hidden="true">🗂️</span><strong>Kafka</strong><small>保存期間内にイベントを再読</small></li>
+        <li><span class="topic-icon" aria-hidden="true">📮</span><strong>RabbitMQ</strong><small>ルールでメッセージを振り分け</small></li>
+        <li><span class="topic-icon" aria-hidden="true">☁️</span><strong>SQS</strong><small>AWS管理のキューから取得</small></li>
+      </ul>
+    </section>
+    <section class="panel" aria-labelledby="point-title">
+      <h2 id="point-title">ポイント</h2>
+      <p>Kafkaはイベントの記録と再読、RabbitMQはメッセージの配信経路、SQSは運用を任せやすいキューが主な検討軸です。重複や順番、再処理の扱いも確認します。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="2" data-correct="正解。Kafkaはイベントの記録と再読、RabbitMQはメッセージの配信経路、SQSは運用を任せやすいキューが主な検討軸です。重複や順番、再処理の扱いも確認します。" data-retry="図とポイントを見返して、もう一度考えてみましょう。">
+        <fieldset>
+          <legend>複数の分析処理で同じイベントを読み直したいときは？</legend>
+          <label><input type="radio" name="answer" value="1" required>配送の速さだけで決める</label>
+          <label><input type="radio" name="answer" value="2" required>保存期間と再読の仕組みを比べる</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+      <noscript><details><summary>答えを見る</summary><p>保存期間と再読の仕組みを比べる</p></details></noscript>
+    </section>
+    <p><a href="/materials/topics/#development">開発・運用のほかの教材を見る →</a></p>
+  </main>
+  <footer class="wrap"><a href="/materials/">無料教材一覧</a></footer>
+</body>
+</html>
