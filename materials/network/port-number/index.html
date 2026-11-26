@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ポート番号とは？｜ネットワーク入門 | IT図鑑</title>
+  <meta name="description" content="同じサーバーでも、ポート番号でWeb閲覧とサーバー管理を区別できます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/network/port-number/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/extra-chapters.css?v=2">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/extra-chapters.js"></script>
+</head>
+<body data-material-id="network-port-number">
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/network/">ネットワーク入門の目次</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="network-port-number">
+    <p class="topic">ネットワーク入門 ／ 追加章</p>
+    <article class="extra-chapter" id="port-number" aria-labelledby="port-number-title">
+<h1 id="port-number-title">ポート番号とは？</h1>
+<p class="lead">同じサーバーでも、ポート番号でWeb閲覧とサーバー管理を区別できます。</p>
+<div class="chapter-flow"><h2>図で仕組みを理解しよう</h2><div class="chapter-flow-row"><div class="chapter-node"><strong>💻 PC</strong><small>Webを開く</small></div><span class="chapter-arrow" aria-hidden="true">→</span><div class="chapter-node"><strong>🖥️ 接続先 192.0.2.10</strong><small>同じIPアドレス</small></div><span class="chapter-arrow" aria-hidden="true">→</span><div class="chapter-node"><strong>🌐 TCP 443</strong><small>HTTPSの入口</small></div></div>
+<div class="chapter-flow-row"><div class="chapter-node"><strong>💻 PC</strong><small>サーバーを管理する</small></div><span class="chapter-arrow" aria-hidden="true">→</span><div class="chapter-node"><strong>🖥️ 接続先 192.0.2.10</strong><small>同じIPアドレス</small></div><span class="chapter-arrow" aria-hidden="true">→</span><div class="chapter-node"><strong>🛠️ TCP 22</strong><small>SSHの入口</small></div></div><p class="note">IPアドレスは接続先の機器、ポート番号は接続先のサービスを区別する手掛かりです。IPは説明用です。</p></div>
+<div class="panel block-learn"><h2>❓ 疑問</h2><p>同じサーバーにWebと管理の両方があるとき、どちらに接続するかはどう決まる？</p></div>
+<div class="panel block-learn"><h2>💡 理由</h2><p>Webの通信を保護するHTTPSは通常TCP 443、離れたサーバーを管理するSSHは通常TCP 22を使います。サービスの設定で番号は変更できます。TCPとUDPは通信のルールが異なり、同じ番号でも別の入口なので、番号だけでサービスは断定できません。</p></div>
+<div class="chapter-os-picker" role="group" aria-label="操作するOS" hidden>
+  <button type="button" data-os-select="windows" aria-pressed="false">Windows</button>
+  <button type="button" data-os-select="mac" aria-pressed="false">Mac</button>
+</div>
+<div class="panel block-try"><h2>⌨️ 操作</h2><div class="chapter-example os-specific os-windows"><p><strong>Windows</strong>　PowerShellで、自分のPCが受け付けているTCP接続を表示します。</p><div class="chapter-code"><strong>Windows PowerShell</strong><pre tabindex="0"><code>netstat -ano -p tcp | Select-String LISTENING</code></pre></div></div>
+<div class="chapter-example os-specific os-mac"><p><strong>Mac</strong>　ターミナルで、自分のPCが受け付けているTCP接続を表示します。</p><div class="chapter-code"><strong>Mac ターミナル</strong><pre tabindex="0"><code>lsof -nP -iTCP -sTCP:LISTEN</code></pre></div></div></div>
+<div class="panel block-result"><h2>📋 結果を見てみよう（表示例）</h2><div class="chapter-example os-specific os-windows"><div class="chapter-code"><strong>Windows PowerShell</strong><pre tabindex="0"><code>  TCP    <mark>127.0.0.1:3000</mark>    0.0.0.0:0    <mark>LISTENING</mark>    4212</code></pre></div><p>左から通信方式、ローカルアドレス、相手先、状態、プロセスID。127.0.0.1:3000は、自分のPC内から接続できるTCP 3000の例です。</p></div>
+<div class="chapter-example os-specific os-mac"><div class="chapter-code"><strong>Mac ターミナル</strong><pre tabindex="0"><code>COMMAND  PID  USER  FD  TYPE            DEVICE SIZE/OFF NODE NAME
+node    4212  demo  20u IPv4 0x0000000000000000      0t0  TCP <mark>127.0.0.1:3000</mark> <mark>(LISTEN)</mark></code></pre></div><p>右端のTCPと127.0.0.1:3000を見ます。LISTENは接続を待っている状態です。</p></div></div>
+<div class="panel block-check"><h2>✅ 答え</h2><p>IPアドレスに加え、TCPかUDPか、何番ポートかで通信先が分かれます。</p></div>
+<div class="panel block-check"><h2>まとめ</h2><p>443と22は代表例です。結果に番号が出ても、アプリ名や設定と照合して判断します。</p></div>
+<p class="note">参考資料 <a href="https://learn.microsoft.com/ja-jp/windows-server/administration/windows-commands/netstat">Microsoftのnetstatの説明</a></p>
+<nav class="chapter-nav" aria-label="章の移動"><a href="/materials/network/">← 入門の目次</a><a href="/materials/network/firewall/">次の追加章 →</a></nav>
+</article>
+  </main>
+  <footer class="wrap"><a href="/materials/">無料教材一覧</a></footer>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ファイアウォールとは？｜ネットワーク入門 | IT図鑑</title>
+  <meta name="description" content="ファイアウォールが、通信をルールで許可したり拒否したりする様子を見てみましょう。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/network/firewall/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/extra-chapters.css?v=2">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/extra-chapters.js"></script>
+</head>
+<body data-material-id="network-firewall">
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/network/">ネットワーク入門の目次</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="network-firewall">
+    <p class="topic">ネットワーク入門 ／ 追加章</p>
+    <article class="extra-chapter" id="firewall" aria-labelledby="firewall-title">
+<h1 id="firewall-title">ファイアウォールとは？</h1>
+<p class="lead">ファイアウォールが、通信をルールで許可したり拒否したりする様子を見てみましょう。</p>
+<div class="chapter-flow"><h2>図で仕組みを理解しよう</h2><div class="chapter-flow-row"><div class="chapter-node"><strong>💻 ブラウザー</strong><small>TCP 443</small></div><span class="chapter-arrow" aria-hidden="true">→</span><div class="chapter-node"><strong>🛡️ ルール確認</strong><small>✅ 許可</small></div><span class="chapter-arrow" aria-hidden="true">→</span><div class="chapter-node"><strong>🌐 Webサーバー</strong><small>通信が届く</small></div></div>
+<div class="chapter-flow-row"><div class="chapter-node"><strong>💻 管理端末</strong><small>TCP 22</small></div><span class="chapter-arrow" aria-hidden="true">→</span><div class="chapter-node"><strong>🛡️ ルール確認</strong><small>🛑 拒否</small></div><span class="chapter-arrow" aria-hidden="true">✕</span><div class="chapter-node"><strong>🖥️ 管理サービス</strong><small>通信が届かない</small></div></div><p class="note">TCP 443を許可、TCP 22を拒否する架空の設定例です。</p></div>
+<div class="panel block-learn"><h2>❓ 疑問</h2><p>ネットにつながっていても、一部のサービスだけ使えないのはなぜ？</p></div>
+<div class="panel block-learn"><h2>💡 理由</h2><p>ファイアウォールは、通信の向き、送信元・宛先IP、TCPかUDPか、宛先ポート番号などをルールと照合します。何を許可するかはネットワークの用途に合わせて決めるので、ネットワークが変わると同じ通信の扱いも変わる場合があります。</p></div>
+<div class="chapter-os-picker" role="group" aria-label="操作するOS" hidden>
+  <button type="button" data-os-select="windows" aria-pressed="false">Windows</button>
+  <button type="button" data-os-select="mac" aria-pressed="false">Mac</button>
+</div>
+<div class="panel block-try"><h2>⌨️ 操作</h2><div class="chapter-example os-specific os-windows"><p><strong>Windows</strong>　Windows PowerShellで、TCP 443の接続が成立するか、公開教材を相手に1回確認します。</p><div class="chapter-code"><strong>Windows PowerShell</strong><pre tabindex="0"><code>Test-NetConnection free.itzukan.com -Port 443 | Select-Object ComputerName,RemotePort,TcpTestSucceeded</code></pre></div></div>
+<div class="chapter-example os-specific os-mac"><p><strong>Mac</strong>　Macのターミナルから同じ公開教材のTCP 443を1回確認します。</p><div class="chapter-code"><strong>Mac ターミナル</strong><pre tabindex="0"><code>nc -vz -G 5 free.itzukan.com 443</code></pre></div></div></div>
+<div class="panel block-result"><h2>📋 結果を見てみよう（表示例）</h2><div class="chapter-example os-specific os-windows"><div class="chapter-code"><strong>Windows PowerShell</strong><pre tabindex="0"><code>ComputerName      RemotePort <mark>TcpTestSucceeded</mark>
+------------      ---------- ----------------
+free.itzukan.com         443             <mark>True</mark></code></pre></div><p>TcpTestSucceeded の True は、TCP接続が成立したという意味です。</p></div>
+<div class="chapter-example os-specific os-mac"><div class="chapter-code"><strong>Mac ターミナル</strong><pre tabindex="0"><code>Connection to free.itzukan.com port 443 [tcp/https] <mark>succeeded!</mark></code></pre></div><p>succeeded! は、TCP接続が成立したという意味です。</p></div></div>
+<div class="panel block-check"><h2>✅ 答え</h2><p>ネットに接続できても、目的の通信がファイアウォールで拒否されれば宛先に届きません。</p></div>
+<div class="panel block-check"><h2>まとめ</h2><p>接続に失敗する原因には相手が待ち受けていない、経路に問題がある場合もあります。接続結果と管理者が確認するルール・ログを照合します。</p></div>
+<p class="note">参考資料 <a href="https://learn.microsoft.com/ja-jp/windows/security/operating-system-security/network-security/windows-firewall/">MicrosoftのWindowsファイアウォールの概要</a></p>
+<nav class="chapter-nav" aria-label="章の移動"><a href="/materials/network/port-number/">← 前の追加章</a><a href="/materials/network/remote-desktop/">次の追加章 →</a></nav>
+</article>
+  </main>
+  <footer class="wrap"><a href="/materials/">無料教材一覧</a></footer>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>リモートデスクトップとは？VPNとの違い｜ネットワーク入門 | IT図鑑</title>
+  <meta name="description" content="自宅PCから会社PCを操作したとき、どちらで処理が行われるかを図で見ます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/network/remote-desktop/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/extra-chapters.css?v=2">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/extra-chapters.js"></script>
+</head>
+<body data-material-id="network-remote-desktop">
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/network/">ネットワーク入門の目次</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="network-remote-desktop">
+    <p class="topic">ネットワーク入門 ／ 追加章</p>
+    <article class="extra-chapter" id="remote-desktop" aria-labelledby="remote-desktop-title">
+<h1 id="remote-desktop-title">リモートデスクトップとは？VPNとの違い</h1>
+<p class="lead">自宅PCから会社PCを操作したとき、どちらで処理が行われるかを図で見ます。</p>
+<div class="chapter-flow">
+  <h2>図で仕組みを理解しよう</h2>
+  <div class="chapter-round-trip">
+    <div class="chapter-node"><strong>💻 自宅PC</strong><small>入力する・画面を見る</small></div>
+    <div class="chapter-trip-arrows">
+      <div><span>① 操作を送る</span><b aria-hidden="true">→</b></div>
+      <div><b aria-hidden="true">←</b><span>② 画面が返る</span></div>
+    </div>
+    <div class="chapter-node"><strong>🖥️ 会社PC</strong><small>アプリを実行する</small></div>
+  </div>
+  <p class="note">自宅PCから会社PCへ操作を送り、会社PCから自宅PCへ処理後の画面が返ります。会社でVPNが必要な場合は、その経路を通ります。</p>
+</div>
+<div class="panel block-learn"><h2>❓ 疑問</h2><p>自宅PCに会社のアプリが表示されたとき、アプリはどちらで動く？</p></div>
+<div class="panel block-learn"><h2>💡 理由</h2><p>VPNは社内ネットワークへつながる経路を作ります。リモートデスクトップは接続先のPCを操作する仕組みです。入力と表示を自宅PCが担い、業務アプリの処理は会社PCで行われます。たとえば会社が認めたVPNで社内につなぎ、そのあと会社PCをリモート操作します。</p></div>
+<div class="panel block-try"><h2>⌨️ 操作</h2><div class="chapter-example"><p><strong>Windows</strong>　Windowsで Win + R を押し、次の文字を入れてEnter。接続画面を開いたら、入力欄を確認して閉じます。</p><div class="chapter-code"><strong>ファイル名を指定して実行（Win + R）</strong><pre tabindex="0"><code>mstsc</code></pre></div></div></div>
+<div class="panel block-result"><h2>📋 結果を見てみよう（表示例）</h2><div class="chapter-example"><div class="chapter-code"><strong>リモート デスクトップ接続</strong><pre tabindex="0"><code><mark>コンピューター</mark>: [                    ]
+                         [ 接続 ]</code></pre></div><p>コンピューター欄は、会社から案内された接続先名などを指定する場所です。画面の模式例です。</p></div></div>
+<div class="panel block-check"><h2>✅ 答え</h2><p>アプリは会社PCで動きます。VPNで社内へ接続することと、会社PCをリモートで操作することは役割が別です。</p></div>
+<div class="panel block-check"><h2>まとめ</h2><p>練習は接続画面を見るところまでです。実際に使うときは、接続方法、利用権限、接続先を会社のルールで確認します。</p></div>
+<p class="note">参考資料 <a href="https://learn.microsoft.com/ja-jp/windows-server/administration/windows-commands/mstsc">Microsoftのリモート デスクトップ接続の説明</a></p>
+<nav class="chapter-nav" aria-label="章の移動"><a href="/materials/network/firewall/">← 前の追加章</a><a href="/materials/network/cdn-cache/">次の追加章 →</a></nav>
+</article>
+  </main>
+  <footer class="wrap"><a href="/materials/">無料教材一覧</a></footer>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>インデックスとは？検索と更新のトレードオフ｜SQL・データベース入門 | IT図鑑</title>
+  <meta name="description" content="5万件の注文から1件を探すとき、索引があるとデータベースの探し方がどう変わるかを比べます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/sql/index-search-update/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/extra-chapters.css?v=2">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/extra-chapters.js"></script>
+</head>
+<body data-material-id="sql-index-search-update">
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/sql/">SQL・データベース入門の目次</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="sql-index-search-update">
+    <p class="topic">SQL・データベース入門 ／ 追加章</p>
+    <article class="extra-chapter" id="index-search-update" aria-labelledby="index-search-update-title">
+<h1 id="index-search-update-title">インデックスとは？検索と更新のトレードオフ</h1>
+<p class="lead">5万件の注文から1件を探すとき、索引があるとデータベースの探し方がどう変わるかを比べます。</p>
+<div class="chapter-flow"><h2>図で仕組みを理解しよう</h2><div class="chapter-flow-row"><div class="chapter-node"><strong>🔎 注文番号を探す</strong></div><span class="chapter-arrow" aria-hidden="true">→</span><div class="chapter-node"><strong>📄 インデックスなし</strong><small>注文表を順に読む</small></div><span class="chapter-arrow" aria-hidden="true">→</span><div class="chapter-node"><strong>📦 該当の注文</strong><small>条件に合う行を返す</small></div></div>
+<div class="chapter-flow-row"><div class="chapter-node"><strong>🔎 同じ注文番号を探す</strong></div><span class="chapter-arrow" aria-hidden="true">→</span><div class="chapter-node"><strong>📇 インデックスあり</strong><small>索引から行の場所を探す</small></div><span class="chapter-arrow" aria-hidden="true">→</span><div class="chapter-node"><strong>📦 該当の注文</strong><small>目的の行を取り出す</small></div></div>
+<div class="chapter-flow-row"><div class="chapter-node"><strong>✏️ 注文を追加・変更</strong></div><span class="chapter-arrow" aria-hidden="true">→</span><div class="chapter-node"><strong>📄 注文表に反映</strong></div><span class="chapter-arrow" aria-hidden="true">→</span><div class="chapter-node"><strong>📇 索引も維持</strong><small>作業と保存領域が増える</small></div></div><p class="note">インデックスは、データの場所を探すための索引です。</p></div>
+<div class="panel block-learn"><h2>❓ 疑問</h2><p>検索が速くなるなら、すべての列にインデックスを作るとよい？</p></div>
+<div class="panel block-learn"><h2>💡 理由</h2><p>索引があると少数の行を探しやすくなります。一方、行の追加や索引対象の値の変更時には、テーブルに加えて索引の維持も必要です。索引を保存する容量も増えます。多くの行を読む場合などは、データベースが索引を使わずに表を順に読むことがあります。</p></div>
+<div class="panel block-try">
+  <h2>⌨️ 操作</h2>
+  <p>架空の注文5万件から1件を探します。「実行計画を比べる」を押すと、ブラウザー内のPostgreSQLで下のSQLを実行します。</p>
+  <button type="button" id="run-index-plans" hidden>実行計画を比べる</button>
+  <p id="index-run-status" role="status"></p>
+  <div id="index-live-results" hidden>
+    <div class="chapter-code"><strong>① 索引なし・1件</strong><pre tabindex="0"><code></code></pre></div>
+    <div class="chapter-code"><strong>② 索引あり・1件</strong><pre tabindex="0"><code></code></pre></div>
+    <div class="chapter-code"><strong>③ 索引あり・多くの行</strong><pre tabindex="0"><code></code></pre></div>
+  </div>
+  <div class="chapter-code"><strong>実行するSQL（PostgreSQL）</strong><pre tabindex="0"><code id="index-example-sql">BEGIN;
+CREATE TEMP TABLE index_lesson_orders AS
+SELECT n AS order_no FROM generate_series(1, 50000) AS n;
+ANALYZE index_lesson_orders;
+
+-- ① 索引なし
+EXPLAIN (COSTS OFF)
+SELECT * FROM index_lesson_orders WHERE order_no = 4242;
+
+-- ② 索引あり
+CREATE INDEX ON index_lesson_orders (order_no);
+ANALYZE index_lesson_orders;
+EXPLAIN (COSTS OFF)
+SELECT * FROM index_lesson_orders WHERE order_no = 4242;
+
+-- ③ 多くの行が該当する場合
+EXPLAIN (COSTS OFF)
+SELECT * FROM index_lesson_orders WHERE order_no &lt;= 49000;
+ROLLBACK;</code></pre></div>
+</div>
+<div class="panel block-result"><h2>📋 結果を見てみよう（表示例）</h2><div class="chapter-example"><div class="chapter-code"><strong>表示例</strong><pre tabindex="0"><code>① <mark>Seq Scan</mark> on index_lesson_orders
+     Filter: (order_no = 4242)
+
+② <mark>Index Only Scan</mark> using index_lesson_orders_order_no_idx on index_lesson_orders
+     Index Cond: (order_no = 4242)
+
+③ <mark>Seq Scan</mark> on index_lesson_orders
+     Filter: (order_no &lt;= 49000)</code></pre></div><p>Seq Scanは表を順に読む、Index Scan / Index Only Scan などは索引を使う計画です。③のように多くの行が対象だと、索引を作ってもSeq Scanが選ばれることがあります。版や統計情報で表示は変わります。</p></div></div>
+<div class="panel block-check"><h2>✅ 答え</h2><p>よく使う絞り込み条件を候補にし、あわせて登録や更新への影響を確かめて決めます。</p></div>
+<div class="panel block-check"><h2>まとめ</h2><p>実際に近い件数・値の偏りを練習用DBに用意し、実行計画・検索時間・更新時間・索引の容量を作成前後で比べます。EXPLAINだけでは実測時間は出ません。</p></div>
+<p class="note">参考資料 <a href="https://www.postgresql.org/docs/current/using-explain.html">PostgreSQLの実行計画の解説</a></p>
+<nav class="chapter-nav" aria-label="章の移動"><a href="/materials/sql/">← 入門の目次</a></nav>
+</article>
+  </main>
+  <footer class="wrap"><a href="/materials/">無料教材一覧</a></footer>
+</body>
+</html>
