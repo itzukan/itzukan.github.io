@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>サブネットマスクで範囲を読む｜基本情報技術者試験 | IT図鑑</title>
+  <meta name="description" content="IPv4アドレスを区切って、同じネットワークに属するアドレスの範囲を見つけます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe/subnet-mask/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/it-passport-visuals.css">
+  <link rel="stylesheet" href="/assets/fe-lesson.css?v=2">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/fe/practice/">基本情報道場</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="fe-subnet-mask">
+    <p class="topic">基本情報技術者試験・科目A ／ テクノロジ系</p>
+    <h1>サブネットマスクで範囲を読む</h1>
+    <p class="lead">IPv4アドレスを区切って、同じネットワークに属するアドレスの範囲を見つけます。</p>
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">🌐 /26は末尾を64個ずつに区切る</h2>
+      <p>IPv4は32ビット。<strong>/26は先頭26ビットがネットワーク部</strong>です。残り6ビットはホスト部なので、1区画には2⁶＝64個のアドレスがあります。</p>
+      <p><strong>サブネットマスクの最後の8ビット</strong></p>
+      <div class="subnet-bits" role="img" aria-label="サブネットマスクの末尾は11000000。1の2ビットはネットワーク部を示し、0の6ビットはホスト部を示す">
+        <span><strong>11</strong><small>ネットワーク部</small></span>
+        <span><strong>000000</strong><small>ホスト部</small></span>
+      </div>
+      <table class="fe-table"><caption>/26の区切り（最後の数字）</caption>
+        <thead><tr><th scope="col">区画の先頭</th><th scope="col">区画の末尾</th></tr></thead>
+        <tbody><tr><td>0</td><td>63</td></tr><tr><td>64</td><td>127</td></tr><tr class="matched"><td>128</td><td>191</td></tr><tr><td>192</td><td>255</td></tr></tbody>
+      </table>
+      <p class="callout"><strong>例：192.168.1.130/26 → 192.168.1.128〜191の区画</strong><br>先頭の.128はネットワークアドレス、末尾の.191はブロードキャストアドレス。機器に割り当てられるのは.129〜.190です。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="2" data-correct="正解。末尾70は64〜127の区画に入るので、先頭の192.168.1.64がネットワークアドレスです。" data-retry="64個ずつ区切った範囲のうち、70が入る区画の先頭を探しましょう。">
+        <fieldset>
+          <legend>IPv4アドレスが192.168.1.70/26です。このアドレスが属するネットワークアドレスはどれですか？</legend>
+          <label><input type="radio" name="answer" value="1" required>192.168.1.0</label>
+          <label><input type="radio" name="answer" value="2" required>192.168.1.64</label>
+          <label><input type="radio" name="answer" value="3" required>192.168.1.70</label>
+          <label><input type="radio" name="answer" value="4" required>192.168.1.128</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+      <form class="quiz" data-answer="4" data-correct="正解。この区画は.64〜.127です。先頭の.64と末尾の.127を除くので、割り当て範囲は.65〜.126です。" data-retry="区画の先頭と末尾は、通常の機器には割り当てません。">
+        <fieldset>
+          <legend>192.168.1.64/26のネットワークで、通常の機器に割り当てられるアドレスの範囲はどれですか？（最後の数字だけで答える）</legend>
+          <label><input type="radio" name="answer" value="1" required>64〜127</label>
+          <label><input type="radio" name="answer" value="2" required>64〜126</label>
+          <label><input type="radio" name="answer" value="3" required>65〜127</label>
+          <label><input type="radio" name="answer" value="4" required>65〜126</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+    <p class="next-lesson"><a href="/materials/fe/practice/">基本情報道場でランダムに解く →</a></p>
+  </main>
+  <footer class="wrap"><a href="/materials/categories/#fe">基本情報の教材一覧</a> · <a href="https://www.ipa.go.jp/shiken/syllabus/omgdg50000005kpe-att/syllabus_fe_ver9_2.pdf#page=40">IPAの出題範囲（PDF）</a></footer>
+</body>
+</html>

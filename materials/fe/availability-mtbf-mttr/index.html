@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MTBF・MTTRと稼働率｜基本情報技術者試験 | IT図鑑</title>
+  <meta name="description" content="注文サービスが故障と復旧を繰り返すとき、1サイクルのうちサービスを使える割合を求めます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe/availability-mtbf-mttr/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/it-passport-visuals.css">
+  <link rel="stylesheet" href="/assets/fe-lesson.css?v=2">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/fe/practice/">基本情報道場</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="fe-availability-mtbf-mttr">
+    <p class="topic">基本情報技術者試験・科目A ／ テクノロジ系</p>
+    <h1>MTBF・MTTRと稼働率</h1>
+    <p class="lead">注文サービスが故障と復旧を繰り返すとき、1サイクルのうちサービスを使える割合を求めます。</p>
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">⏱️ 稼働時間と修復時間を分ける</h2>
+      <div class="uptime-example" role="img" aria-label="100時間のうち、左の90時間は稼働、右の10時間は修復">
+        <span class="uptime">稼働</span><span class="repair" aria-hidden="true">⚙</span>
+      </div>
+      <div class="duo">
+        <div class="example"><h3>🟢 MTBF（平均故障間隔）</h3><p>故障から復旧したあと、次の故障まで使える時間は平均<strong>90時間</strong>。</p></div>
+        <div class="example"><h3>🛠️ MTTR（平均修復時間）</h3><p>故障してから復旧するまでの時間は平均<strong>10時間</strong>。</p></div>
+      </div>
+      <p class="callout"><strong>稼働率 ＝ MTBF ÷（MTBF ＋ MTTR）</strong><br>90 ÷（90 ＋ 10）＝ 0.90（90%）</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="3" data-correct="正解。全部で200時間のうち196時間使えるので、196 ÷ 200 ＝ 0.98（98%）です。" data-retry="MTBFとMTTRの合計を分母にし、使える時間を分子にしましょう。">
+        <fieldset>
+          <legend>MTBFが196時間、MTTRが4時間です。稼働と修復を繰り返すこのシステムの稼働率は何%ですか？</legend>
+          <label><input type="radio" name="answer" value="1" required>2%</label>
+          <label><input type="radio" name="answer" value="2" required>96%</label>
+          <label><input type="radio" name="answer" value="3" required>98%</label>
+          <label><input type="radio" name="answer" value="4" required>99%</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+      <form class="quiz" data-answer="2" data-correct="正解。MTTRが1時間なら99 ÷（99 ＋ 1）＝ 99%です。修復時間がこれより長いと99%を下回ります。" data-retry="稼働時間99時間に修復時間を足し、稼働率がちょうど99%になる組み合わせを探しましょう。">
+        <fieldset>
+          <legend>MTBFが99時間のシステムで、稼働率を99%以上にしたいとします。MTTRは最大何時間に抑える必要がありますか？</legend>
+          <label><input type="radio" name="answer" value="1" required>0.5時間</label>
+          <label><input type="radio" name="answer" value="2" required>1時間</label>
+          <label><input type="radio" name="answer" value="3" required>2時間</label>
+          <label><input type="radio" name="answer" value="4" required>9時間</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+    <p class="next-lesson"><a href="/materials/fe/practice/">基本情報道場でランダムに解く →</a></p>
+  </main>
+  <footer class="wrap"><a href="/materials/categories/#fe">基本情報の教材一覧</a> · <a href="https://www.ipa.go.jp/shiken/syllabus/omgdg50000005kpe-att/syllabus_fe_ver9_2.pdf#page=23">IPAの出題範囲（PDF）</a></footer>
+</body>
+</html>

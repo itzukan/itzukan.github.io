@@ -11,6 +11,15 @@
 .fe-table th { background: #1d3049; }
 .fe-table .one { color: #b8f6ff; background: #174457; font-weight: 750; }
 .join-arrow { text-align: center; color: #8beaf6; }
+.uptime-example { display: grid; grid-template-columns: 9fr 1fr; margin-top: 12px; overflow: hidden; border-radius: 8px; text-align: center; font-weight: 800; }
+.uptime-example span { padding: 6px 0; color: #0b1120; }
+.uptime { background: #a4ead2; }
+.repair { background: #f8c780; }
+.subnet-bits { display: grid; grid-template-columns: 1fr 1.3fr; gap: 6px; margin-top: 12px; }
+.subnet-bits span { display: grid; padding: 6px; border-radius: 6px; background: #1d3049; text-align: center; }
+.subnet-bits span:first-child { background: #174457; }
+.subnet-bits strong { font: 800 1.15rem ui-monospace, monospace; letter-spacing: .12em; color: #b8f6ff; }
+.fe-table .matched { background: #174457; font-weight: 750; }
 @media (max-width: 400px) {
   .example h3 { font-size: .92rem; }
   .number-row { gap: 3px; }
