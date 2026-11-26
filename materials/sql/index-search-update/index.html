@@ -118,7 +118,11 @@
       <option value="1">注文が1件</option>
       <option value="2" selected>注文が2件</option>
     </select>
-
+    <label for="index-speed">再生速度</label>
+    <select id="index-speed">
+      <option value="1">通常</option>
+      <option value="0.5">ゆっくり</option>
+    </select>
   </div>
   <section class="chapter-node index-lane" data-index-lane="scan">
     <h3>📄 インデックスなし｜注文表を順に見る</h3>
@@ -193,53 +197,49 @@
 <div class="panel block-learn"><h2>❓ 疑問</h2><p>検索が速くなるなら、すべての列にインデックスを作るとよい？</p></div>
 <section class="chapter-flow index-decision" id="choose-index" aria-labelledby="choose-index-title">
   <h2 id="choose-index-title">① 人が決める｜どの列にインデックスを作る？</h2>
-  <p>注文表は5万件。<strong>よく使う検索で、何件まで絞れるか</strong>を見ます。</p>
+  <p><strong>よく使う検索で、何件まで絞れる？</strong></p>
   <div class="index-compare">
     <section class="chapter-node">
       <h3>🔎 顧客IDで探す</h3>
-      <p class="decision-step">顧客4242の注文履歴を検索</p>
+      <p class="decision-step">例｜顧客4242の注文履歴</p>
       <span class="decision-arrow" aria-hidden="true">↓</span>
-      <p>該当する注文 <strong>5万件のうち2件</strong></p>
+      <p>該当 <strong>5万件のうち2件</strong></p>
       <div class="index-match-bar" aria-hidden="true"><span style="--match-share: .004%"></span></div>
-      <p class="decision-outcome">📇 <strong>顧客IDの列に作る候補</strong></p>
+      <p class="decision-outcome">📇 <strong>顧客IDに作る候補</strong></p>
     </section>
     <section class="chapter-node">
       <h3>📋 ステータスで探す</h3>
-      <p class="decision-step">「処理済み」の注文をすべて一覧で見る</p>
+      <p class="decision-step">例｜「処理済み」の一覧</p>
       <span class="decision-arrow" aria-hidden="true">↓</span>
-      <p>該当する注文 <strong>5万件のうち4万9千件</strong></p>
+      <p>該当 <strong>5万件のうち4万9千件</strong></p>
       <div class="index-match-bar" aria-hidden="true"><span style="--match-share: 98%"></span></div>
-      <p class="decision-outcome">💾 <strong>この検索だけなら作る優先度は低い</strong></p>
+      <p class="decision-outcome">💾 <strong>この検索だけなら優先度は低い</strong></p>
     </section>
   </div>
-  <p>インデックスを増やすと、注文を追加したり索引対象の値を変えたりするときに索引も更新します。検索が速くなる効果と、登録・更新の時間や保存容量を比べて決めます。</p>
+  <p>検索が速くなる効果と、索引の更新・保存にかかる負担を比べます。</p>
 </section>
 <section class="chapter-flow index-decision" id="use-index" aria-labelledby="use-index-title">
   <h2 id="use-index-title">② DBが決める｜この検索でインデックスを使う？</h2>
-  <p><strong>どちらも顧客IDのインデックスは作成済み。</strong> 検索条件が変わると、DBが選ぶ探し方も変わります。</p>
+  <p><strong>どちらも顧客IDのインデックスは作成済み。</strong></p>
   <div class="index-compare">
     <section class="chapter-node">
       <h3>🔎 顧客IDが 4242</h3>
       <p class="decision-step">該当 <strong>2件</strong></p>
       <span class="decision-arrow" aria-hidden="true">↓</span>
-      <p class="decision-step">索引で場所を絞り、2件を取り出す</p>
-      <span class="decision-arrow" aria-hidden="true">↓</span>
-      <p class="decision-outcome">📇 <strong>索引を使うほうが有利になりやすい</strong></p>
+      <p class="decision-outcome">📇 <strong>索引で絞るほうが有利</strong></p>
     </section>
     <section class="chapter-node">
       <h3>📋 顧客IDが 49000 以下</h3>
       <p class="decision-step">該当 <strong>4万9千件</strong></p>
       <span class="decision-arrow" aria-hidden="true">↓</span>
-      <p class="decision-step">注文表のほとんどの行が必要になる</p>
-      <span class="decision-arrow" aria-hidden="true">↓</span>
-      <p class="decision-outcome">📄 <strong>注文表を順に読むほうが有利なことがある</strong></p>
+      <p class="decision-outcome">📄 <strong>表を順に読むほうが有利な場合も</strong></p>
     </section>
   </div>
-  <p>DBはデータの件数や値の分布をもとに、読み取りの手間を見積もります。何％なら索引を使うという一律の基準はありません。</p>
+  <p>DBは件数や値の偏りから読み取りの手間を見積もります。何割の行が該当したら索引を使うかは、データによって変わります。</p>
 </section>
 <div class="panel block-try">
   <h2>⌨️ 操作</h2>
-  <p>「実行計画を比べる」を押すと、ブラウザー内のPostgreSQLで下のSQLを実行します。演習結果の②と③を見比べると、同じ顧客IDのインデックスがあっても、2件と4万9千件ではDBが選ぶ探し方が変わることを確認できます。</p>
+  <p>②の2件と③の4万9千件で、DBが選ぶ探し方を比べてみましょう。</p>
   <button type="button" id="run-index-plans" hidden>実行計画を比べる</button>
   <p id="index-run-status" role="status"></p>
   <div id="index-live-results" hidden>
@@ -247,7 +247,7 @@
     <div class="chapter-code"><strong>② 索引あり・2件</strong><pre tabindex="0"><code></code></pre></div>
     <div class="chapter-code"><strong>③ 索引あり・多くの行</strong><pre tabindex="0"><code></code></pre></div>
   </div>
-  <div class="chapter-code"><strong>実行するSQL（PostgreSQL）</strong><pre tabindex="0"><code id="index-example-sql">BEGIN;
+  <details class="index-notes"><summary>実行するSQLを表示（PostgreSQL）</summary><div class="chapter-code"><pre tabindex="0"><code id="index-example-sql">BEGIN;
 CREATE TEMP TABLE index_lesson_orders AS
 SELECT n AS order_no,
        CASE WHEN n IN (308, 18000) THEN 4242
@@ -269,7 +269,7 @@ SELECT * FROM index_lesson_orders WHERE customer_id = 4242;
 -- ③ 多くの行が該当する場合
 EXPLAIN (COSTS OFF)
 SELECT * FROM index_lesson_orders WHERE customer_id &lt;= 49000;
-ROLLBACK;</code></pre></div>
+ROLLBACK;</code></pre></div></details>
 </div>
 <div class="panel block-result"><h2>📋 結果を見てみよう（表示例）</h2><div class="chapter-example"><div class="chapter-code"><strong>表示例</strong><pre tabindex="0"><code>① <mark>Seq Scan</mark> on index_lesson_orders
      Filter: (customer_id = 4242)
@@ -278,9 +278,9 @@ ROLLBACK;</code></pre></div>
      Index Cond: (customer_id = 4242)
 
 ③ <mark>Seq Scan</mark> on index_lesson_orders
-     Filter: (customer_id &lt;= 49000)</code></pre></div><p>Seq Scanは表を順に読む、Index Scan / Index Only Scan などは索引を使う計画です。③のように多くの行が対象だと、索引を作ってもSeq Scanが選ばれることがあります。版や統計情報で表示は変わります。</p></div></div>
-<div class="panel block-check"><h2>✅ 答え</h2><p>人は、よく使う検索で少数の行に絞れる列を候補にします。DBは、検索ごとに索引を使う場合と注文表を順に読む場合の手間を比べます。</p></div>
-<div class="panel block-check"><h2>まとめ</h2><p>実際に近い件数・値の偏りを練習用DBに用意し、実行計画・検索時間・更新時間・索引の容量を作成前後で比べます。EXPLAINだけでは実測時間は出ません。</p></div>
+     Filter: (customer_id &lt;= 49000)</code></pre></div><p><code>Seq Scan</code> は表を順に読み、<code>Index Scan</code> は索引を使います。表示はデータの分布やDBの設定で変わります。</p></div></div>
+<div class="panel block-check"><h2>✅ 答え</h2><p>よく使う検索で少数の行に絞れる列から、索引を検討します。</p></div>
+<div class="panel block-check"><h2>まとめ</h2><p>実データに近い環境で、実行計画・検索と更新の時間・索引の容量を比べます。実測時間を見るには <code>EXPLAIN ANALYZE</code> を使います。</p></div>
 <p class="note">参考資料 <a href="https://www.postgresql.org/docs/current/using-explain.html">PostgreSQLの実行計画</a>・<a href="https://www.postgresql.org/docs/current/btree.html#BTREE-STRUCTURE">B-tree索引と注文表の行への参照</a></p>
 <nav class="chapter-nav" aria-label="章の移動"><a href="/materials/sql/">← 入門の目次</a></nav>
 </article>
@@ -290,6 +290,7 @@ ROLLBACK;</code></pre></div>
   (() => {
     const demo = document.getElementById('index-search-demo');
     const example = document.getElementById('index-example');
+    const speed = document.getElementById('index-speed');
     const scanButton = document.getElementById('play-index-scan');
     const lookupButton = document.getElementById('play-index-lookup');
     const scanResult = document.getElementById('index-scan-result');
@@ -335,6 +336,7 @@ ROLLBACK;</code></pre></div>
     async function move(element, from, to, duration, via = []) {
       if (!motion.matches && element.animate) {
         const animation = element.animate([from, ...via, to].map(transform => ({transform})), {duration, fill: 'forwards'});
+        animation.playbackRate = Number(speed.value);
         try { await animation.finished; } catch { return false; }
         element.style.transform = to;
         animation.cancel();
@@ -414,6 +416,13 @@ ROLLBACK;</code></pre></div>
       lookupResult.textContent = '顧客4242の注文を' + matches + '件取得。';
     });
 
+    speed.addEventListener('change', () => {
+      for (const element of [scanRows, treeDot, dot]) {
+        for (const animation of element.getAnimations?.() ?? []) {
+          animation.updatePlaybackRate(Number(speed.value));
+        }
+      }
+    });
     example.addEventListener('change', () => {
       const single = example.value === '1';
       for (const item of demo.querySelectorAll('[data-duplicate]')) item.hidden = single;
