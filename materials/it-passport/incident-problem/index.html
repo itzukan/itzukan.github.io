@@ -54,6 +54,16 @@
         <button type="submit">答えを確認</button>
         <output aria-live="polite"></output>
       </form>
+      <form class="quiz" data-answer="2" data-correct="正解。①はサービスを再開する対応なのでインシデント管理、②は原因に対処して再発を防ぐ活動なので問題管理です。" data-retry="①と②を「すぐ使えるようにする」「同じ障害を防ぐ」に分けてみましょう。">
+        <fieldset>
+          <legend>決済障害が起きました。担当者は①予備経路で注文を再開し、②調査で見つけた設定ミスを直して再発を防ぎました。①と②の組み合わせはどれですか？</legend>
+          <label><input type="radio" name="answer" value="1" required>① 問題管理 ／ ② インシデント管理</label>
+          <label><input type="radio" name="answer" value="2" required>① インシデント管理 ／ ② 問題管理</label>
+          <label><input type="radio" name="answer" value="3" required>① 問題管理 ／ ② 問題管理</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
     </section>
     <p class="next-lesson"><a href="/materials/categories/#it-passport">ITパスポートの教材一覧へ</a></p>
   </main>
