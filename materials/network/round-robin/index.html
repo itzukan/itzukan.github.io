@@ -55,7 +55,15 @@
   <p><code>free.itzukan.com</code> は候補の一覧を観察するための例です。順番が変わる理由にはDNSサーバー側の並べ替えなどもあり、この結果だけでサイトの構成は断定できません。DNSが前の回答を一時保存している場合などは、同じ順番で返ることもあります。</p>
 </div>
 <div class="panel block-check"><h2>✅ 答え</h2><p>各サーバーに同じ件数を配っても、1件ごとの処理の重さが違えば負荷は変わります。</p></div>
-<div class="panel block-check"><h2>まとめ</h2><p>ロードバランサーは届いたアクセスを転送し、DNSは接続先の候補を返します。<code>nslookup</code> で見られるのは、接続する前の候補の一覧です。</p></div>
+<div class="panel block-check" id="round-robin-summary">
+  <h2>まとめ</h2>
+  <p><strong>ラウンドロビンは、A → B → C → A のように順番に振り分け、一周したら最初に戻る仕組みです。</strong></p>
+  <ul>
+    <li><strong>ロードバランサーのラウンドロビン</strong>では、届いたアクセスの転送先を順番に切り替えます。</li>
+    <li><strong>DNSラウンドロビン</strong>では、接続先の候補の順番を入れ替えます。アプリが先頭のIPアドレスから試す場合は、接続先が分散することがあります。<code>nslookup</code> で確認できるのは候補の順番までです。</li>
+  </ul>
+  <p>同じ件数を配っても、処理の重さが違えば負荷に差が出ます。故障したサーバーを候補から外すには、ヘルスチェックの結果を振り分けに反映する仕組みが必要です。</p>
+</div>
 <p class="note">参考資料 <a href="https://learn.microsoft.com/en-us/troubleshoot/windows-server/networking/how-to-use-netmask-ordering-round-robin-feature">MicrosoftのDNSラウンドロビンの解説</a></p>
 <nav class="chapter-nav" aria-label="章の移動"><a href="/materials/network/cdn-cache/">← 前のテーマ</a></nav>
 </article>
