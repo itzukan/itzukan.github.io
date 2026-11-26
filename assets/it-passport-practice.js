@@ -302,6 +302,14 @@
     showQuestion();
   }
 
+  function trackPractice(event) {
+    if (series !== 'it-passport' || window.itzukanAnalyticsOptOut) return;
+    const params = new URLSearchParams(location.search);
+    if (params.get('utm_source')?.toLowerCase() === 'itzukan_qa' ||
+        params.get('utm_medium')?.toLowerCase() === 'qa') return;
+    window.gtag?.('event', event, { question_count: questions.length });
+  }
+
   function start(count) {
     if (count > bank.length) return;
     closeTransfer();
@@ -314,6 +322,7 @@
     draft = null;
     openExercise();
     saveProgress(true);
+    trackPractice('it_passport_dojo_start');
   }
 
   function resizeReview() {
@@ -383,6 +392,7 @@
     draft = null;
     saveProgress();
     showAnswer(selected);
+    if (answers.length === questions.length) trackPractice('it_passport_dojo_complete');
     get('result').focus();
   });
 
