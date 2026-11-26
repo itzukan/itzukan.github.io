@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>本番の管理権限からバックアップを守る｜基本情報技術者試験 科目B | IT図鑑</title>
+  <meta name="description" content="本番とバックアップで削除できる人を分け、同時に失う危険を減らします。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe-b-security/protect-backup-access/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/fe-security-case.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/fe-b-security/practice/">科目B・情報セキュリティ</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="fe-b-security-protect-backup-access">
+    <p class="topic">基本情報技術者試験・科目B</p>
+    <h1>本番の管理権限からバックアップを守る</h1>
+    <p class="lead">本番とバックアップで削除できる人を分け、同時に失う危険を減らします。</p>
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">🗄️ 両方を消せる権限を分ける</h2>
+      <ol class="security-flow">
+        <li><span class="case-icon" aria-hidden="true">🗄️</span><div><strong>保存先は別</strong>同じ管理アカウントで本番とバックアップを削除できる。</div></li>
+        <li><span class="case-icon" aria-hidden="true">👥</span><div><strong>管理権限を分ける</strong>本番の管理アカウントからバックアップの削除権限を外す。</div></li>
+        <li><span class="case-icon" aria-hidden="true">🔒</span><div><strong>保管期間中の削除を防ぐ</strong>保管期間を設定し、削除制限と復元手順を確かめる。</div></li>
+      </ol>
+      <p class="callout">バックアップから実際にデータを戻せるかも定期的にテストします。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="2" data-correct="正解。本番の管理アカウントが乗っ取られても、その権限だけでは保管期間中のバックアップを消せないようにします。" data-retry="保存先を分けていても、同じアカウントで削除できるかを確認します。">
+        <fieldset>
+          <legend>本番データとバックアップの両方を失うリスクを下げる設定はどれですか？</legend>
+          <ul class="question-context" aria-label="事例の条件">
+            <li>本番データとバックアップは別の保存先にありますが、同じ管理アカウントで両方を削除できます。</li>
+            <li>会社では保管期間中にバックアップを削除できなくする機能も使えます。</li>
+          </ul>
+          <label><input type="radio" name="answer" value="1" required>削除権限は共通のまま、バックアップをさらに別の保存先へ複製する</label>
+          <label><input type="radio" name="answer" value="2" required>バックアップの管理権限を分け、保管期間中は削除できないようにする</label>
+          <label><input type="radio" name="answer" value="3" required>保存先の名前だけ変え、削除権限はそのままにする</label>
+          <label><input type="radio" name="answer" value="4" required>バックアップの管理権限を分け、その権限も本番の管理アカウントに追加する</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+  </main>
+  <footer class="wrap"><a href="/materials/categories/#fe-b-security">情報セキュリティの教材一覧</a> · <a href="https://www.ipa.go.jp/security/guide/sme/about.html">IPAの情報セキュリティ対策ガイドライン</a></footer>
+</body>
+</html>

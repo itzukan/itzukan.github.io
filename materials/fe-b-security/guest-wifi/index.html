@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>来客用Wi-Fiを社内ネットワークから分ける｜基本情報技術者試験 科目B | IT図鑑</title>
+  <meta name="description" content="来客に必要な通信だけを許可するよう、接続先を分けます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe-b-security/guest-wifi/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/fe-security-case.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/fe-b-security/practice/">科目B・情報セキュリティ</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="fe-b-security-guest-wifi">
+    <p class="topic">基本情報技術者試験・科目B</p>
+    <h1>来客用Wi-Fiを社内ネットワークから分ける</h1>
+    <p class="lead">来客に必要な通信だけを許可するよう、接続先を分けます。</p>
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">💻 必要な通信先を確認</h2>
+      <ol class="security-flow">
+        <li><span class="case-icon" aria-hidden="true">💻</span><div><strong>来客はWeb会議に参加</strong>必要なのはインターネット接続。</div></li>
+        <li><span class="case-icon" aria-hidden="true">🔀</span><div><strong>来客用Wi-Fiに分ける</strong>インターネットへの通信を許可し、社内への通信を遮断する。</div></li>
+        <li><span class="case-icon" aria-hidden="true">✅</span><div><strong>両方の通信をテスト</strong>Web会議にはつながり、社内サーバーにはつながらない。</div></li>
+      </ol>
+      <p class="callout">社内機器への通信は、業務上必要な端末に限ります。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="2" data-correct="正解。来客に必要なのはインターネットだけです。社内への通信を遮断し、設定後に両方の接続をテストします。" data-retry="Wi-Fiの名前に加えて、接続後にどこまで通信できるかを確認します。">
+        <fieldset>
+          <legend>来客用Wi-Fiの設定として適切なのはどれですか？</legend>
+          <ul class="question-context" aria-label="事例の条件">
+            <li>来客は持参したPCでWeb会議に参加します。社内のプリンターやファイルサーバーは使いません。</li>
+            <li>来客用Wi-Fiでは社内ネットワークへの通信を遮断できます。</li>
+          </ul>
+          <label><input type="radio" name="answer" value="1" required>社員用Wi-Fiのパスワードを当日だけ教える</label>
+          <label><input type="radio" name="answer" value="2" required>来客用Wi-Fiでインターネットだけ許可し、社内への通信を遮断する</label>
+          <label><input type="radio" name="answer" value="3" required>プリンターとファイルサーバーへの通信も許可する</label>
+          <label><input type="radio" name="answer" value="4" required>来客用と社員用のWi-Fiの名前だけを分け、同じ通信設定にする</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+  </main>
+  <footer class="wrap"><a href="/materials/categories/#fe-b-security">情報セキュリティの教材一覧</a> · <a href="https://www.ipa.go.jp/security/guide/sme/about.html">IPAの情報セキュリティ対策ガイドライン</a></footer>
+</body>
+</html>

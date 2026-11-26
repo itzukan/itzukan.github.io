@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>社外に出すPDFから隠した情報を除く｜基本情報技術者試験 科目B | IT図鑑</title>
+  <meta name="description" content="見た目の黒塗りと、PDFから元の文字を削除する操作の違いを学びます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe-b-security/redact-document/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/fe-security-case.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/fe-b-security/practice/">科目B・情報セキュリティ</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="fe-b-security-redact-document">
+    <p class="topic">基本情報技術者試験・科目B</p>
+    <h1>社外に出すPDFから隠した情報を除く</h1>
+    <p class="lead">見た目の黒塗りと、PDFから元の文字を削除する操作の違いを学びます。</p>
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">⬛ 黒塗りの下に文字が残るか確認</h2>
+      <ol class="security-flow">
+        <li><span class="case-icon" aria-hidden="true">⬛</span><div><strong>黒い四角形で隠れた</strong>画面では仕入れ単価が見えない。</div></li>
+        <li><span class="case-icon" aria-hidden="true">📋</span><div><strong>コピーすると単価が出る</strong>黒い図形の下に元の文字が残っている。</div></li>
+        <li><span class="case-icon" aria-hidden="true">✂️</span><div><strong>元の文字を削除して確認</strong>墨消しを適用し、書き出したPDFで検索とコピーを試す。</div></li>
+      </ol>
+      <p class="callout">公開前には、コメントや文書のプロパティにも機密情報が残っていないか確認します。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="4" data-correct="正解。上に図形を置いただけでは元の文字が残ります。元データを除去し、公開するファイルを検証します。" data-retry="画面で隠れている文字と、ファイルに残る文字を区別します。">
+        <fieldset>
+          <legend>社外にPDFを公開する前に、どの対応を取りますか？</legend>
+          <ul class="question-context" aria-label="事例の条件">
+            <li>見積書のPDFから仕入れ単価を隠すため、文字の上に黒い四角形を重ねました。</li>
+            <li>プレビューでは見えませんが、該当箇所をコピーして貼り付けると単価が読めます。</li>
+          </ul>
+          <label><input type="radio" name="answer" value="1" required>四角形をもう1枚重ねて公開する</label>
+          <label><input type="radio" name="answer" value="2" required>PDFファイル名から「見積書」を外す</label>
+          <label><input type="radio" name="answer" value="3" required>黒い四角形が印刷できることだけを確認する</label>
+          <label><input type="radio" name="answer" value="4" required>墨消し機能で元の文字を削除し、公開用PDFを開き直して検索やコピーでも残っていないか確認する</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+  </main>
+  <footer class="wrap"><a href="/materials/categories/#fe-b-security">情報セキュリティの教材一覧</a> · <a href="https://www.ipa.go.jp/security/guide/sme/about.html">IPAの情報セキュリティ対策ガイドライン</a></footer>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>委託先の事故通知から自社の影響を調べる｜基本情報技術者試験 科目B | IT図鑑</title>
+  <meta name="description" content="事故が起きた期間と、実際に委託先へ渡したデータを照合します。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe-b-security/vendor-notice/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/fe-security-case.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/fe-b-security/practice/">科目B・情報セキュリティ</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="fe-b-security-vendor-notice">
+    <p class="topic">基本情報技術者試験・科目B</p>
+    <h1>委託先の事故通知から自社の影響を調べる</h1>
+    <p class="lead">事故が起きた期間と、実際に委託先へ渡したデータを照合します。</p>
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">📨 通知と委託記録を照合</h2>
+      <ol class="security-flow">
+        <li><span class="case-icon" aria-hidden="true">📨</span><div><strong>委託先から事故通知</strong>10月1日〜3日の受付分の一部が対象候補。</div></li>
+        <li><span class="case-icon" aria-hidden="true">🔎</span><div><strong>自社の送信記録と照合</strong>日付・受付番号・渡したデータ項目を確認する。</div></li>
+        <li><span class="case-icon" aria-hidden="true">📞</span><div><strong>窓口に共有</strong>影響が確認できた範囲と調査中の範囲を分けて伝える。</div></li>
+      </ol>
+      <p class="callout">委託先には、影響範囲の更新と追加調査の予定も確認します。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="1" data-correct="正解。事故通知と送信記録を突き合わせると、影響の可能性がある範囲を絞れます。確定情報と調査中の情報を分けて共有します。" data-retry="事故の対象期間と、自社が渡した情報を組み合わせて確認します。">
+        <fieldset>
+          <legend>通知を受けた担当者が、自社への影響を調べるために行うことは何ですか？</legend>
+          <ul class="question-context" aria-label="事例の条件">
+            <li>配送の委託先から「10月1日〜3日の受付分の一部に外部から閲覧された可能性がある」と連絡を受けました。</li>
+            <li>自社は受付日、配送の受付番号、送信したデータ項目を記録しています。</li>
+          </ul>
+          <label><input type="radio" name="answer" value="1" required>10月1日〜3日の送信記録と通知を突き合わせ、対象の受付番号とデータ項目を窓口へ共有する</label>
+          <label><input type="radio" name="answer" value="2" required>委託先に預けたデータをすべて漏えい確定と判断する</label>
+          <label><input type="radio" name="answer" value="3" required>自社のサーバーに異常がなければ影響なしと判断する</label>
+          <label><input type="radio" name="answer" value="4" required>委託先の最終報告が来るまで、自社の送信記録の確認を待つ</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+  </main>
+  <footer class="wrap"><a href="/materials/categories/#fe-b-security">情報セキュリティの教材一覧</a> · <a href="https://www.ipa.go.jp/security/guide/sme/about.html">IPAの情報セキュリティ対策ガイドライン</a></footer>
+</body>
+</html>

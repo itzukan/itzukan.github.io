@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>調査に必要なログが消える前に保全する｜基本情報技術者試験 科目B | IT図鑑</title>
+  <meta name="description" content="自動削除の時刻を確認し、調査に必要な記録を取り出します。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe-b-security/log-export-hold/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/fe-security-case.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/fe-b-security/practice/">科目B・情報セキュリティ</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="fe-b-security-log-export-hold">
+    <p class="topic">基本情報技術者試験・科目B</p>
+    <h1>調査に必要なログが消える前に保全する</h1>
+    <p class="lead">自動削除の時刻を確認し、調査に必要な記録を取り出します。</p>
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">🕒 自動削除より先にログを保全</h2>
+      <ol class="security-flow">
+        <li><span class="case-icon" aria-hidden="true">🕒</span><div><strong>今夜の自動削除を確認</strong>5日前の記録が今夜から消え始める。</div></li>
+        <li><span class="case-icon" aria-hidden="true">📥</span><div><strong>必要なログを保全</strong>対象期間を記録し、元の形式で調査用の保存先へ。</div></li>
+        <li><span class="case-icon" aria-hidden="true">🔍</span><div><strong>コピーで順序を確認</strong>元の記録を残し、ログインや操作を時系列で照合する。</div></li>
+      </ol>
+      <p class="callout">保全したログは、許可を受けた調査担当者が扱います。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="1" data-correct="正解。必要な期間の元ログを保存すれば、関連する操作を前後の記録と照合できます。" data-retry="先に消える記録と、明日以降も残る記録を区別します。">
+        <fieldset>
+          <legend>アクセス記録を調査で使うには、何を優先しますか？</legend>
+          <ul class="question-context" aria-label="事例の条件">
+            <li>不審なアクセスがあり、5日前からの記録を調べます。一番古い対象ログは今夜の自動削除で消えます。</li>
+            <li>社内手順では、調査用の保存先にログを取り出せます。</li>
+          </ul>
+          <label><input type="radio" name="answer" value="1" required>必要なログを元の形式のまま保存し、対象期間を記録する</label>
+          <label><input type="radio" name="answer" value="2" required>明日から取得周期を短くして、過去のログが戻るのを待つ</label>
+          <label><input type="radio" name="answer" value="3" required>ログを表示し、気になる1行だけをメモする</label>
+          <label><input type="radio" name="answer" value="4" required>保存期限の設定だけを変更し、対象ログが保持されたかは確認しない</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+  </main>
+  <footer class="wrap"><a href="/materials/categories/#fe-b-security">情報セキュリティの教材一覧</a> · <a href="https://www.ipa.go.jp/security/guide/sme/about.html">IPAの情報セキュリティ対策ガイドライン</a></footer>
+</body>
+</html>

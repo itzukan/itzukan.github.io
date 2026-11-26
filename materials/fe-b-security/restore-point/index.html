@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>障害前のどの時点まで戻せるか判断する｜基本情報技術者試験 科目B | IT図鑑</title>
+  <meta name="description" content="許容できるデータの消失時間と、バックアップの時刻を照合します。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe-b-security/restore-point/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/fe-security-case.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/fe-b-security/practice/">科目B・情報セキュリティ</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="fe-b-security-restore-point">
+    <p class="topic">基本情報技術者試験・科目B</p>
+    <h1>障害前のどの時点まで戻せるか判断する</h1>
+    <p class="lead">許容できるデータの消失時間と、バックアップの時刻を照合します。</p>
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">🕑 障害時刻からさかのぼる</h2>
+      <ol class="security-flow">
+        <li><span class="case-icon" aria-hidden="true">🕑</span><div><strong>14:00に停止</strong>停止直前の1時間分までの損失を許容。</div></li>
+        <li><span class="case-icon" aria-hidden="true">🗓️</span><div><strong>13:00以降を探す</strong>12:30まで戻すと90分分、13:30なら30分分を失う可能性。</div></li>
+        <li><span class="case-icon" aria-hidden="true">💾</span><div><strong>13:30の版で復元</strong>復元後、13:30以降の注文を確認する。</div></li>
+      </ol>
+      <p class="callout">失ってよいデータの範囲を時刻で表した目標をRPO（目標復旧時点）と呼びます。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="4" data-correct="正解。14:00から1時間さかのぼると13:00です。13:30の版なら範囲内に収まります。" data-retry="止まった時刻と、復元できる時刻との差を求めます。">
+        <fieldset>
+          <legend>データの消失を許容範囲に収めるには、どのバックアップを選びますか？</legend>
+          <ul class="question-context" aria-label="事例の条件">
+            <li>受注システムは14:00に停止しました。業務ルールでは、失ってよいデータは停止前の最大1時間分です。</li>
+            <li>復元テスト済みのバックアップは12:30と13:30の2つです。</li>
+          </ul>
+          <label><input type="radio" name="answer" value="1" required>12:30の版を使う。早く取得したほうがデータが多い</label>
+          <label><input type="radio" name="answer" value="2" required>12:30の版を使う。停止の1時間前より古いことが条件だから</label>
+          <label><input type="radio" name="answer" value="3" required>12:30の版を使う。古い版を選べば消失時間を短くできる</label>
+          <label><input type="radio" name="answer" value="4" required>13:30の版を使う。失うデータが最大30分分に収まる</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+  </main>
+  <footer class="wrap"><a href="/materials/categories/#fe-b-security">情報セキュリティの教材一覧</a> · <a href="https://www.ipa.go.jp/security/guide/sme/about.html">IPAの情報セキュリティ対策ガイドライン</a></footer>
+</body>
+</html>

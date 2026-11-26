@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>感染が疑われるPCをネットワークから隔離する｜基本情報技術者試験 科目B | IT図鑑</title>
+  <meta name="description" content="感染の疑いがある端末を、調査に必要な情報を残しながら切り離します。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe-b-security/isolate-device/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/fe-security-case.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/fe-b-security/practice/">科目B・情報セキュリティ</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="fe-b-security-isolate-device">
+    <p class="topic">基本情報技術者試験・科目B</p>
+    <h1>感染が疑われるPCをネットワークから隔離する</h1>
+    <p class="lead">感染の疑いがある端末を、調査に必要な情報を残しながら切り離します。</p>
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">⚠️ 感染の拡大を防ぐ初動</h2>
+      <ol class="security-flow">
+        <li><span class="case-icon" aria-hidden="true">⚠️</span><div><strong>警告を発見</strong>画面に身代金の要求が表示された。</div></li>
+        <li><span class="case-icon" aria-hidden="true">🔌</span><div><strong>通信を切る</strong>社内手順に従い、有線LANとWi-Fiを切断する。電源は入れたまま。</div></li>
+        <li><span class="case-icon" aria-hidden="true">📞</span><div><strong>別の端末で報告</strong>端末名・発見時刻・表示内容を窓口に伝える。</div></li>
+      </ol>
+      <p class="callout">隔離・報告のあとは窓口の指示を待ちます。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="3" data-correct="正解。別の端末から連絡すれば、疑わしいPCを再接続せずに状況を伝えられます。" data-retry="共有フォルダへの通信と、調査に使う端末の状態を分けて考えます。">
+        <fieldset>
+          <legend>感染が疑われるPCを見つけたとき、社内手順に沿った対応はどれですか？</legend>
+          <ul class="question-context" aria-label="事例の条件">
+            <li>PCの画面に身代金の要求が出ました。社内の共有フォルダにも接続しています。</li>
+            <li>社内手順では、感染が疑われるPCの通信を切り、電源を入れたまま窓口に連絡します。</li>
+          </ul>
+          <label><input type="radio" name="answer" value="1" required>画面を閉じて、再び警告が出るまで仕事を続ける</label>
+          <label><input type="radio" name="answer" value="2" required>共有フォルダを開いて、ファイルを一つずつ確認する</label>
+          <label><input type="radio" name="answer" value="3" required>通信を切り、端末名・発見時刻・表示内容を別の端末で報告する</label>
+          <label><input type="radio" name="answer" value="4" required>電源を切り、翌朝の起動後に判断する</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+  </main>
+  <footer class="wrap"><a href="/materials/categories/#fe-b-security">情報セキュリティの教材一覧</a> · <a href="https://www.ipa.go.jp/security/guide/sme/about.html">IPAの情報セキュリティ対策ガイドライン</a></footer>
+</body>
+</html>

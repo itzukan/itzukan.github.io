@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>返却する端末からデータを消去する｜基本情報技術者試験 科目B | IT図鑑</title>
+  <meta name="description" content="ファイル一覧から消えることと、端末からデータを消去することの違いを学びます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe-b-security/disposed-device/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/fe-security-case.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/fe-b-security/practice/">科目B・情報セキュリティ</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="fe-b-security-disposed-device">
+    <p class="topic">基本情報技術者試験・科目B</p>
+    <h1>返却する端末からデータを消去する</h1>
+    <p class="lead">ファイル一覧から消えることと、端末からデータを消去することの違いを学びます。</p>
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">📦 返却前に消去と記録を確認</h2>
+      <ol class="security-flow">
+        <li><span class="case-icon" aria-hidden="true">📦</span><div><strong>必要な資料を退避</strong>業務で使うデータを所定の保存先へ移し、開けることを確認。</div></li>
+        <li><span class="case-icon" aria-hidden="true">🧹</span><div><strong>記憶装置を消去</strong>PCの種類に合った社内手順で記憶装置のデータを消去する。</div></li>
+        <li><span class="case-icon" aria-hidden="true">📝</span><div><strong>結果を記録して返却</strong>端末番号、実施日、結果を残す。</div></li>
+      </ol>
+      <p class="callout">消去方法は、記憶装置の種類や再利用の有無に合わせて選びます。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="4" data-correct="正解。ごみ箱を空にしただけでは復元できる場合があります。所定の消去を行い、結果を記録します。" data-retry="ファイル一覧の表示だけで消去済みと判断できるか考えます。">
+        <fieldset>
+          <legend>担当者はノートPCを返却する前に、何を行いますか？</legend>
+          <ul class="question-context" aria-label="事例の条件">
+            <li>顧客資料を保存したリースPCを返却します。ファイルをごみ箱に移して空にしました。</li>
+            <li>社内手順では、必要なデータを所定の場所に退避し、専用の消去手順を実施して記録を残します。</li>
+          </ul>
+          <label><input type="radio" name="answer" value="1" required>ファイル一覧が空なので、そのまま返却する</label>
+          <label><input type="radio" name="answer" value="2" required>空のフォルダを作ってから返却する</label>
+          <label><input type="radio" name="answer" value="3" required>ログイン画面の利用者名を変えてから返却する</label>
+          <label><input type="radio" name="answer" value="4" required>退避を確認し、社内手順で記憶装置を消去して結果を記録する</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+  </main>
+  <footer class="wrap"><a href="/materials/categories/#fe-b-security">情報セキュリティの教材一覧</a> · <a href="https://www.ipa.go.jp/security/guide/sme/about.html">IPAの情報セキュリティ対策ガイドライン</a></footer>
+</body>
+</html>

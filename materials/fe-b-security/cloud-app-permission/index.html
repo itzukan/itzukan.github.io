@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>連携アプリが求めるアクセス権を判断する｜基本情報技術者試験 科目B | IT図鑑</title>
+  <meta name="description" content="アプリが必要とする操作と、許可画面に出る操作を照合します。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe-b-security/cloud-app-permission/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/fe-security-case.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=3"></script>
+  <script defer src="/assets/it-passport-quiz.js?v=2"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a href="/materials/fe-b-security/practice/">科目B・情報セキュリティ</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="fe-b-security-cloud-app-permission">
+    <p class="topic">基本情報技術者試験・科目B</p>
+    <h1>連携アプリが求めるアクセス権を判断する</h1>
+    <p class="lead">アプリが必要とする操作と、許可画面に出る操作を照合します。</p>
+    <section class="panel" aria-labelledby="diagram-title">
+      <h2 id="diagram-title">📅 必要な操作と要求された権限を比較</h2>
+      <ol class="security-flow">
+        <li><span class="case-icon" aria-hidden="true">📅</span><div><strong>必要なのは空き時間の確認</strong>予定表の空き時間が分かれば日程を調整できる。</div></li>
+        <li><span class="case-icon" aria-hidden="true">✉️</span><div><strong>メールの権限も要求</strong>連携するとアプリにメールの読み取りと送信を許す。</div></li>
+        <li><span class="case-icon" aria-hidden="true">🛑</span><div><strong>保留して代替を確認</strong>必要な権限だけで使える承認済みの方法を探す。</div></li>
+      </ol>
+      <p class="callout">必要な操作に絞って権限を付ける考え方を、最小権限と呼びます。</p>
+    </section>
+    <section class="panel" aria-labelledby="quiz-title">
+      <h2 id="quiz-title">確認問題</h2>
+      <form class="quiz" data-answer="3" data-correct="正解。メールの読み取りや送信は空き時間の確認に不要です。許可を保留し、社内の承認済みの方法を確認します。" data-retry="アプリ名よりも、許可画面にある具体的な操作に注目します。">
+        <fieldset>
+          <legend>この許可画面が出たとき、社員はどう対応しますか？</legend>
+          <ul class="question-context" aria-label="事例の条件">
+            <li>日程調整アプリで必要なのは、予定表の空き時間の確認だけです。</li>
+            <li>連携の許可画面には、予定表に加え「メールの読み取りと送信」も必須と出ています。</li>
+          </ul>
+          <label><input type="radio" name="answer" value="1" required>一度すべて許可し、メールが送信されてから見直す</label>
+          <label><input type="radio" name="answer" value="2" required>個人アカウントで許可して、業務用メールを転送する</label>
+          <label><input type="radio" name="answer" value="3" required>許可を保留し、必要な権限だけで使える承認済みの方法を確認する</label>
+          <label><input type="radio" name="answer" value="4" required>アプリの名前が日程調整用なので、そのまま許可する</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+  </main>
+  <footer class="wrap"><a href="/materials/categories/#fe-b-security">情報セキュリティの教材一覧</a> · <a href="https://www.ipa.go.jp/security/guide/sme/about.html">IPAの情報セキュリティ対策ガイドライン</a></footer>
+</body>
+</html>
