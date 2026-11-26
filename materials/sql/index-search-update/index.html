@@ -85,9 +85,13 @@
   <section class="chapter-node index-lane" data-index-lane="lookup">
     <h3>📇 インデックスあり｜索引から該当行へ</h3>
     <ol class="index-track" aria-label="索引から注文表に進む順番">
-      <li>索引<br>1〜10000</li><li>索引<br>4242の場所</li><li data-target>注文表<br>4242</li>
+      <li>索引<small>範囲を絞る</small></li>
+      <li data-index-match>4242<small>索引で一致</small></li>
+      <li data-index-end>4243<small>ここで打ち切り</small></li>
+      <li data-target>注文表<small>4242の行へ</small></li>
     </ol>
     <p class="index-result" role="status">確認する注文表の行 <strong>該当の1行</strong></p>
+    <p>番号順の索引では、同じ4242があれば隣に並びます。次が4243なら、4242の並びはそこで終わりです。</p>
   </section>
   <p><strong>4242を見つけても、同じ番号がほかにないか確認します。</strong> このSQLは、条件に合う行をすべて返す指定です。注文番号の重複を禁止する設定がないので、索引なしでは末尾まで調べます。</p>
   <p class="note">比較のために流れを簡略化しています。「…」は省略した行です。点の速さは実測時間ではありません。下のSQL演習では注文番号だけを取得するため、索引だけで結果を返せる場合もあります。</p>
@@ -226,7 +230,7 @@ ROLLBACK;</code></pre></div>
         if (!dot.hidden) {
           const animation = dot.animate(
             [{transform: position(previous)}, {transform: position(step)}],
-            {duration: scan ? (found ? 700 : 470) : 290, fill: 'forwards'},
+            {duration: scan ? (found ? 700 : 470) : 410, fill: 'forwards'},
           );
           try { await animation.finished; } catch { return; }
           if (currentRun !== run) return;
@@ -234,6 +238,12 @@ ROLLBACK;</code></pre></div>
           animation.cancel();
         }
         step.setAttribute('data-checked', '');
+        if (step.hasAttribute('data-index-match')) {
+          result.textContent = '索引で4242を発見 → 次の番号を確認';
+        }
+        if (step.hasAttribute('data-index-end')) {
+          result.textContent = '次は4243 → 4242は1件。注文表の該当行へ';
+        }
         if (step.hasAttribute('data-target')) {
           step.setAttribute('data-found', '');
           found = true;
