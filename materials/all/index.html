@@ -1,0 +1,669 @@
+<!doctype html>
+<html lang="ja">
+<head><link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0B1120">
+<meta name="description" content="初心者向けの無料IT教材。Git、SQL、API、ネットワーク、Webセキュリティなどを図解で学び、GitやSQLはブラウザで実際に練習できます。">
+<link rel="canonical" href="https://free.itzukan.com/materials/all/">
+<title>すべての無料教材 | IT図鑑</title>
+<link rel="stylesheet" href="/assets/materials-layout.css">
+<link rel="stylesheet" href="/assets/materials-home.css?v=7">
+<script defer src="/assets/materials-search.js?v=7"></script>
+<script defer src="/assets/materials-pins.js"></script>
+<script defer src="/assets/materials-pagination.js"></script>
+<script defer src="/assets/analytics.js"></script></head>
+<body><main class="wrap">
+<header class="materials-header">
+  <a class="brand" href="/materials/">IT図鑑トップ</a>
+<div id="search-materials" class="materials-search" role="search" aria-labelledby="materials-query-label" hidden>
+  <label id="materials-query-label" for="materials-query">無料教材を検索</label>
+  <div class="materials-search-controls">
+    <input id="materials-query" type="search" placeholder="教材名・用語で検索" aria-controls="material-cards">
+    <button id="materials-clear" type="button" hidden>クリア</button>
+  </div>
+</div>
+  <nav aria-label="教材メニュー">
+    <details class="category-menu">
+      <summary>カテゴリ</summary>
+      <ul>
+        <li><a href="/materials/categories/#it-passport">ITパスポート</a></li>
+        <li><a href="/materials/fe/">基本情報</a></li>
+        <li><a href="/materials/categories/#fe-b">基本情報・科目B</a></li>
+        <li><a href="/materials/categories/#data">SQL・データベース</a></li>
+        <li><a href="/materials/categories/#web">Web・開発</a></li>
+        <li><a href="/materials/categories/#network">ネットワーク</a></li>
+        <li><a href="/materials/categories/#telework">テレワーク</a></li>
+        <li><a href="/materials/categories/#security">セキュリティ</a></li>
+        <li><a href="/materials/categories/">カテゴリ別一覧</a></li>
+      </ul>
+    </details>
+    <a class="question-series-link" href="/materials/practice/">問題シリーズ</a>
+    <a href="#free-materials">無料教材</a>
+    <a href="/materials/sql/training-demo/">SQL無料体験</a>
+    <a class="materials-paid-link" href="https://premium.itzukan.com/">有料教材</a>
+  </nav>
+</header>
+<section id="free-materials" aria-labelledby="materials-title">
+<h1 class="section-title" id="materials-title">すべての無料教材</h1>
+<p id="materials-count" role="status"></p>
+<div id="material-cards">
+<section id="pinned-materials" aria-labelledby="pinned-materials-title" hidden>
+  <h3 id="pinned-materials-title">ピン留めした教材</h3>
+  <div class="cards" id="pinned-material-cards"></div>
+</section>
+<div class="cards" id="all-material-cards">
+<!-- 新しい教材はこの article.card を複製し、タイトル・説明・タグ・リンクを変更して追加 -->
+<article class="card" data-search-aliases="在宅勤務 リモートワーク テレワーク Web会議">
+  <span class="status">● 無料図解</span>
+  <h3>🏠 はじめてのテレワーク</h3>
+  <p>VPN、Wi-Fi、会議音声、画面共有、ログイン承認、会社資料の6テーマを図で学びます。</p>
+  <div class="meta"><span>テレワーク</span><span>初心者向け</span></div>
+  <a class="button" href="/materials/telework/" data-analytics-event="material_click" data-material-id="telework-intro" data-click-location="material_card">6つの教材を見る</a>
+</article>
+<article class="card" data-search-aliases="DHCP DNS IPアドレス IP設定 自動割当 名前解決">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>DHCPとDNSの違い</h3>
+  <p>Wi-FiにつないだPCが自分の設定を受け取る場面と、接続先を調べる場面を比べます。</p>
+  <div class="meta"><span>ITパスポート</span><span>テクノロジ系</span></div>
+  <a class="button" href="/materials/it-passport/dhcp-dns/" data-analytics-event="material_click" data-material-id="it-passport-dhcp-dns" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="BFS 幅優先探索 グラフ キュー 最短経路">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>幅優先探索で最少の区間数を求める</h3>
+  <p>駅を近い順に調べる様子と、次に調べる駅の列を図で追います。</p>
+  <div class="meta"><span>基本情報</span><span>テクノロジ系</span></div>
+  <a class="button" href="/materials/fe/breadth-first-search/" data-analytics-event="material_click" data-material-id="fe-breadth-first-search" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="WiFi 無線LAN 名前解決"><span class="status">● 公開中 · 無料HTML＋PDF保存</span><h3>🌐 自宅のPCで学ぶ<br>はじめてのネットワーク入門</h3><p>Wi-Fi・IPアドレス・ルーター・DNS・HTTPSをHTMLで学習。Windows/Macの操作を切り替え、PDF保存もできます。</p><div class="meta"><span>初心者向け</span><span>原本全11ページ相当</span><span>Windows 11 / Mac</span></div><a class="button" href="/materials/network/" data-analytics-event="material_click" data-material-id="network-intro" data-click-location="material_card">教材を見る</a></article>
+<article class="card" data-search-aliases="ファイアウオール ファイヤーウォール firewall FW セキュリティグループ インバウンド">
+  <span class="status">● 無料図解</span>
+  <h3>🛡️ ファイアウォールとは？</h3>
+  <p>HTTPSは通るのにSSHは通らない理由を、通信の図とルールの設定例で確認します。</p>
+  <div class="meta"><span>ネットワーク</span><span>初心者向け</span></div>
+  <a class="button" href="/materials/network/firewall/" data-analytics-event="material_click" data-material-id="network-firewall" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="リクエスト レスポンス ステータスコード"><span class="status">● 公開中 · 無料HTML＋PDF保存</span><h3>🔌 自宅のPCで学ぶ<br>はじめてのAPI入門</h3><p>API・HTTP・JSONの基本をHTML全16章で学習。公開APIをブラウザやcurlで呼び出し、PDF保存もできます。</p><div class="meta"><span>初心者向け</span><span>全16章</span><span>Windows 10/11 / Mac</span></div><a class="button" href="/materials/api/" data-analytics-event="material_click" data-material-id="api-intro" data-click-location="material_card">教材を見る</a></article>
+<article class="card" data-search-aliases="認証 HTTPステータス OK">
+  <span class="status">● 公開中 · 無料ブラウザー演習</span>
+  <h3>🔑 はじめてのAPIキー</h3>
+  <p>APIキーを付ける前と後で商品一覧への応答を見比べ、401と200の違いを確認します。</p>
+  <div class="meta"><span>初心者向け</span><span>登録・インストール不要</span></div>
+  <a class="button" href="/materials/api-key/" data-analytics-event="material_click" data-material-id="api-key-intro" data-click-location="card_primary">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="ステージ PRレビュー">
+  <span class="status">● 公開中 · 無料ブラウザー演習</span>
+  <h3>はじめてのGit</h3>
+  <p>Gitとは何かを学び、ファイルの保存とコミットの違いを操作して確かめます。実務形式のコマンド演習2問に進めます。</p>
+  <div class="meta"><span>初心者向け</span><span>登録・インストール不要</span></div>
+  <a class="button" href="/materials/git/" data-analytics-event="material_click" data-material-id="git-intro" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="DB iパス アイパス 商品ID データベース設計">
+  <span class="status">● 公開中 · 無料図解＋確認問題</span>
+  <h3>🗄️ ITパスポート入門<br>主キーと外部キーの違い</h3>
+  <p>注文表から商品名をたどり、主キーと外部キーの役割を見比べます。確認問題は1問です。</p>
+  <div class="meta"><span>初心者向け</span><span>データベース</span></div>
+  <a class="button" href="/materials/it-passport/primary-foreign-key/" data-analytics-event="material_click" data-material-id="it-passport-keys" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="DB iパス アイパス データベース設計">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🗄️ ITパスポート入門<br>データベースの正規化とは？</h3>
+  <p>同じ商品名を何度も直すと何が起きる？ 注文表と商品表を分ける理由を、図と1問で学びます。</p>
+  <div class="meta"><span>初心者向け</span><span>データベース</span></div>
+  <a class="button" href="/materials/it-passport/normalization/" data-analytics-event="material_click" data-material-id="it-passport-normalization" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="iパス アイパス MFA 2FA 2段階認証 2要素認証">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🔐 ITパスポート入門<br>二段階認証と二要素認証の違い</h3>
+  <p>パスワードのあとに暗証番号を入れる場合と、スマホの認証アプリを使う場合を見比べます。</p>
+  <div class="meta"><span>初心者向け</span><span>セキュリティ</span></div>
+  <a class="button" href="/materials/it-passport/two-factor-auth/" data-analytics-event="material_click" data-material-id="it-passport-two-factor" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="iパス アイパス 損益分岐点 固定費 変動費 売上 販売量 利益 ストラテジ">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🥤 ITパスポート入門<br>損益分岐点とは？</h3>
+  <p>ジュースの販売数を動かして、赤字と黒字の境目を確かめます。固定費と変動費を使った計算問題もあります。</p>
+  <div class="meta"><span>初心者向け</span><span>ストラテジ系</span></div>
+  <a class="button" href="/materials/it-passport/break-even/" data-analytics-event="material_click" data-material-id="it-passport-break-even" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="iパス アイパス SLA SLO SLI サービスレベル合意 月間稼働率 ITサービスマネジメント">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🛒 ITパスポート入門<br>SLAとは？</h3>
+  <p>ネットショップの注文サービスを例に、SLA・SLO・SLIを見比べ、目標を下回ったときの判断を練習します。</p>
+  <div class="meta"><span>初心者向け</span><span>マネジメント系</span></div>
+  <a class="button" href="/materials/it-passport/sla/" data-analytics-event="material_click" data-material-id="it-passport-sla" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="iパス アイパス SWOT 経営戦略 内部環境 外部環境">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🥐 ITパスポート入門<br>SWOT分析とは？</h3>
+  <p>駅前のパン屋を例に、強み・弱み・機会・脅威を4マスで見分けます。</p>
+  <div class="meta"><span>初心者向け</span><span>ストラテジ系</span></div>
+  <a class="button" href="/materials/it-passport/swot/" data-analytics-event="material_click" data-material-id="it-passport-swot" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="iパス アイパス PERT クリティカルパス 工程表 プロジェクト管理 並行作業">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>📅 ITパスポート入門<br>アローダイアグラムで作業日程を読む</h3>
+  <p>写真と紹介文の準備を並行すると、公開まで何日？ 作業の順序とクリティカルパスを図でたどります。</p>
+  <div class="meta"><span>初心者向け</span><span>マネジメント系</span></div>
+  <a class="button" href="/materials/it-passport/project-schedule/" data-analytics-event="material_click" data-material-id="it-passport-project-schedule" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="iパス アイパス RAM SSD HDD 主記憶 補助記憶 パソコン">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🖼️ ITパスポート入門<br>CPU・メモリ・ストレージの違い</h3>
+  <p>写真を編集して保存する流れで、CPU・メモリ・ストレージの役割を見比べます。</p>
+  <div class="meta"><span>初心者向け</span><span>テクノロジ系</span></div>
+  <a class="button" href="/materials/it-passport/cpu-memory-storage/" data-analytics-event="material_click" data-material-id="it-passport-cpu-memory-storage" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="iパス アイパス 経営戦略 重要目標達成指標 重要業績評価指標">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🎯 ITパスポート入門<br>KGIとKPIの違い</h3>
+  <p>オンライン書店で、途中で追う指標と最終結果の指標を見分けます。</p>
+  <div class="meta"><span>初心者向け</span><span>ストラテジ系</span></div>
+  <a class="button" href="/materials/it-passport/kgi-kpi/" data-analytics-event="material_click" data-material-id="it-passport-kgi-kpi" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="iパス アイパス ITサービスマネジメント 障害対応 原因調査">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🛠️ ITパスポート入門<br>インシデント管理と問題管理の違い</h3>
+  <p>決済の障害を例に、サービスの復旧と再発防止の違いを学びます。</p>
+  <div class="meta"><span>初心者向け</span><span>マネジメント系</span></div>
+  <a class="button" href="/materials/it-passport/incident-problem/" data-analytics-event="material_click" data-material-id="it-passport-incident-problem" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="iパス アイパス CIA 情報セキュリティ 機密性 完全性 可用性">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🔒 ITパスポート入門<br>情報セキュリティの3要素</h3>
+  <p>注文台帳を例に、機密性・完全性・可用性を見分けます。</p>
+  <div class="meta"><span>初心者向け</span><span>テクノロジ系</span></div>
+  <a class="button" href="/materials/it-passport/security-cia/" data-analytics-event="material_click" data-material-id="it-passport-security-cia" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="iパス アイパス 暗号 暗号化 復号 ハッシュ ハッシュ関数 SHA-256 完全性">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🔐 ITパスポート入門<br>ハッシュ化と暗号化の違い</h3>
+  <p>注文ファイルを例に、鍵で内容を戻す場合と、ハッシュ値を照合する場合を図で学びます。</p>
+  <div class="meta"><span>初心者向け</span><span>テクノロジ系</span></div>
+  <a class="button" href="/materials/it-passport/hash-vs-encryption/" data-analytics-event="material_click" data-material-id="it-passport-hash-vs-encryption" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目A FE 二分探索 2分探索 アルゴリズム">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🔎 基本情報技術者試験<br>二分探索の手順</h3>
+  <p>昇順に並んだ棚番号から、中央を調べて探す範囲を絞ります。</p>
+  <div class="meta"><span>科目A</span></div>
+  <a class="button" href="/materials/fe/binary-search/" data-analytics-event="material_click" data-material-id="fe-binary-search" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目A FE データ構造 LIFO FIFO 後入れ先出し 先入れ先出し">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>📚 基本情報技術者試験<br>スタックとキューの違い</h3>
+  <p>同じ順で入れても、先に出てくる要素が違う理由を見比べます。</p>
+  <div class="meta"><span>科目A</span></div>
+  <a class="button" href="/materials/fe/stack-queue/" data-analytics-event="material_click" data-material-id="fe-stack-queue" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目A FE 論理積 論理和 排他的論理和 ビット演算">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>💡 基本情報技術者試験<br>AND・OR・XORの違い</h3>
+  <p>0・1の組み合わせ表で、同じ位置のビットを計算します。</p>
+  <div class="meta"><span>科目A</span></div>
+  <a class="button" href="/materials/fe/bit-operations/" data-analytics-event="material_click" data-material-id="fe-bit-operations" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目A FE SQL レフトジョイン 外部結合 DB">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🔗 基本情報技術者試験<br>LEFT JOINで残る行</h3>
+  <p>顧客と注文を結合し、一致しないときや複数あるときに残る行を見ます。</p>
+  <div class="meta"><span>科目A</span></div>
+  <a class="button" href="/materials/fe/left-join/" data-analytics-event="material_click" data-material-id="fe-left-join" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目A FE 主記憶 キャッシュメモリ ヒット率 平均アクセス時間">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>⚡ 基本情報技術者試験<br>キャッシュのヒット率と平均時間</h3>
+  <p>見つかる場合と見つからない場合の時間を、割合で重みづけします。</p>
+  <div class="meta"><span>科目A</span></div>
+  <a class="button" href="/materials/fe/cache-hit/" data-analytics-event="material_click" data-material-id="fe-cache-hit" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目A FE 信頼性 稼働率 平均故障間隔 平均修復時間 RASIS">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>⏱️ 基本情報技術者試験<br>MTBF・MTTRと稼働率</h3>
+  <p>故障まで使える時間と修復時間から、稼働率を計算します。</p>
+  <div class="meta"><span>科目A</span></div>
+  <a class="button" href="/materials/fe/availability-mtbf-mttr/" data-analytics-event="material_click" data-material-id="fe-availability-mtbf-mttr" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目A FE IPv4 CIDR サブネット ネットワークアドレス ブロードキャスト">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🌐 基本情報技術者試験<br>サブネットマスクで範囲を読む</h3>
+  <p>/26を図解し、ネットワークの区画や機器に割り当てられるアドレスを求めます。</p>
+  <div class="meta"><span>科目A</span></div>
+  <a class="button" href="/materials/fe/subnet-mask/" data-analytics-event="material_click" data-material-id="fe-subnet-mask" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 擬似言語 疑似言語 アルゴリズム ループ for if 配列 加算 トレース">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🔁 基本情報技術者試験<br>ループと条件分岐で合計する</h3>
+  <p>配列を1つずつ調べて、条件に合う値だけを足します。</p>
+  <div class="meta"><span>科目B</span></div>
+  <a class="button" href="/materials/fe-b/loop-sum/" data-analytics-event="material_click" data-material-id="fe-b-loop-sum" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 擬似言語 疑似言語 アルゴリズム 代入 交換 添字 一時変数 トレース">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>📦 基本情報技術者試験<br>配列の値を一時変数で入れ替える</h3>
+  <p>値を一時変数に退避してから、配列の両端を入れ替える手順を追います。</p>
+  <div class="meta"><span>科目B</span></div>
+  <a class="button" href="/materials/fe-b/array-swap/" data-analytics-event="material_click" data-material-id="fe-b-array-swap" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 擬似言語 疑似言語 アルゴリズム 関数 return 引数 戻り値 変数 トレース">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>↩️ 基本情報技術者試験<br>関数の引数と戻り値を追う</h3>
+  <p>2回の関数呼び出しを分けて計算し、戻り値を組み合わせます。</p>
+  <div class="meta"><span>科目B</span></div>
+  <a class="button" href="/materials/fe-b/function-return/" data-analytics-event="material_click" data-material-id="fe-b-function-return" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 擬似言語 疑似言語 配列 ループ カウンタ 条件式 一致">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🔢 基本情報技術者試験<br>条件に合う要素を数える</h3>
+  <p>配列を走査し、条件を満たす回だけカウンタを増やします。</p>
+  <div class="meta"><span>科目B</span></div>
+  <a class="button" href="/materials/fe-b/count-matches/" data-analytics-event="material_click" data-material-id="fe-b-count-matches" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 擬似言語 疑似言語 配列 ループ 最大値 負数 配列 走査">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🏁 基本情報技術者試験<br>配列を1周して最大値を求める</h3>
+  <p>先頭の値を候補にし、より大きな値に出会ったときに更新します。</p>
+  <div class="meta"><span>科目B</span></div>
+  <a class="button" href="/materials/fe-b/scan-max/" data-analytics-event="material_click" data-material-id="fe-b-scan-max" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 擬似言語 疑似言語 配列 ループ 線形探索 最初 要素番号">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🔎 基本情報技術者試験<br>最初に一致する位置を記録する</h3>
+  <p>同じ値が複数あっても、最初に見つけた要素番号だけを残します。</p>
+  <div class="meta"><span>科目B</span></div>
+  <a class="button" href="/materials/fe-b/first-match/" data-analytics-event="material_click" data-material-id="fe-b-first-match" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 擬似言語 疑似言語 配列 ループ 右シフト 上書き 代入">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>➡️ 基本情報技術者試験<br>配列の値を後ろからずらす</h3>
+  <p>同じ配列を読み書きするので、まだ使う値を上書きしない順番が重要です。</p>
+  <div class="meta"><span>科目B</span></div>
+  <a class="button" href="/materials/fe-b/shift-right/" data-analytics-event="material_click" data-material-id="fe-b-shift-right" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 擬似言語 疑似言語 配列 ループ 隣接 比較 増加 厳密不等号">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>📈 基本情報技術者試験<br>隣り合う値の増加を数える</h3>
+  <p>1つ前の要素と比べて、大きくなった回数を数えます。</p>
+  <div class="meta"><span>科目B</span></div>
+  <a class="button" href="/materials/fe-b/adjacent-rise/" data-analytics-event="material_click" data-material-id="fe-b-adjacent-rise" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 擬似言語 疑似言語 配列 ループ 累計 累積和 更新">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🧮 基本情報技術者試験<br>配列を先頭からの累計に変える</h3>
+  <p>書き換え済みの直前の要素を使い、先頭からの累計を作ります。</p>
+  <div class="meta"><span>科目B</span></div>
+  <a class="button" href="/materials/fe-b/prefix-total/" data-analytics-event="material_click" data-material-id="fe-b-prefix-total" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 擬似言語 疑似言語 配列 ループ 二重ループ ネスト 組合せ">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🔄 基本情報技術者試験<br>二重ループで条件に合う組を数える</h3>
+  <p>外側の要素を1つ選ぶたびに、内側の配列を最初から調べます。</p>
+  <div class="meta"><span>科目B</span></div>
+  <a class="button" href="/materials/fe-b/nested-pairs/" data-analytics-event="material_click" data-material-id="fe-b-nested-pairs" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 擬似言語 疑似言語 整数除算 商 while 終了条件">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🌓 基本情報技術者試験<br>値を半分にしながら終了条件を追う</h3>
+  <p>整数を半分にする処理を、条件が偽になるまで繰り返します。</p>
+  <div class="meta"><span>科目B</span></div>
+  <a class="button" href="/materials/fe-b/while-halving/" data-analytics-event="material_click" data-material-id="fe-b-while-halving" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 擬似言語 疑似言語 while 番兵 合計 配列">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🚩 基本情報技術者試験<br>目印の値まで配列を読み取る</h3>
+  <p>配列の末尾まで読む代わりに、終了の目印に出会った時点で止めます。</p>
+  <div class="meta"><span>科目B</span></div>
+  <a class="button" href="/materials/fe-b/sentinel-sum/" data-analytics-event="material_click" data-material-id="fe-b-sentinel-sum" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 擬似言語 疑似言語 連続回数 リセット 最大値 カウンタ">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>📊 基本情報技術者試験<br>連続した1の最長記録を求める</h3>
+  <p>今続いている回数と、これまでの最長記録を別々に持ちます。</p>
+  <div class="meta"><span>科目B</span></div>
+  <a class="button" href="/materials/fe-b/longest-streak/" data-analytics-event="material_click" data-material-id="fe-b-longest-streak" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 擬似言語 疑似言語 フィルタ コピー 添字 書き込み位置">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>📥 基本情報技術者試験<br>条件に合う要素だけを別の配列へ写す</h3>
+  <p>読む位置と書き込む位置を分けると、条件に合う値だけを詰めて並べられます。</p>
+  <div class="meta"><span>科目B</span></div>
+  <a class="button" href="/materials/fe-b/filter-copy/" data-analytics-event="material_click" data-material-id="fe-b-filter-copy" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 擬似言語 疑似言語 逆順 コピー 添字 反転">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🔃 基本情報技術者試験<br>配列を逆順にコピーする</h3>
+  <p>書く位置が先頭に近いほど、読む位置は元の配列の末尾に近くなります。</p>
+  <div class="meta"><span>科目B</span></div>
+  <a class="button" href="/materials/fe-b/reverse-copy/" data-analytics-event="material_click" data-material-id="fe-b-reverse-copy" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 擬似言語 疑似言語 選択ソート 最小値 交換 一時変数">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>📍 基本情報技術者試験<br>最小の要素を見つけて先頭と交換する</h3>
+  <p>まず最小値がある場所を調べ、最後に1回だけ先頭と交換します。</p>
+  <div class="meta"><span>科目B</span></div>
+  <a class="button" href="/materials/fe-b/select-first/" data-analytics-event="material_click" data-material-id="fe-b-select-first" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 擬似言語 疑似言語 スタック LIFO push pop top 後入れ先出し">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>📚 基本情報技術者試験<br>スタックを配列と top で管理する</h3>
+  <p>追加と取り出しのたびに、スタックの先頭側の境界を top で管理します。</p>
+  <div class="meta"><span>科目B</span></div>
+  <a class="button" href="/materials/fe-b/stack-top/" data-analytics-event="material_click" data-material-id="fe-b-stack-top" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 擬似言語 疑似言語 ユークリッドの互除法 最大公約数 余り while">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>➗ 基本情報技術者試験<br>余りを使って最大公約数を求める</h3>
+  <p>余りを計算し、2つの変数を順に入れ替える処理を追います。</p>
+  <div class="meta"><span>科目B</span></div>
+  <a class="button" href="/materials/fe-b/gcd-remainder/" data-analytics-event="material_click" data-material-id="fe-b-gcd-remainder" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 擬似言語 疑似言語 引数 戻り値 関数 return ループ">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>↩️ 基本情報技術者試験<br>ループの中で関数の戻り値を足す</h3>
+  <p>要素を関数に渡す処理と、戻り値を合計する処理を分けて追います。</p>
+  <div class="meta"><span>科目B</span></div>
+  <a class="button" href="/materials/fe-b/function-in-loop/" data-analytics-event="material_click" data-material-id="fe-b-function-in-loop" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 擬似言語 疑似言語 二次元配列 行 列 二重ループ リセット">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🧮 基本情報技術者試験<br>二次元配列で行ごとの合計を求める</h3>
+  <p>行ごとに合計を0から計算し、結果を別の配列に保存します。</p>
+  <div class="meta"><span>科目B</span></div>
+  <a class="button" href="/materials/fe-b/matrix-row-total/" data-analytics-event="material_click" data-material-id="fe-b-matrix-row-total" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 擬似言語 疑似言語 二分探索 最初の位置 境界 low high">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🔎 基本情報技術者試験<br>二分探索で同じ値の最初の位置を探す</h3>
+  <p>同じ値が並ぶ場合に、中央で一致しても左側を調べ続けます。</p>
+  <div class="meta"><span>科目B</span></div>
+  <a class="button" href="/materials/fe-b/binary-boundary/" data-analytics-event="material_click" data-material-id="fe-b-binary-boundary" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 擬似言語 疑似言語 挿入ソート 整列 シフト 退避">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>📥 基本情報技術者試験<br>整列済みの部分に1つ挿入する</h3>
+  <p>挿入する値より大きな要素だけを右にずらし、空いた位置に値を入れます。</p>
+  <div class="meta"><span>科目B</span></div>
+  <a class="button" href="/materials/fe-b/insertion-position/" data-analytics-event="material_click" data-material-id="fe-b-insertion-position" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 擬似言語 疑似言語 マージ 併合 ソート 比較">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🔀 基本情報技術者試験<br>整列した2つの配列から小さい値を順に取る</h3>
+  <p>2つの配列の未処理位置を別々に持ち、選んだ側だけを次に進めます。</p>
+  <div class="meta"><span>科目B</span></div>
+  <a class="button" href="/materials/fe-b/merge-heads/" data-analytics-event="material_click" data-material-id="fe-b-merge-heads" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 擬似言語 疑似言語 リングバッファ 循環キュー 余り FIFO">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🔄 基本情報技術者試験<br>循環キューで末尾から先頭へ戻る</h3>
+  <p>配列に並べたキューを読み、末尾の次は要素番号1へ戻ります。</p>
+  <div class="meta"><span>科目B</span></div>
+  <a class="button" href="/materials/fe-b/circular-queue/" data-analytics-event="material_click" data-material-id="fe-b-circular-queue" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 擬似言語 疑似言語 頻度 ヒストグラム 出現回数">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🔢 基本情報技術者試験<br>配列で値ごとの出現回数を数える</h3>
+  <p>出てきた値を、そのまま回数を保存する場所の番号に使います。</p>
+  <div class="meta"><span>科目B</span></div>
+  <a class="button" href="/materials/fe-b/array-frequency/" data-analytics-event="material_click" data-material-id="fe-b-array-frequency" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 擬似言語 疑似言語 累積和 区間和 範囲 部分和">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>➖ 基本情報技術者試験<br>累計の差から途中の範囲の合計を求める</h3>
+  <p>先頭からの累計を並べておくと、欲しい区間より前の合計を引けます。</p>
+  <div class="meta"><span>科目B</span></div>
+  <a class="button" href="/materials/fe-b/range-sum/" data-analytics-event="material_click" data-material-id="fe-b-range-sum" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 擬似言語 疑似言語 行列 転置 二次元配列">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🔁 基本情報技術者試験<br>二次元配列で行と列を入れ替える</h3>
+  <p>元の表の行番号と列番号を逆にして、新しい表のどこに書くかを決めます。</p>
+  <div class="meta"><span>科目B</span></div>
+  <a class="button" href="/materials/fe-b/matrix-transpose/" data-analytics-event="material_click" data-material-id="fe-b-matrix-transpose" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 擬似言語 疑似言語 再帰 階乗 戻り値 基底条件">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🪜 基本情報技術者試験<br>再帰の呼び出しと戻り値を追う</h3>
+  <p>自分と同じ処理に小さい値を渡し、停止条件に着いてから結果が戻る順番を追います。</p>
+  <div class="meta"><span>科目B</span></div>
+  <a class="button" href="/materials/fe-b/recursive-product/" data-analytics-event="material_click" data-material-id="fe-b-recursive-product" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 擬似言語 疑似言語 バブルソート 整列 交換">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🫧 基本情報技術者試験<br>バブルソートの1周で値がどう動くか追う</h3>
+  <p>隣り合う値を比較し、順番が逆なら交換します。左から1周した直後の状態を見ます。</p>
+  <div class="meta"><span>科目B</span></div>
+  <a class="button" href="/materials/fe-b/bubble-pass/" data-analytics-event="material_click" data-material-id="fe-b-bubble-pass" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 擬似言語 疑似言語 最大値 同値 添字 位置 比較">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>📍 基本情報技術者試験<br>最大値が同じなら最後の位置を残す</h3>
+  <p>比較に「以上」を使うと、最大値と等しい場合も位置を書き換えます。</p>
+  <div class="meta"><span>科目B</span></div>
+  <a class="button" href="/materials/fe-b/last-maximum/" data-analytics-event="material_click" data-material-id="fe-b-last-maximum" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 情報セキュリティ 不審なログイン インシデント 初動 ログ 報告 MFA">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🔎 基本情報技術者試験<br>不審なログインを見つけたときの初動</h3>
+  <p>自分のアカウントに心当たりのないログインがあるとき、被害を抑えるために何を伝えるか考えます。</p>
+  <div class="meta"><span>科目B・情報セキュリティ</span></div>
+  <a class="button" href="/materials/fe-b-security/suspicious-sign-in/" data-analytics-event="material_click" data-material-id="fe-b-security-suspicious-sign-in" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 情報セキュリティ 最小権限 アクセス制御 クラウド 共有リンク 閲覧">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🔐 基本情報技術者試験<br>社外に資料を共有するときの権限</h3>
+  <p>必要な相手と操作を整理して、クラウド上の資料を共有する範囲を決めます。</p>
+  <div class="meta"><span>科目B・情報セキュリティ</span></div>
+  <a class="button" href="/materials/fe-b-security/share-permissions/" data-analytics-event="material_click" data-material-id="fe-b-security-share-permissions" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 情報セキュリティ ランサムウェア オフライン バックアップ 復旧 復元">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>💾 基本情報技術者試験<br>ランサムウェアから安全にデータを戻す</h3>
+  <p>バックアップの時刻と状態を見比べて、復旧元と復旧先を選びます。</p>
+  <div class="meta"><span>科目B・情報セキュリティ</span></div>
+  <a class="button" href="/materials/fe-b-security/backup-restore/" data-analytics-event="material_click" data-material-id="fe-b-security-backup-restore" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 情報セキュリティ 誤送信 個人情報 インシデント 報告 記録">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>✉️ 基本情報技術者試験<br>顧客資料を誤送信したときの初動</h3>
+  <p>送った内容、相手、時刻を整理して、影響を確認する手順を考えます。</p>
+  <div class="meta"><span>科目B・情報セキュリティ</span></div>
+  <a class="button" href="/materials/fe-b-security/wrong-recipient/" data-analytics-event="material_click" data-material-id="fe-b-security-wrong-recipient" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 情報セキュリティ 振込先 口座変更 BEC ビジネスメール詐欺">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>☎️ 基本情報技術者試験<br>振込先の変更依頼を確認する</h3>
+  <p>いつもの取引先から急な変更連絡が届いたとき、確認の経路を選びます。</p>
+  <div class="meta"><span>科目B・情報セキュリティ</span></div>
+  <a class="button" href="/materials/fe-b-security/payment-change/" data-analytics-event="material_click" data-material-id="fe-b-security-payment-change" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 情報セキュリティ USBメモリ 記録媒体 不明 持ち主">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🔌 基本情報技術者試験<br>拾ったUSBメモリの扱いを判断する</h3>
+  <p>持ち主が分からない記録媒体を見つけた場面で、確認のための行動を選びます。</p>
+  <div class="meta"><span>科目B・情報セキュリティ</span></div>
+  <a class="button" href="/materials/fe-b-security/unknown-usb/" data-analytics-event="material_click" data-material-id="fe-b-security-unknown-usb" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 情報セキュリティ 契約終了 退職 アカウント 無効化 アクセス権">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>👤 基本情報技術者試験<br>契約終了時にアクセス権を見直す</h3>
+  <p>退場する担当者のアクセスを止めつつ、他の担当者の業務を続けられるようにします。</p>
+  <div class="meta"><span>科目B・情報セキュリティ</span></div>
+  <a class="button" href="/materials/fe-b-security/offboarding-access/" data-analytics-event="material_click" data-material-id="fe-b-security-offboarding-access" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 情報セキュリティ 証明書 HTTPS TLS ブラウザ 警告">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>⚠️ 基本情報技術者試験<br>証明書の警告が出たときの判断</h3>
+  <p>ログイン画面を開いたとき、ブラウザが接続先を確認できない場合の対応を考えます。</p>
+  <div class="meta"><span>科目B・情報セキュリティ</span></div>
+  <a class="button" href="/materials/fe-b-security/certificate-warning/" data-analytics-event="material_click" data-material-id="fe-b-security-certificate-warning" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 情報セキュリティ 脆弱性 セキュリティ更新 パッチ 公開サーバー">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🛠️ 基本情報技術者試験<br>セキュリティ更新の優先順位を決める</h3>
+  <p>同じ更新が必要なシステムでも、公開範囲と再起動の影響を合わせて考えます。</p>
+  <div class="meta"><span>科目B・情報セキュリティ</span></div>
+  <a class="button" href="/materials/fe-b-security/patch-priority/" data-analytics-event="material_click" data-material-id="fe-b-security-patch-priority" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 情報セキュリティ 紛失 端末 遠隔ロック 暗号化 初動">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>💻 基本情報技術者試験<br>業務用ノートPCを紛失したときの初動</h3>
+  <p>端末を捜す動きと、情報を守るための初動を並行できるようにします。</p>
+  <div class="meta"><span>科目B・情報セキュリティ</span></div>
+  <a class="button" href="/materials/fe-b-security/lost-laptop/" data-analytics-event="material_click" data-material-id="fe-b-security-lost-laptop" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 情報セキュリティ MFA 多要素認証 ログイン 承認 通知">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>📱 基本情報技術者試験<br>心当たりのない認証通知が続いたとき</h3>
+  <p>スマホへの認証通知が自分の操作と一致するかを確認します。</p>
+  <div class="meta"><span>科目B・情報セキュリティ</span></div>
+  <a class="button" href="/materials/fe-b-security/unexpected-mfa/" data-analytics-event="material_click" data-material-id="fe-b-security-unexpected-mfa" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 情報セキュリティ テストデータ 架空データ 個人情報 本番データ">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🧪 基本情報技術者試験<br>動作確認に使う顧客データを選ぶ</h3>
+  <p>テストで確かめたい条件から、用意するデータを絞ります。</p>
+  <div class="meta"><span>科目B・情報セキュリティ</span></div>
+  <a class="button" href="/materials/fe-b-security/synthetic-test-data/" data-analytics-event="material_click" data-material-id="fe-b-security-synthetic-test-data" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 情報セキュリティ 監査ログ 操作ログ 共有ID 責任追跡性 管理者">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🧾 基本情報技術者試験<br>管理画面の操作履歴から担当者を特定する</h3>
+  <p>操作記録とアカウントの使い方を見比べて、誰が何をしたか追えるようにします。</p>
+  <div class="meta"><span>科目B・情報セキュリティ</span></div>
+  <a class="button" href="/materials/fe-b-security/shared-admin-audit/" data-analytics-event="material_click" data-material-id="fe-b-security-shared-admin-audit" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 情報セキュリティ APIキー 漏えい 秘密情報 失効 ローテーション">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🔑 基本情報技術者試験<br>公開されたAPIキーの対応を決める</h3>
+  <p>キーを含むファイルの公開後に、何を優先して止めるか考えます。</p>
+  <div class="meta"><span>科目B・情報セキュリティ</span></div>
+  <a class="button" href="/materials/fe-b-security/exposed-api-key/" data-analytics-event="material_click" data-material-id="fe-b-security-exposed-api-key" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 情報セキュリティ クラウド フォルダ 誤公開 アクセスログ リンク共有">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>☁️ 基本情報技術者試験<br>公開になったクラウドフォルダを初動で止める</h3>
+  <p>閲覧できる状態を止める操作と、公開中の影響を調べる操作に分けます。</p>
+  <div class="meta"><span>科目B・情報セキュリティ</span></div>
+  <a class="button" href="/materials/fe-b-security/public-share-incident/" data-analytics-event="material_click" data-material-id="fe-b-security-public-share-incident" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 情報セキュリティ SHA-256 チェックサム ハッシュ 完全性 ダウンロード">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🧮 基本情報技術者試験<br>ダウンロードしたファイルのハッシュを照合する</h3>
+  <p>配布元が示した値と手元のファイルから計算した値を見比べ、差が出たときの対応を考えます。</p>
+  <div class="meta"><span>科目B・情報セキュリティ</span></div>
+  <a class="button" href="/materials/fe-b-security/download-integrity/" data-analytics-event="material_click" data-material-id="fe-b-security-download-integrity" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 情報セキュリティ UTC JST タイムゾーン ログ時刻 時差 証跡">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🕒 基本情報技術者試験<br>異なる時刻表記のログを照合する</h3>
+  <p>別々のシステムのログを、同じ時間の基準に揃えてから読みます。</p>
+  <div class="meta"><span>科目B・情報セキュリティ</span></div>
+  <a class="button" href="/materials/fe-b-security/log-timezones/" data-analytics-event="material_click" data-material-id="fe-b-security-log-timezones" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 情報セキュリティ QRコード フィッシング なりすまし 公式ポータル">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>📱 基本情報技術者試験<br>QRコードで届いた本人確認依頼を判断する</h3>
+  <p>画像に入っているリンクと、社内サービスの正規の入口を分けて考えます。</p>
+  <div class="meta"><span>科目B・情報セキュリティ</span></div>
+  <a class="button" href="/materials/fe-b-security/qr-phishing/" data-analytics-event="material_click" data-material-id="fe-b-security-qr-phishing" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 情報セキュリティ 職務分離 承認 申請 自己承認 内部統制">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>👥 基本情報技術者試験<br>申請者と承認者の権限を分ける</h3>
+  <p>重要な変更を一人で完結できるとき、操作の権限をどう分けるか考えます。</p>
+  <div class="meta"><span>科目B・情報セキュリティ</span></div>
+  <a class="button" href="/materials/fe-b-security/approval-separation/" data-analytics-event="material_click" data-material-id="fe-b-security-approval-separation" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 情報セキュリティ 外部保守 一時権限 最小権限 有効期限 アクセス制御">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🛠️ 基本情報技術者試験<br>外部保守のために一時的な権限を付ける</h3>
+  <p>保守に必要な権限を、作業範囲と時間に合わせて決めます。</p>
+  <div class="meta"><span>科目B・情報セキュリティ</span></div>
+  <a class="button" href="/materials/fe-b-security/temporary-maintenance/" data-analytics-event="material_click" data-material-id="fe-b-security-temporary-maintenance" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 情報セキュリティ 感染 隔離 LAN Wi-Fi 初動">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>⚠️ 基本情報技術者試験<br>感染が疑われるPCをネットワークから隔離する</h3>
+  <p>感染の疑いがある端末を、調査に必要な情報を残しながら切り離します。</p>
+  <div class="meta"><span>科目B・情報セキュリティ</span></div>
+  <a class="button" href="/materials/fe-b-security/isolate-device/" data-analytics-event="material_click" data-material-id="fe-b-security-isolate-device" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 情報セキュリティ セッション アカウント停止 ログアウト">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>👤 基本情報技術者試験<br>アカウント停止後も残るログインを止める</h3>
+  <p>新規ログインを止める操作と、ログイン済みの状態を終了する操作を区別します。</p>
+  <div class="meta"><span>科目B・情報セキュリティ</span></div>
+  <a class="button" href="/materials/fe-b-security/session-revoke/" data-analytics-event="material_click" data-material-id="fe-b-security-session-revoke" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 情報セキュリティ RPO 目標復旧時点 バックアップ">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🕑 基本情報技術者試験<br>障害前のどの時点まで戻せるか判断する</h3>
+  <p>許容できるデータの消失時間と、バックアップの時刻を照合します。</p>
+  <div class="meta"><span>科目B・情報セキュリティ</span></div>
+  <a class="button" href="/materials/fe-b-security/restore-point/" data-analytics-event="material_click" data-material-id="fe-b-security-restore-point" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 情報セキュリティ ゲスト Wi-Fi ネットワーク分離">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>💻 基本情報技術者試験<br>来客用Wi-Fiを社内ネットワークから分ける</h3>
+  <p>来客に必要な通信だけを許可するよう、接続先を分けます。</p>
+  <div class="meta"><span>科目B・情報セキュリティ</span></div>
+  <a class="button" href="/materials/fe-b-security/guest-wifi/" data-analytics-event="material_click" data-material-id="fe-b-security-guest-wifi" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 情報セキュリティ ログ 保全 自動削除 証拠">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🕒 基本情報技術者試験<br>調査に必要なログが消える前に保全する</h3>
+  <p>自動削除の時刻を確認し、調査に必要な記録を取り出します。</p>
+  <div class="meta"><span>科目B・情報セキュリティ</span></div>
+  <a class="button" href="/materials/fe-b-security/log-export-hold/" data-analytics-event="material_click" data-material-id="fe-b-security-log-export-hold" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 情報セキュリティ 連携アプリ 最小権限 メール アクセス権">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>📅 基本情報技術者試験<br>連携アプリが求めるアクセス権を判断する</h3>
+  <p>アプリが必要とする操作と、許可画面に出る操作を照合します。</p>
+  <div class="meta"><span>科目B・情報セキュリティ</span></div>
+  <a class="button" href="/materials/fe-b-security/cloud-app-permission/" data-analytics-event="material_click" data-material-id="fe-b-security-cloud-app-permission" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 情報セキュリティ PDF 墨消し 黒塗り 情報漏えい">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>⬛ 基本情報技術者試験<br>社外に出すPDFから隠した情報を除く</h3>
+  <p>見た目の黒塗りと、PDFから元の文字を削除する操作の違いを学びます。</p>
+  <div class="meta"><span>科目B・情報セキュリティ</span></div>
+  <a class="button" href="/materials/fe-b-security/redact-document/" data-analytics-event="material_click" data-material-id="fe-b-security-redact-document" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 情報セキュリティ バックアップ 削除制限 権限分離">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>🗄️ 基本情報技術者試験<br>本番の管理権限からバックアップを守る</h3>
+  <p>本番とバックアップで削除できる人を分け、同時に失う危険を減らします。</p>
+  <div class="meta"><span>科目B・情報セキュリティ</span></div>
+  <a class="button" href="/materials/fe-b-security/protect-backup-access/" data-analytics-event="material_click" data-material-id="fe-b-security-protect-backup-access" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 情報セキュリティ データ消去 リース 返却 記憶装置">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>📦 基本情報技術者試験<br>返却する端末からデータを消去する</h3>
+  <p>ファイル一覧から消えることと、端末からデータを消去することの違いを学びます。</p>
+  <div class="meta"><span>科目B・情報セキュリティ</span></div>
+  <a class="button" href="/materials/fe-b-security/disposed-device/" data-analytics-event="material_click" data-material-id="fe-b-security-disposed-device" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="基本情報 科目B 情報セキュリティ 委託先 事故通知 影響範囲 配送">
+  <span class="status">● 無料図解＋確認問題</span>
+  <h3>📨 基本情報技術者試験<br>委託先の事故通知から自社の影響を調べる</h3>
+  <p>事故が起きた期間と、実際に委託先へ渡したデータを照合します。</p>
+  <div class="meta"><span>科目B・情報セキュリティ</span></div>
+  <a class="button" href="/materials/fe-b-security/vendor-notice/" data-analytics-event="material_click" data-material-id="fe-b-security-vendor-notice" data-click-location="material_card">教材を見る</a>
+</article>
+<article class="card" data-search-aliases="DB SQLite JOIN 結合"><span class="status">● 公開中 · 無料HTML＋PDF保存＋SQL演習</span><h3>🗄️ 自宅のPCで学ぶ<br>はじめてのSQL・データベース入門</h3><p>りんごとみかんの売上データで、SELECT・WHERE・SUM・GROUP BYなどのSQLを学び、ブラウザで実行できます。</p><div class="meta"><span>初心者向け</span><span>全16ページ</span><span>Windows 10/11 / Mac</span><span>登録・インストール不要</span></div><a class="button" href="/materials/sql/" data-analytics-event="material_click" data-material-id="sql-intro" data-click-location="material_card">教材を見る</a></article>
+<article class="card" data-search-aliases="JS Web制作"><span class="status">● 公開中 · 無料HTML＋PDF保存＋実習コード</span><h3>💻 自宅のPCで学ぶ<br>はじめてのHTML・JavaScript入門</h3><p>HTMLで商品カードを作り、CSSで見た目を整え、JavaScriptで個数や合計金額を動かします。STEP1〜5のコード付き。</p><div class="meta"><span>初心者向け</span><span>全16ページ</span><span>Windows 10/11 / Mac</span><span>登録不要</span></div><a class="button" href="/materials/html-javascript/" data-analytics-event="material_click" data-material-id="html-javascript-intro" data-click-location="material_card">教材を見る</a></article>
+<article class="card" data-search-aliases="クッキー"><span class="status">● 公開中 · 無料HTML＋PDF保存＋ブラウザ演習</span><h3>🔐 自宅のPCで学ぶ<br>はじめてのWebセキュリティ入門</h3><p>りんごショップを題材に、HTTPS・認証・XSS・SQLインジェクション・CSRF・CORS・APIの認可を全16章で学習。ブラウザ演習付き。</p><div class="meta"><span>初心者向け</span><span>全16章</span><span>A4 PDF保存</span><span>登録不要</span><span>ブラウザ演習</span></div><a class="button" href="/materials/security/" data-analytics-event="material_click" data-material-id="security-intro" data-click-location="material_card">教材を見る</a></article></div>
+</div>
+</section>
+
+<footer class="materials-footer">
+  <nav aria-label="フッターメニュー">
+    <a href="/materials/all/">全教材</a>
+    <a href="https://premium.itzukan.com/">有料教材</a>
+    <a href="https://www.instagram.com/itzukan/">Instagram</a>
+    <a href="https://www.youtube.com/@itzukan">YouTube</a>
+  </nav>
+  <small>© IT図鑑</small>
+</footer>
+</main></body></html>

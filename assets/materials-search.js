@@ -37,8 +37,33 @@
       card,
       title: [...card.querySelector('h3').childNodes].map(node => node.textContent).filter(Boolean).join(' ').trim(),
       path: card.querySelector('a[data-material-id]').getAttribute('href'),
-      searchText: normalize(card.textContent + ' ' + (card.dataset.searchKeywords || '')),
+      searchText: normalize(card.textContent + ' ' + (card.dataset.searchAliases || '')),
     }));
+  }
+
+  let catalogueRequest;
+  function getCatalogue() {
+    catalogueRequest ??= fetch('/materials/all/').then(async response => {
+      if (!response.ok) throw Error('Catalogue unavailable');
+      return catalogueEntries(new DOMParser().parseFromString(await response.text(), 'text/html'));
+    }).catch(error => {
+      catalogueRequest = undefined;
+      throw error;
+    });
+    return catalogueRequest;
+  }
+
+  let indexRequest;
+  function getIndex() {
+    indexRequest ??= fetch('/assets/materials-search-index.json').then(async response => {
+      if (!response.ok) throw Error('Search index unavailable');
+      const entries = await response.json();
+      return entries.map(entry => ({ ...entry, searchText: normalize(entry.searchText) }));
+    }).catch(error => {
+      indexRequest = undefined;
+      throw error;
+    });
+    return indexRequest;
   }
 
   let topicRequest;
@@ -126,13 +151,23 @@
       const terms = termsFor(input.value);
       clear.hidden = input.value === '';
       let topics = [];
+      let searchTexts;
+      let searchable = entries;
       if (terms.length) {
         status.textContent = '教材を検索中…';
-        topics = await getTopics();
+        const [index, extra] = await Promise.all([
+          getIndex().catch(() => entries.length ? [] : getCatalogue().catch(() => [])),
+          getTopics(),
+        ]);
+        if (!entries.length) searchable = index;
+        searchTexts = new Map(index.map(entry => [entry.path, entry.searchText]));
+        topics = extra;
         if (request !== currentSearch) return;
       }
 
-      const found = terms.length ? rankedResults([...entries, ...topics], terms) : [];
+      const found = terms.length ? rankedResults([...searchable.map(entry => ({
+        ...entry, searchText: searchTexts?.get(entry.path) ?? entry.searchText,
+      })), ...topics], terms) : [];
       cards.hidden = terms.length > 0;
       topicLinks.replaceChildren();
       found.forEach(entry => appendSearchResult(topicLinks, entry));
@@ -182,18 +217,6 @@
     form.append(input, panel);
     fallback.replaceWith(form);
 
-    let catalogueRequest;
-    function getCatalogue() {
-      catalogueRequest ??= fetch('/materials/').then(async response => {
-        if (!response.ok) throw Error('Catalogue unavailable');
-        return catalogueEntries(new DOMParser().parseFromString(await response.text(), 'text/html'));
-      }).catch(error => {
-        catalogueRequest = undefined;
-        throw error;
-      });
-      return catalogueRequest;
-    }
-
     let currentSearch = 0;
     async function updateResults() {
       const search = ++currentSearch;
@@ -206,7 +229,7 @@
       }
       status.textContent = '教材を検索中…';
       try {
-        const [catalogue, topics] = await Promise.all([getCatalogue(), getTopics()]);
+        const [catalogue, topics] = await Promise.all([getIndex().catch(getCatalogue), getTopics()]);
         if (search !== currentSearch) return;
         const found = rankedResults([...catalogue, ...topics], terms);
         status.textContent = found.length ? found.length + '件の教材' : '該当する教材がありません。';

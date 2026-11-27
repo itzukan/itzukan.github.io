@@ -74,7 +74,7 @@ def main():
     args = parser.parse_args()
     site = Path(__file__).resolve().parents[1]
     catalogue = Catalogue()
-    catalogue.feed((site / "materials/index.html").read_text(encoding="utf-8"))
+    catalogue.feed((site / "materials/all/index.html").read_text(encoding="utf-8"))
     if not catalogue.ids_by_path:
         raise ValueError("No published material cards found")
     if args.report:

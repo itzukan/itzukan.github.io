@@ -4,22 +4,46 @@
   const section = document.querySelector('#materials-ranking');
   if (!section) return;
   const list = section.querySelector('#materials-ranking-list');
-  const query = document.querySelector('#materials-query');
-  const clear = document.querySelector('#materials-clear');
-  const materials = new Map(
-    [...document.querySelectorAll('#material-cards .card')].map(card => {
+  const pins = document.querySelector('#home-pins');
+  const pinList = document.querySelector('#home-pins-list');
+  const storageKey = 'itzukan-material-pins-v1';
+
+  const catalogue = fetch('/materials/all/').then(async response => {
+    if (!response.ok) throw Error('Catalogue unavailable');
+    const page = new DOMParser().parseFromString(await response.text(), 'text/html');
+    return new Map([...page.querySelectorAll('#all-material-cards .card')].map(card => {
       const link = card.querySelector('a[data-material-id]');
       const title = [...card.querySelector('h3').childNodes].map(node => node.textContent).join(' ').trim();
       return [link.dataset.materialId, { href: link.getAttribute('href'), title }];
-    }),
-  );
+    }));
+  }).catch(() => new Map());
 
-  function updateVisibility() {
-    const searching = /[^\s、,]/.test(query.value.normalize('NFKC'));
-    section.hidden = searching || list.children.length === 0;
+  async function loadPins() {
+    const materials = await catalogue;
+    let saved = [];
+    try {
+      const stored = JSON.parse(localStorage.getItem(storageKey));
+      if (Array.isArray(stored)) saved = stored;
+    } catch {
+      // Pins are optional when storage is unavailable.
+    }
+    const items = [];
+    for (const id of new Set(saved)) {
+      const material = materials.get(id);
+      if (!material) continue;
+      const item = document.createElement('li');
+      const anchor = document.createElement('a');
+      anchor.href = material.href;
+      anchor.textContent = material.title;
+      item.append(anchor);
+      items.push(item);
+      if (items.length === 3) break;
+    }
+    pinList.replaceChildren(...items);
+    pins.hidden = !items.length;
   }
 
-  function rankItem(id, rank, material) {
+  function rankItem(id, material) {
     const item = document.createElement('li');
     const link = document.createElement('a');
     link.className = 'material-rank-link';
@@ -27,17 +51,17 @@
     link.dataset.materialId = id;
     link.dataset.analyticsEvent = 'material_click';
     link.dataset.clickLocation = 'materials_ranking';
-    const position = document.createElement('span');
-    position.className = 'material-rank-position';
-    position.textContent = rank + '位';
-    link.append(position, document.createTextNode(material.title));
+    link.textContent = material.title;
     item.append(link);
     return item;
   }
 
   async function loadRanking() {
     try {
-      const response = await fetch(section.dataset.src, { cache: 'no-store' });
+      const [response, materials] = await Promise.all([
+        fetch(section.dataset.src, { cache: 'no-store' }),
+        catalogue,
+      ]);
       if (!response.ok) throw Error('Ranking unavailable');
       const data = await response.json();
       const generated = Date.parse(data.generatedAt);
@@ -49,7 +73,7 @@
       for (const row of data.popular) {
         const material = materials.get(row?.id);
         if (!material || shown.has(row.id) || !Number.isInteger(row.rank) || row.rank < 1 || row.rank > 3) continue;
-        items.push(rankItem(row.id, row.rank, material));
+        items.push(rankItem(row.id, material));
         shown.add(row.id);
         if (items.length === 3) break;
       }
@@ -57,11 +81,13 @@
     } catch {
       list.replaceChildren();
     }
-    updateVisibility();
+    section.hidden = list.children.length === 0;
   }
 
-  query.addEventListener('input', updateVisibility);
-  clear.addEventListener('click', updateVisibility);
-  window.addEventListener('pageshow', event => { if (event.persisted) loadRanking(); });
+  window.addEventListener('storage', event => {
+    if (event.key === storageKey || event.key === null) loadPins();
+  });
+  window.addEventListener('pageshow', () => loadPins());
+  loadPins();
   loadRanking();
 })();

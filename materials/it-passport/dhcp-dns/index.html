@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DHCPとDNSの違い | IT図鑑</title>
+  <meta name="description" content="新しいPCをWi-Fiにつないで社内サイトを開きます。自分のIPアドレスをもらう場面と、開きたいサイトのIPアドレスを調べる場面を見比べます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/it-passport/dhcp-dns/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/it-passport-visuals.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=6"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/it-passport-quiz.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="it-passport-dhcp-dns">
+    <p class="topic">ITパスポート・テクノロジ系</p>
+    <h1>DHCPとDNSの違い</h1>
+    <p class="lead">新しいPCをWi-Fiにつないで社内サイトを開きます。自分のIPアドレスをもらう場面と、開きたいサイトのIPアドレスを調べる場面を見比べます。</p>
+    <section class="panel">
+      <h2>💻 接続の準備と、サイトを開くとき</h2>
+      <ol class="visual-steps">
+        <li><span class="visual-icon" aria-hidden="true">📶</span><div><strong>接続の準備 · DHCP</strong>DHCPサーバー → PCに <code>192.168.1.23</code><br><small>つないだPCが自分のIPアドレスなどの設定を自動で受け取ります。</small></div></li>
+        <li><span class="visual-icon" aria-hidden="true">🔎</span><div><strong>サイトを開く · DNS</strong>PCから名前を問い合わせる → DNSが <code>192.0.2.10</code> を返す<br><small>開きたいサイトの名前から、接続先のIPアドレスを調べます。</small></div></li>
+      </ol>
+      <p class="callout"><strong>自分の設定を受け取るのがDHCP、相手の名前を調べるのがDNS。</strong> IPアドレスは説明用の例です。</p>
+    </section>
+    <section class="panel">
+      <h2>確認問題</h2>
+      <form class="quiz" data-answer="1" data-correct="正解。DHCPで、接続したPCが自分のIPアドレスなどの設定を受け取ります。" data-retry="DHCPで、接続したPCが自分のIPアドレスなどの設定を受け取ります。">
+        <fieldset>
+          <legend>PCがWi-Fiに接続したとき、自分のIPアドレスを自動で受け取りました。この仕組みはどれ？</legend>
+          <label><input type="radio" name="answer" value="1" required>DHCP</label>
+          <label><input type="radio" name="answer" value="2" required>DNS</label>
+          <label><input type="radio" name="answer" value="3" required>HTTPS</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+      <form class="quiz" data-answer="2" data-correct="正解。DNSで、接続先の名前に対応するIPアドレスを調べます。" data-retry="DNSで、接続先の名前に対応するIPアドレスを調べます。">
+        <fieldset>
+          <legend>PCが、開きたいサイトの名前に対応するIPアドレスを問い合わせました。この仕組みはどれ？</legend>
+          <label><input type="radio" name="answer" value="1" required>DHCP</label>
+          <label><input type="radio" name="answer" value="2" required>DNS</label>
+          <label><input type="radio" name="answer" value="3" required>Wi-Fi</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+    <p class="next-lesson"><a href="/materials/it-passport/practice/#setup-title">道場で問題を解く →</a></p>
+    <p class="next-lesson"><a href="/materials/categories/#it-passport">カテゴリ別教材一覧へ</a></p>
+  </main>
+  <footer class="wrap"><a href="https://www.rfc-editor.org/rfc/rfc2131">DHCP（RFC 2131）</a> · <a href="https://www.rfc-editor.org/rfc/rfc1034">DNS（RFC 1034）</a> · <a href="https://www.ipa.go.jp/shiken/syllabus/gaiyou.html">IPAの試験シラバス</a></footer>
+</body>
+</html>

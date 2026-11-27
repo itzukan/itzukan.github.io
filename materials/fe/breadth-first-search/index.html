@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>幅優先探索で最少の区間数を求める | IT図鑑</title>
+  <meta name="description" content="駅Aから駅Eまで、移動する区間が最も少ない経路を探します。幅優先探索（BFS）は、出発点から1区間、2区間と近い順に調べる方法です。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/fe/breadth-first-search/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/it-passport-visuals.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <script defer src="/assets/materials-search.js?v=6"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="/assets/it-passport-quiz.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+  <style>
+    .station-map { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin:12px 0 0; padding:8px; text-align:center; }
+    .station-map .origin { position:relative; grid-column:1 / -1; justify-self:center; }
+    .station-map .origin::after { content:""; position:absolute; top:100%; left:50%; height:5px; border-left:2px solid #6b89a6; }
+    .station-map .branch { grid-column:1 / -1; width:50%; height:2px; margin:-6px auto -8px; background:#6b89a6; }
+    .station-map strong { display:inline-block; min-width:2.6rem; padding:.22rem .4rem; border:1px solid #57718d; border-radius:8px; background:#1d3049; }
+    .station-map .destination { border-color:#8beaf6; color:#b8f6ff; }
+    .line { position:relative; display:grid; justify-items:center; gap:13px; }
+    .line::before { content:""; position:absolute; z-index:0; top:-10px; bottom:10px; left:50%; border-left:2px solid #6b89a6; }
+    .line strong { z-index:1; }
+    .station-map figcaption { grid-column:1 / -1; color:#c1d0e4; font-size:.9rem; }
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="fe-breadth-first-search">
+    <p class="topic">基本情報・テクノロジ系</p>
+    <h1>幅優先探索で最少の区間数を求める</h1>
+    <p class="lead">駅Aから駅Eまで、移動する区間が最も少ない経路を探します。幅優先探索（BFS）は、出発点から1区間、2区間と近い順に調べる方法です。</p>
+    <section class="panel">
+      <h2>🚉 Aから1区間ずつ範囲を広げる</h2>
+      <figure class="station-map">
+        <strong class="origin">A</strong>
+        <span class="branch" aria-hidden="true"></span>
+        <div class="line"><strong>B</strong><strong>D</strong></div>
+        <div class="line"><strong>C</strong><strong class="destination">E</strong></div>
+        <figcaption>駅AからBとCに分かれ、BからD、CからEへつながります。</figcaption>
+      </figure>
+      <ol class="visual-steps">
+        <li><span class="visual-icon" aria-hidden="true">🚉</span><div><strong>0区間 · A</strong>出発駅Aを調べる → 隣のBとCを列の後ろへ<br><small>次に調べる列［B、C］</small></div></li>
+        <li><span class="visual-icon" aria-hidden="true">🚏</span><div><strong>1区間 · BとC</strong>Bから未登録のD、Cから未登録のEへ<br><small>Bを調べた後［C、D］ → Cを調べた後［D、E］</small></div></li>
+        <li><span class="visual-icon" aria-hidden="true">🏁</span><div><strong>2区間 · DとE</strong>A → C → E で到着<br><small>Eに初めて届いたのは2区間。どの区間も同じ重みならこれが最少です。</small></div></li>
+      </ol>
+      <p class="callout">調べる駅を並べる列を<strong>キュー</strong>と呼びます。先に入れた駅から調べ、すでに列に入れた駅は重ねて入れません。</p>
+    </section>
+    <section class="panel">
+      <h2>確認問題</h2>
+      <form class="quiz" data-answer="2" data-correct="正解。先頭のBを取り出してから、見つけたDを末尾に入れるので［C、D］です。" data-retry="先頭のBを取り出してから、見つけたDを末尾に入れるので［C、D］です。">
+        <fieldset>
+          <legend>Aを調べた直後のキューは［B、C］です。次にBを調べ、未登録のDを見つけました。キューはどうなる？</legend>
+          <label><input type="radio" name="answer" value="1" required>［D、C］</label>
+          <label><input type="radio" name="answer" value="2" required>［C、D］</label>
+          <label><input type="radio" name="answer" value="3" required>［B、C、D］</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+      <form class="quiz" data-answer="1" data-correct="正解。1区間、2区間と近い順に調べるため、先に見つかった経路が最少です。" data-retry="1区間、2区間と近い順に調べるため、先に見つかった経路が最少です。">
+        <fieldset>
+          <legend>すべての区間を同じ重みとしたとき、幅優先探索で最初にEへ届いた経路が最少の区間数になる理由は？</legend>
+          <label><input type="radio" name="answer" value="1" required>出発駅から近い区間数の順で調べるから</label>
+          <label><input type="radio" name="answer" value="2" required>見つけた新しい駅から調べるから</label>
+          <label><input type="radio" name="answer" value="3" required>駅名が早い順で調べるから</label>
+        </fieldset>
+        <button type="submit">答えを確認</button>
+        <output aria-live="polite"></output>
+      </form>
+    </section>
+    <p class="next-lesson"><a href="/materials/fe/practice/#setup-title">道場で問題を解く →</a></p>
+    <p class="next-lesson"><a href="/materials/categories/#fe">カテゴリ別教材一覧へ</a></p>
+  </main>
+  <footer class="wrap"><a href="https://algs4.cs.princeton.edu/41graph/">Princetonの幅優先探索</a> · <a href="https://www.ipa.go.jp/shiken/syllabus/gaiyou.html">IPAの試験シラバス</a></footer>
+</body>
+</html>
