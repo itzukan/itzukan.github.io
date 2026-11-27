@@ -27,3 +27,7 @@ fieldset{border:0;padding:0;margin:0}legend{font-weight:750}label.choice{display
 @media(max-width:430px){.route span:not(.arrow){padding:.35rem .15rem;font-size:.8rem}dl{grid-template-columns:1fr;gap:.15rem}dd{margin-bottom:.5rem}}
 @page{size:A4;margin:14mm}
 @media print{:root{color-scheme:light;background:#fff;color:#111;font:11pt/1.5 system-ui,sans-serif}header,footer,.no-print{display:none}main{padding:0}h1{font-size:23pt;max-width:none}strong{color:inherit}.sheet li{break-inside:avoid}}
+
+.telework-paid{margin-top:1rem}
+.telework-paid .button{background:#f0cf79;border-color:#f0cf79;color:#0c1424;text-decoration:none}
+.telework-paid .button:hover{background:#ffe3a3;border-color:#ffe3a3}
