@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-11-26T10:56:17+00:00",
+  "generatedAt": "2026-11-27T00:52:05+00:00",
   "popular": [
     {
-      "id": "api-intro",
-      "rank": 1
-    },
-    {
-      "id": "api-key-intro",
+      "id": "network-intro",
       "rank": 1
     },
     {
       "id": "security-intro",
-      "rank": 1
+      "rank": 2
+    },
+    {
+      "id": "api-intro",
+      "rank": 3
     }
   ]
 }
