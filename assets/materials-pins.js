@@ -32,6 +32,7 @@
   }
 
   let pins = readPins() ?? new Set();
+  const sync = window.materialPinSync;
 
   function placeCards(grid, cards) {
     cards.forEach((card, index) => {
@@ -44,8 +45,11 @@
     const searching = /[^\s、,]/.test(input.value.normalize('NFKC'));
     const pinnedCards = [];
     const otherCards = [];
+    const visiblePins = sync?.pins() ?? pins;
+    const selected = visiblePins instanceof Set ? visiblePins : new Set(visiblePins);
     for (const { id, card, button } of entries) {
-      const pinned = pins.has(id);
+      const pinned = selected.has(id);
+      button.setAttribute('aria-disabled', String(!!sync?.locked()));
       button.setAttribute('aria-pressed', String(pinned));
       button.title = pinned ? 'ピン留めを解除' : 'ピン留め';
       (pinned && !searching ? pinnedCards : otherCards).push(card);
@@ -58,6 +62,12 @@
 
   for (const { id, button } of entries) {
     button.addEventListener('click', () => {
+      if (sync?.locked()) return;
+      const accountPins = sync?.pins();
+      if (accountPins) {
+        sync.setPin(id, !accountPins.includes(id));
+        return;
+      }
       if (pins.has(id)) pins.delete(id);
       else pins.add(id);
       try {
@@ -76,6 +86,7 @@
 
   input.addEventListener('input', render);
   clear.addEventListener('click', render);
+  window.addEventListener('material-pins-sync-change', render);
   window.addEventListener('pageshow', event => { if (event.persisted) restorePins(); });
   window.addEventListener('storage', event => {
     if (event.key === storageKey || event.key === null) restorePins();

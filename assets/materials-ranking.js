@@ -20,12 +20,12 @@
 
   async function loadPins() {
     const materials = await catalogue;
-    let saved = [];
-    try {
-      const stored = JSON.parse(localStorage.getItem(storageKey));
-      if (Array.isArray(stored)) saved = stored;
-    } catch {
-      // Pins are optional when storage is unavailable.
+    let saved = window.materialPinSync?.pins();
+    if (!saved) {
+      try {
+        const stored = JSON.parse(localStorage.getItem(storageKey));
+        saved = Array.isArray(stored) ? stored : [];
+      } catch { saved = []; }
     }
     const items = [];
     for (const id of new Set(saved)) {
@@ -88,6 +88,7 @@
     if (event.key === storageKey || event.key === null) loadPins();
   });
   window.addEventListener('pageshow', () => loadPins());
+  window.addEventListener('material-pins-sync-change', loadPins);
   loadPins();
   loadRanking();
 })();

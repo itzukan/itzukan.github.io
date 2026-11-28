@@ -8,9 +8,10 @@
 <link rel="canonical" href="https://free.itzukan.com/materials/all/">
 <title>すべての無料教材 | IT図鑑</title>
 <link rel="stylesheet" href="/assets/materials-layout.css">
-<link rel="stylesheet" href="/assets/materials-home.css?v=7">
+<link rel="stylesheet" href="/assets/materials-home.css?v=8">
 <script defer src="/assets/materials-search.js?v=7"></script>
-<script defer src="/assets/materials-pins.js"></script>
+<script defer src="/assets/material-pin-sync.js"></script>
+<script defer src="/assets/materials-pins.js?v=2"></script>
 <script defer src="/assets/materials-pagination.js"></script>
 <script defer src="/assets/analytics.js"></script></head>
 <body><main class="wrap">
@@ -48,6 +49,14 @@
 <h1 class="section-title" id="materials-title">すべての無料教材</h1>
 <p id="materials-count" role="status"></p>
 <div id="material-cards">
+<details id="material-pin-sync" class="material-pin-sync" hidden>
+  <summary>別の端末でもピン留めを見る（任意）</summary>
+  <p role="status">Googleでログインすると、別の端末からも同じピン留めを見られます。</p>
+  <button type="button" data-sync-login disabled>Googleでログイン</button>
+  <button type="button" data-sync-logout hidden>ログアウト</button>
+  <button type="button" data-pin-import hidden>このブラウザーのピン留めを引き継ぐ</button>
+  <p><a href="/materials/practice/sync-data/#pin-data">同期で保存されるデータ</a></p>
+</details>
 <section id="pinned-materials" aria-labelledby="pinned-materials-title" hidden>
   <h3 id="pinned-materials-title">ピン留めした教材</h3>
   <div class="cards" id="pinned-material-cards"></div>

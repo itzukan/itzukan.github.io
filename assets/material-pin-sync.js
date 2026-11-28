@@ -1,0 +1,169 @@
+(() => {
+  'use strict';
+
+  const panel = document.querySelector('#material-pin-sync');
+  const login = panel?.querySelector('[data-sync-login]');
+  const logout = panel?.querySelector('[data-sync-logout]');
+  const importPins = panel?.querySelector('[data-pin-import]');
+  const status = panel?.querySelector('[role="status"]');
+  const storageKey = 'itzukan-material-pins-v1';
+  const endpoint = location.origin === 'https://free.itzukan.com'
+    ? 'https://sync.itzukan.com/api/dojo-sync/' : '/api/dojo-sync/';
+  let sessionKey = null;
+  let saved = null;
+  let auth;
+  let enabled = false;
+  let busy = false;
+
+  function guestPins() {
+    try {
+      const pins = JSON.parse(localStorage.getItem(storageKey));
+      if (Array.isArray(pins)) return pins;
+    } catch {
+      // This browser may have blocked storage.
+    }
+    return [];
+  }
+
+  async function request(route, method = 'GET', body) {
+    const response = await fetch(endpoint + route, {
+      method, credentials: 'include', cache: 'no-store', signal: AbortSignal.timeout(8000),
+      headers: {
+        Accept: 'application/json',
+        ...(sessionKey ? { 'X-Dojo-Session': sessionKey } : {}),
+        ...(body === undefined ? {} : { 'Content-Type': 'application/json' }),
+      },
+      ...(body === undefined ? {} : { body: JSON.stringify(body) }),
+    });
+    if (!response.ok) throw Object.assign(new Error('Pin sync request failed'), { status: response.status });
+    return response.json();
+  }
+
+  function render() {
+    if (panel) {
+      panel.hidden = !enabled;
+      login.hidden = !!sessionKey;
+      login.disabled = busy || !auth;
+      logout.hidden = !sessionKey;
+      logout.disabled = busy;
+      importPins.hidden = !saved || !guestPins().some(id => !saved.pins.includes(id));
+      importPins.disabled = busy;
+      panel.querySelector('summary').textContent = sessionKey ? 'ピン留めの同期 · ログイン中' : '別の端末でもピン留めを見る（任意）';
+    }
+    window.dispatchEvent(new Event('material-pins-sync-change'));
+  }
+
+  function report(message) {
+    if (status) status.textContent = message;
+  }
+
+  async function run(action) {
+    if (busy) return;
+    busy = true;
+    render();
+    try { await action(); }
+    finally {
+      busy = false;
+      render();
+    }
+  }
+
+  async function readAccount() {
+    try {
+      ({ sessionKey } = await request('session'));
+      saved = sessionKey ? await request('pins') : null;
+      report(sessionKey ? 'このアカウントのピン留めを端末間で同期します。' : 'Googleでログインすると、別の端末からも同じピン留めを見られます。');
+    } catch {
+      saved = null;
+      report('ピン留めを読み込めませんでした。ページを開き直してください。');
+    }
+  }
+
+  function update(transform) {
+    return run(async () => {
+      if (!saved) return;
+      try {
+        for (let attempt = 0; attempt < 2; attempt++) {
+          const pins = transform(saved.pins);
+          if (pins.length > 200) {
+            report('同期できるピン留めは200件までです。');
+            return;
+          }
+          try {
+            const { version } = await request('pins', 'PUT', { version: saved.version, pins });
+            saved = { version, pins };
+            report('ピン留めを同期しました。');
+            return;
+          } catch (error) {
+            if (error.status !== 409) throw error;
+            saved = await request('pins');
+          }
+        }
+        report('別の端末でも変更されました。最新の一覧で操作し直してください。');
+      } catch (error) {
+        if ([401, 409].includes(error.status)) {
+          sessionKey = null;
+          saved = null;
+        }
+        report('ピン留めを同期できませんでした。ページを開き直してください。');
+      }
+    });
+  }
+
+  window.materialPinSync = {
+    pins: () => sessionKey ? (saved?.pins ?? []) : null,
+    locked: () => enabled && (busy || (!!sessionKey && !saved)),
+    setPin: (id, pinned) => update(pins => pinned ? [...new Set([...pins, id])] : pins.filter(pin => pin !== id)),
+  };
+
+  login?.addEventListener('click', () => run(async () => {
+    if (!auth || sessionKey) return;
+    try {
+      const idToken = await auth.login();
+      ({ sessionKey } = await request('session', 'POST', { idToken }));
+      await readAccount();
+    } catch {
+      report('Googleログインを確認できませんでした。');
+    }
+  }));
+
+  logout?.addEventListener('click', () => run(async () => {
+    try {
+      await request('logout', 'POST');
+      sessionKey = saved = null;
+      report('ログアウトしました。このブラウザーのピン留めを表示します。');
+    } catch {
+      await readAccount();
+    }
+  }));
+
+  importPins?.addEventListener('click', () => {
+    const localPins = guestPins().filter(id => typeof id === 'string' && /^[a-z0-9][a-z0-9-]{0,47}$/.test(id));
+    update(pins => [...new Set([...pins, ...localPins])]);
+  });
+
+  function refresh() {
+    if (enabled) run(readAccount);
+  }
+  window.addEventListener('focus', refresh);
+  window.addEventListener('pageshow', event => { if (event.persisted) refresh(); });
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) refresh(); });
+
+  run(async () => {
+    let config;
+    try { config = await request('config'); }
+    catch { return; }
+    if (!config.pinsEnabled) return;
+    enabled = true;
+    const { pinsEnabled, ...authConfig } = config;
+    if (panel) {
+      try {
+        const { createGoogleSignIn } = await import('/assets/dojo-google-sign-in.js');
+        auth = await createGoogleSignIn(authConfig);
+      } catch {
+        // Existing sessions can still load pins when the Google script is unavailable.
+      }
+    }
+    await readAccount();
+  });
+})();

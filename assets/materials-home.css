@@ -182,3 +182,7 @@
   .materials-pagination a { display: inline-grid; place-items: center; min-height: 44px; padding: .3rem .75rem; border: 1px solid #57718d; border-radius: 8px; color: #8beaf6; }
   .materials-page-status { color: #cbd5e1; margin: 0; }
   @media (max-width: 560px) { .route-grid { grid-template-columns: 1fr; } }
+.material-pin-sync { margin-block: 1rem; }
+.material-pin-sync summary { cursor: pointer; width: fit-content; }
+.material-pin-sync button { margin: 0 0.5rem 0.5rem 0; padding: 0.5rem 0.75rem; }
+.material-pin[aria-disabled="true"] { cursor: wait; }
