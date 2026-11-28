@@ -94,10 +94,11 @@
   }
 
   async function renderPins() {
-    if (open !== pinsButton) return;
-    const render = ++pinLoad;
     const sync = window.materialPinSync;
     const ids = sync?.pins() ?? sync?.guestPins() ?? [];
+    pinsButton.toggleAttribute('data-has-pins', ids.length > 0);
+    if (open !== pinsButton) return;
+    const render = ++pinLoad;
     clearPins.disabled = clearingPins || !!sync?.locked();
     if (!ids.length) {
       pinList.replaceChildren();

@@ -77,7 +77,7 @@
       } catch {
         // Keep pins in memory when storage is unavailable.
       }
-      render();
+      window.dispatchEvent(new Event('material-pins-sync-change'));
     });
   }
 

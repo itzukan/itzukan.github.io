@@ -7,6 +7,7 @@
   padding-bottom: 14px;
   border-bottom: 1px solid #314661;
 }
+header[data-library-header]:has(> .materials-header:only-child) { border-bottom: 0; }
 .materials-header nav {
   display: flex;
   align-items: center;
@@ -236,6 +237,7 @@
   clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 71%, 0 100%);
 }
 .materials-header-tools button[aria-expanded="true"] .header-bookmark::before { background: #172940; }
+.materials-header-tools button[data-has-pins] .header-bookmark::before { visibility: hidden; }
 .header-search-icon {
   position: relative;
   width: 15px;
