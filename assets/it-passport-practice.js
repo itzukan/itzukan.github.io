@@ -20,7 +20,7 @@
   let resumable = null;
   let imported = null;
   const syncPanel = get('dojo-sync');
-  const syncImport = syncPanel?.querySelector('[data-sync-import]');
+  const syncImport = document.querySelector('[data-sync-import]');
   const sync = window.dojoSync;
   const transferPrefix = '#resume=v1.';
   let transferToken = location.hash.startsWith('#resume=') ? location.hash : '';
@@ -155,8 +155,10 @@
         get('resume-status').textContent = resumable
           ? progressLabel(resumable) + ' · アカウントに保存済み'
           : '保存した問題が更新されています。新しい練習を始められます。';
-      } else if (syncImport) {
-        syncImport.hidden = !localResume();
+      } else if (syncImport && localResume()) {
+        get('resume-panel').hidden = false;
+        get('resume-status').textContent = 'このブラウザーに途中の練習があります。';
+        syncImport.hidden = false;
       }
       return;
     }
@@ -337,7 +339,6 @@
   }
 
   function openExercise() {
-    if (syncPanel) syncPanel.open = false;
     get('setup').hidden = true;
     get('summary').hidden = true;
     get('exercise').hidden = false;

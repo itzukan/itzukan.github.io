@@ -88,7 +88,7 @@
 
   input.addEventListener('input', render);
   clear.addEventListener('click', render);
-  window.addEventListener('material-pins-sync-change', render);
+  window.addEventListener('material-pins-sync-change', restorePins);
   window.addEventListener('pageshow', event => { if (event.persisted) restorePins(); });
   window.addEventListener('storage', event => {
     if (event.key === storageKey || event.key === null) restorePins();

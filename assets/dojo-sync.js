@@ -4,12 +4,9 @@
   const panel = document.getElementById('dojo-sync');
   if (!panel) return;
 
-  const login = panel.querySelector('[data-sync-login]');
-  const logout = panel.querySelector('[data-sync-logout]');
   const refresh = panel.querySelector('[data-sync-refresh]');
-  const remove = panel.querySelector('[data-sync-delete]');
+  const remove = document.querySelector('[data-sync-delete]');
   const status = panel.querySelector('[role="status"]');
-  const summary = panel.querySelector('summary');
   const series = document.body.dataset.dojo;
   const progress = 'progress/' + series;
   const endpoint = location.origin === 'https://free.itzukan.com'
@@ -17,7 +14,6 @@
   let sessionKey = null;
   let version = null;
   let snapshot = null;
-  let auth = null;
   let busy = false;
   let blocked = false;
   let queue = Promise.resolve();
@@ -36,15 +32,11 @@
   }
 
   function setControls() {
-    login.hidden = !!sessionKey;
-    login.disabled = busy || !auth;
-    logout.hidden = !sessionKey;
-    logout.disabled = busy;
     refresh.hidden = !sessionKey || !blocked;
     refresh.disabled = busy;
     remove.hidden = !sessionKey || !snapshot || blocked;
     remove.disabled = busy;
-    summary.textContent = sessionKey ? '端末間の同期 · ログイン中' : '別の端末でも続ける（任意）';
+    panel.hidden = refresh.hidden && !status.textContent;
   }
 
   function changed() {
@@ -90,49 +82,6 @@
     return true;
   }
 
-  login.addEventListener('click', async () => {
-    if (busy || !auth) return;
-    busy = true;
-    setControls();
-    let signedIn = false;
-    try {
-      const idToken = await auth.login();
-      ({ sessionKey } = await request('session', 'POST', { idToken }));
-      signedIn = true;
-      window.dispatchEvent(new Event('free-account-change'));
-      await readProgress();
-      status.textContent = 'このアカウントの進み具合を端末間で同期します。';
-    } catch {
-      blocked = signedIn;
-      status.textContent = signedIn ? '保存済みの進捗を取得できませんでした。' : 'Googleログインを確認できませんでした。';
-    } finally {
-      busy = false;
-      if (signedIn) changed();
-      else setControls();
-    }
-  });
-
-  logout.addEventListener('click', async () => {
-    if (busy) return;
-    busy = true;
-    setControls();
-    try {
-      await queue;
-      await request('logout', 'POST');
-      restoreGuest('ログアウトしました。このブラウザーに保存した練習を使えます。');
-      window.dispatchEvent(new Event('free-account-change'));
-    } catch (error) {
-      if (error.status === 409) {
-        restoreGuest('別のタブでログイン状態が変わりました。ページを開き直してください。');
-      } else {
-        status.textContent = 'ログアウトを確認できませんでした。もう一度お試しください。';
-      }
-    } finally {
-      busy = false;
-      setControls();
-    }
-  });
-
   refresh.addEventListener('click', async () => {
     if (busy) return;
     busy = true;
@@ -177,7 +126,7 @@
   });
 
   async function syncAccount() {
-    if (busy || panel.hidden) return;
+    if (busy) return;
     const check = sessionKey;
     try {
       const current = await request('session');
@@ -187,13 +136,13 @@
       try {
         await queue;
         if (!current.sessionKey) {
-          restoreGuest('ログアウトしました。このブラウザーに保存した練習を使えます。');
+          restoreGuest('');
           return;
         }
         sessionKey = current.sessionKey;
         version = snapshot = null;
         await readProgress();
-        status.textContent = 'このアカウントの進み具合を端末間で同期します。';
+        status.textContent = '';
         changed();
       } catch {
         blocked = true;
@@ -212,22 +161,5 @@
   });
 
   window.dojoSync = { signedIn: () => !!sessionKey, snapshot: () => snapshot, save };
-  (async () => {
-    try {
-      const config = await request('config');
-      ({ sessionKey } = await request('session'));
-      if (sessionKey) {
-        try { await readProgress(); }
-        catch { blocked = true; status.textContent = '保存済みの進捗を取得できませんでした。'; }
-        changed();
-      }
-      panel.hidden = false;
-      const { createGoogleSignIn } = await import('./dojo-google-sign-in.js?v=3');
-      auth = await createGoogleSignIn(config);
-    } catch {
-      if (!panel.hidden) status.textContent = 'Googleログインを読み込めませんでした。';
-    } finally {
-      setControls();
-    }
-  })();
+  syncAccount();
 })();

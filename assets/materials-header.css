@@ -273,7 +273,21 @@
 #header-materials-pins ul { max-height: 42vh; overflow: auto; list-style: none; margin: 0; padding: 0; }
 #header-materials-pins a { display: flex; align-items: center; min-height: 44px; }
 #header-materials-pins li a { border-bottom: 1px solid #30415c; text-decoration: none; }
-#header-materials-pins > a { color: #a5f3fc; font-size: .85rem; }
+.header-pin-actions { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: .4rem .8rem; }
+.header-pin-actions a { color: #a5f3fc; font-size: .85rem; }
+.header-pin-actions button {
+  min-height: 44px;
+  padding: .35rem .7rem;
+  border: 1px solid #57718d;
+  border-radius: 8px;
+  background: transparent;
+  color: #e0e9f6;
+  font: inherit;
+  font-size: .85rem;
+  cursor: pointer;
+}
+.header-pin-actions button:focus-visible { outline: 2px solid #8beaf6; outline-offset: 2px; }
+.header-pin-actions button:disabled { opacity: .56; cursor: wait; }
 @media (max-width: 360px) {
   .materials-header[data-panel] { column-gap: .35rem; }
   .materials-header[data-panel] .brand { font-size: .85rem; letter-spacing: .02em; }

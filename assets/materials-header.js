@@ -63,12 +63,18 @@
   pins.hidden = true;
   pins.innerHTML = `<h2 id="header-materials-pins-title">ピン留めした教材<span data-pin-count></span></h2>
     <p data-pin-message role="status"></p><ul></ul>
-    <a href="/materials/all/#free-materials">教材一覧でピン留めを管理</a>`;
+    <div class="header-pin-actions">
+      <a href="/materials/all/#free-materials">教材一覧でピン留めを管理</a>
+      <button type="button" data-clear-pins hidden>すべて解除</button>
+    </div>`;
   header.append(pins);
   const pinList = pins.querySelector('ul');
   const pinCount = pins.querySelector('[data-pin-count]');
   const pinMessage = pins.querySelector('[data-pin-message]');
   const managePins = pins.querySelector('a');
+  const clearPins = pins.querySelector('[data-clear-pins]');
+  let clearingPins = false;
+  let clearFailed = false;
 
   let open = null;
   let catalogue;
@@ -92,11 +98,14 @@
     const render = ++pinLoad;
     const sync = window.materialPinSync;
     const ids = sync?.pins() ?? sync?.guestPins() ?? [];
+    clearPins.disabled = clearingPins || !!sync?.locked();
     if (!ids.length) {
       pinList.replaceChildren();
+      clearPins.hidden = true;
       pinCount.textContent = '（0件）';
       managePins.hash = 'free-materials';
-      pinMessage.textContent = 'ピン留めした教材はありません。教材カードの📌で追加できます。';
+      pinMessage.textContent = clearFailed ? 'ピン留めの状態を確認できませんでした。ページを開き直してください。'
+        : 'ピン留めした教材はありません。教材カードの📌で追加できます。';
       return;
     }
     try {
@@ -115,19 +124,45 @@
         items.push(item);
       }
       pinList.replaceChildren(...items);
+      clearPins.hidden = !items.length || !sync?.clearPins;
       pinCount.textContent = `（${items.length}件）`;
       managePins.hash = items.length ? 'pinned-materials' : 'free-materials';
-      pinMessage.textContent = items.length ? '' : 'ピン留めした教材はありません。';
+      pinMessage.textContent = clearFailed ? '解除できませんでした。最新の一覧を確認して、もう一度お試しください。'
+        : items.length ? '' : 'ピン留めした教材はありません。';
     } catch {
       catalogue = undefined;
       if (render !== pinLoad || open !== pinsButton) return;
       pinList.replaceChildren();
+      clearPins.hidden = true;
       pinCount.textContent = '';
       pinMessage.textContent = 'ピン留めした教材を読み込めませんでした。';
     }
   }
 
+  clearPins.addEventListener('click', async () => {
+    const sync = window.materialPinSync;
+    const message = sync?.pins()
+      ? 'ピン留めをすべて解除しますか？ 同じアカウントで使っている他の端末にも反映されます。'
+      : 'このブラウザーのピン留めをすべて解除しますか？';
+    if (!sync?.clearPins || !window.confirm(message)) return;
+    clearingPins = true;
+    clearFailed = false;
+    clearPins.disabled = true;
+    try {
+      clearFailed = !await sync.clearPins();
+    } catch {
+      clearFailed = true;
+    } finally {
+      clearingPins = false;
+      if (open === pinsButton) {
+        await renderPins();
+        (clearPins.hidden ? pinsButton : clearPins).focus();
+      }
+    }
+  });
+
   function show(next, focus = false) {
+    if (next !== pinsButton) clearFailed = false;
     if (open === searchButton && next !== searchButton && input.value) {
       input.value = '';
       input.dispatchEvent(new Event('input'));

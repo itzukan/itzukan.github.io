@@ -8,11 +8,11 @@
   <link rel="canonical" href="https://free.itzukan.com/materials/it-passport/practice/">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/it-passport-lesson.css">
-  <script defer src="/assets/dojo-sync.js?v=3"></script>
-  <script defer src="/assets/it-passport-practice.js?v=10"></script>
+  <script defer src="/assets/dojo-sync.js?v=4"></script>
+  <script defer src="/assets/it-passport-practice.js?v=11"></script>
   <script defer src="/assets/analytics.js"></script>
-  <link rel="stylesheet" href="/assets/practice-dojo.css?v=3">
-<link rel="stylesheet" href="/assets/materials-header.css?v=5"><script defer src="/assets/materials-header.js?v=5"></script><script defer src="/assets/material-pin-sync.js?v=12"></script><script defer src="/assets/materials-search.js?v=8"></script></head>
+  <link rel="stylesheet" href="/assets/practice-dojo.css?v=4">
+<link rel="stylesheet" href="/assets/materials-header.css?v=6"><script defer src="/assets/materials-header.js?v=6"></script><script defer src="/assets/material-pin-sync.js?v=13"></script><script defer src="/assets/materials-search.js?v=8"></script></head>
 <body data-dojo="it-passport">
   <header data-library-header class="wrap">
     <a href="/materials/">IT図鑑トップ</a>
@@ -22,18 +22,6 @@
   <main class="wrap">
     <h1>ITパスポート道場</h1>
     <p class="lead">問題を1問ずつ解いて、気になるところは教材の図解で復習できます。</p>
-    <details id="dojo-sync" class="dojo-sync panel" hidden>
-      <summary>別の端末でも続ける（任意）</summary>
-      <p class="note" role="status">Googleでログインすると、同じアカウントで途中から再開できます。</p>
-      <div class="actions">
-        <button type="button" data-sync-login disabled>Googleでログイン</button>
-        <button type="button" data-sync-logout class="secondary" hidden>ログアウト</button>
-        <button type="button" data-sync-import class="secondary" hidden>このブラウザーの続きから再開して同期</button>
-        <button type="button" data-sync-refresh class="secondary" hidden>保存済みの進捗を読み直す</button>
-        <button type="button" data-sync-delete class="secondary" hidden>同期した途中経過を削除</button>
-      </div>
-      <p class="note"><a href="/materials/practice/sync-data/">同期で保存されるデータ</a></p>
-    </details>
     <section id="setup" class="panel" aria-labelledby="setup-title">
       <div class="resume" id="transfer-panel" hidden>
         <h2>別の端末からの続き</h2>
@@ -46,7 +34,11 @@
       <div class="resume" id="resume-panel" hidden>
         <h2>途中の練習</h2>
         <p class="note" id="resume-status"></p>
-        <div class="actions"><button type="button" id="resume" hidden>続きから再開</button></div>
+        <div class="actions">
+          <button type="button" id="resume" hidden>続きから再開</button>
+          <button type="button" data-sync-import class="secondary" hidden>このブラウザーの続きから再開して同期</button>
+          <button type="button" data-sync-delete class="secondary" hidden>同期した途中経過を削除</button>
+        </div>
       </div>
       <h2 id="setup-title" tabindex="-1">何問解きますか？</h2>
       <p id="bank-status" class="note" role="status">教材の確認問題を読み込み中…</p>
@@ -98,6 +90,10 @@
         <button type="button" id="choose" class="secondary">問題数を選び直す</button>
       </div>
     </section>
+    <div id="dojo-sync" class="progress-recovery" hidden>
+      <p class="note" role="status"></p>
+      <button type="button" data-sync-refresh class="secondary" hidden>保存済みの進捗を読み直す</button>
+    </div>
   </main>
 </body>
 </html>

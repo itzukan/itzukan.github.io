@@ -19,6 +19,5 @@
 .subject-switch { display: flex; flex-wrap: wrap; gap: 6px 12px; margin: 8px 0 4px; }
 .subject-switch a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 8px; }
 .subject-switch a[aria-current="page"] { border-bottom: 2px solid #8beaf6; color: #eef5ff; font-weight: 750; text-decoration: none; }
-.dojo-sync.panel { padding-block: 7px; }
-.dojo-sync summary { min-height: 44px; padding-block: 9px; color: #8beaf6; cursor: pointer; }
-.dojo-sync .actions { margin-bottom: 7px; }
+.progress-recovery { margin-top: 1rem; }
+.progress-recovery .note:empty { display: none; }

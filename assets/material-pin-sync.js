@@ -20,7 +20,7 @@
           <button type="button" data-sync-login disabled>Googleでログイン</button>
           <button type="button" data-pin-import hidden>このブラウザーのピン留めを引き継ぐ</button>
           <button type="button" data-sync-logout hidden>ログアウト</button>
-          <a href="/materials/practice/sync-data/#pin-data">同期で保存されるデータ</a>
+          <a href="/materials/practice/sync-data/">同期で保存されるデータ</a>
         </div>
       </div>
     </details>`;
@@ -100,7 +100,7 @@
     if (busy) return;
     busy = true;
     render();
-    try { await action(); }
+    try { return await action(); }
     finally {
       busy = false;
       render();
@@ -136,7 +136,7 @@
     }
   }
 
-  function update(transform) {
+  function update(transform, retryOnConflict = true) {
     return run(async () => {
       if (!saved) return;
       try {
@@ -150,10 +150,11 @@
             const { version } = await request('pins', 'PUT', { version: saved.version, pins });
             saved = { version, pins };
             report('ピン留めを同期しました。');
-            return;
+            return true;
           } catch (error) {
             if (error.status !== 409) throw error;
             saved = await request('pins');
+            if (!retryOnConflict) break;
           }
         }
         report('別の端末でも変更されました。最新の一覧で操作し直してください。');
@@ -172,6 +173,16 @@
     guestPins,
     locked: () => enabled && (busy || (!!sessionKey && !saved)),
     setPin: (id, pinned) => update(pins => pinned ? [...new Set([...pins, id])] : pins.filter(pin => pin !== id)),
+    clearPins() {
+      if (sessionKey) return update(() => [], false);
+      try {
+        localStorage.removeItem(storageKey);
+      } catch {
+        return false;
+      }
+      render();
+      return true;
+    },
   };
 
   login?.addEventListener('click', () => run(async () => {
