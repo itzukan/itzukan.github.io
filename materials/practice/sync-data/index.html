@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>道場の同期で保存されるデータ | IT図鑑</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+</head>
+<body>
+  <header class="wrap"><a href="/materials/">IT図鑑トップ</a><a href="/materials/practice/">問題シリーズ</a></header>
+  <main class="wrap">
+    <h1>道場の同期で保存されるデータ</h1>
+    <section class="panel" aria-labelledby="sync-data">
+      <h2 id="sync-data">端末間で続きから解くために</h2>
+      <p>ログインは任意です。Googleでログインした場合、Google／Firebase Authenticationで本人を確認します。</p>
+      <p>同期用データベースには、アカウントの識別子、道場の種類、途中の問題と選択肢の識別子、回答、現在位置を保存します。氏名やメールアドレスは同期用データベースには保存しません。</p>
+      <p>同期APIのCookieは、ログイン状態の確認に使います。</p>
+    </section>
+    <section class="panel" aria-labelledby="sync-remove">
+      <h2 id="sync-remove">途中経過を消すには</h2>
+      <p>該当する道場で「端末間の同期」を開き、「同期した途中経過を削除」を選びます。その道場の練習を最後まで解いて結果を表示したときも、同期した途中経過が消えます。</p>
+      <p>削除後は、古い端末からの上書きを防ぐための識別子が残ります。ブラウザーに保存したゲストの途中経過は、端末上で管理されます。</p>
+    </section>
+  </main>
+</body>
+</html>

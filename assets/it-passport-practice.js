@@ -19,6 +19,9 @@
   let savedRaw = null;
   let resumable = null;
   let imported = null;
+  const syncPanel = get('dojo-sync');
+  const syncImport = syncPanel?.querySelector('[data-sync-import]');
+  const sync = window.dojoSync;
   const transferPrefix = '#resume=v1.';
   let transferToken = location.hash.startsWith('#resume=') ? location.hash : '';
   if (transferToken) history.replaceState(history.state, '', location.pathname + location.search);
@@ -50,7 +53,7 @@
     let eligible = false;
     for (const section of page.querySelectorAll('main > section')) {
       const quizzes = section.querySelectorAll('form[data-answer]');
-      if (!quizzes.length) sections.push(section);
+      if (!quizzes.length && !section.classList.contains('related-materials')) sections.push(section);
       for (const quiz of quizzes) {
         // A lesson can be listed in both exams. Untagged questions are shared with every exam listing it.
         const audiences = quiz.dataset.dojoSeries;
@@ -141,16 +144,25 @@
     get('resume-panel').hidden = true;
     get('resume').hidden = true;
     get('restart-note').hidden = true;
-    let saved;
-    try {
-      savedRaw = localStorage.getItem(storageKey);
-      saved = JSON.parse(savedRaw);
-    } catch {
+    if (syncImport) syncImport.hidden = true;
+    if (sync?.signedIn()) {
+      const saved = sync.snapshot();
+      if (saved) {
+        resumable = restorePortable(saved);
+        get('resume-panel').hidden = false;
+        get('resume').hidden = !resumable;
+        get('restart-note').hidden = false;
+        get('resume-status').textContent = resumable
+          ? progressLabel(resumable) + ' · アカウントに保存済み'
+          : '保存した問題が更新されています。新しい練習を始められます。';
+      } else if (syncImport) {
+        syncImport.hidden = !localResume();
+      }
       return;
     }
-    if (!saved) return;
-    resumable = restore(saved, entry => bank.find(question => question.prompt === entry?.prompt
-      && question.path === entry.path && (!entry.id || question.id === entry.id)));
+    const saved = localResume();
+    if (!savedRaw) return;
+    resumable = saved;
     get('resume-panel').hidden = false;
     get('restart-note').hidden = false;
     if (!resumable) {
@@ -160,6 +172,25 @@
     }
     get('resume-status').textContent = progressLabel(resumable);
     get('resume').hidden = false;
+  }
+
+  function localResume() {
+    let saved;
+    try {
+      savedRaw = localStorage.getItem(storageKey);
+      saved = JSON.parse(savedRaw);
+    } catch {
+      return null;
+    }
+    return restore(saved, entry => bank.find(question => question.prompt === entry?.prompt
+      && question.path === entry.path && (!entry.id || question.id === entry.id)));
+  }
+
+  function restorePortable(saved) {
+    return restore(saved, entry => {
+      const matches = bank.filter(question => question.id === entry?.id);
+      return matches.length === 1 ? matches[0] : null;
+    });
   }
 
   function showTransfer() {
@@ -173,10 +204,7 @@
       if (!transferToken.startsWith(transferPrefix) || !/^[A-Za-z0-9_-]{1,5000}$/.test(encoded)) throw new Error();
       const binary = atob(encoded.replaceAll('-', '+').replaceAll('_', '/'));
       const saved = JSON.parse(new TextDecoder('utf-8', { fatal: true }).decode(Uint8Array.from(binary, c => c.charCodeAt(0))));
-      imported = restore(saved, entry => {
-        const matches = bank.filter(question => question.id === entry?.id);
-        return matches.length === 1 ? matches[0] : null;
-      });
+      imported = restorePortable(saved);
     } catch {
       status.textContent = '続きのリンクを読み取れませんでした。リンク全体をコピーし直してください。';
       return;
@@ -186,7 +214,8 @@
       get('retry').hidden = false;
       return;
     }
-    status.textContent = progressLabel(imported) + (savedRaw ? '。再開すると、このブラウザの途中経過が置き換わります。' : '。');
+    const previous = sync?.signedIn() ? sync.snapshot() : savedRaw;
+    status.textContent = progressLabel(imported) + (previous ? '。再開すると、保存済みの途中経過が置き換わります。' : '。');
     get('accept-transfer').hidden = false;
   }
 
@@ -196,11 +225,15 @@
     get('transfer-panel').hidden = true;
   }
 
-  async function copyProgress() {
-    const snapshot = {
+  function portableProgress() {
+    return {
       questions: questions.map(question => ({ id: question.id, order: question.choices.map(choice => choice.value) })),
-      index, answers, draft,
+      index, answers: [...answers], draft,
     };
+  }
+
+  async function copyProgress() {
+    const snapshot = portableProgress();
     const bytes = new TextEncoder().encode(JSON.stringify(snapshot));
     const encoded = btoa(Array.from(bytes, byte => String.fromCharCode(byte)).join(''))
       .replaceAll('+', '-').replaceAll('/', '_').replace(/=+$/, '');
@@ -220,6 +253,14 @@
 
   function saveProgress(replace = false) {
     const status = get('storage-status');
+    if (sync?.signedIn()) {
+      syncImport.hidden = true;
+      status.textContent = '進み具合を端末間で同期します。';
+      if (!sync.save(portableProgress(), message => { status.textContent = message; })) {
+        status.textContent = '同期できません。続きのリンクをコピーして、この画面の進み具合を残せます。';
+      }
+      return;
+    }
     try {
       if (!replace && localStorage.getItem(storageKey) !== savedRaw) {
         status.textContent = '別のタブで保存内容が更新されました。このタブの進み具合は保存されません。';
@@ -296,6 +337,7 @@
   }
 
   function openExercise() {
+    if (syncPanel) syncPanel.open = false;
     get('setup').hidden = true;
     get('summary').hidden = true;
     get('exercise').hidden = false;
@@ -403,9 +445,17 @@
       saveProgress();
       return;
     }
-    try {
-      if (localStorage.getItem(storageKey) === savedRaw) localStorage.removeItem(storageKey);
-    } catch {}
+    if (sync?.signedIn()) {
+      const status = get('summary-sync-status');
+      if (!sync.save(null, message => {
+        status.textContent = message;
+        if (questions.length && !get('setup').hidden) showResume();
+      })) status.textContent = '同期できませんでした。';
+    } else {
+      try {
+        if (localStorage.getItem(storageKey) === savedRaw) localStorage.removeItem(storageKey);
+      } catch {}
+    }
     const correctCount = answers.filter((answer, position) => answer === questions[position].answer).length;
     get('exercise').hidden = true;
     get('summary').hidden = false;
@@ -423,6 +473,41 @@
     if (!resumable) return;
     closeTransfer();
     ({ questions, index, answers, draft } = resumable);
+    openExercise();
+    if (!sync?.signedIn()) saveProgress();
+  });
+  syncPanel?.addEventListener('dojo-sync-change', () => {
+    questions = [];
+    index = 0;
+    answers = [];
+    draft = null;
+    form.reset();
+    previewContainer.replaceChildren();
+    get('resume-link').value = '';
+    get('copy-status').textContent = '';
+    get('storage-status').textContent = '';
+    get('progress').textContent = '';
+    get('prompt').textContent = '';
+    get('choices').replaceChildren();
+    for (const id of ['verdict', 'explanation', 'question-code', 'question-context']) {
+      if (get(id)) get(id).textContent = '';
+    }
+    get('source').removeAttribute('href');
+    get('score').textContent = '';
+    get('summary-sync-status').textContent = '';
+    get('exercise').hidden = true;
+    get('summary').hidden = true;
+    get('setup').hidden = false;
+    showResume();
+    showTransfer();
+  });
+  syncImport?.addEventListener('click', () => {
+    if (!sync?.signedIn() || sync.snapshot()) return;
+    const saved = localResume();
+    if (!saved) return;
+    closeTransfer();
+    syncImport.hidden = true;
+    ({ questions, index, answers, draft } = saved);
     openExercise();
     saveProgress();
   });

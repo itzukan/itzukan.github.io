@@ -8,11 +8,12 @@
   <link rel="canonical" href="https://free.itzukan.com/materials/it-passport/practice/">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/it-passport-lesson.css">
-  <script defer src="/assets/it-passport-practice.js?v=9"></script>
+  <script defer src="/assets/dojo-sync.js"></script>
+  <script defer src="/assets/it-passport-practice.js?v=10"></script>
   <script defer src="/assets/analytics.js"></script>
-  <link rel="stylesheet" href="/assets/practice-dojo.css">
+  <link rel="stylesheet" href="/assets/practice-dojo.css?v=3">
 </head>
-<body>
+<body data-dojo="it-passport">
   <header class="wrap">
     <a href="/materials/">IT図鑑トップ</a>
     <a href="/materials/practice/">問題シリーズ</a>
@@ -21,6 +22,18 @@
   <main class="wrap">
     <h1>ITパスポート道場</h1>
     <p class="lead">問題を1問ずつ解いて、気になるところは教材の図解で復習できます。</p>
+    <details id="dojo-sync" class="dojo-sync panel" hidden>
+      <summary>別の端末でも続ける（任意）</summary>
+      <p class="note" role="status">Googleでログインすると、同じアカウントで途中から再開できます。</p>
+      <div class="actions">
+        <button type="button" data-sync-login disabled>Googleでログイン</button>
+        <button type="button" data-sync-logout class="secondary" hidden>ログアウト</button>
+        <button type="button" data-sync-import class="secondary" hidden>このブラウザーの続きから再開して同期</button>
+        <button type="button" data-sync-refresh class="secondary" hidden>保存済みの進捗を読み直す</button>
+        <button type="button" data-sync-delete class="secondary" hidden>同期した途中経過を削除</button>
+      </div>
+      <p class="note"><a href="/materials/practice/sync-data/">同期で保存されるデータ</a></p>
+    </details>
     <section id="setup" class="panel" aria-labelledby="setup-title">
       <div class="resume" id="transfer-panel" hidden>
         <h2>別の端末からの続き</h2>
@@ -79,6 +92,7 @@
     <section id="summary" class="panel" aria-labelledby="summary-title" hidden>
       <h2 id="summary-title" tabindex="-1">結果</h2>
       <p id="score"></p>
+      <p id="summary-sync-status" class="note" role="status"></p>
       <div class="actions">
         <button type="button" id="again">もう一度解く</button>
         <button type="button" id="choose" class="secondary">問題数を選び直す</button>
