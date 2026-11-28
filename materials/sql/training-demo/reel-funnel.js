@@ -9,7 +9,7 @@
     utm_content: 'profile_link',
   };
   const tagged = Object.entries(campaign).every(([name, value]) => query.get(name) === value);
-  const fromLesson = ['sql_intro_group_by', 'sql_intro_left_join'].includes(query.get('from'));
+  const fromLesson = ['sql_intro_group_by', 'sql_intro_left_join', 'sql_intro_primary_foreign_key'].includes(query.get('from'));
   const storageKey = 'itzukan_sql_reel_trial';
   const qa = window.itzukanAnalyticsOptOut || query.get('utm_medium') === 'qa' ||
     query.get('utm_source') === 'itzukan_qa' || navigator.globalPrivacyControl || navigator.doNotTrack === '1';
