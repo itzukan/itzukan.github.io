@@ -1,6 +1,7 @@
 (() => {
   'use strict';
 
+  const signInBenefit = 'ピン留めした教材をPCとスマホで共有し、道場の続きも別の端末で解けます。';
   const host = document.querySelector('[data-pin-sync-host]');
   if (host) host.innerHTML = `
     <details id="material-pin-sync" class="material-pin-sync" hidden>
@@ -14,7 +15,7 @@
           <p data-sync-email></p>
           <a href="https://premium.itzukan.com/purchases">購入済み教材</a>
         </div>
-        <p role="status">PCとスマホで同じGoogleアカウントを使ってください。</p>
+        <p role="status">${signInBenefit}</p>
         <div class="material-pin-sync-actions">
           <button type="button" data-sync-login disabled>Googleでログイン</button>
           <button type="button" data-pin-import hidden>このブラウザーのピン留めを引き継ぐ</button>
@@ -128,7 +129,7 @@
     try {
       ({ sessionKey, accountInitial, accountEmail = null } = await request('session'));
       saved = sessionKey ? await request('pins') : null;
-      report(sessionKey ? 'このアカウントのピン留めを端末間で同期します。' : 'PCとスマホで同じGoogleアカウントを使ってください。');
+      report(sessionKey ? 'このアカウントのピン留めを端末間で同期します。' : signInBenefit);
     } catch {
       saved = null;
       report('ピン留めを読み込めませんでした。ページを開き直してください。');
