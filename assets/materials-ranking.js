@@ -5,6 +5,7 @@
   if (!section) return;
   const list = section.querySelector('#materials-ranking-list');
   const pins = document.querySelector('#home-pins');
+  const pinCount = pins.querySelector('[data-pin-count]');
   const pinList = document.querySelector('#home-pins-list');
   const storageKey = 'itzukan-material-pins-v1';
 
@@ -27,18 +28,16 @@
         saved = Array.isArray(stored) ? stored : [];
       } catch { saved = []; }
     }
-    const items = [];
-    for (const id of new Set(saved)) {
-      const material = materials.get(id);
-      if (!material) continue;
+    const pinnedMaterials = [...new Set(saved)].map(id => materials.get(id)).filter(Boolean);
+    const items = pinnedMaterials.slice(0, 3).map(material => {
       const item = document.createElement('li');
       const anchor = document.createElement('a');
       anchor.href = material.href;
       anchor.textContent = material.title;
       item.append(anchor);
-      items.push(item);
-      if (items.length === 3) break;
-    }
+      return item;
+    });
+    pinCount.textContent = `（${pinnedMaterials.length}件）`;
     pinList.replaceChildren(...items);
     pins.hidden = !items.length;
   }

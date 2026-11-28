@@ -5,6 +5,7 @@
   const input = document.querySelector('#materials-query');
   const clear = document.querySelector('#materials-clear');
   const pinnedSection = document.querySelector('#pinned-materials');
+  const pinnedCount = pinnedSection.querySelector('[data-pin-count]');
   const pinnedGrid = document.querySelector('#pinned-material-cards');
   const allGrid = document.querySelector('#all-material-cards');
   const entries = [...allGrid.querySelectorAll('.card')].map(card => {
@@ -57,6 +58,7 @@
     placeCards(pinnedGrid, pinnedCards);
     placeCards(allGrid, otherCards);
     pinnedSection.hidden = pinnedCards.length === 0;
+    pinnedCount.textContent = `（${pinnedCards.length}件）`;
     if (focused !== document.activeElement && focused?.isConnected) focused.focus({ preventScroll: true });
   }
 

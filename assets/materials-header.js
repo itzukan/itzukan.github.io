@@ -47,26 +47,26 @@
   const menu = header.querySelector('nav');
   const input = search.querySelector('input');
   let syncPanel;
-  const mobile = window.matchMedia('(max-width: 680px)');
   const tools = document.createElement('div');
   tools.className = 'materials-header-tools';
   tools.innerHTML = `
-    <button type="button" aria-label="メニュー" aria-controls="mobile-materials-menu" aria-expanded="false"><span class="header-dots" aria-hidden="true"></span></button>
-    <button type="button" aria-label="ピン留めした教材" aria-controls="mobile-materials-pins" aria-expanded="false"><span class="header-bookmark" aria-hidden="true"></span></button>
+    <button type="button" aria-label="メニュー" aria-controls="header-materials-menu" aria-expanded="false"><span class="header-dots" aria-hidden="true"></span></button>
+    <button type="button" aria-label="ピン留めした教材" aria-controls="header-materials-pins" aria-expanded="false"><span class="header-bookmark" aria-hidden="true"></span></button>
     <button type="button" aria-label="検索" aria-controls="search-materials" aria-expanded="false"><span class="header-search-icon" aria-hidden="true"></span></button>`;
   const [menuButton, pinsButton, searchButton] = tools.querySelectorAll('button');
   header.querySelector('.brand').after(tools);
-  menu.id = 'mobile-materials-menu';
+  menu.id = 'header-materials-menu';
 
   const pins = document.createElement('section');
-  pins.id = 'mobile-materials-pins';
-  pins.setAttribute('aria-label', 'ピン留めした教材');
+  pins.id = 'header-materials-pins';
+  pins.setAttribute('aria-labelledby', 'header-materials-pins-title');
   pins.hidden = true;
-  pins.innerHTML = `<h2>ピン留めした教材</h2>
+  pins.innerHTML = `<h2 id="header-materials-pins-title">ピン留めした教材<span data-pin-count></span></h2>
     <p data-pin-message role="status"></p><ul></ul>
     <a href="/materials/all/#free-materials">教材一覧でピン留めを管理</a>`;
   header.append(pins);
   const pinList = pins.querySelector('ul');
+  const pinCount = pins.querySelector('[data-pin-count]');
   const pinMessage = pins.querySelector('[data-pin-message]');
   const managePins = pins.querySelector('a');
 
@@ -94,6 +94,7 @@
     const ids = sync?.pins() ?? sync?.guestPins() ?? [];
     if (!ids.length) {
       pinList.replaceChildren();
+      pinCount.textContent = '（0件）';
       managePins.hash = 'free-materials';
       pinMessage.textContent = 'ピン留めした教材はありません。教材カードの📌で追加できます。';
       return;
@@ -114,18 +115,19 @@
         items.push(item);
       }
       pinList.replaceChildren(...items);
+      pinCount.textContent = `（${items.length}件）`;
       managePins.hash = items.length ? 'pinned-materials' : 'free-materials';
       pinMessage.textContent = items.length ? '' : 'ピン留めした教材はありません。';
     } catch {
       catalogue = undefined;
       if (render !== pinLoad || open !== pinsButton) return;
       pinList.replaceChildren();
+      pinCount.textContent = '';
       pinMessage.textContent = 'ピン留めした教材を読み込めませんでした。';
     }
   }
 
   function show(next, focus = false) {
-    if (!mobile.matches) return;
     if (open === searchButton && next !== searchButton && input.value) {
       input.value = '';
       input.dispatchEvent(new Event('input'));
@@ -148,17 +150,6 @@
     if (location.hash === '#material-pin-sync' && syncPanel) syncPanel.open = true;
   }
 
-  function layout() {
-    placeAccount();
-    if (mobile.matches) {
-      show(null);
-      openFromLink();
-    } else {
-      open = null;
-      pins.hidden = true;
-    }
-  }
-
   function placeAccount() {
     if (!syncPanel) {
       syncPanel = header.querySelector('#material-pin-sync');
@@ -167,14 +158,11 @@
       });
     }
     if (!syncPanel) return;
-    const parent = mobile.matches ? tools : header;
-    if (syncPanel.parentElement === parent) return;
-    if (mobile.matches) tools.append(syncPanel);
-    else menu.before(syncPanel);
+    if (syncPanel.parentElement === tools) return;
+    tools.append(syncPanel);
     if (location.hash === '#material-pin-sync') syncPanel.open = true;
   }
 
-  header.dataset.mobileHeader = '';
   for (const button of [menuButton, pinsButton, searchButton]) {
     button.addEventListener('click', () => {
       if (syncPanel) syncPanel.open = false;
@@ -187,7 +175,7 @@
       syncPanel.querySelector('summary').focus();
       return;
     }
-    if (event.key !== 'Escape' || event.isComposing || !open || !mobile.matches) return;
+    if (event.key !== 'Escape' || event.isComposing || !open) return;
     const trigger = open;
     show(null);
     trigger.focus();
@@ -203,6 +191,7 @@
   });
   window.addEventListener('storage', renderPins);
   window.addEventListener('hashchange', openFromLink);
-  mobile.addEventListener('change', layout);
-  layout();
+  placeAccount();
+  show(null);
+  openFromLink();
 })();
