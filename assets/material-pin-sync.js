@@ -34,6 +34,9 @@
   let auth;
   let authConfig;
   let loadingAuth = false;
+  let premiumOrigin = null;
+  const premiumLinks = new Map();
+  let premiumLinksActive = false;
   let enabled = false;
   let busy = false;
 
@@ -74,6 +77,7 @@
       summary.setAttribute('aria-label', sessionKey ? 'アカウント（ログイン中）' : 'ログイン');
       initial.textContent = accountInitial || '?';
     }
+    updatePremiumLinks();
     window.dispatchEvent(new Event('material-pins-sync-change'));
   }
 
@@ -194,13 +198,37 @@
   window.addEventListener('pageshow', event => { if (event.persisted) refresh(); });
   document.addEventListener('visibilitychange', () => { if (!document.hidden) refresh(); });
 
+  function updatePremiumLinks() {
+    const active = !!premiumOrigin && !!sessionKey;
+    if (active === premiumLinksActive) return;
+    premiumLinksActive = active;
+    if (!active) {
+      for (const [link, { original, handoff }] of premiumLinks) {
+        if (link.href === handoff) link.setAttribute('href', original);
+      }
+      premiumLinks.clear();
+      return;
+    }
+    for (const link of document.querySelectorAll(`a[href^="${premiumOrigin}"]:not([download])`)) {
+      const target = new URL(link.href);
+      if (target.origin !== premiumOrigin || /^\/(?:auth|api)(?:\/|$)/.test(target.pathname)) continue;
+      const next = target.pathname + target.search + target.hash;
+      if (next.length > 900) continue;
+      const start = new URL('/auth/free/start', premiumOrigin);
+      start.searchParams.set('next', next);
+      premiumLinks.set(link, { original: link.getAttribute('href'), handoff: start.href });
+      link.href = start.href;
+    }
+  }
+
   run(async () => {
     let config;
     try { config = await request('config'); }
     catch { return; }
     if (!config.pinsEnabled) return;
     enabled = true;
-    const { pinsEnabled, ...googleConfig } = config;
+    const { pinsEnabled, premiumHandoffOrigin, ...googleConfig } = config;
+    premiumOrigin = premiumHandoffOrigin ?? null;
     authConfig = googleConfig;
     await readAccount();
   });
