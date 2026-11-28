@@ -15,7 +15,9 @@
   let active = tagged;
   try {
     if (tagged) sessionStorage.setItem(storageKey, String(Date.now()));
-    else if (query.has('utm_source') || query.has('utm_campaign')) sessionStorage.removeItem(storageKey);
+    else if (query.has('utm_source') || query.has('utm_campaign') || query.get('from') === 'sql_intro_group_by') {
+      sessionStorage.removeItem(storageKey);
+    }
     else active = Date.now() - Number(sessionStorage.getItem(storageKey)) < 30 * 60 * 1000;
   } catch { /* The tagged landing URL is still usable without storage. */ }
 
