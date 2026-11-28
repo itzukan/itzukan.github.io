@@ -5,8 +5,8 @@
   if (host) host.innerHTML = `
     <details id="material-pin-sync" class="material-pin-sync" hidden>
       <summary>
-        <span class="material-pin-sync-icon" aria-hidden="true">📌</span>
-        <span data-pin-title>Googleログイン</span>
+        <span class="material-pin-sync-icon" aria-hidden="true"></span>
+        <span data-pin-title>ログイン</span>
         <span class="material-pin-sync-state" data-pin-state>任意</span>
       </summary>
       <div class="material-pin-sync-body">
@@ -26,6 +26,7 @@
   const status = panel?.querySelector('[role="status"]');
   const title = panel?.querySelector('[data-pin-title]');
   const state = panel?.querySelector('[data-pin-state]');
+  const summary = panel?.querySelector('summary');
   const storageKey = 'itzukan-material-pins-v1';
   const endpoint = location.origin === 'https://free.itzukan.com'
     ? 'https://sync.itzukan.com/api/dojo-sync/' : '/api/dojo-sync/';
@@ -69,8 +70,9 @@
       importPins.hidden = !saved || !guestPins().some(id => !saved.pins.includes(id));
       importPins.disabled = busy;
       panel.toggleAttribute('data-signed-in', !!sessionKey);
-      title.textContent = sessionKey ? 'アカウント' : 'Googleログイン';
+      title.textContent = sessionKey ? 'アカウント' : 'ログイン';
       state.textContent = sessionKey ? 'ログイン中' : '任意';
+      summary.setAttribute('aria-label', sessionKey ? 'アカウント（ログイン中）' : 'ログイン');
     }
     window.dispatchEvent(new Event('material-pins-sync-change'));
   }

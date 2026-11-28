@@ -114,7 +114,7 @@
       show(null);
       openFromLink();
     } else {
-      if (syncPanel) syncHost.append(syncPanel);
+      if (syncPanel) menu.before(syncPanel);
       open = null;
       pins.hidden = true;
     }
@@ -125,12 +125,18 @@
     button.addEventListener('click', () => show(open === button ? null : button, true));
   }
   document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && !event.isComposing && !mobile.matches && syncPanel?.open && syncPanel.contains(event.target)) {
+      syncPanel.open = false;
+      syncPanel.querySelector('summary').focus();
+      return;
+    }
     if (event.key !== 'Escape' || event.isComposing || !open || !mobile.matches) return;
     const trigger = open;
     show(null);
     trigger.focus();
   });
   document.addEventListener('click', event => {
+    if (!mobile.matches && syncPanel?.open && !syncPanel.contains(event.target) && !event.target.closest('dialog')) syncPanel.open = false;
     if (open && open !== searchButton && !header.contains(event.target) && !event.target.closest('dialog')) show(null);
     if (open === pinsButton && managePins.contains(event.target) && location.pathname === '/materials/all/') show(null);
   });
