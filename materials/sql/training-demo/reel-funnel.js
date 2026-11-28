@@ -31,6 +31,8 @@
   const destination = new URL(link.href);
   if (active) {
     for (const [name, value] of Object.entries(campaign)) destination.searchParams.set(name, value);
+  } else if (lesson) {
+    destination.searchParams.set('sql_lesson', lesson);
   }
   if (qa) destination.searchParams.set('it_admin', '1');
   link.href = destination.href;
