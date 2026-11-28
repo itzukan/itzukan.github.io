@@ -33,6 +33,8 @@
   let sessionKey = null;
   let saved = null;
   let auth;
+  let authConfig;
+  let loadingAuth = false;
   let enabled = false;
   let busy = false;
 
@@ -89,8 +91,25 @@
     finally {
       busy = false;
       render();
+      prepareLogin();
     }
   }
+
+  async function prepareLogin() {
+    if (!panel?.open || !authConfig || sessionKey || auth || loadingAuth) return;
+    loadingAuth = true;
+    try {
+      const { createGoogleSignIn } = await import('/assets/dojo-google-sign-in.js?v=2');
+      auth = await createGoogleSignIn(authConfig);
+    } catch {
+      report('Googleログインを読み込めませんでした。閉じて開き直してください。');
+    } finally {
+      loadingAuth = false;
+      render();
+    }
+  }
+
+  panel?.addEventListener('toggle', prepareLogin);
 
   async function readAccount() {
     try {
@@ -146,6 +165,7 @@
     try {
       const idToken = await auth.login();
       ({ sessionKey } = await request('session', 'POST', { idToken }));
+      window.dispatchEvent(new Event('free-account-change'));
       await readAccount();
     } catch {
       report('Googleログインを確認できませんでした。');
@@ -156,6 +176,7 @@
     try {
       await request('logout', 'POST');
       sessionKey = saved = null;
+      window.dispatchEvent(new Event('free-account-change'));
       report('ログアウトしました。このブラウザーのピン留めを表示します。');
     } catch {
       await readAccount();
@@ -171,6 +192,7 @@
     if (enabled) run(readAccount);
   }
   window.addEventListener('focus', refresh);
+  window.addEventListener('free-account-change', refresh);
   window.addEventListener('pageshow', event => { if (event.persisted) refresh(); });
   document.addEventListener('visibilitychange', () => { if (!document.hidden) refresh(); });
 
@@ -180,15 +202,8 @@
     catch { return; }
     if (!config.pinsEnabled) return;
     enabled = true;
-    const { pinsEnabled, ...authConfig } = config;
-    if (panel) {
-      try {
-        const { createGoogleSignIn } = await import('/assets/dojo-google-sign-in.js');
-        auth = await createGoogleSignIn(authConfig);
-      } catch {
-        // Existing sessions can still load pins when the Google script is unavailable.
-      }
-    }
+    const { pinsEnabled, ...googleConfig } = config;
+    authConfig = googleConfig;
     await readAccount();
   });
 })();

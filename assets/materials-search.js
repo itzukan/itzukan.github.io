@@ -183,6 +183,7 @@
     }
 
     input.addEventListener('input', filter);
+    search.addEventListener('submit', event => event.preventDefault());
     clear.addEventListener('click', () => {
       input.value = '';
       filter();
@@ -195,25 +196,9 @@
     focusFromLesson();
   }
 
-  function initLesson(fallback) {
-    const controls = document.createElement('span');
-    controls.className = 'lesson-search-widget';
-    const toggle = document.createElement('button');
-    toggle.type = 'button';
-    toggle.className = 'lesson-search-toggle';
-    toggle.setAttribute('aria-label', '検索');
-    toggle.setAttribute('aria-controls', 'lesson-material-search');
-    toggle.setAttribute('aria-expanded', 'false');
-    const form = document.createElement('form');
-    form.className = 'lesson-search';
-    form.id = 'lesson-material-search';
-    form.setAttribute('role', 'search');
-    form.setAttribute('aria-label', '無料教材検索');
-    const input = document.createElement('input');
-    input.type = 'search';
-    input.placeholder = '教材名・用語で検索';
-    input.autocomplete = 'off';
-    input.setAttribute('aria-label', '無料教材を検索');
+  function initLesson(form) {
+    const input = form.querySelector('input');
+    const clear = form.querySelector('#materials-clear');
     const panel = document.createElement('div');
     panel.id = 'lesson-search-results';
     panel.className = 'lesson-search-results';
@@ -224,13 +209,13 @@
     const results = document.createElement('ul');
     panel.append(status, results);
     form.append(input, panel);
-    controls.append(toggle, form);
-    fallback.replaceWith(controls);
+    form.hidden = false;
 
     let currentSearch = 0;
     async function updateResults() {
       const search = ++currentSearch;
       const terms = termsFor(input.value);
+      clear.hidden = input.value === '';
       panel.hidden = terms.length === 0;
       results.replaceChildren();
       if (panel.hidden) {
@@ -247,7 +232,7 @@
       } catch {
         if (search !== currentSearch) return;
         status.textContent = '検索結果を読み込めませんでした。';
-        appendSearchResult(results, { title: '無料教材一覧で探す', path: fallback.href });
+        appendSearchResult(results, { title: '無料教材一覧で探す', path: '/materials/all/#search-materials' });
       }
     }
 
@@ -258,21 +243,12 @@
       status.textContent = '';
     }
 
-    function setSearchOpen(visible) {
-      toggle.setAttribute('aria-expanded', String(visible));
-      if (visible) input.focus();
-      else closeResults();
-    }
-
-    toggle.addEventListener('click', () => setSearchOpen(toggle.getAttribute('aria-expanded') !== 'true'));
-    controls.addEventListener('keydown', event => {
-      if (event.key !== 'Escape' || event.defaultPrevented || event.isComposing ||
-          toggle.getAttribute('aria-expanded') !== 'true' || !toggle.getClientRects().length) return;
-      setSearchOpen(false);
-      toggle.focus();
-    });
-
     input.addEventListener('input', updateResults);
+    clear.addEventListener('click', () => {
+      input.value = '';
+      updateResults();
+      input.focus();
+    });
     input.addEventListener('focus', () => {
       if (panel.hidden && termsFor(input.value).length) updateResults();
     });
@@ -302,8 +278,8 @@
     });
   }
 
-  const catalogue = document.querySelector('.materials-search');
-  const lessonLink = document.querySelector('header .lesson-search-link');
-  if (catalogue) initCatalogue(catalogue);
-  else if (lessonLink) initLesson(lessonLink);
+  const search = document.querySelector('.materials-search');
+  if (!search) return;
+  if (document.querySelector('#materials-count') && document.querySelector('#material-cards')) initCatalogue(search);
+  else initLesson(search);
 })();

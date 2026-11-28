@@ -99,6 +99,7 @@
       const idToken = await auth.login();
       ({ sessionKey } = await request('session', 'POST', { idToken }));
       signedIn = true;
+      window.dispatchEvent(new Event('free-account-change'));
       await readProgress();
       status.textContent = 'このアカウントの進み具合を端末間で同期します。';
     } catch {
@@ -119,6 +120,7 @@
       await queue;
       await request('logout', 'POST');
       restoreGuest('ログアウトしました。このブラウザーに保存した練習を使えます。');
+      window.dispatchEvent(new Event('free-account-change'));
     } catch (error) {
       if (error.status === 409) {
         restoreGuest('別のタブでログイン状態が変わりました。ページを開き直してください。');
@@ -174,18 +176,39 @@
     }
   });
 
-  document.addEventListener('visibilitychange', async () => {
-    if (document.visibilityState !== 'visible' || busy || !sessionKey) return;
+  async function syncAccount() {
+    if (busy || panel.hidden) return;
     const check = sessionKey;
     try {
       const current = await request('session');
-      if (!busy && check === sessionKey && current.sessionKey !== check) {
+      if (busy || check !== sessionKey || current.sessionKey === check) return;
+      busy = true;
+      setControls();
+      try {
         await queue;
-        if (!busy && check === sessionKey) {
-          restoreGuest('ログイン状態が変わりました。ページを開き直してください。');
+        if (!current.sessionKey) {
+          restoreGuest('ログアウトしました。このブラウザーに保存した練習を使えます。');
+          return;
         }
+        sessionKey = current.sessionKey;
+        version = snapshot = null;
+        await readProgress();
+        status.textContent = 'このアカウントの進み具合を端末間で同期します。';
+        changed();
+      } catch {
+        blocked = true;
+        status.textContent = '保存済みの進捗を取得できませんでした。';
+        changed();
+      } finally {
+        busy = false;
+        setControls();
       }
     } catch { /* Existing quiz state remains available during a temporary connection loss. */ }
+  }
+
+  window.addEventListener('free-account-change', syncAccount);
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') syncAccount();
   });
 
   window.dojoSync = { signedIn: () => !!sessionKey, snapshot: () => snapshot, save };
@@ -199,7 +222,7 @@
         changed();
       }
       panel.hidden = false;
-      const { createGoogleSignIn } = await import('./dojo-google-sign-in.js');
+      const { createGoogleSignIn } = await import('./dojo-google-sign-in.js?v=2');
       auth = await createGoogleSignIn(config);
     } catch {
       if (!panel.hidden) status.textContent = 'Googleログインを読み込めませんでした。';

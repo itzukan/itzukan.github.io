@@ -8,44 +8,15 @@
 <link rel="canonical" href="https://free.itzukan.com/materials/">
 <title>無料IT教材一覧 | IT図鑑</title>
 <link rel="stylesheet" href="/assets/materials-layout.css">
-<link rel="stylesheet" href="/assets/materials-home.css?v=11">
-<script defer src="/assets/materials-search.js?v=7"></script>
-<script defer src="/assets/material-pin-sync.js?v=4"></script>
-<script defer src="/assets/materials-header.js?v=2"></script>
+<link rel="stylesheet" href="/assets/materials-home.css?v=12">
+<link rel="stylesheet" href="/assets/materials-header.css?v=1">
+<script defer src="/assets/materials-header.js?v=3"></script>
+<script defer src="/assets/material-pin-sync.js?v=5"></script>
+<script defer src="/assets/materials-search.js?v=8"></script>
 <script defer src="/assets/materials-ranking.js?v=3"></script>
 <script defer src="/assets/analytics.js"></script></head>
 <body><main class="wrap">
-<header class="materials-header">
-  <a class="brand" href="/materials/">IT図鑑トップ</a>
-<div id="search-materials" class="materials-search" role="search" aria-labelledby="materials-query-label" hidden>
-  <label id="materials-query-label" for="materials-query">無料教材を検索</label>
-  <div class="materials-search-controls">
-    <input id="materials-query" type="search" placeholder="教材名・用語で検索" aria-controls="material-cards">
-    <button id="materials-clear" type="button" hidden>クリア</button>
-  </div>
-</div>
-  <nav aria-label="教材メニュー">
-    <details class="category-menu">
-      <summary>カテゴリ</summary>
-      <ul>
-        <li><a href="/materials/categories/#it-passport">ITパスポート</a></li>
-        <li><a href="/materials/fe/">基本情報</a></li>
-        <li><a href="/materials/categories/#fe-b">基本情報・科目B</a></li>
-        <li><a href="/materials/categories/#data">SQL・データベース</a></li>
-        <li><a href="/materials/categories/#web">Web・開発</a></li>
-        <li><a href="/materials/categories/#network">ネットワーク</a></li>
-        <li><a href="/materials/categories/#telework">テレワーク</a></li>
-        <li><a href="/materials/categories/#security">セキュリティ</a></li>
-        <li><a href="/materials/categories/">カテゴリ別一覧</a></li>
-      </ul>
-    </details>
-    <a class="question-series-link" href="/materials/practice/">問題シリーズ</a>
-    <a href="/materials/all/">全教材</a>
-    <a href="/materials/sql/training-demo/">SQL無料体験</a>
-    <a class="materials-paid-link" href="https://premium.itzukan.com/">有料教材</a>
-  </nav>
-</header>
-<div data-pin-sync-host hidden></div>
+<header data-library-header><a href="/materials/">IT図鑑トップ</a></header>
 <section class="hero"><h1>図解で学ぶ<em>無料IT教材</em></h1><p class="lead">気になるテーマから、読んで、試して学べます。</p></section>
 <p id="materials-count" role="status"></p>
 <div id="material-cards">

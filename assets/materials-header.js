@@ -1,12 +1,52 @@
 (() => {
   'use strict';
 
-  const header = document.querySelector('.materials-header');
+  const mount = document.querySelector('header[data-library-header]');
+  if (!mount) return;
+  const header = document.createElement('div');
+  header.className = 'materials-header';
+  header.innerHTML = `
+    <a class="brand" href="/materials/">IT図鑑トップ</a>
+    <form id="search-materials" class="materials-search" role="search" aria-labelledby="materials-query-label" hidden>
+      <label id="materials-query-label" for="materials-query">無料教材を検索</label>
+      <div class="materials-search-controls">
+        <input id="materials-query" name="q" type="search" placeholder="教材名・用語で検索" autocomplete="off">
+        <button id="materials-clear" type="button" hidden>クリア</button>
+      </div>
+    </form>
+    <nav aria-label="無料教材メニュー">
+      <details class="category-menu">
+        <summary>カテゴリ</summary>
+        <ul>
+          <li><a href="/materials/categories/#it-passport">ITパスポート</a></li>
+          <li><a href="/materials/fe/">基本情報</a></li>
+          <li><a href="/materials/categories/#fe-b">基本情報・科目B</a></li>
+          <li><a href="/materials/categories/#data">SQL・データベース</a></li>
+          <li><a href="/materials/categories/#web">Web・開発</a></li>
+          <li><a href="/materials/categories/#network">ネットワーク</a></li>
+          <li><a href="/materials/categories/#telework">テレワーク</a></li>
+          <li><a href="/materials/categories/#security">セキュリティ</a></li>
+          <li><a href="/materials/categories/">カテゴリ別一覧</a></li>
+        </ul>
+      </details>
+      <a class="question-series-link" href="/materials/practice/">問題シリーズ</a>
+      <a href="/materials/all/">全教材</a>
+      <a href="/materials/sql/training-demo/">SQL無料体験</a>
+      <a class="materials-paid-link" href="https://premium.itzukan.com/">有料教材</a>
+    </nav>
+    <div data-pin-sync-host hidden></div>`;
+  const commonLinks = new Set([...header.querySelectorAll('a')].map(link => link.getAttribute('href')));
+  for (const link of mount.querySelectorAll('a[href]')) {
+    if (!link.matches('.lesson-search-link') && !commonLinks.has(link.getAttribute('href'))) continue;
+    const parent = link.parentElement;
+    link.remove();
+    if (parent.matches('nav') && !parent.children.length && !parent.textContent.trim()) parent.remove();
+  }
+  mount.prepend(header);
   const search = header.querySelector('.materials-search');
   const menu = header.querySelector('nav');
   const input = search.querySelector('input');
-  const syncHost = document.querySelector('[data-pin-sync-host]');
-  const syncPanel = syncHost.querySelector('#material-pin-sync');
+  let syncPanel;
   const mobile = window.matchMedia('(max-width: 680px)');
   const tools = document.createElement('div');
   tools.className = 'materials-header-tools';
@@ -109,14 +149,26 @@
   }
 
   function layout() {
+    placeAccount();
     if (mobile.matches) {
-      if (syncPanel) menu.append(syncPanel);
       show(null);
       openFromLink();
     } else {
-      if (syncPanel) menu.before(syncPanel);
       open = null;
       pins.hidden = true;
+    }
+  }
+
+  function placeAccount() {
+    syncPanel ??= header.querySelector('#material-pin-sync');
+    if (!syncPanel) return;
+    const parent = mobile.matches ? menu : header;
+    if (syncPanel.parentElement === parent) return;
+    if (mobile.matches) menu.append(syncPanel);
+    else menu.before(syncPanel);
+    if (location.hash === '#material-pin-sync') {
+      if (mobile.matches) show(menuButton);
+      syncPanel.open = true;
     }
   }
 
@@ -140,7 +192,10 @@
     if (open && open !== searchButton && !header.contains(event.target) && !event.target.closest('dialog')) show(null);
     if (open === pinsButton && managePins.contains(event.target) && location.pathname === '/materials/all/') show(null);
   });
-  window.addEventListener('material-pins-sync-change', renderPins);
+  window.addEventListener('material-pins-sync-change', () => {
+    placeAccount();
+    renderPins();
+  });
   window.addEventListener('storage', renderPins);
   window.addEventListener('hashchange', openFromLink);
   mobile.addEventListener('change', layout);
