@@ -19,6 +19,23 @@
     .subject-grid > .subject { padding: 10px; background: #0e192c; border: 1px solid #344a66; border-radius: 8px; }
     .subject ul { display: grid; gap: 4px; list-style: none; margin: 0; padding: 0; }
     .subject a { display: flex; align-items: center; min-height: 44px; padding: 5px 2px; }
+    .subject-grid > .exam-disclosure, .exam-disclosure {
+      padding: 0;
+      border: 1px solid #344a66;
+      border-radius: 8px;
+      background: #0e192c;
+    }
+    .exam-disclosure > summary {
+      align-content: center;
+      min-height: 44px;
+      padding: 8px 12px;
+      color: #b8f6ff;
+      font-weight: 750;
+      cursor: pointer;
+    }
+    .exam-disclosure[open] > summary { border-bottom: 1px solid #344a66; }
+    .exam-disclosure > ul { padding: 4px 12px 8px; }
+    .exam-overview { align-items: start; }
     .common-material { flex: none; margin-inline-start: 6px; border: 1px solid #496680; border-radius: 5px; padding: 1px 5px; color: #c1d0e4; font-size: .75rem; }
     .panel[id] { scroll-margin-top: 16px; }
     .panel:target { border-color: #8beaf6; }
@@ -26,6 +43,7 @@
     .topics a { display: inline-flex; align-items: center; min-height: 44px; }
     @media (min-width: 690px) {
       .subject-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .exam-wide > ul { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 16px; }
     }
   </style>
 </head>
@@ -40,8 +58,8 @@
     <p><a href="/materials/topics/">技術テーマ別の図解・確認問題 →</a></p>
     <nav class="topics" aria-label="教材カテゴリ">
       <a href="#it-passport">ITパスポート</a>
-      <a href="#fe">基本情報</a>
-      <a href="#fe-b">基本情報・科目B</a>
+      <a href="#fe">基本情報・科目A</a>
+      <a href="#fe-b">科目B・擬似言語</a>
       <a href="#fe-b-security">科目B・情報セキュリティ</a>
       <a href="#data">SQL・データベース</a>
       <a href="#web">Web・開発</a>
@@ -88,22 +106,22 @@
       <h2 id="fe-title">💻 基本情報技術者試験 科目A</h2>
       <p><a class="practice-link" href="/materials/fe/practice/">基本情報道場 科目Aで問題を解く →</a></p>
       <!-- To share a lesson, list its existing URL here and under IT Passport. Tag individual quiz forms only to limit their audience. -->
-      <div class="subject-grid">
-        <div class="subject">
-          <h3 class="subject-title">ストラテジ系</h3>
+      <div class="subject-grid exam-overview">
+        <details class="subject exam-disclosure" name="fe-a-subjects">
+          <summary>ストラテジ系</summary>
           <ul>
             <li><a href="/materials/it-passport/break-even/" data-analytics-event="material_click" data-material-id="it-passport-break-even" data-click-location="category_list">損益分岐点とは？<small class="common-material">共通</small></a></li>
             <li><a href="/materials/it-passport/kgi-kpi/" data-analytics-event="material_click" data-material-id="it-passport-kgi-kpi" data-click-location="category_list">KGIとKPIの違い<small class="common-material">共通</small></a></li>
           </ul>
-        </div>
-        <div class="subject">
-          <h3 class="subject-title">マネジメント系</h3>
+        </details>
+        <details class="subject exam-disclosure" name="fe-a-subjects">
+          <summary>マネジメント系</summary>
           <ul>
             <li><a href="/materials/it-passport/project-schedule/" data-analytics-event="material_click" data-material-id="it-passport-project-schedule" data-click-location="category_list">アローダイアグラムで作業日程を読む<small class="common-material">共通</small></a></li>
           </ul>
-        </div>
-        <div class="subject">
-          <h3 class="subject-title">テクノロジ系</h3>
+        </details>
+        <details class="subject exam-disclosure" name="fe-a-subjects">
+          <summary>テクノロジ系</summary>
           <ul>
             <li><a href="/materials/fe/binary-search/" data-analytics-event="material_click" data-material-id="fe-binary-search" data-click-location="category_list">二分探索の手順<small class="common-material">共通</small></a></li>
             <li><a href="/materials/fe/stack-queue/" data-analytics-event="material_click" data-material-id="fe-stack-queue" data-click-location="category_list">スタックとキューの違い</a></li>
@@ -118,14 +136,14 @@
             <li><a href="/materials/it-passport/security-cia/" data-analytics-event="material_click" data-material-id="it-passport-security-cia" data-click-location="category_list">情報セキュリティの3要素<small class="common-material">共通</small></a></li>
             <li><a href="/materials/it-passport/two-factor-auth/" data-analytics-event="material_click" data-material-id="it-passport-two-factor" data-click-location="category_list">二段階認証と二要素認証<small class="common-material">共通</small></a></li>
           </ul>
-        </div>
+        </details>
       </div>
     </section>
     <section id="fe-b" class="panel" aria-labelledby="fe-b-title">
       <h2 id="fe-b-title">⌨️ 基本情報技術者試験 科目B・擬似言語</h2>
       <p><a class="practice-link" href="/materials/fe-b/practice/">擬似言語の問題を解く →</a></p>
-      <div class="subject">
-        <h3 class="subject-title">擬似言語</h3>
+      <details class="subject exam-disclosure exam-wide">
+        <summary>擬似言語の教材一覧</summary>
         <ul>
           <li><a href="/materials/fe-b/loop-sum/" data-analytics-event="material_click" data-material-id="fe-b-loop-sum" data-click-location="category_list">ループと条件分岐で合計する</a></li>
           <li><a href="/materials/fe-b/array-swap/" data-analytics-event="material_click" data-material-id="fe-b-array-swap" data-click-location="category_list">配列の値を一時変数で入れ替える</a></li>
@@ -158,12 +176,13 @@
           <li><a href="/materials/fe-b/bubble-pass/" data-analytics-event="material_click" data-material-id="fe-b-bubble-pass" data-click-location="category_list">バブルソートの1周で値がどう動くか追う</a></li>
           <li><a href="/materials/fe-b/last-maximum/" data-analytics-event="material_click" data-material-id="fe-b-last-maximum" data-click-location="category_list">最大値が同じなら最後の位置を残す</a></li>
         </ul>
-      </div>
+      </details>
     </section>
     <section id="fe-b-security" class="panel" aria-labelledby="fe-b-security-title">
       <h2 id="fe-b-security-title">🔒 基本情報技術者試験 科目B・情報セキュリティ</h2>
       <p><a class="practice-link" href="/materials/fe-b-security/practice/">情報セキュリティの問題を解く →</a></p>
-      <div class="subject">
+      <details class="subject exam-disclosure exam-wide">
+        <summary>情報セキュリティの教材一覧</summary>
         <ul>
           <li><a href="/materials/fe-b-security/suspicious-sign-in/" data-analytics-event="material_click" data-material-id="fe-b-security-suspicious-sign-in" data-click-location="category_list">不審なログインを見つけたときの初動</a></li>
           <li><a href="/materials/fe-b-security/share-permissions/" data-analytics-event="material_click" data-material-id="fe-b-security-share-permissions" data-click-location="category_list">社外に資料を共有するときの権限</a></li>
@@ -196,7 +215,7 @@
           <li><a href="/materials/fe-b-security/disposed-device/" data-analytics-event="material_click" data-material-id="fe-b-security-disposed-device" data-click-location="category_list">返却する端末からデータを消去する</a></li>
           <li><a href="/materials/fe-b-security/vendor-notice/" data-analytics-event="material_click" data-material-id="fe-b-security-vendor-notice" data-click-location="category_list">委託先の事故通知から自社の影響を調べる</a></li>
         </ul>
-      </div>
+      </details>
     </section>
     <section id="data" class="panel subject" aria-labelledby="data-title">
       <h2 id="data-title">🗄️ SQL・データベース</h2>
