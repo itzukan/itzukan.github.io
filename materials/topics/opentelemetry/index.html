@@ -14,6 +14,7 @@
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/material-feedback.js"></script>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -52,6 +53,33 @@
     </section>
     <p><a href="/materials/topics/#development">開発・運用のほかの教材を見る →</a></p>
   <p class="related-instagram">🎬 <a href="https://www.instagram.com/reel/DelvWqhDaXD/" target="_blank" rel="noopener noreferrer" data-analytics-event="related_reel_click" data-material-id="topic-opentelemetry">関連するInstagram解説を見る ↗</a></p>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/topics/correlation-id/" data-analytics-event="material_click" data-material-id="topic-correlation-id" data-click-location="related_lessons">
+            <strong>X-Correlation-IDでログをつなぐ</strong>
+            <span>注文APIから在庫・発送APIまで、同じ注文処理の記録を追います。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/prevent-detect-recover/" data-analytics-event="material_click" data-material-id="topic-prevent-detect-recover" data-click-location="related_lessons">
+            <strong>サイバー対策の基本は「防ぐ・気づく・立て直す」</strong>
+            <span>政府の緊急対策パッケージを入口に、職場で備える3段階を学びます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/detect-unusual-admin/" data-analytics-event="material_click" data-material-id="topic-detect-unusual-admin" data-click-location="related_lessons">
+            <strong>不正アクセスに気づく仕組み</strong>
+            <span>デジタル庁の公表事例を入口に、管理者追加の記録をどう調べるか学びます。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/">無料教材一覧</a> · <a href="https://opentelemetry.io/docs/what-is-opentelemetry/">OpenTelemetryの公式解説</a></footer>
 </body>

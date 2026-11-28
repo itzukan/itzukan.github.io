@@ -14,6 +14,7 @@
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/material-feedback.js"></script>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -52,6 +53,33 @@
     </section>
     <p><a href="/materials/topics/#cloud">クラウド・AWSのほかの教材を見る →</a></p>
   <p class="related-instagram">🎬 <a href="https://www.instagram.com/reel/DeL1GMTiT52/" target="_blank" rel="noopener noreferrer" data-analytics-event="related_reel_click" data-material-id="topic-s3-encryption-keys">関連するInstagram解説を見る ↗</a></p>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/topics/s3-endpoint-types/" data-analytics-event="material_click" data-material-id="topic-s3-endpoint-types" data-click-location="related_lessons">
+            <strong>S3のゲートウェイ型とインターフェイス型</strong>
+            <span>VPC内のアプリと、別の場所からS3へアクセスする要件を比べます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/it-passport/hash-vs-encryption/" data-analytics-event="material_click" data-material-id="it-passport-hash-vs-encryption" data-click-location="related_lessons">
+            <strong>ハッシュ化と暗号化の違い</strong>
+            <span>ハッシュ化と暗号化の違いを、ネットショップの注文ファイルで図解。復号できるか、ファイルの変化をどう確かめるかを、ITパスポートの確認問題で練習できます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/privatelink/" data-analytics-event="material_click" data-material-id="topic-privatelink" data-click-location="related_lessons">
+            <strong>AWS PrivateLinkとは？プライベートな接続経路</strong>
+            <span>自分のVPCから提供側のサービスへ、プライベートIPの入口で接続します。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/">無料教材一覧</a> · <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/UsingKMSEncryption.html">S3のSSE-KMS公式ガイド</a></footer>
 </body>

@@ -14,6 +14,7 @@
   <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/material-feedback.js"></script>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -52,6 +53,33 @@
         <output aria-live="polite"></output>
       </form>
     </section>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/topics/php2shell-defensive-response/" data-analytics-event="material_click" data-material-id="topic-php2shell-defensive-response" data-click-location="related_lessons">
+            <strong>PHP2Shellから学ぶ認証前の脆弱性対策</strong>
+            <span>IPAの注意喚起を基に、ログインを強くしても別途必要なサーバーの更新を学びます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/fe-b-security/backup-restore/" data-analytics-event="material_click" data-material-id="fe-b-security-backup-restore" data-click-location="related_lessons">
+            <strong>ランサムウェアから安全にデータを戻す</strong>
+            <span>バックアップの時刻と状態を見比べて、復旧元と復旧先を選びます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/fe-b-security/patch-priority/" data-analytics-event="material_click" data-material-id="fe-b-security-patch-priority" data-click-location="related_lessons">
+            <strong>セキュリティ更新の優先順位を決める</strong>
+            <span>同じ更新が必要なシステムでも、公開範囲と再起動の影響を合わせて考えます。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/categories/#fe-b-security">情報セキュリティの教材一覧</a> · <a href="https://www.ipa.go.jp/security/guide/sme/about.html">IPAの情報セキュリティ対策ガイドライン</a></footer>
 </body>

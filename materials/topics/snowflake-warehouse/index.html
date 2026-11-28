@@ -14,6 +14,7 @@
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/material-feedback.js"></script>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -52,6 +53,33 @@
     </section>
     <p><a href="/materials/topics/#data">データベース・分析のほかの教材を見る →</a></p>
   <p class="related-instagram">🎬 <a href="https://www.instagram.com/reel/DfYPENPCQSQ/" target="_blank" rel="noopener noreferrer" data-analytics-event="related_reel_click" data-material-id="topic-snowflake-warehouse">関連するInstagram解説を見る ↗</a></p>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/topics/parquet-csv/" data-analytics-event="material_click" data-material-id="topic-parquet-csv" data-click-location="related_lessons">
+            <strong>ParquetとCSVの違い</strong>
+            <span>売上表から金額の列だけを集計するとき、読み方がどう変わるか学びます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/redshift-snowflake-databricks/" data-analytics-event="material_click" data-material-id="topic-redshift-snowflake-databricks" data-click-location="related_lessons">
+            <strong>Redshift・Snowflake・Databricksの比較</strong>
+            <span>売上のBI集計と、機械学習用の加工がある会社で、候補を絞ります。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/database-catalog/" data-analytics-event="material_click" data-material-id="topic-database-catalog" data-click-location="related_lessons">
+            <strong>データベースとデータカタログの違い</strong>
+            <span>売上データを利用する前に、その保管先、意味、問い合わせ先を確認します。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/">無料教材一覧</a> · <a href="https://docs.snowflake.com/en/user-guide/warehouses-overview">Snowflakeのウェアハウスの概要</a></footer>
 </body>

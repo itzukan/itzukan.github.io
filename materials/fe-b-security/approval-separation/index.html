@@ -14,6 +14,7 @@
   <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/material-feedback.js"></script>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -52,6 +53,33 @@
         <output aria-live="polite"></output>
       </form>
     </section>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/fe-b-security/cloud-app-permission/" data-analytics-event="material_click" data-material-id="fe-b-security-cloud-app-permission" data-click-location="related_lessons">
+            <strong>連携アプリが求めるアクセス権を判断する</strong>
+            <span>アプリが必要とする操作と、許可画面に出る操作を照合します。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/fe-b-security/temporary-maintenance/" data-analytics-event="material_click" data-material-id="fe-b-security-temporary-maintenance" data-click-location="related_lessons">
+            <strong>外部保守のために一時的な権限を付ける</strong>
+            <span>保守に必要な権限を、作業範囲と時間に合わせて決めます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/fe-b-security/offboarding-access/" data-analytics-event="material_click" data-material-id="fe-b-security-offboarding-access" data-click-location="related_lessons">
+            <strong>契約終了時にアクセス権を見直す</strong>
+            <span>退場する担当者のアクセスを止めつつ、他の担当者の業務を続けられるようにします。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/categories/#fe-b-security">情報セキュリティの教材一覧</a> · <a href="https://www.ipa.go.jp/security/guide/sme/about.html">IPAの情報セキュリティ対策ガイドライン</a></footer>
 </body>

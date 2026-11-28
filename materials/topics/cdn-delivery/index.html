@@ -14,6 +14,7 @@
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/material-feedback.js"></script>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -52,6 +53,33 @@
     </section>
     <p><a href="/materials/topics/#network">ネットワーク・通信のほかの教材を見る →</a></p>
   <p class="related-instagram">🎬 <a href="https://www.instagram.com/reel/DfyBsAXD5rZ/" target="_blank" rel="noopener noreferrer" data-analytics-event="related_reel_click" data-material-id="topic-cdn-delivery">関連するInstagram解説を見る ↗</a></p>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/topics/cache-stale-screen/" data-analytics-event="material_click" data-material-id="topic-cache-stale-screen" data-click-location="related_lessons">
+            <strong>キャッシュで古い画面が出る理由</strong>
+            <span>商品の写真を差し替えたのに、いつものブラウザーには前の画像が表示されます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/network/cdn-cache/" data-analytics-event="material_click" data-material-id="network-cdn-cache" data-click-location="related_lessons">
+            <strong>CDNとは？設定ミスで他人のページが見える理由</strong>
+            <span>商品画像はみんなで再利用できますが、マイページは利用者ごとに内容が違います。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/network/round-robin/" data-analytics-event="material_click" data-material-id="network-round-robin" data-click-location="related_lessons">
+            <strong>ラウンドロビンとは？順番に振り分ける仕組み</strong>
+            <span>Webへのアクセスを3台のサーバーへ順番に配る方法を、ラウンドロビンと呼びます。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/">無料教材一覧</a> · <a href="https://www.rfc-editor.org/rfc/rfc9111.html">RFC 9111</a></footer>
 </body>

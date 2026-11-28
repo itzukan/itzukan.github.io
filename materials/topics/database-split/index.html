@@ -14,6 +14,7 @@
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/material-feedback.js"></script>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -51,6 +52,33 @@
       <noscript><details><summary>答えを見る</summary><p>その検索の実行計画と待ち時間</p></details></noscript>
     </section>
     <p><a href="/materials/topics/#data">データベース・分析のほかの教材を見る →</a></p>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/topics/optimistic-concurrency-control/" data-analytics-event="material_click" data-material-id="topic-optimistic-concurrency-control" data-click-location="related_lessons">
+            <strong>OCCとは？楽観的同時実行制御で上書きを防ぐ</strong>
+            <span>商品名を2人が同時に編集したとき、後から保存した人が先の変更を消さないようにします。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/sql/index-search-update/" data-analytics-event="material_click" data-material-id="sql-index-search-update" data-click-location="related_lessons">
+            <strong>インデックスとは？検索と更新のトレードオフ</strong>
+            <span>5万件の注文から同じ顧客の注文履歴を探し、インデックスのあり・なしを比べます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/fe/left-join/" data-analytics-event="material_click" data-material-id="fe-left-join" data-click-location="related_lessons">
+            <strong>LEFT JOINで残る行</strong>
+            <span>顧客一覧から、注文した人も注文がない人も含めて確認したいときに、LEFT JOINを使えます。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/">無料教材一覧</a> · <a href="https://www.postgresql.org/docs/current/using-explain.html">PostgreSQLの実行計画</a></footer>
 </body>

@@ -14,6 +14,7 @@
   <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/material-feedback.js"></script>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -52,6 +53,33 @@
         <output aria-live="polite"></output>
       </form>
     </section>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/telework/unexpected-approval/">
+            <strong>心当たりのないログイン承認が続いたら？</strong>
+            <span>自分ではログインしていないのに、会社アカウントへの承認通知が10回来ました。「承認」は、通知を出したログインを許可する操作です。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/fe-b-security/suspicious-sign-in/" data-analytics-event="material_click" data-material-id="fe-b-security-suspicious-sign-in" data-click-location="related_lessons">
+            <strong>不審なログインを見つけたときの初動</strong>
+            <span>自分のアカウントに心当たりのないログインがあるとき、被害を抑えるために何を伝えるか考えます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/it-passport/two-factor-auth/" data-analytics-event="material_click" data-material-id="it-passport-two-factor" data-click-location="related_lessons">
+            <strong>二段階認証と二要素認証の違い</strong>
+            <span>二段階認証と二要素認証の違いをスマホのログイン画面で図解。知識・所持・生体の3種類と、ITパスポート向けの確認問題。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/categories/#fe-b-security">情報セキュリティの教材一覧</a> · <a href="https://www.ipa.go.jp/security/guide/sme/about.html">IPAの情報セキュリティ対策ガイドライン</a></footer>
 </body>

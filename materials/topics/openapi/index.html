@@ -14,6 +14,7 @@
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/material-feedback.js"></script>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -52,6 +53,33 @@
     </section>
     <p><a href="/materials/topics/#api">APIのほかの教材を見る →</a></p>
   <p class="related-instagram">🎬 <a href="https://www.instagram.com/reel/DeeHDRnEtiJ/" target="_blank" rel="noopener noreferrer" data-analytics-event="related_reel_click" data-material-id="topic-openapi">関連するInstagram解説を見る ↗</a></p>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/topics/rest-graphql-grpc/" data-analytics-event="material_click" data-material-id="topic-rest-graphql-grpc" data-click-location="related_lessons">
+            <strong>REST・GraphQL・gRPCの違い</strong>
+            <span>商品詳細を取得する画面と、サービス間通信の設計を比べます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/protocol-buffers/" data-analytics-event="material_click" data-material-id="topic-protocol-buffers" data-click-location="related_lessons">
+            <strong>Protocol BuffersとJSONの違い</strong>
+            <span>商品番号と商品名を2つのサービスでやり取りします。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/sync-and-async-api/" data-analytics-event="material_click" data-material-id="topic-sync-and-async-api" data-click-location="related_lessons">
+            <strong>同期APIと非同期APIの違い</strong>
+            <span>大きな売上レポートを作るとき、呼び出し側がいつ結果を受け取るかを考えます。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/">無料教材一覧</a> · <a href="https://spec.openapis.org/oas/latest.html">OpenAPI仕様</a></footer>
 </body>

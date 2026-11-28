@@ -14,6 +14,7 @@
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/material-feedback.js"></script>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -51,6 +52,33 @@
       <noscript><details><summary>答えを見る</summary><p>対象と中止条件が決まっているか</p></details></noscript>
     </section>
     <p><a href="/materials/topics/#cloud">クラウド・AWSのほかの教材を見る →</a></p>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/topics/aws-cross-region/" data-analytics-event="material_click" data-material-id="topic-aws-cross-region" data-click-location="related_lessons">
+            <strong>AWSでリージョンをまたぐときの確認</strong>
+            <span>東京のAPIから別地域のサービスを呼ぶ設計を考えます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/single-point-of-failure/" data-analytics-event="material_click" data-material-id="topic-single-point-of-failure" data-click-location="related_lessons">
+            <strong>SPOFとは？サーバーが2台でもサービスが止まる理由</strong>
+            <span>Webサーバーが2台あるのに、共通のDBが止まると注文を受けられません。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/when-to-use-eks/" data-analytics-event="material_click" data-material-id="topic-when-to-use-eks" data-click-location="related_lessons">
+            <strong>ECSからEKSを検討する条件</strong>
+            <span>小さなサービスが増えたとき、コンテナ管理を切り替える価値を考えます。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/">無料教材一覧</a> · <a href="https://docs.aws.amazon.com/fis/latest/userguide/what-is.html">AWS FISの公式ガイド</a></footer>
 </body>

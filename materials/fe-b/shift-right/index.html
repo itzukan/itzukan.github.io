@@ -14,6 +14,7 @@
   <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/material-feedback.js"></script>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -62,6 +63,33 @@ data[1] ← 0</pre>
         <output aria-live="polite"></output>
       </form>
     </section>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/fe-b/reverse-copy/" data-analytics-event="material_click" data-material-id="fe-b-reverse-copy" data-click-location="related_lessons">
+            <strong>配列を逆順にコピーする</strong>
+            <span>書く位置が先頭に近いほど、読む位置は元の配列の末尾に近くなります。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/fe-b/filter-copy/" data-analytics-event="material_click" data-material-id="fe-b-filter-copy" data-click-location="related_lessons">
+            <strong>条件に合う要素だけを別の配列へ写す</strong>
+            <span>読む位置と書き込む位置を分けると、条件に合う値だけを詰めて並べられます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/fe-b/array-swap/" data-analytics-event="material_click" data-material-id="fe-b-array-swap" data-click-location="related_lessons">
+            <strong>配列の値を一時変数で入れ替える</strong>
+            <span>配列の両端を入れ替えるときは、上書きされる前の値を別の変数に取っておきます。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/categories/#fe-b">科目Bの教材一覧</a> · <a href="https://www.ipa.go.jp/shiken/syllabus/henkou/2022/gmcbt80000007cfs-att/fe_kamoku_b_set_sample_qs.pdf">IPAの擬似言語の記述形式（PDF）</a></footer>
 </body>

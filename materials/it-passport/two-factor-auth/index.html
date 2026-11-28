@@ -56,6 +56,7 @@
     footer { border-top: 1px solid #31465d; padding: 14px 0 24px; font-size: .9rem; }
     @media (max-width: 590px) { .compare { grid-template-columns: 1fr; } }
   </style>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -129,6 +130,33 @@
       <h2 id="next-title">次は、ログイン後の仕組みを学ぼう</h2>
       <p><a href="/materials/security/" data-analytics-event="material_click" data-material-id="security-intro" data-click-location="it_passport_two_factor">Webセキュリティ入門でCookieとセッションを学ぶ →</a></p>
     </section>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/topics/opaque-login/" data-analytics-event="material_click" data-material-id="topic-opaque-login" data-click-location="related_lessons">
+            <strong>OPAQUEでパスワードを送らずに認証する</strong>
+            <span>利用者がパスワードを入力しても、それ自体をサーバーへ渡さずに認証する方式です。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/telework/unexpected-approval/">
+            <strong>心当たりのないログイン承認が続いたら？</strong>
+            <span>自分ではログインしていないのに、会社アカウントへの承認通知が10回来ました。「承認」は、通知を出したログインを許可する操作です。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/fe-b-security/session-revoke/" data-analytics-event="material_click" data-material-id="fe-b-security-session-revoke" data-click-location="related_lessons">
+            <strong>アカウント停止後も残るログインを止める</strong>
+            <span>新規ログインを止める操作と、ログイン済みの状態を終了する操作を区別します。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap">
     <a href="/materials/fe/practice/">基本情報道場</a> · <a href="/materials/">無料教材一覧</a>

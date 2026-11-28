@@ -14,6 +14,7 @@
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/material-feedback.js"></script>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -51,6 +52,33 @@
       <noscript><details><summary>答えを見る</summary><p>操作時刻・対象・承認記録を担当者が照合する</p></details></noscript>
     </section>
     <p><a href="/materials/topics/#security">セキュリティ・認証のほかの教材を見る →</a></p>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/fe-b-security/shared-admin-audit/" data-analytics-event="material_click" data-material-id="fe-b-security-shared-admin-audit" data-click-location="related_lessons">
+            <strong>管理画面の操作履歴から担当者を特定する</strong>
+            <span>操作記録とアカウントの使い方を見比べて、誰が何をしたか追えるようにします。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/correlation-id/" data-analytics-event="material_click" data-material-id="topic-correlation-id" data-click-location="related_lessons">
+            <strong>X-Correlation-IDでログをつなぐ</strong>
+            <span>注文APIから在庫・発送APIまで、同じ注文処理の記録を追います。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/fe-b-security/log-export-hold/" data-analytics-event="material_click" data-material-id="fe-b-security-log-export-hold" data-click-location="related_lessons">
+            <strong>調査に必要なログが消える前に保全する</strong>
+            <span>自動削除の時刻を確認し、調査に必要な記録を取り出します。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/">無料教材一覧</a> · <a href="https://www.digital.go.jp/press/a0a8f66c-b32d-4695-9372-bcd5d4280f22">デジタル庁の公表</a></footer>
 </body>

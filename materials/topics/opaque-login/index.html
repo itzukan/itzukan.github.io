@@ -14,6 +14,7 @@
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/material-feedback.js"></script>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -51,6 +52,33 @@
       <noscript><details><summary>答えを見る</summary><p>送らずに認証と鍵交換を行う</p></details></noscript>
     </section>
     <p><a href="/materials/topics/#security">セキュリティ・認証のほかの教材を見る →</a></p>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/fe-b-security/session-revoke/" data-analytics-event="material_click" data-material-id="fe-b-security-session-revoke" data-click-location="related_lessons">
+            <strong>アカウント停止後も残るログインを止める</strong>
+            <span>新規ログインを止める操作と、ログイン済みの状態を終了する操作を区別します。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/it-passport/two-factor-auth/" data-analytics-event="material_click" data-material-id="it-passport-two-factor" data-click-location="related_lessons">
+            <strong>二段階認証と二要素認証の違い</strong>
+            <span>二段階認証と二要素認証の違いをスマホのログイン画面で図解。知識・所持・生体の3種類と、ITパスポート向けの確認問題。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/jwt-and-session/" data-analytics-event="material_click" data-material-id="topic-jwt-and-session" data-click-location="related_lessons">
+            <strong>JWTとサーバーセッションの違い</strong>
+            <span>注文画面を開くたびに、サイトはログイン済みか確認します。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/">無料教材一覧</a> · <a href="https://www.rfc-editor.org/rfc/rfc9807.html">RFC 9807</a></footer>
 </body>

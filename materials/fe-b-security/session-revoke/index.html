@@ -14,6 +14,7 @@
   <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/material-feedback.js"></script>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -52,6 +53,33 @@
         <output aria-live="polite"></output>
       </form>
     </section>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/topics/jwt-and-session/" data-analytics-event="material_click" data-material-id="topic-jwt-and-session" data-click-location="related_lessons">
+            <strong>JWTとサーバーセッションの違い</strong>
+            <span>注文画面を開くたびに、サイトはログイン済みか確認します。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/fe-b-security/offboarding-access/" data-analytics-event="material_click" data-material-id="fe-b-security-offboarding-access" data-click-location="related_lessons">
+            <strong>契約終了時にアクセス権を見直す</strong>
+            <span>退場する担当者のアクセスを止めつつ、他の担当者の業務を続けられるようにします。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/browser-cookie/" data-analytics-event="material_click" data-material-id="web-browser-cookie" data-click-location="related_lessons">
+            <strong>Cookieとは？ ページを移動してもログインが続く理由</strong>
+            <span>ログイン後にページを移動しても、なぜログインしたまま？ ブラウザーとサーバーがCookieをやり取りする様子を図とミニ演習で学びます。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/categories/#fe-b-security">情報セキュリティの教材一覧</a> · <a href="https://www.ipa.go.jp/security/guide/sme/about.html">IPAの情報セキュリティ対策ガイドライン</a></footer>
 </body>

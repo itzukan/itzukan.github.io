@@ -14,6 +14,7 @@
   <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/material-feedback.js"></script>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -62,6 +63,33 @@ endfor</pre>
         <output aria-live="polite"></output>
       </form>
     </section>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/fe-b/first-match/" data-analytics-event="material_click" data-material-id="fe-b-first-match" data-click-location="related_lessons">
+            <strong>最初に一致する位置を記録する</strong>
+            <span>同じ値が複数あっても、最初に見つけた要素番号だけを残します。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/fe-b/last-maximum/" data-analytics-event="material_click" data-material-id="fe-b-last-maximum" data-click-location="related_lessons">
+            <strong>最大値が同じなら最後の位置を残す</strong>
+            <span>比較に「以上」を使うと、最大値と等しい場合も位置を書き換えます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/fe-b/longest-streak/" data-analytics-event="material_click" data-material-id="fe-b-longest-streak" data-click-location="related_lessons">
+            <strong>連続した1の最長記録を求める</strong>
+            <span>今続いている回数と、これまでの最長記録を別々に持ちます。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/categories/#fe-b">科目Bの教材一覧</a> · <a href="https://www.ipa.go.jp/shiken/syllabus/henkou/2022/gmcbt80000007cfs-att/fe_kamoku_b_set_sample_qs.pdf">IPAの擬似言語の記述形式（PDF）</a></footer>
 </body>

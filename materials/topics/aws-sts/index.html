@@ -14,6 +14,7 @@
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/material-feedback.js"></script>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -51,6 +52,33 @@
       <noscript><details><summary>答えを見る</summary><p>新しい認証情報を取得してから使う</p></details></noscript>
     </section>
     <p><a href="/materials/topics/#cloud">クラウド・AWSのほかの教材を見る →</a></p>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/topics/api-keys-vs-iam-roles/" data-analytics-event="material_click" data-material-id="topic-api-keys-vs-iam-roles" data-click-location="related_lessons">
+            <strong>APIキーとIAMロールの違い</strong>
+            <span>外部の商品APIとAWSのS3に、それぞれどの認証情報を使うか考えます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/iam-sts-sigv4/" data-analytics-event="material_click" data-material-id="topic-iam-sts-sigv4" data-click-location="related_lessons">
+            <strong>IAMロールでS3に接続する流れ</strong>
+            <span>アプリがS3へアクセスする際、AWS SDKが認証情報を取り扱う流れです。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/iam-roles-anywhere/" data-analytics-event="material_click" data-material-id="topic-iam-roles-anywhere" data-click-location="related_lessons">
+            <strong>IAM Roles Anywhereとは？</strong>
+            <span>AWS外の社内サーバーへ、固定のAWS認証情報を配らずにS3の権限を渡す例です。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/">無料教材一覧</a> · <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp.html">AWS IAMの一時認証情報</a></footer>
 </body>

@@ -12,7 +12,8 @@
   <script defer src="/assets/material-feedback.js"></script>
   <script type="module" src="./lab.mjs"></script>
   <title>はじめてのAPIキー | IT図鑑</title>
-<link rel="stylesheet" href="/assets/lesson-search-link.css?v=3"><script defer src="/assets/materials-search.js?v=6"></script></head>
+<link rel="stylesheet" href="/assets/lesson-search-link.css?v=3"><script defer src="/assets/materials-search.js?v=6"></script>  <link rel="stylesheet" href="/assets/related-materials.css">
+</head>
 <body>
 <main class="wrap api-key-page">
   <header class="lab-header">
@@ -137,6 +138,33 @@ curl -i -H "Authorization: Bearer itzukan-demo-key" http://127.0.0.1:8711/produc
   </section>
   <p class="lab-note">参考 <a href="https://www.rfc-editor.org/rfc/rfc9110.html#name-401-unauthorized">HTTP 401の仕様</a></p>
   <p class="related-instagram">🎬 <a href="https://www.instagram.com/reel/DgJMrKwDi0f/" target="_blank" rel="noopener noreferrer" data-analytics-event="related_reel_click" data-material-id="api-key">関連するInstagram解説を見る ↗</a></p>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/topics/api-authentication/" data-analytics-event="material_click" data-material-id="topic-api-authentication" data-click-location="related_lessons">
+            <strong>API認証で呼び出し元を確認する</strong>
+            <span>配送先を返すAPIが、誰からの要求か、どの注文を読めるかを判断します。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/api-keys-vs-iam-roles/" data-analytics-event="material_click" data-material-id="topic-api-keys-vs-iam-roles" data-click-location="related_lessons">
+            <strong>APIキーとIAMロールの違い</strong>
+            <span>外部の商品APIとAWSのS3に、それぞれどの認証情報を使うか考えます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/oauth-and-oidc/" data-analytics-event="material_click" data-material-id="topic-oauth-and-oidc" data-click-location="related_lessons">
+            <strong>OAuthとOpenID Connectの違い</strong>
+            <span>予定表アプリに空き時間を読ませることと、誰がログインしたかを区別します。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   <footer><a href="/materials/">無料教材一覧に戻る</a></footer>
 </main>
 </body>

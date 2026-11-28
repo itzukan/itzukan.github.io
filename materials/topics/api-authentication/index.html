@@ -14,6 +14,7 @@
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/material-feedback.js"></script>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -52,6 +53,33 @@
     </section>
     <p><a href="/materials/topics/#api">APIのほかの教材を見る →</a></p>
   <p class="related-instagram">🎬 <a href="https://www.instagram.com/reel/DdaeMOQgeFg/" target="_blank" rel="noopener noreferrer" data-analytics-event="related_reel_click" data-material-id="topic-api-authentication">関連するInstagram解説を見る ↗</a></p>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/topics/oauth-and-oidc/" data-analytics-event="material_click" data-material-id="topic-oauth-and-oidc" data-click-location="related_lessons">
+            <strong>OAuthとOpenID Connectの違い</strong>
+            <span>予定表アプリに空き時間を読ませることと、誰がログインしたかを区別します。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/api-key/">
+            <strong>はじめてのAPIキー</strong>
+            <span>APIキーを付けて商品一覧を取得する無料演習。APIキーがないときの401と、あるときの200を見比べます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/sso-saml-oauth/" data-analytics-event="material_click" data-material-id="topic-sso-saml-oauth" data-click-location="related_lessons">
+            <strong>SSO・SAML・OAuthの役割</strong>
+            <span>1回の社内ログインで業務アプリを使い、外部アプリへの予定表の許可と区別します。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/">無料教材一覧</a></footer>
 </body>

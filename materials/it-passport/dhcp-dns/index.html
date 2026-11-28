@@ -14,6 +14,7 @@
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/it-passport-quiz.js"></script>
   <script defer src="/assets/material-feedback.js"></script>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -57,6 +58,33 @@
     </section>
     <p class="next-lesson"><a href="/materials/it-passport/practice/#setup-title">道場で問題を解く →</a></p>
     <p class="next-lesson"><a href="/materials/categories/#it-passport">カテゴリ別教材一覧へ</a></p>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/topics/fqdn-host-domain/" data-analytics-event="material_click" data-material-id="topic-fqdn-host-domain" data-click-location="related_lessons">
+            <strong>FQDN・ホスト名・ドメイン名の違い</strong>
+            <span>shop.example.comを見て、どこまで書くと名前が特定できるか確認します。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/private-dns/" data-analytics-event="material_click" data-material-id="topic-private-dns" data-click-location="related_lessons">
+            <strong>プライベートDNSとは？同じ名前が社内だけで使える理由</strong>
+            <span>社内ポータルの名前が、社内からは調べられて自宅からは見つからない例です。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/fe/subnet-mask/" data-analytics-event="material_click" data-material-id="fe-subnet-mask" data-click-location="related_lessons">
+            <strong>サブネットマスクで範囲を読む</strong>
+            <span>IPv4アドレスを区切って、同じネットワークに属するアドレスの範囲を見つけます。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="https://www.rfc-editor.org/rfc/rfc2131">DHCP（RFC 2131）</a> · <a href="https://www.rfc-editor.org/rfc/rfc1034">DNS（RFC 1034）</a> · <a href="https://www.ipa.go.jp/shiken/syllabus/gaiyou.html">IPAの試験シラバス</a></footer>
 </body>

@@ -14,6 +14,7 @@
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/material-feedback.js"></script>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -52,6 +53,33 @@
     </section>
     <p><a href="/materials/topics/#cloud">クラウド・AWSのほかの教材を見る →</a></p>
   <p class="related-instagram">🎬 <a href="https://www.instagram.com/reel/DdyQ1irDiUK/" target="_blank" rel="noopener noreferrer" data-analytics-event="related_reel_click" data-material-id="topic-privatelink">関連するInstagram解説を見る ↗</a></p>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/topics/private-dns/" data-analytics-event="material_click" data-material-id="topic-private-dns" data-click-location="related_lessons">
+            <strong>プライベートDNSとは？同じ名前が社内だけで使える理由</strong>
+            <span>社内ポータルの名前が、社内からは調べられて自宅からは見つからない例です。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/s3-endpoint-types/" data-analytics-event="material_click" data-material-id="topic-s3-endpoint-types" data-click-location="related_lessons">
+            <strong>S3のゲートウェイ型とインターフェイス型</strong>
+            <span>VPC内のアプリと、別の場所からS3へアクセスする要件を比べます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/s3-encryption-keys/" data-analytics-event="material_click" data-material-id="topic-s3-encryption-keys" data-click-location="related_lessons">
+            <strong>SSE-S3とSSE-KMSの違い</strong>
+            <span>S3に置くバックアップを暗号化し、鍵の権限を誰が管理するかを考えます。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/">無料教材一覧</a> · <a href="https://docs.aws.amazon.com/vpc/latest/privatelink/what-is-privatelink.html">AWS PrivateLinkの公式ガイド</a></footer>
 </body>

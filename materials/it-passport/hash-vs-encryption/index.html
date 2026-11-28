@@ -25,6 +25,7 @@
       .comparison-flow li + li::before { content: "→"; top: 50%; left: -21px; transform: translateY(-50%); }
     }
   </style>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -79,6 +80,33 @@
       </form>
     </section>
     <p class="next-lesson"><a href="/materials/it-passport/practice/#setup-title" data-analytics-event="material_click" data-material-id="it-passport-dojo" data-click-location="lesson_end" data-learning-route="it-passport">ITパスポートの問題を10問解く →</a></p>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/topics/s3-encryption-keys/" data-analytics-event="material_click" data-material-id="topic-s3-encryption-keys" data-click-location="related_lessons">
+            <strong>SSE-S3とSSE-KMSの違い</strong>
+            <span>S3に置くバックアップを暗号化し、鍵の権限を誰が管理するかを考えます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/fe-b-security/download-integrity/" data-analytics-event="material_click" data-material-id="fe-b-security-download-integrity" data-click-location="related_lessons">
+            <strong>ダウンロードしたファイルのハッシュを照合する</strong>
+            <span>配布元が示した値と手元のファイルから計算した値を見比べ、差が出たときの対応を考えます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/s3-endpoint-types/" data-analytics-event="material_click" data-material-id="topic-s3-endpoint-types" data-click-location="related_lessons">
+            <strong>S3のゲートウェイ型とインターフェイス型</strong>
+            <span>VPC内のアプリと、別の場所からS3へアクセスする要件を比べます。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap">
     <a href="/materials/it-passport/security-cia/">情報セキュリティの3要素</a> ·

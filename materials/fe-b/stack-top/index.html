@@ -14,6 +14,7 @@
   <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/material-feedback.js"></script>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -67,6 +68,33 @@ top ← top - 1</pre>
         <output aria-live="polite"></output>
       </form>
     </section>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/fe/stack-queue/" data-analytics-event="material_click" data-material-id="fe-stack-queue" data-click-location="related_lessons">
+            <strong>スタックとキューの違い</strong>
+            <span>同じ順番でA、B、Cを入れたとき、最初に取り出せるものは入れ物によって変わります。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/fe-b/circular-queue/" data-analytics-event="material_click" data-material-id="fe-b-circular-queue" data-click-location="related_lessons">
+            <strong>循環キューで末尾から先頭へ戻る</strong>
+            <span>配列に並べたキューを読み、末尾の次は要素番号1へ戻ります。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/fe-b/insertion-position/" data-analytics-event="material_click" data-material-id="fe-b-insertion-position" data-click-location="related_lessons">
+            <strong>整列済みの部分に1つ挿入する</strong>
+            <span>挿入する値より大きな要素だけを右にずらし、空いた位置に値を入れます。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/categories/#fe-b">科目Bの教材一覧</a> · <a href="https://www.ipa.go.jp/shiken/syllabus/henkou/2022/gmcbt80000007cfs-att/fe_kamoku_b_set_sample_qs.pdf">IPAの擬似言語の記述形式（PDF）</a></footer>
 </body>

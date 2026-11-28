@@ -14,6 +14,7 @@
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/material-feedback.js"></script>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -52,6 +53,33 @@
     </section>
     <p><a href="/materials/topics/#cloud">クラウド・AWSのほかの教材を見る →</a></p>
   <p class="related-instagram">🎬 <a href="https://www.instagram.com/reel/DeJeDwTDMGo/" target="_blank" rel="noopener noreferrer" data-analytics-event="related_reel_click" data-material-id="topic-kinesis-and-firehose">関連するInstagram解説を見る ↗</a></p>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/topics/kafka-rabbitmq-sqs/" data-analytics-event="material_click" data-material-id="topic-kafka-rabbitmq-sqs" data-click-location="related_lessons">
+            <strong>Kafka・RabbitMQ・SQSの違い</strong>
+            <span>注文イベントを後から分析する場合と、発送ジョブを一度処理する場合を比べます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/idempotency/" data-analytics-event="material_click" data-material-id="topic-idempotency" data-click-location="related_lessons">
+            <strong>冪等性とは？同じ依頼が再送されても結果を重複させない</strong>
+            <span>注文確定の返事を受け取れず、同じ注文を再送したときの設計です。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/sqs-and-kinesis/" data-analytics-event="material_click" data-material-id="topic-sqs-and-kinesis" data-click-location="related_lessons">
+            <strong>SQSのキューとKinesisのストリーム</strong>
+            <span>発送作業を順次処理する場合と、注文履歴を複数の処理で読む場合を比べます。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/">無料教材一覧</a> · <a href="https://docs.aws.amazon.com/firehose/latest/dev/writing-with-kinesis-streams.html">AWSのData StreamsとData Firehoseの接続</a></footer>
 </body>

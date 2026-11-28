@@ -14,6 +14,7 @@
   <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/material-feedback.js"></script>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -52,6 +53,33 @@
         <output aria-live="polite"></output>
       </form>
     </section>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/fe-b-security/isolate-device/" data-analytics-event="material_click" data-material-id="fe-b-security-isolate-device" data-click-location="related_lessons">
+            <strong>感染が疑われるPCをネットワークから隔離する</strong>
+            <span>感染の疑いがある端末を、調査に必要な情報を残しながら切り離します。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/fe-b-security/restore-point/" data-analytics-event="material_click" data-material-id="fe-b-security-restore-point" data-click-location="related_lessons">
+            <strong>障害前のどの時点まで戻せるか判断する</strong>
+            <span>許容できるデータの消失時間と、バックアップの時刻を照合します。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/php2shell-defensive-response/" data-analytics-event="material_click" data-material-id="topic-php2shell-defensive-response" data-click-location="related_lessons">
+            <strong>PHP2Shellから学ぶ認証前の脆弱性対策</strong>
+            <span>IPAの注意喚起を基に、ログインを強くしても別途必要なサーバーの更新を学びます。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/categories/#fe-b-security">情報セキュリティの教材一覧</a> · <a href="https://www.ipa.go.jp/security/guide/sme/ug65p90000019cbk-att/sme_guideline_v4.0_app_8.pdf">IPAのインシデント対応の手引き（PDF）</a></footer>
 </body>

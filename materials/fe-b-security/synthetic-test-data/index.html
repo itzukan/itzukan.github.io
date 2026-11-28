@@ -14,6 +14,7 @@
   <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/material-feedback.js"></script>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -52,6 +53,33 @@
         <output aria-live="polite"></output>
       </form>
     </section>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/fe-b-security/redact-document/" data-analytics-event="material_click" data-material-id="fe-b-security-redact-document" data-click-location="related_lessons">
+            <strong>社外に出すPDFから隠した情報を除く</strong>
+            <span>見た目の黒塗りと、PDFから元の文字を削除する操作の違いを学びます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/fe-b-security/public-share-incident/" data-analytics-event="material_click" data-material-id="fe-b-security-public-share-incident" data-click-location="related_lessons">
+            <strong>公開になったクラウドフォルダを初動で止める</strong>
+            <span>閲覧できる状態を止める操作と、公開中の影響を調べる操作に分けます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/fe-b-security/share-permissions/" data-analytics-event="material_click" data-material-id="fe-b-security-share-permissions" data-click-location="related_lessons">
+            <strong>社外に資料を共有するときの権限</strong>
+            <span>必要な相手と操作を整理して、クラウド上の資料を共有する範囲を決めます。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/categories/#fe-b-security">情報セキュリティの教材一覧</a> · <a href="https://www.ipa.go.jp/security/guide/sme/about.html">IPAの情報セキュリティ対策ガイドライン</a></footer>
 </body>

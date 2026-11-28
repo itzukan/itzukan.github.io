@@ -14,6 +14,7 @@
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/material-feedback.js"></script>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -52,6 +53,33 @@
     </section>
     <p><a href="/materials/topics/#cloud">クラウド・AWSのほかの教材を見る →</a></p>
   <p class="related-instagram">🎬 <a href="https://www.instagram.com/reel/DeL3WfvDj0u/" target="_blank" rel="noopener noreferrer" data-analytics-event="related_reel_click" data-material-id="topic-iam-sts-sigv4">関連するInstagram解説を見る ↗</a></p>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/topics/aws-sts/" data-analytics-event="material_click" data-material-id="topic-aws-sts" data-click-location="related_lessons">
+            <strong>AWS STSの一時認証情報</strong>
+            <span>出荷ジョブにS3を読む権限を短時間だけ渡します。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/iam-roles-anywhere/" data-analytics-event="material_click" data-material-id="topic-iam-roles-anywhere" data-click-location="related_lessons">
+            <strong>IAM Roles Anywhereとは？</strong>
+            <span>AWS外の社内サーバーへ、固定のAWS認証情報を配らずにS3の権限を渡す例です。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/api-keys-vs-iam-roles/" data-analytics-event="material_click" data-material-id="topic-api-keys-vs-iam-roles" data-click-location="related_lessons">
+            <strong>APIキーとIAMロールの違い</strong>
+            <span>外部の商品APIとAWSのS3に、それぞれどの認証情報を使うか考えます。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/">無料教材一覧</a> · <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp.html">AWS IAMの一時認証情報</a></footer>
 </body>

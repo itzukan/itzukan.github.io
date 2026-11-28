@@ -48,7 +48,7 @@ class LessonHeadings(HTMLParser):
         self.current = None
 
     def handle_starttag(self, tag, attrs):
-        if tag in self.tags:
+        if tag in self.tags and dict(attrs).get("id") != "related-title":
             self.current = []
 
     def handle_data(self, text):

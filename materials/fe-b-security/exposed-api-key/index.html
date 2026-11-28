@@ -14,6 +14,7 @@
   <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/material-feedback.js"></script>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -52,6 +53,33 @@
         <output aria-live="polite"></output>
       </form>
     </section>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/topics/api-keys-vs-iam-roles/" data-analytics-event="material_click" data-material-id="topic-api-keys-vs-iam-roles" data-click-location="related_lessons">
+            <strong>APIキーとIAMロールの違い</strong>
+            <span>外部の商品APIとAWSのS3に、それぞれどの認証情報を使うか考えます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/api-key/">
+            <strong>はじめてのAPIキー</strong>
+            <span>APIキーを付けて商品一覧を取得する無料演習。APIキーがないときの401と、あるときの200を見比べます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/api-authentication/" data-analytics-event="material_click" data-material-id="topic-api-authentication" data-click-location="related_lessons">
+            <strong>API認証で呼び出し元を確認する</strong>
+            <span>配送先を返すAPIが、誰からの要求か、どの注文を読めるかを判断します。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/categories/#fe-b-security">情報セキュリティの教材一覧</a> · <a href="https://docs.github.com/en/code-security/tutorials/remediate-leaked-secrets/remediating-a-leaked-secret">GitHub公式の漏えい時の対応</a></footer>
 </body>

@@ -14,6 +14,7 @@
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/material-feedback.js"></script>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -52,6 +53,33 @@
     </section>
     <p><a href="/materials/topics/#security">セキュリティ・認証のほかの教材を見る →</a></p>
   <p class="related-instagram">🎬 <a href="https://www.instagram.com/reel/Ddin-uPk_bl/" target="_blank" rel="noopener noreferrer" data-analytics-event="related_reel_click" data-material-id="topic-sso-saml-oauth">関連するInstagram解説を見る ↗</a></p>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/topics/identity-provider/" data-analytics-event="material_click" data-material-id="topic-identity-provider" data-click-location="related_lessons">
+            <strong>IdPとは？複数サービスの本人確認を担う</strong>
+            <span>勤怠と経費のアプリが、共通のログインサービスを使います。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/oauth-and-oidc/" data-analytics-event="material_click" data-material-id="topic-oauth-and-oidc" data-click-location="related_lessons">
+            <strong>OAuthとOpenID Connectの違い</strong>
+            <span>予定表アプリに空き時間を読ませることと、誰がログインしたかを区別します。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/authentication-boundary/" data-analytics-event="material_click" data-material-id="topic-authentication-boundary" data-click-location="related_lessons">
+            <strong>認証境界とは？APIの呼び出し元の確認</strong>
+            <span>社内システムから届いた注文要求が、許可されたサービスから来たか確かめます。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/">無料教材一覧</a> · <a href="https://openid.net/developers/specs/">OpenID Foundationの仕様一覧</a></footer>
 </body>

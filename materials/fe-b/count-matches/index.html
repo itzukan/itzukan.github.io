@@ -14,6 +14,7 @@
   <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/material-feedback.js"></script>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -64,6 +65,33 @@ endfor</pre>
         <output aria-live="polite"></output>
       </form>
     </section>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/fe-b/loop-sum/" data-analytics-event="material_click" data-material-id="fe-b-loop-sum" data-click-location="related_lessons">
+            <strong>ループと条件分岐で合計する</strong>
+            <span>配列を先頭からたどり、条件に合う値だけを足します。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/fe-b/sentinel-sum/" data-analytics-event="material_click" data-material-id="fe-b-sentinel-sum" data-click-location="related_lessons">
+            <strong>目印の値まで配列を読み取る</strong>
+            <span>配列の末尾まで読む代わりに、終了の目印に出会った時点で止めます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/fe-b/adjacent-rise/" data-analytics-event="material_click" data-material-id="fe-b-adjacent-rise" data-click-location="related_lessons">
+            <strong>隣り合う値の増加を数える</strong>
+            <span>1つ前の要素と比べて、大きくなった回数を数えます。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/categories/#fe-b">科目Bの教材一覧</a> · <a href="https://www.ipa.go.jp/shiken/syllabus/henkou/2022/gmcbt80000007cfs-att/fe_kamoku_b_set_sample_qs.pdf">IPAの擬似言語の記述形式（PDF）</a></footer>
 </body>

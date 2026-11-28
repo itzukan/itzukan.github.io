@@ -14,6 +14,7 @@
   <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/material-feedback.js"></script>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -65,6 +66,33 @@ endfor</pre>
         <output aria-live="polite"></output>
       </form>
     </section>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/fe-b/shift-right/" data-analytics-event="material_click" data-material-id="fe-b-shift-right" data-click-location="related_lessons">
+            <strong>配列の値を後ろからずらす</strong>
+            <span>同じ配列を読み書きするので、まだ使う値を上書きしない順番が重要です。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/fe-b/merge-heads/" data-analytics-event="material_click" data-material-id="fe-b-merge-heads" data-click-location="related_lessons">
+            <strong>整列した2つの配列から小さい値を順に取る</strong>
+            <span>2つの配列の未処理位置を別々に持ち、選んだ側だけを次に進めます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/fe-b/reverse-copy/" data-analytics-event="material_click" data-material-id="fe-b-reverse-copy" data-click-location="related_lessons">
+            <strong>配列を逆順にコピーする</strong>
+            <span>書く位置が先頭に近いほど、読む位置は元の配列の末尾に近くなります。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/categories/#fe-b">科目Bの教材一覧</a> · <a href="https://www.ipa.go.jp/shiken/syllabus/henkou/2022/gmcbt80000007cfs-att/fe_kamoku_b_set_sample_qs.pdf">IPAの擬似言語の記述形式（PDF）</a></footer>
 </body>

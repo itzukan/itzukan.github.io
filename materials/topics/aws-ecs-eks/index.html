@@ -14,6 +14,7 @@
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/material-feedback.js"></script>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -52,6 +53,33 @@
     </section>
     <p><a href="/materials/topics/#cloud">クラウド・AWSのほかの教材を見る →</a></p>
   <p class="related-instagram">🎬 <a href="https://www.instagram.com/reel/Dd3UVHxARzg/" target="_blank" rel="noopener noreferrer" data-analytics-event="related_reel_click" data-material-id="topic-aws-ecs-eks">関連するInstagram解説を見る ↗</a></p>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/topics/lambda-or-containers/" data-analytics-event="material_click" data-material-id="topic-lambda-or-containers" data-click-location="related_lessons">
+            <strong>APIをLambdaとコンテナのどちらで動かす？</strong>
+            <span>注文APIにアクセスが集中する時間帯と、処理時間の条件を見ます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/when-to-use-eks/" data-analytics-event="material_click" data-material-id="topic-when-to-use-eks" data-click-location="related_lessons">
+            <strong>ECSからEKSを検討する条件</strong>
+            <span>小さなサービスが増えたとき、コンテナ管理を切り替える価値を考えます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/aws-cross-region/" data-analytics-event="material_click" data-material-id="topic-aws-cross-region" data-click-location="related_lessons">
+            <strong>AWSでリージョンをまたぐときの確認</strong>
+            <span>東京のAPIから別地域のサービスを呼ぶ設計を考えます。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/">無料教材一覧</a> · <a href="https://docs.aws.amazon.com/eks/latest/userguide/what-is-eks.html">AWSのEKS公式ガイド</a></footer>
 </body>

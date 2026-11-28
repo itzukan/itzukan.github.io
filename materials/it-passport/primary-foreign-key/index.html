@@ -44,7 +44,8 @@
     }
     @media(max-width:360px){.meanings{grid-template-columns:1fr}}
   </style>
-<link rel="stylesheet" href="/assets/lesson-search-link.css?v=3"><script defer src="/assets/materials-search.js?v=6"></script></head>
+<link rel="stylesheet" href="/assets/lesson-search-link.css?v=3"><script defer src="/assets/materials-search.js?v=6"></script>  <link rel="stylesheet" href="/assets/related-materials.css">
+</head>
 <body>
   <header class="wrap">
     <a href="/materials/">IT図鑑トップ</a> <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
@@ -104,6 +105,33 @@
       <p>SQLで検索・結合・集計を練習することもできます。</p>
       <a class="button" href="/materials/sql/training-demo/" data-analytics-event="material_click" data-material-id="sql-demo" data-click-location="it_passport_keys">SQLを無料で3問試す →</a>
     </section>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/it-passport/normalization/" data-analytics-event="material_click" data-material-id="it-passport-normalization" data-click-location="related_lessons">
+            <strong>データベースの正規化とは？</strong>
+            <span>データベースの正規化はなぜ必要？ 注文表と商品表を使って、重複や更新漏れを減らす仕組みを図解と確認問題で学びます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/fe/left-join/" data-analytics-event="material_click" data-material-id="fe-left-join" data-click-location="related_lessons">
+            <strong>LEFT JOINで残る行</strong>
+            <span>顧客一覧から、注文した人も注文がない人も含めて確認したいときに、LEFT JOINを使えます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/sql/index-search-update/" data-analytics-event="material_click" data-material-id="sql-index-search-update" data-click-location="related_lessons">
+            <strong>インデックスとは？検索と更新のトレードオフ</strong>
+            <span>5万件の注文から同じ顧客の注文履歴を探し、インデックスのあり・なしを比べます。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/fe/practice/">基本情報道場</a> · <a href="/materials/">無料教材一覧</a><p class="note">出題範囲の参考：<a href="https://www.ipa.go.jp/shiken/syllabus/gaiyou.html">IPAのシラバス（データベース設計）</a></p></footer>
 </body>

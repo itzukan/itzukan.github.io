@@ -14,6 +14,7 @@
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/material-feedback.js"></script>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -52,6 +53,33 @@
     </section>
     <p><a href="/materials/topics/#security">セキュリティ・認証のほかの教材を見る →</a></p>
   <p class="related-instagram">🎬 <a href="https://www.instagram.com/reel/De7_lDwCu_R/" target="_blank" rel="noopener noreferrer" data-analytics-event="related_reel_click" data-material-id="topic-zero-trust">関連するInstagram解説を見る ↗</a></p>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/fe-b-security/shared-admin-audit/" data-analytics-event="material_click" data-material-id="fe-b-security-shared-admin-audit" data-click-location="related_lessons">
+            <strong>管理画面の操作履歴から担当者を特定する</strong>
+            <span>操作記録とアカウントの使い方を見比べて、誰が何をしたか追えるようにします。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/fe-b-security/session-revoke/" data-analytics-event="material_click" data-material-id="fe-b-security-session-revoke" data-click-location="related_lessons">
+            <strong>アカウント停止後も残るログインを止める</strong>
+            <span>新規ログインを止める操作と、ログイン済みの状態を終了する操作を区別します。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/fe-b-security/offboarding-access/" data-analytics-event="material_click" data-material-id="fe-b-security-offboarding-access" data-click-location="related_lessons">
+            <strong>契約終了時にアクセス権を見直す</strong>
+            <span>退場する担当者のアクセスを止めつつ、他の担当者の業務を続けられるようにします。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/">無料教材一覧</a> · <a href="https://csrc.nist.gov/pubs/sp/800/207/final">NIST SP 800-207</a></footer>
 </body>

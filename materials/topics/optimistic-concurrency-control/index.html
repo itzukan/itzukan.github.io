@@ -14,6 +14,7 @@
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/material-feedback.js"></script>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -52,6 +53,33 @@
     </section>
     <p><a href="/materials/topics/#data">データベース・分析のほかの教材を見る →</a></p>
   <p class="related-instagram">🎬 <a href="https://www.instagram.com/reel/DdYhtIOjAr4/" target="_blank" rel="noopener noreferrer" data-analytics-event="related_reel_click" data-material-id="topic-optimistic-concurrency-control">関連するInstagram解説を見る ↗</a></p>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/sql/index-search-update/" data-analytics-event="material_click" data-material-id="sql-index-search-update" data-click-location="related_lessons">
+            <strong>インデックスとは？検索と更新のトレードオフ</strong>
+            <span>5万件の注文から同じ顧客の注文履歴を探し、インデックスのあり・なしを比べます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/database-split/" data-analytics-event="material_click" data-material-id="topic-database-split" data-click-location="related_lessons">
+            <strong>DBを分けるべきタイミング</strong>
+            <span>商品閲覧が遅くなった。注文DBを分ける前に、待ち時間の原因を調べます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/fe/left-join/" data-analytics-event="material_click" data-material-id="fe-left-join" data-click-location="related_lessons">
+            <strong>LEFT JOINで残る行</strong>
+            <span>顧客一覧から、注文した人も注文がない人も含めて確認したいときに、LEFT JOINを使えます。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/">無料教材一覧</a> · <a href="https://learn.microsoft.com/en-us/ef/core/saving/concurrency">Microsoftの同時実行制御の解説</a></footer>
 </body>

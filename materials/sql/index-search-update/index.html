@@ -104,6 +104,7 @@
       #index-example-sql .index-sql-comment { color: #385b39; }
     }
   </style>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body data-material-id="sql-index-search-update">
   <header class="wrap">
@@ -287,6 +288,33 @@
 <p class="note">参考資料 <a href="https://www.postgresql.org/docs/current/using-explain.html">PostgreSQLの実行計画</a>・<a href="https://www.postgresql.org/docs/current/btree.html#BTREE-STRUCTURE">B-tree索引と注文表の行への参照</a></p>
 <nav class="chapter-nav" aria-label="章の移動"><a href="/materials/sql/">← 入門の目次</a></nav>
 </article>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/fe/left-join/" data-analytics-event="material_click" data-material-id="fe-left-join" data-click-location="related_lessons">
+            <strong>LEFT JOINで残る行</strong>
+            <span>顧客一覧から、注文した人も注文がない人も含めて確認したいときに、LEFT JOINを使えます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/optimistic-concurrency-control/" data-analytics-event="material_click" data-material-id="topic-optimistic-concurrency-control" data-click-location="related_lessons">
+            <strong>OCCとは？楽観的同時実行制御で上書きを防ぐ</strong>
+            <span>商品名を2人が同時に編集したとき、後から保存した人が先の変更を消さないようにします。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/it-passport/normalization/" data-analytics-event="material_click" data-material-id="it-passport-normalization" data-click-location="related_lessons">
+            <strong>データベースの正規化とは？</strong>
+            <span>データベースの正規化はなぜ必要？ 注文表と商品表を使って、重複や更新漏れを減らす仕組みを図解と確認問題で学びます。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/">無料教材一覧</a></footer>
 <script>

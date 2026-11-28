@@ -14,6 +14,7 @@
   <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/material-feedback.js"></script>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -52,6 +53,33 @@
         <output aria-live="polite"></output>
       </form>
     </section>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/fe-b-security/log-timezones/" data-analytics-event="material_click" data-material-id="fe-b-security-log-timezones" data-click-location="related_lessons">
+            <strong>異なる時刻表記のログを照合する</strong>
+            <span>別々のシステムのログを、同じ時間の基準に揃えてから読みます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/fe-b-security/shared-admin-audit/" data-analytics-event="material_click" data-material-id="fe-b-security-shared-admin-audit" data-click-location="related_lessons">
+            <strong>管理画面の操作履歴から担当者を特定する</strong>
+            <span>操作記録とアカウントの使い方を見比べて、誰が何をしたか追えるようにします。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/detect-unusual-admin/" data-analytics-event="material_click" data-material-id="topic-detect-unusual-admin" data-click-location="related_lessons">
+            <strong>不正アクセスに気づく仕組み</strong>
+            <span>デジタル庁の公表事例を入口に、管理者追加の記録をどう調べるか学びます。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/categories/#fe-b-security">情報セキュリティの教材一覧</a> · <a href="https://www.ipa.go.jp/security/guide/sme/about.html">IPAの情報セキュリティ対策ガイドライン</a></footer>
 </body>

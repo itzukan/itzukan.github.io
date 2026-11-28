@@ -14,6 +14,7 @@
   <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/material-feedback.js"></script>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -52,6 +53,33 @@
         <output aria-live="polite"></output>
       </form>
     </section>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/topics/public-wifi-and-https/" data-analytics-event="material_click" data-material-id="topic-public-wifi-and-https" data-click-location="related_lessons">
+            <strong>フリーWi-Fi・WPA2・WPA3・HTTPSの違い</strong>
+            <span>カフェのWi-FiからWebサイトを開くとき、どの範囲を保護するか見ます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/zero-trust/" data-analytics-event="material_click" data-material-id="topic-zero-trust" data-click-location="related_lessons">
+            <strong>ゼロトラストとは？社内でも利用条件を確認する</strong>
+            <span>社内の端末から顧客資料を開く前に、利用者と権限を確認します。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/telework/meeting-audio/">
+            <strong>Web会議で自分の声だけ途切れるのはなぜ？</strong>
+            <span>同僚の声は聞こえるのに、「あなたの声が途切れる」と言われた。聞くときと話すときで、音声の流れが逆になります。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/categories/#fe-b-security">情報セキュリティの教材一覧</a> · <a href="https://www.ipa.go.jp/security/guide/sme/about.html">IPAの情報セキュリティ対策ガイドライン</a></footer>
 </body>

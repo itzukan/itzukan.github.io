@@ -14,6 +14,7 @@
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/material-feedback.js"></script>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -52,6 +53,33 @@
     </section>
     <p><a href="/materials/topics/#cloud">クラウド・AWSのほかの教材を見る →</a></p>
   <p class="related-instagram">🎬 <a href="https://www.instagram.com/reel/DeBSgh4DpgZ/" target="_blank" rel="noopener noreferrer" data-analytics-event="related_reel_click" data-material-id="topic-sqs-and-kinesis">関連するInstagram解説を見る ↗</a></p>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/topics/sync-and-async-api/" data-analytics-event="material_click" data-material-id="topic-sync-and-async-api" data-click-location="related_lessons">
+            <strong>同期APIと非同期APIの違い</strong>
+            <span>大きな売上レポートを作るとき、呼び出し側がいつ結果を受け取るかを考えます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/kafka-rabbitmq-sqs/" data-analytics-event="material_click" data-material-id="topic-kafka-rabbitmq-sqs" data-click-location="related_lessons">
+            <strong>Kafka・RabbitMQ・SQSの違い</strong>
+            <span>注文イベントを後から分析する場合と、発送ジョブを一度処理する場合を比べます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/kinesis-and-firehose/" data-analytics-event="material_click" data-material-id="topic-kinesis-and-firehose" data-click-location="related_lessons">
+            <strong>Kinesis Data StreamsとAmazon Data Firehose</strong>
+            <span>注文イベントを自由に処理する場合と、S3にまとめて配信する場合を比べます。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/">無料教材一覧</a> · <a href="https://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/welcome.html">AWS SQSの公式ガイド</a></footer>
 </body>

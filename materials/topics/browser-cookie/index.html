@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cookieとは？ページを移動してもログインが続く理由 | IT図鑑</title>
+  <meta name="description" content="ログイン後にページを移動しても、なぜログインしたまま？ ブラウザーとサーバーがCookieをやり取りする様子を図とミニ演習で学びます。">
+  <link rel="canonical" href="https://free.itzukan.com/materials/topics/browser-cookie/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/it-passport-lesson.css">
+  <link rel="stylesheet" href="/assets/lesson-search-link.css?v=3">
+  <link rel="stylesheet" href="./cookie.css">
+  <link rel="stylesheet" href="/assets/related-materials.css">
+  <script defer src="/assets/materials-search.js?v=7"></script>
+  <script defer src="/assets/analytics.js"></script>
+  <script defer src="./cookie.js"></script>
+  <script defer src="/assets/material-feedback.js"></script>
+</head>
+<body data-material-id="web-browser-cookie">
+  <header class="wrap">
+    <a href="/materials/">IT図鑑トップ</a>
+    <a class="lesson-search-link" href="/materials/#search-materials">教材を検索</a>
+  </header>
+  <main class="wrap" data-feedback-material="web-browser-cookie">
+    <p class="topic">Web・開発</p>
+    <h1>Cookieとは？<br>ページを移動してもログインが続く理由</h1>
+    <p class="lead">ネットショップでログインしたあと、注文履歴を開くたびにパスワードを入れ直さずに済むのはなぜ？</p>
+
+    <section class="panel" aria-labelledby="flow-title">
+      <h2 id="flow-title">ブラウザーとサーバーのやり取り</h2>
+      <ol class="cookie-flow">
+        <li>
+          <h3>① ログインしたとき</h3>
+          <div class="cookie-route">
+            <div class="cookie-node"><span aria-hidden="true">💻</span><strong>ブラウザー</strong><small>Cookieを受け取って保存</small></div>
+            <div class="cookie-transfer"><span>Cookieを<br>渡す</span><span class="cookie-arrow left" aria-hidden="true"></span></div>
+            <div class="cookie-node"><span aria-hidden="true">🖥️</span><strong>サーバー</strong><small>ログイン確認後に発行</small></div>
+          </div>
+        </li>
+        <li>
+          <h3>② 注文履歴を開いたとき</h3>
+          <div class="cookie-route">
+            <div class="cookie-node"><span aria-hidden="true">💻</span><strong>ブラウザー</strong><small>注文履歴をリクエスト</small></div>
+            <div class="cookie-transfer"><span>Cookieを<br>送る</span><span class="cookie-arrow right" aria-hidden="true"></span></div>
+            <div class="cookie-node"><span aria-hidden="true">🖥️</span><strong>サーバー</strong><small>照合できれば履歴を返す</small></div>
+          </div>
+        </li>
+      </ol>
+      <p class="callout"><strong>Cookie（クッキー）</strong>はブラウザーが保存する小さなデータです。この例では、サーバーがログイン状態を確かめるための番号が入っています。</p>
+    </section>
+
+    <section class="panel" aria-labelledby="try-title">
+      <h2 id="try-title">注文履歴を開いてみよう</h2>
+      <p>ログイン済みのネットショップで、Cookieが送られる場合と送られない場合を比べます。</p>
+      <div class="cookie-demo" id="cookie-demo" hidden>
+        <div class="cookie-actions" role="group" aria-label="Cookie付き・Cookieなしのリクエスト">
+          <button type="button" aria-pressed="false" data-cookie-mode="with">Cookieを付けて開く</button>
+          <button type="button" aria-pressed="false" data-cookie-mode="without">Cookieなしで開く</button>
+        </div>
+        <div class="cookie-window" aria-label="ネットショップの画面例">
+          <div class="cookie-window-bar"><span aria-hidden="true">● ● ●</span> ネットショップ（見本）</div>
+          <div class="cookie-window-body" role="status">
+            <strong id="outcome">注文履歴を開いてください</strong>
+            <p id="explanation"></p>
+          </div>
+        </div>
+        <p class="note">「Cookieなしで開く」は、ログインに必要なCookieがサーバーに届かない場合の再現です。</p>
+      </div>
+      <noscript><p>Cookieが送られて照合できると注文履歴が開きます。Cookieがないとログイン画面に戻ります。</p></noscript>
+    </section>
+
+    <section class="panel" aria-labelledby="reject-title">
+      <h2 id="reject-title">「Cookieを拒否」してもログインできる？</h2>
+      <ul class="cards">
+        <li><strong>サイトのバナーで任意のCookieを拒否</strong>広告やアクセス解析など、拒否の対象になっているCookieが止まります。ログインに必要なCookieが使えれば、注文履歴も開けます。</li>
+        <li><strong>ブラウザーでそのサイトのCookieをすべてブロック</strong>ログインに必要なCookieも使えなくなり、注文履歴が開けない場合があります。</li>
+      </ul>
+      <p class="note">バナーで何を拒否できるかはサイトごとに異なります。 <a href="https://support.google.com/chrome/answer/95647?hl=ja">ChromeのCookie設定</a></p>
+    </section>
+
+    <section class="panel" aria-labelledby="takeaway-title">
+      <h2 id="takeaway-title">💡 まとめ</h2>
+      <p>有効なCookieが送られると、サーバーが前のログインと結び付けられます。サイトのCookieを消したあとにログインし直すことがあるのは、このためです。</p>
+      <p>Cookieには、買い物かごや表示設定を覚える用途、閲覧状況を計測する用途もあります。</p>
+      <p>🎬 <a href="https://www.instagram.com/reel/DgLxMz9uCpW/" target="_blank" rel="noopener noreferrer" data-analytics-event="related_reel_click" data-material-id="web-browser-cookie">Instagramで「Cookieとセッション」の解説を見る ↗</a></p>
+      <p class="note">参考 <a href="https://www.rfc-editor.org/rfc/rfc6265.html#section-3.1">RFC 6265のCookieの送受信例</a></p>
+    </section>
+
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/security/#chapter-6" data-analytics-event="material_click" data-material-id="security-intro" data-click-location="related_lessons">
+            <strong>Cookieとセッション</strong>
+            <span>ログイン用のCookieを守る設定を、図で学びます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/jwt-and-session/" data-analytics-event="material_click" data-material-id="topic-jwt-and-session" data-click-location="related_lessons">
+            <strong>JWTとサーバーセッションの違い</strong>
+            <span>ログイン状態をどう確かめるか、2つの方式を比べます。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/fe-b-security/session-revoke/" data-analytics-event="material_click" data-material-id="fe-b-security-session-revoke" data-click-location="related_lessons">
+            <strong>アカウント停止後も残るログインを止める</strong>
+            <span>ログイン済みの端末からのアクセスをどう止めるか、問題で考えます。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+  </main>
+  <footer class="wrap"><a href="/materials/categories/#web">Web・開発の教材</a> ・ <a href="/materials/">無料教材トップ</a></footer>
+</body>
+</html>

@@ -14,6 +14,7 @@
   <script defer src="/assets/it-passport-quiz.js?v=2"></script>
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/material-feedback.js"></script>
+  <link rel="stylesheet" href="/assets/related-materials.css">
 </head>
 <body>
   <header class="wrap">
@@ -52,6 +53,33 @@
         <output aria-live="polite"></output>
       </form>
     </section>
+
+    <!-- related-materials:start -->
+    <section class="related-materials" aria-labelledby="related-title">
+      <h2 id="related-title">関連教材</h2>
+      <p class="related-swipe">横にスワイプして見る →</p>
+      <ul class="related-lessons">
+        <li>
+          <a href="/materials/topics/https-and-fake-sites/" data-analytics-event="material_click" data-material-id="topic-https-and-fake-sites" data-click-location="related_lessons">
+            <strong>偽サイトでもHTTPSは使える？</strong>
+            <span>注文確認メールのリンクが、本物そっくりの画面を開く場面です。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/mutual-tls/" data-analytics-event="material_click" data-material-id="topic-mutual-tls" data-click-location="related_lessons">
+            <strong>相互TLS（mTLS）とは？</strong>
+            <span>配送サービスが注文APIに接続し、双方が相手を確認する場面です。</span>
+          </a>
+        </li>
+        <li>
+          <a href="/materials/topics/public-wifi-and-https/" data-analytics-event="material_click" data-material-id="topic-public-wifi-and-https" data-click-location="related_lessons">
+            <strong>フリーWi-Fi・WPA2・WPA3・HTTPSの違い</strong>
+            <span>カフェのWi-FiからWebサイトを開くとき、どの範囲を保護するか見ます。</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+    <!-- related-materials:end -->
   </main>
   <footer class="wrap"><a href="/materials/categories/#fe-b-security">情報セキュリティの教材一覧</a> · <a href="https://www.ipa.go.jp/security/guide/sme/about.html">IPAの情報セキュリティ対策ガイドライン</a></footer>
 </body>

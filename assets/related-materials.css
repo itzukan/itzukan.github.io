@@ -1,0 +1,59 @@
+.related-materials {
+  box-sizing: border-box;
+  min-width: 0;
+  margin-block: 20px;
+  padding: clamp(12px, 3vw, 22px);
+  border: 1px solid #344a66;
+  border-radius: 14px;
+  background: #132036;
+  color: #eef5ff;
+}
+.related-materials h2 { margin: 0; font-size: 1.22rem; line-height: 1.4; }
+.related-materials .related-swipe { display: none; margin: 8px 0 0; color: #c1d0e4; font-size: .85rem; }
+.related-materials .related-lessons {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 4px;
+}
+.related-materials .related-lessons li { display: flex; min-width: 0; margin: 0; padding: 0; }
+.related-materials .related-lessons a {
+  box-sizing: border-box;
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #496886;
+  border-radius: 9px;
+  background: #0e192c;
+  color: #8beaf6;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+.related-materials .related-lessons a:hover { border-color: #8beaf6; }
+.related-materials .related-lessons a:focus-visible { outline: 2px solid #fbd38d; outline-offset: 2px; }
+.related-materials .related-lessons a:hover strong,
+.related-materials .related-lessons a:focus-visible strong { text-decoration: underline; }
+.related-materials .related-lessons a span { color: #c1d0e4; font-size: .875rem; }
+
+@media (max-width: 640px) {
+  .related-materials .related-swipe { display: block; }
+  .related-materials .related-lessons {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 84%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 4px;
+    scrollbar-color: #65849f #0e192c;
+    overscroll-behavior-inline: contain;
+  }
+  .related-materials .related-lessons li { scroll-snap-align: start; }
+}
+
+@media print {
+  .related-materials { display: none; }
+}
