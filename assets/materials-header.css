@@ -109,48 +109,45 @@
   .category-menu li a:hover { background: #243650; }
   .materials-header nav .question-series-link { color: #8beaf6; font-weight: 800; }
 .material-pin-sync {
-  margin: 0 0 1.25rem;
-  border: 1px solid #30415c;
-  border-radius: 14px;
-  background: #111e32;
+  margin: 0;
 }
 .material-pin-sync summary {
   display: flex;
   align-items: center;
-  gap: .55rem;
-  min-height: 48px;
-  padding: .55rem .85rem;
-  border-radius: inherit;
-  font-size: .9rem;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 .65rem;
+  border: 1px solid #3c5672;
+  border-radius: 10px;
+  background: #142239;
+  color: #e2e8f0;
+  font-size: .875rem;
   font-weight: 700;
   line-height: 1.4;
   list-style: none;
   cursor: pointer;
 }
 .material-pin-sync summary::-webkit-details-marker { display: none; }
-.material-pin-sync summary::after {
-  content: '';
-  width: .42rem;
-  height: .42rem;
-  margin-inline-start: auto;
-  margin-inline-end: .2rem;
-  flex: none;
-  border: solid #8beaf6;
-  border-width: 0 2px 2px 0;
-  transform: rotate(45deg);
+.material-pin-sync[data-signed-in] summary {
+  width: 44px;
+  padding: 0;
+  border-radius: 50%;
+  border-color: #3d707c;
+  background: #183e47;
 }
-.material-pin-sync[open] summary::after { transform: rotate(225deg); }
-.material-pin-sync-icon, .material-pin-sync-state { flex: none; }
-.material-pin-sync-state {
-  padding: .12rem .46rem;
-  border-radius: 999px;
-  background: #243650;
-  color: #cbd5e1;
-  font-size: .72rem;
-  white-space: nowrap;
+.material-pin-sync[data-signed-in] .material-pin-login-label { display: none; }
+.material-pin-sync-body {
+  position: absolute;
+  z-index: 15;
+  inset: calc(100% + .5rem) 0 auto auto;
+  width: min(20rem, calc(100vw - 2.5rem));
+  padding: .75rem;
+  border: 1px solid #3c5672;
+  border-radius: 12px;
+  background: #111e32;
+  box-shadow: 0 10px 24px #0007;
 }
-.material-pin-sync[data-signed-in] .material-pin-sync-state { background: #183e47; color: #a5f3fc; }
-.material-pin-sync-body { padding: 0 .85rem .8rem; }
 .material-pin-sync-body p { margin: .2rem 0 .65rem; color: #cbd5e1; font-size: .875rem; }
 .material-pin-sync-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .55rem .8rem; }
 .material-pin-sync-actions button {
@@ -177,7 +174,7 @@
 .materials-header-tools, #mobile-materials-pins[hidden] { display: none; }
 .material-pin-sync-icon {
   position: relative;
-  display: inline-block;
+  display: none;
   width: 18px;
   height: 18px;
   background: radial-gradient(circle at 50% 24%, currentColor 3px, transparent 3.5px);
@@ -190,53 +187,16 @@
   border-radius: 9px 9px 3px 3px;
   background: currentColor;
 }
+.material-pin-sync[data-signed-in] .material-pin-sync-icon { display: inline-block; }
 @media (min-width: 681px) {
   .materials-header[data-mobile-header] > nav { flex-basis: 100%; }
-  .materials-header > .material-pin-sync {
-    position: relative;
-    margin: 0 0 0 auto;
-    padding: 0;
-    border: 0;
-    background: transparent;
-  }
-  .materials-header > .material-pin-sync summary {
-    justify-content: center;
-    min-height: 44px;
-    padding: .5rem .85rem;
-    border: 1px solid #3c5672;
-    border-radius: 10px;
-    background: #142239;
-    color: #e2e8f0;
-  }
-  .materials-header > .material-pin-sync summary::after,
-  .materials-header > .material-pin-sync .material-pin-sync-icon,
-  .materials-header > .material-pin-sync .material-pin-sync-state { display: none; }
-  .materials-header > .material-pin-sync[data-signed-in] summary {
-    width: 44px;
-    padding: 0;
-    border-radius: 50%;
-    border-color: #3d707c;
-    background: #183e47;
-  }
-  .materials-header > .material-pin-sync[data-signed-in] .material-pin-sync-icon { display: inline-block; }
-  .materials-header > .material-pin-sync[data-signed-in] [data-pin-title] { display: none; }
-  .materials-header > .material-pin-sync .material-pin-sync-body {
-    position: absolute;
-    z-index: 15;
-    inset: calc(100% + .5rem) 0 auto auto;
-    width: min(20rem, calc(100vw - 2.5rem));
-    padding: .75rem;
-    border: 1px solid #3c5672;
-    border-radius: 12px;
-    background: #111e32;
-    box-shadow: 0 10px 24px #0007;
-  }
+  .materials-header > .material-pin-sync { position: relative; margin-inline-start: auto; }
 }
 @media (max-width: 680px) {
-  .materials-header[data-mobile-header] { gap: .45rem .6rem; }
+  .materials-header[data-mobile-header] { position: relative; gap: .45rem .6rem; }
   .materials-header[data-mobile-header] .brand { white-space: nowrap; }
   .materials-header-tools { display: flex; gap: .25rem; }
-  .materials-header-tools button {
+  .materials-header-tools > button {
     display: grid;
     place-items: center;
     width: 44px;
@@ -248,8 +208,10 @@
     color: #d9e8f5;
     cursor: pointer;
   }
-  .materials-header-tools button[aria-expanded="true"] { background: #172940; border-color: #3c5672; color: #8beaf6; }
-  .materials-header-tools button:focus-visible { outline: 2px solid #8beaf6; outline-offset: 1px; }
+  .materials-header-tools > button[aria-expanded="true"] { background: #172940; border-color: #3c5672; color: #8beaf6; }
+  .materials-header-tools > button:focus-visible { outline: 2px solid #8beaf6; outline-offset: 1px; }
+  .materials-header-tools .material-pin-sync summary { width: 44px; padding: 0; font-size: .8rem; }
+  .materials-header-tools .material-pin-sync-body { width: min(20rem, 100%); }
   .header-dots {
     width: 4px;
     height: 4px;
@@ -305,7 +267,6 @@
   .materials-header[data-mobile-header] > nav { align-items: stretch; gap: 0; }
   .materials-header[data-mobile-header] > nav > * { flex-basis: 100%; }
   .materials-header[data-mobile-header] .category-menu ul { position: static; width: auto; max-width: none; box-shadow: none; }
-  .materials-header[data-mobile-header] .material-pin-sync { margin: .35rem 0 0; }
   #mobile-materials-pins h2 { margin: 0 0 .25rem; font-size: .95rem; }
   #mobile-materials-pins p { margin: .3rem 0; color: #cbd5e1; font-size: .85rem; }
   #mobile-materials-pins p:empty, #mobile-materials-pins ul:empty { display: none; }
@@ -313,6 +274,11 @@
   #mobile-materials-pins a { display: flex; align-items: center; min-height: 44px; }
   #mobile-materials-pins li a { border-bottom: 1px solid #30415c; text-decoration: none; }
   #mobile-materials-pins > a { color: #a5f3fc; font-size: .85rem; }
+}
+@media (max-width: 360px) {
+  .materials-header[data-mobile-header] { column-gap: .35rem; }
+  .materials-header[data-mobile-header] .brand { font-size: .85rem; letter-spacing: .02em; }
+  .materials-header-tools { gap: 0; }
 }
 .lesson-search-results {
   position: absolute;

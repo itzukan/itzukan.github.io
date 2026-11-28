@@ -141,11 +141,11 @@
   }
 
   function openFromLink() {
-    if (location.hash === '#search-materials') show(searchButton, true);
-    if (location.hash === '#material-pin-sync' && syncPanel) {
-      show(menuButton);
-      syncPanel.open = true;
+    if (location.hash === '#search-materials') {
+      if (syncPanel) syncPanel.open = false;
+      show(searchButton, true);
     }
+    if (location.hash === '#material-pin-sync' && syncPanel) syncPanel.open = true;
   }
 
   function layout() {
@@ -160,24 +160,29 @@
   }
 
   function placeAccount() {
-    syncPanel ??= header.querySelector('#material-pin-sync');
-    if (!syncPanel) return;
-    const parent = mobile.matches ? menu : header;
-    if (syncPanel.parentElement === parent) return;
-    if (mobile.matches) menu.append(syncPanel);
-    else menu.before(syncPanel);
-    if (location.hash === '#material-pin-sync') {
-      if (mobile.matches) show(menuButton);
-      syncPanel.open = true;
+    if (!syncPanel) {
+      syncPanel = header.querySelector('#material-pin-sync');
+      syncPanel?.addEventListener('toggle', () => {
+        if (syncPanel.open) show(null);
+      });
     }
+    if (!syncPanel) return;
+    const parent = mobile.matches ? tools : header;
+    if (syncPanel.parentElement === parent) return;
+    if (mobile.matches) tools.append(syncPanel);
+    else menu.before(syncPanel);
+    if (location.hash === '#material-pin-sync') syncPanel.open = true;
   }
 
   header.dataset.mobileHeader = '';
   for (const button of [menuButton, pinsButton, searchButton]) {
-    button.addEventListener('click', () => show(open === button ? null : button, true));
+    button.addEventListener('click', () => {
+      if (syncPanel) syncPanel.open = false;
+      show(open === button ? null : button, true);
+    });
   }
   document.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && !event.isComposing && !mobile.matches && syncPanel?.open && syncPanel.contains(event.target)) {
+    if (event.key === 'Escape' && !event.isComposing && syncPanel?.open && syncPanel.contains(event.target)) {
       syncPanel.open = false;
       syncPanel.querySelector('summary').focus();
       return;
@@ -188,7 +193,7 @@
     trigger.focus();
   });
   document.addEventListener('click', event => {
-    if (!mobile.matches && syncPanel?.open && !syncPanel.contains(event.target) && !event.target.closest('dialog')) syncPanel.open = false;
+    if (syncPanel?.open && !syncPanel.contains(event.target) && !event.target.closest('dialog')) syncPanel.open = false;
     if (open && open !== searchButton && !header.contains(event.target) && !event.target.closest('dialog')) show(null);
     if (open === pinsButton && managePins.contains(event.target) && location.pathname === '/materials/all/') show(null);
   });
