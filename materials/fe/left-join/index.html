@@ -14,6 +14,18 @@
   <script defer src="/assets/analytics.js"></script>
   <script defer src="/assets/material-feedback.js"></script>
   <link rel="stylesheet" href="/assets/related-materials.css">
+  <style>
+    .sql-trial-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      background: #8beaf6;
+      color: #0b1120;
+      font-weight: 800;
+    }
+  </style>
 <link rel="stylesheet" href="/assets/materials-header.css?v=7"><script defer src="/assets/materials-header.js?v=7"></script><script defer src="/assets/material-pin-sync.js?v=13"></script><script defer src="/assets/materials-search.js?v=8"></script></head>
 <body>
   <header data-library-header class="wrap">
@@ -59,6 +71,11 @@
         <button type="submit">答えを確認</button>
         <output aria-live="polite"></output>
       </form>
+    </section>
+    <section class="panel" aria-labelledby="left-join-trial">
+      <h2 id="left-join-trial">注文がない顧客をSQLで探してみよう</h2>
+      <p>顧客表と注文表をつなぎ、注文がない顧客だけを抽出します。ブラウザでSQLを書いて、答え合わせまでできます。</p>
+      <p><a class="sql-trial-link" href="/materials/sql/training-demo/?mission=11&amp;from=sql_intro_left_join" data-analytics-event="material_click" data-material-id="sql-demo" data-click-location="sql_intro_left_join">SQLを無料で3問試す →</a></p>
     </section>
     <p class="next-lesson"><a href="/materials/fe/practice/">基本情報道場でランダムに解く →</a></p>
 

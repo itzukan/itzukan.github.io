@@ -9,13 +9,14 @@
     utm_content: 'profile_link',
   };
   const tagged = Object.entries(campaign).every(([name, value]) => query.get(name) === value);
+  const fromLesson = ['sql_intro_group_by', 'sql_intro_left_join'].includes(query.get('from'));
   const storageKey = 'itzukan_sql_reel_trial';
   const qa = window.itzukanAnalyticsOptOut || query.get('utm_medium') === 'qa' ||
     query.get('utm_source') === 'itzukan_qa' || navigator.globalPrivacyControl || navigator.doNotTrack === '1';
   let active = tagged;
   try {
     if (tagged) sessionStorage.setItem(storageKey, String(Date.now()));
-    else if (query.has('utm_source') || query.has('utm_campaign') || query.get('from') === 'sql_intro_group_by') {
+    else if (query.has('utm_source') || query.has('utm_campaign') || fromLesson) {
       sessionStorage.removeItem(storageKey);
     }
     else active = Date.now() - Number(sessionStorage.getItem(storageKey)) < 30 * 60 * 1000;
