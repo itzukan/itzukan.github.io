@@ -9,6 +9,11 @@
         <span class="material-pin-account-initial" aria-hidden="true">?</span>
       </summary>
       <div class="material-pin-sync-body">
+        <div class="material-pin-account" data-sync-account hidden>
+          <span class="material-pin-account-label">ログイン中</span>
+          <p data-sync-email></p>
+          <a href="https://premium.itzukan.com/purchases">購入済み教材</a>
+        </div>
         <p role="status">PCとスマホで同じGoogleアカウントを使ってください。</p>
         <div class="material-pin-sync-actions">
           <button type="button" data-sync-login disabled>Googleでログイン</button>
@@ -19,6 +24,8 @@
       </div>
     </details>`;
   const panel = host?.querySelector('#material-pin-sync');
+  const account = panel?.querySelector('[data-sync-account]');
+  const email = panel?.querySelector('[data-sync-email]');
   const login = panel?.querySelector('[data-sync-login]');
   const logout = panel?.querySelector('[data-sync-logout]');
   const importPins = panel?.querySelector('[data-pin-import]');
@@ -30,6 +37,7 @@
     ? 'https://sync.itzukan.com/api/dojo-sync/' : '/api/dojo-sync/';
   let sessionKey = null;
   let accountInitial = null;
+  let accountEmail = null;
   let saved = null;
   let auth;
   let authConfig;
@@ -76,6 +84,8 @@
       panel.toggleAttribute('data-signed-in', !!sessionKey);
       summary.setAttribute('aria-label', sessionKey ? 'アカウント（ログイン中）' : 'ログイン');
       initial.textContent = accountInitial || '?';
+      account.hidden = !sessionKey;
+      email.textContent = sessionKey ? accountEmail || 'メールアドレスの表示には再ログインが必要です。' : '';
     }
     updatePremiumLinks();
     window.dispatchEvent(new Event('material-pins-sync-change'));
@@ -114,8 +124,9 @@
   panel?.addEventListener('toggle', prepareLogin);
 
   async function readAccount() {
+    accountEmail = null;
     try {
-      ({ sessionKey, accountInitial } = await request('session'));
+      ({ sessionKey, accountInitial, accountEmail = null } = await request('session'));
       saved = sessionKey ? await request('pins') : null;
       report(sessionKey ? 'このアカウントのピン留めを端末間で同期します。' : 'PCとスマホで同じGoogleアカウントを使ってください。');
     } catch {
@@ -147,7 +158,7 @@
         report('別の端末でも変更されました。最新の一覧で操作し直してください。');
       } catch (error) {
         if ([401, 409].includes(error.status)) {
-          sessionKey = accountInitial = null;
+          sessionKey = accountInitial = accountEmail = null;
           saved = null;
         }
         report('ピン留めを同期できませんでした。ページを開き直してください。');
@@ -177,7 +188,7 @@
   logout?.addEventListener('click', () => run(async () => {
     try {
       await request('logout', 'POST');
-      sessionKey = accountInitial = saved = null;
+      sessionKey = accountInitial = accountEmail = saved = null;
       window.dispatchEvent(new Event('free-account-change'));
       report('ログアウトしました。このブラウザーのピン留めを表示します。');
     } catch {

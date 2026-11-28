@@ -146,6 +146,18 @@
   box-shadow: 0 10px 24px #0007;
 }
 .material-pin-sync-body p { margin: .2rem 0 .65rem; color: #cbd5e1; font-size: .875rem; }
+.material-pin-account {
+  margin-bottom: .75rem;
+  padding-bottom: .65rem;
+  border-bottom: 1px solid #3c5672;
+}
+.material-pin-account-label { color: #b9c5d8; font-size: .75rem; }
+.material-pin-account [data-sync-email] {
+  color: #eef2f8;
+  font-size: .95rem;
+  overflow-wrap: anywhere;
+}
+.material-pin-account a { color: #a5f3fc; font-size: .9rem; }
 .material-pin-sync-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .55rem .8rem; }
 .material-pin-sync-actions button {
   min-height: 44px;
