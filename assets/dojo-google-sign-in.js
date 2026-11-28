@@ -6,7 +6,19 @@ import {
 
 let signIn;
 
-export function createGoogleSignIn({ authEmulator, apiKey, authDomain, projectId }) {
+export function createGoogleSignIn({ authEmulator, apiKey, authDomain, projectId, googleRedirectOrigin }) {
+  const ios = /iPhone|iPad|iPod/i.test(navigator.userAgent) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  if (ios && googleRedirectOrigin && !authEmulator) {
+    return Promise.resolve({
+      login() {
+        const url = new URL('/auth/google', googleRedirectOrigin);
+        url.searchParams.set('next', location.pathname + location.search + location.hash);
+        location.assign(url.href);
+        return new Promise(() => {});
+      },
+    });
+  }
   signIn ??= initialize({ authEmulator, apiKey, authDomain, projectId }).catch(error => {
     signIn = undefined;
     throw error;

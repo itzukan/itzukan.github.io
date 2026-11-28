@@ -222,7 +222,7 @@
         changed();
       }
       panel.hidden = false;
-      const { createGoogleSignIn } = await import('./dojo-google-sign-in.js?v=2');
+      const { createGoogleSignIn } = await import('./dojo-google-sign-in.js?v=3');
       auth = await createGoogleSignIn(config);
     } catch {
       if (!panel.hidden) status.textContent = 'Googleログインを読み込めませんでした。';

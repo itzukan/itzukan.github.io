@@ -101,7 +101,7 @@
     if (!panel?.open || !authConfig || sessionKey || auth || loadingAuth) return;
     loadingAuth = true;
     try {
-      const { createGoogleSignIn } = await import('/assets/dojo-google-sign-in.js?v=2');
+      const { createGoogleSignIn } = await import('/assets/dojo-google-sign-in.js?v=3');
       auth = await createGoogleSignIn(authConfig);
     } catch {
       report('Googleログインを読み込めませんでした。閉じて開き直してください。');
