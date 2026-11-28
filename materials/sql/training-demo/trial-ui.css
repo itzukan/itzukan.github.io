@@ -68,6 +68,14 @@ body[data-view="mission"] #progress{grid-column:3;grid-row:1;justify-self:end;ma
 .trial-site-header .trial-buy { margin-left: auto; color: #e4c582; }
 .trial-footer { border-top: 1px solid #29354a; }
 .trial-footer p { margin: 0; }
-.trial-footer .trial-buy { color: #e4c582; font-weight: 700; }
+.trial-completion { padding: clamp(16px, 3vw, 26px); border-color: #756341; }
+.trial-completion p { margin: 0; }
+.trial-completion-status { color: #a0f0bd; font-size: .9rem; font-weight: 700; }
+.trial-completion h2 { margin: 5px 0 12px; font-size: clamp(1.25rem, 3vw, 1.65rem); line-height: 1.4; }
+.trial-completion blockquote { margin: 0 0 12px; padding: 8px 12px; border-inline-start: 3px solid #d9b975; background: #1e2c40; }
+.trial-completion-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin-top: 16px; }
+.trial-completion-price strong { color: #f0dfba; margin-inline-start: .3em; }
+.trial-completion .trial-buy { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 8px 14px; border-radius: 9px; background: #e4c582; color: #172033; font-weight: 800; }
+.trial-completion .trial-buy:focus-visible { outline: 2px solid #e4c582; outline-offset: 3px; }
 .trial-chapter-link { color: #e0e8f7; display: flex; align-items: center; }
 #chapterBottom.trial-chapter-link { justify-content: center; }

@@ -7,7 +7,7 @@
 <title>SQL実務トレーニング30問｜無料体験</title>
 <link rel="canonical" href="https://free.itzukan.com/materials/sql/training-demo/">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="stylesheet" href="./trial-ui.css?v=trial-parity-1">
+<link rel="stylesheet" href="./trial-ui.css?v=trial-completion-offer-1">
 <script defer src="/assets/analytics.js"></script>
 <script defer src="./reel-funnel.js?v=5"></script>
 <script defer src="/assets/material-next.js"></script>
@@ -26,11 +26,14 @@
 </div>
 <div id="missionView" class="view">
 <div class="bottom-nav"><button class="route-btn" id="prevMission" type="button">← 前の問題</button><button class="route-btn" id="nextMission" type="button">次の問題 →</button></div><div id="lessonTabs" class="lesson-tabs" role="tablist" aria-label="学習モード"><button id="exerciseTab" role="tab" aria-selected="true" aria-controls="exercisePanel" type="button">演習</button><button id="lessonTab" role="tab" aria-selected="false" aria-controls="deepLesson" type="button" tabindex="-1">詳細解説</button></div><div id="exercisePanel" role="tabpanel" aria-labelledby="exerciseTab"><section class="panel problem-panel"><div class="stage-heading stage-request"><span class="stage-icon" aria-hidden="true">📋</span><span>業務依頼を確認</span></div><div class="mission-meta"><span id="chapterName"></span><span id="number"></span></div><div class="mission-heading"><h2 id="title"></h2><span id="completionState" role="status" aria-live="polite"></span></div><p id="learningSupport" class="support-level"></p><p id="request"></p><p class="note" id="task"></p><p id="expectedColumns" class="muted"></p><div id="exerciseResources"><details class="problem-diagram"><summary>この問題のデータの流れを見る（結果を含む）</summary><div id="conceptDiagram" class="diagram" hidden></div></details><details class="reference-data"><summary>使えるデータ・列の説明を見る</summary><div id="referenceData"></div></details><details><summary>ヒントを見る</summary><p id="hint"></p><details id="syntaxHint"><summary>具体的な書き方のヒントを見る</summary><p id="syntaxHintText"></p></details></details><details><summary>解説・模範解答を見る</summary><p id="explain"></p><pre id="answer"></pre><button id="load" type="button" aria-label="この問題の模範解答をSQL入力欄にコピー">模範解答を入力欄にコピー</button></details></div></section><section class="panel editor-panel"><div class="stage-heading stage-coding"><span class="stage-icon" aria-hidden="true">⌨</span><span>SQLを入力して実行</span></div><h2>SQLで依頼に応える</h2><p class="muted">SQLは自動保存されます。入力したら「SQLを実行」で結果を確認しましょう。</p><div class="sql-label-row"><label for="sql">SQLを入力</label><div class="editor-help"><button id="openData" type="button">使えるデータ</button><button id="openHint" type="button">💡 ヒント</button><button id="openAnswer" type="button">解説・模範解答</button></div></div><textarea id="sql" spellcheck="false"></textarea><div class="actions"><button class="primary" id="run" disabled>▶ SQLを実行</button><button id="grade" disabled>採点する</button><button id="clear">SQLをクリア</button></div><p id="status" role="status" aria-live="polite">SQLiteを準備しています…</p><p id="gradeGuide">先にSQLを実行してください。実行結果を確認すると採点できます。</p><div class="grading-step"><h3 class="result-heading">実行結果</h3><div class="data" id="result"></div><button id="readLesson" type="button" hidden>詳しい解説を読む →</button><p id="feedback" role="status" aria-live="polite"></p></div></section></div><section id="deepLesson" class="panel" role="tabpanel" hidden aria-labelledby="lessonTab"><div class="lesson-return"><strong>詳細解説を読んでいます</strong><button id="returnToSql" type="button">← SQL入力に戻る</button></div><p class="step-label">READ & UNDERSTAND / 解いてから深める</p><div id="lessonContent"></div></section>
-<section id="trialContinuation" aria-labelledby="trialContinuationTitle" hidden>
-  <div class="trial-footer">
-    <h2 id="trialContinuationTitle">無料体験3問クリア</h2>
-    <p>有料版では、売上集計や月次レポートなど、仕事の依頼を読んでSQLを書く練習ができます。</p>
-    <a class="trial-buy" href="https://premium.itzukan.com/courses/sql30/" data-analytics-event="material_click" data-material-id="sql30" data-click-location="sql_demo_complete">有料版30問の内容を見る →</a>
+<section class="panel trial-completion" id="trialContinuation" aria-labelledby="trialContinuationTitle" hidden>
+  <p class="trial-completion-status"><span aria-hidden="true">✓</span> 無料体験3問クリア</p>
+  <h2 id="trialContinuationTitle">次は、月次売上レポートを作ってみよう</h2>
+  <blockquote>店長「先月はいくら売れた？ 売れ筋の商品も教えて」</blockquote>
+  <p>無料体験では、商品を売上順に並べました。有料版では、仕事の依頼を読んで、集計に使うデータや条件を自分で考えるところまで練習できます。</p>
+  <div class="trial-completion-actions">
+    <p class="trial-completion-price">全5章・30問 <strong>税込1,980円</strong>（買い切り）</p>
+    <a class="trial-buy" href="https://premium.itzukan.com/courses/sql30/#sql30CurriculumTitle" data-analytics-event="material_click" data-material-id="sql30" data-click-location="sql_demo_complete">30問のカリキュラムを見る →</a>
   </div>
 </section>
 <div class="bottom-nav"><button class="route-btn" id="prevMissionBottom" type="button">← 前の問題</button><a class="route-btn trial-chapter-link" id="chapterBottom" href="/materials/sql/course/learn/">体験の学習ホーム</a><button class="route-btn" id="nextMissionBottom" type="button">次の問題 →</button></div></div></main>
