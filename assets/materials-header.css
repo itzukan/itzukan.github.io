@@ -117,26 +117,23 @@
   justify-content: center;
   min-width: 44px;
   min-height: 44px;
-  padding: 0 .65rem;
-  border: 1px solid #3c5672;
-  border-radius: 10px;
-  background: #142239;
-  color: #e2e8f0;
-  font-size: .875rem;
-  font-weight: 700;
+  width: 44px;
+  padding: 0;
+  border: 1px solid #3d707c;
+  border-radius: 50%;
+  background: #183e47;
   line-height: 1.4;
   list-style: none;
   cursor: pointer;
 }
 .material-pin-sync summary::-webkit-details-marker { display: none; }
 .material-pin-sync[data-signed-in] summary {
-  width: 44px;
-  padding: 0;
-  border-radius: 50%;
-  border-color: #3d707c;
-  background: #183e47;
+  border-color: #e8ce97;
+  background: #d8b975;
+  color: #142039;
 }
-.material-pin-sync[data-signed-in] .material-pin-login-label { display: none; }
+.material-pin-account-initial { display: none; font: 800 19px/1 system-ui, sans-serif; }
+.material-pin-sync[data-signed-in] .material-pin-account-initial { display: inline; }
 .material-pin-sync-body {
   position: absolute;
   z-index: 15;
@@ -174,7 +171,7 @@
 .materials-header-tools, #mobile-materials-pins[hidden] { display: none; }
 .material-pin-sync-icon {
   position: relative;
-  display: none;
+  display: inline-block;
   width: 18px;
   height: 18px;
   background: radial-gradient(circle at 50% 24%, currentColor 3px, transparent 3.5px);
@@ -187,7 +184,7 @@
   border-radius: 9px 9px 3px 3px;
   background: currentColor;
 }
-.material-pin-sync[data-signed-in] .material-pin-sync-icon { display: inline-block; }
+.material-pin-sync[data-signed-in] .material-pin-sync-icon { display: none; }
 @media (min-width: 681px) {
   .materials-header[data-mobile-header] > nav { flex-basis: 100%; }
   .materials-header > .material-pin-sync { position: relative; margin-inline-start: auto; }
@@ -210,7 +207,6 @@
   }
   .materials-header-tools > button[aria-expanded="true"] { background: #172940; border-color: #3c5672; color: #8beaf6; }
   .materials-header-tools > button:focus-visible { outline: 2px solid #8beaf6; outline-offset: 1px; }
-  .materials-header-tools .material-pin-sync summary { width: 44px; padding: 0; font-size: .8rem; }
   .materials-header-tools .material-pin-sync-body { width: min(20rem, 100%); }
   .header-dots {
     width: 4px;

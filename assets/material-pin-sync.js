@@ -6,7 +6,7 @@
     <details id="material-pin-sync" class="material-pin-sync" hidden>
       <summary>
         <span class="material-pin-sync-icon" aria-hidden="true"></span>
-        <span class="material-pin-login-label" lang="en">Login</span>
+        <span class="material-pin-account-initial" aria-hidden="true">?</span>
       </summary>
       <div class="material-pin-sync-body">
         <p role="status">PCとスマホで同じGoogleアカウントを使ってください。</p>
@@ -24,10 +24,12 @@
   const importPins = panel?.querySelector('[data-pin-import]');
   const status = panel?.querySelector('[role="status"]');
   const summary = panel?.querySelector('summary');
+  const initial = panel?.querySelector('.material-pin-account-initial');
   const storageKey = 'itzukan-material-pins-v1';
   const endpoint = location.origin === 'https://free.itzukan.com'
     ? 'https://sync.itzukan.com/api/dojo-sync/' : '/api/dojo-sync/';
   let sessionKey = null;
+  let accountInitial = null;
   let saved = null;
   let auth;
   let authConfig;
@@ -69,7 +71,8 @@
       importPins.hidden = !saved || !guestPins().some(id => !saved.pins.includes(id));
       importPins.disabled = busy;
       panel.toggleAttribute('data-signed-in', !!sessionKey);
-      summary.setAttribute('aria-label', sessionKey ? 'アカウント（ログイン中）' : 'Login');
+      summary.setAttribute('aria-label', sessionKey ? 'アカウント（ログイン中）' : 'ログイン');
+      initial.textContent = accountInitial || '?';
     }
     window.dispatchEvent(new Event('material-pins-sync-change'));
   }
@@ -108,7 +111,7 @@
 
   async function readAccount() {
     try {
-      ({ sessionKey } = await request('session'));
+      ({ sessionKey, accountInitial } = await request('session'));
       saved = sessionKey ? await request('pins') : null;
       report(sessionKey ? 'このアカウントのピン留めを端末間で同期します。' : 'PCとスマホで同じGoogleアカウントを使ってください。');
     } catch {
@@ -140,7 +143,7 @@
         report('別の端末でも変更されました。最新の一覧で操作し直してください。');
       } catch (error) {
         if ([401, 409].includes(error.status)) {
-          sessionKey = null;
+          sessionKey = accountInitial = null;
           saved = null;
         }
         report('ピン留めを同期できませんでした。ページを開き直してください。');
@@ -170,7 +173,7 @@
   logout?.addEventListener('click', () => run(async () => {
     try {
       await request('logout', 'POST');
-      sessionKey = saved = null;
+      sessionKey = accountInitial = saved = null;
       window.dispatchEvent(new Event('free-account-change'));
       report('ログアウトしました。このブラウザーのピン留めを表示します。');
     } catch {
