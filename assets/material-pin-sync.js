@@ -1,7 +1,25 @@
 (() => {
   'use strict';
 
-  const panel = document.querySelector('#material-pin-sync');
+  const host = document.querySelector('[data-pin-sync-host]');
+  if (host) host.innerHTML = `
+    <details id="material-pin-sync" class="material-pin-sync" hidden>
+      <summary>
+        <span class="material-pin-sync-icon" aria-hidden="true">📌</span>
+        <span data-pin-title>Googleログイン</span>
+        <span class="material-pin-sync-state" data-pin-state>任意</span>
+      </summary>
+      <div class="material-pin-sync-body">
+        <p role="status">PCとスマホで同じGoogleアカウントを使ってください。</p>
+        <div class="material-pin-sync-actions">
+          <button type="button" data-sync-login disabled>Googleでログイン</button>
+          <button type="button" data-pin-import hidden>このブラウザーのピン留めを引き継ぐ</button>
+          <button type="button" data-sync-logout hidden>ログアウト</button>
+          <a href="/materials/practice/sync-data/#pin-data">同期で保存されるデータ</a>
+        </div>
+      </div>
+    </details>`;
+  const panel = host?.querySelector('#material-pin-sync');
   const login = panel?.querySelector('[data-sync-login]');
   const logout = panel?.querySelector('[data-sync-logout]');
   const importPins = panel?.querySelector('[data-pin-import]');
@@ -51,7 +69,7 @@
       importPins.hidden = !saved || !guestPins().some(id => !saved.pins.includes(id));
       importPins.disabled = busy;
       panel.toggleAttribute('data-signed-in', !!sessionKey);
-      title.textContent = sessionKey ? 'ピン留めの同期' : '別の端末でもピン留めを見る';
+      title.textContent = sessionKey ? 'アカウント' : 'Googleログイン';
       state.textContent = sessionKey ? 'ログイン中' : '任意';
     }
     window.dispatchEvent(new Event('material-pins-sync-change'));
@@ -116,6 +134,7 @@
 
   window.materialPinSync = {
     pins: () => sessionKey ? (saved?.pins ?? []) : null,
+    guestPins,
     locked: () => enabled && (busy || (!!sessionKey && !saved)),
     setPin: (id, pinned) => update(pins => pinned ? [...new Set([...pins, id])] : pins.filter(pin => pin !== id)),
   };

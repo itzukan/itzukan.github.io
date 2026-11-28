@@ -196,8 +196,17 @@
   }
 
   function initLesson(fallback) {
+    const controls = document.createElement('span');
+    controls.className = 'lesson-search-widget';
+    const toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'lesson-search-toggle';
+    toggle.setAttribute('aria-label', '検索');
+    toggle.setAttribute('aria-controls', 'lesson-material-search');
+    toggle.setAttribute('aria-expanded', 'false');
     const form = document.createElement('form');
     form.className = 'lesson-search';
+    form.id = 'lesson-material-search';
     form.setAttribute('role', 'search');
     form.setAttribute('aria-label', '無料教材検索');
     const input = document.createElement('input');
@@ -215,7 +224,8 @@
     const results = document.createElement('ul');
     panel.append(status, results);
     form.append(input, panel);
-    fallback.replaceWith(form);
+    controls.append(toggle, form);
+    fallback.replaceWith(controls);
 
     let currentSearch = 0;
     async function updateResults() {
@@ -247,6 +257,20 @@
       results.replaceChildren();
       status.textContent = '';
     }
+
+    function setSearchOpen(visible) {
+      toggle.setAttribute('aria-expanded', String(visible));
+      if (visible) input.focus();
+      else closeResults();
+    }
+
+    toggle.addEventListener('click', () => setSearchOpen(toggle.getAttribute('aria-expanded') !== 'true'));
+    controls.addEventListener('keydown', event => {
+      if (event.key !== 'Escape' || event.defaultPrevented || event.isComposing ||
+          toggle.getAttribute('aria-expanded') !== 'true' || !toggle.getClientRects().length) return;
+      setSearchOpen(false);
+      toggle.focus();
+    });
 
     input.addEventListener('input', updateResults);
     input.addEventListener('focus', () => {

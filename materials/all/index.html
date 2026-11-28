@@ -8,9 +8,10 @@
 <link rel="canonical" href="https://free.itzukan.com/materials/all/">
 <title>すべての無料教材 | IT図鑑</title>
 <link rel="stylesheet" href="/assets/materials-layout.css">
-<link rel="stylesheet" href="/assets/materials-home.css?v=9">
+<link rel="stylesheet" href="/assets/materials-home.css?v=10">
 <script defer src="/assets/materials-search.js?v=7"></script>
-<script defer src="/assets/material-pin-sync.js?v=2"></script>
+<script defer src="/assets/material-pin-sync.js?v=3"></script>
+<script defer src="/assets/materials-header.js"></script>
 <script defer src="/assets/materials-pins.js?v=2"></script>
 <script defer src="/assets/materials-pagination.js"></script>
 <script defer src="/assets/analytics.js"></script></head>
@@ -49,22 +50,7 @@
 <h1 class="section-title" id="materials-title">すべての無料教材</h1>
 <p id="materials-count" role="status"></p>
 <div id="material-cards">
-<details id="material-pin-sync" class="material-pin-sync" hidden>
-  <summary>
-    <span class="material-pin-sync-icon" aria-hidden="true">📌</span>
-    <span data-pin-title>別の端末でもピン留めを見る</span>
-    <span class="material-pin-sync-state" data-pin-state>任意</span>
-  </summary>
-  <div class="material-pin-sync-body">
-    <p role="status">PCとスマホで同じGoogleアカウントを使ってください。</p>
-    <div class="material-pin-sync-actions">
-      <button type="button" data-sync-login disabled>Googleでログイン</button>
-      <button type="button" data-pin-import hidden>このブラウザーのピン留めを引き継ぐ</button>
-      <button type="button" data-sync-logout hidden>ログアウト</button>
-      <a href="/materials/practice/sync-data/#pin-data">同期で保存されるデータ</a>
-    </div>
-  </div>
-</details>
+<div data-pin-sync-host></div>
 <section id="pinned-materials" aria-labelledby="pinned-materials-title" hidden>
   <h3 id="pinned-materials-title">ピン留めした教材</h3>
   <div class="cards" id="pinned-material-cards"></div>
