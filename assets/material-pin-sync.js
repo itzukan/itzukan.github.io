@@ -1,7 +1,7 @@
 (() => {
   'use strict';
 
-  const signInBenefit = 'ピン留めした教材をPCとスマホで共有し、道場の続きも別の端末で解けます。';
+  const signInBenefit = 'ピン留めした教材をPCとスマホで共有し、問題演習の続きも別の端末で解けます。';
   const host = document.querySelector('[data-pin-sync-host]');
   if (host) host.innerHTML = `
     <details id="material-pin-sync" class="material-pin-sync" hidden>
