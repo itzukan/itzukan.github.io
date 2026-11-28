@@ -6,6 +6,8 @@
   const logout = panel?.querySelector('[data-sync-logout]');
   const importPins = panel?.querySelector('[data-pin-import]');
   const status = panel?.querySelector('[role="status"]');
+  const title = panel?.querySelector('[data-pin-title]');
+  const state = panel?.querySelector('[data-pin-state]');
   const storageKey = 'itzukan-material-pins-v1';
   const endpoint = location.origin === 'https://free.itzukan.com'
     ? 'https://sync.itzukan.com/api/dojo-sync/' : '/api/dojo-sync/';
@@ -48,7 +50,9 @@
       logout.disabled = busy;
       importPins.hidden = !saved || !guestPins().some(id => !saved.pins.includes(id));
       importPins.disabled = busy;
-      panel.querySelector('summary').textContent = sessionKey ? 'ピン留めの同期 · ログイン中' : '別の端末でもピン留めを見る（任意）';
+      panel.toggleAttribute('data-signed-in', !!sessionKey);
+      title.textContent = sessionKey ? 'ピン留めの同期' : '別の端末でもピン留めを見る';
+      state.textContent = sessionKey ? 'ログイン中' : '任意';
     }
     window.dispatchEvent(new Event('material-pins-sync-change'));
   }
@@ -72,7 +76,7 @@
     try {
       ({ sessionKey } = await request('session'));
       saved = sessionKey ? await request('pins') : null;
-      report(sessionKey ? 'このアカウントのピン留めを端末間で同期します。' : 'Googleでログインすると、別の端末からも同じピン留めを見られます。');
+      report(sessionKey ? 'このアカウントのピン留めを端末間で同期します。' : 'PCとスマホで同じGoogleアカウントを使ってください。');
     } catch {
       saved = null;
       report('ピン留めを読み込めませんでした。ページを開き直してください。');
